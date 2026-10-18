@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+﻿import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Moon, Sun, Globe, Search, Volume2, VolumeX } from 'lucide-react';
 import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 
-// Dynamic AudioManager — never imported synchronously in the critical path
+// Dynamic AudioManager â€” never imported synchronously in the critical path
 const playClick = () => import('../utils/AudioManager').then(mod => mod.AudioManager.playClick());
 const playButtonClick = () => import('../utils/AudioManager').then(mod => mod.AudioManager.playButtonClick());
 
-// Animation variants — defined at module scope to avoid re-creation on every render
+// Animation variants â€” defined at module scope to avoid re-creation on every render
 const navbarContainerVariants = {
   hidden: { opacity: 0, y: -20 },
   visible: {
@@ -59,7 +59,34 @@ export const GlassmorphismNavbar = () => {
 
   useEffect(() => {
     setActiveLink(location.pathname);
+    setIsMobileMenuOpen(false); // close menu on any navigation (incl. back/forward)
   }, [location.pathname]);
+
+  // Lock background scroll while the mobile menu is open
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [isMobileMenuOpen]);
+
+  // Escape closes the menu from anywhere on the page
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isMobileMenuOpen]);
+
+  // Switching to desktop width must not leave the menu open (CSS would hide it while scroll stays locked)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1280px)');
+    const onChange = (e: MediaQueryListEvent) => { if (e.matches) setIsMobileMenuOpen(false); };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   // Load persisted audio preference
   useEffect(() => {
@@ -68,7 +95,7 @@ export const GlassmorphismNavbar = () => {
       const enabled = stored === null ? true : stored === 'true';
       setAudioEnabled(enabled);
       import('../utils/AudioManager').then(mod => mod.AudioManager.setEnabled(enabled)).catch(() => {});
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, []);
@@ -90,7 +117,7 @@ export const GlassmorphismNavbar = () => {
   const navLinks = [
     { to: '/', label: t('nav.home') },
     { to: '/inventory', label: t('nav.inventory') },
-    { to: '/experience', label: language === 'en' ? 'Experience' : 'অভিজ্ঞতা' },
+    { to: '/experience', label: language === 'en' ? 'Experience' : 'à¦…à¦­à¦¿à¦œà§à¦žà¦¤à¦¾' },
     { to: '/services', label: t('nav.services') },
     { to: '/accessories', label: t('nav.accessories') },
     { to: '/about', label: t('nav.about') },
@@ -114,7 +141,7 @@ export const GlassmorphismNavbar = () => {
     try {
       localStorage.setItem('audio_enabled', String(next));
       import('../utils/AudioManager').then(mod => mod.AudioManager.setEnabled(next)).catch(() => {});
-    } catch (e) {
+    } catch {
       // ignore
     }
   };
@@ -181,11 +208,11 @@ export const GlassmorphismNavbar = () => {
       initial="hidden"
       animate="visible"
       variants={navbarContainerVariants}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="fixed left-0 right-0 z-50 top-[var(--geo-banner-h,0px)] pt-[env(safe-area-inset-top,0px)] transition-all duration-300"
     >
       {/* Glassmorphic background */}
       <div className={`${isScrolled ? glassBackgroundScrolled : glassBackground} transition-all duration-300`}>
-        <nav aria-label="Main navigation" className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-3 lg:py-4">
+        <nav aria-label="Main navigation" className="container px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             {/* Logo Section */}
             <m.div
@@ -238,11 +265,11 @@ export const GlassmorphismNavbar = () => {
               </Link>
             </m.div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-0.5">
+            {/* Desktop Navigation â€” full link set from xl; below that the drawer takes over */}
+            <div className="hidden xl:flex items-center space-x-0.5">
               {navLinks.map((link, index) => {
                 const isExternal = link.to.startsWith('tel:');
-                const commonClasses = `px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 relative outline-none focus-visible:ring-2 focus-visible:ring-[#C00000] ${
+                const commonClasses = `px-2.5 2xl:px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative outline-none focus-visible:ring-2 focus-visible:ring-[#C00000] ${
                   activeLink === link.to
                     ? theme === 'dark'
                       ? 'text-[#FF1A1A]'
@@ -316,12 +343,12 @@ export const GlassmorphismNavbar = () => {
                 <Search className="h-4 w-4" />
               </m.button>
 
-              {/* Audio Toggle Button (visible on mobile and desktop) */}
+              {/* Audio Toggle â€” hidden on xs to keep the 360px control row comfortable */}
               <m.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleToggleAudio}
-                className={`p-2.5 rounded-lg transition-all ${
+                className={`hidden sm:inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
                   theme === 'dark'
                     ? 'hover:bg-gray-700/50 text-gray-400 hover:text-white'
                     : 'hover:bg-gray-100/50 text-gray-600 hover:text-gray-900'
@@ -336,7 +363,7 @@ export const GlassmorphismNavbar = () => {
                 whileHover={{ scale: 1.1, rotate: 20 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleToggleTheme}
-                className={`p-2.5 rounded-lg transition-all ${
+                className={`inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
                   theme === 'dark'
                     ? 'hover:bg-gray-700/50 text-yellow-400'
                     : 'hover:bg-gray-100/50 text-gray-800'
@@ -355,7 +382,7 @@ export const GlassmorphismNavbar = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={toggleLanguage}
-                className={`p-2.5 rounded-lg transition-all ${
+                className={`inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
                   theme === 'dark'
                     ? 'hover:bg-gray-700/50 text-[#FF1A1A]'
                     : 'hover:bg-gray-100/50 text-[#C00000]'
@@ -386,7 +413,7 @@ export const GlassmorphismNavbar = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleMobileMenuToggle}
-                className={`lg:hidden p-2 rounded-lg transition-all ${
+                className={`xl:hidden inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
                   theme === 'dark'
                     ? 'hover:bg-gray-700/50 text-gray-400'
                     : 'hover:bg-gray-100/50 text-gray-600'
@@ -432,7 +459,7 @@ export const GlassmorphismNavbar = () => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="lg:hidden mt-4"
+                className="xl:hidden mt-4 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain pb-safe-6"
                 role="menu"
                 aria-label="Mobile navigation"
                 onKeyDown={handleMenuKeyDown}

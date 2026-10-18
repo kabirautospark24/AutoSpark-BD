@@ -511,7 +511,7 @@ export const ProductDetailPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 pb-32 lg:pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left: Image Gallery */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
@@ -674,8 +674,8 @@ export const ProductDetailPage = () => {
                 <dl className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   {Object.entries(product.specifications).map(([key, value]) => (
                     <div key={key} className="flex justify-between gap-4 py-1.5 border-b border-gray-200 dark:border-gray-800 last:border-0">
-                      <dt className="font-medium shrink-0">{key}</dt>
-                      <dd className="text-right">{value}</dd>
+                      <dt className="font-medium min-w-0 break-words">{key}</dt>
+                      <dd className="text-right break-words">{value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -840,6 +840,38 @@ export const ProductDetailPage = () => {
             </div>
           </section>
         )}
+      </div>
+
+      {/* Sticky mobile buy bar */}
+      <div
+        className={`fixed bottom-0 inset-x-0 z-40 lg:hidden border-t backdrop-blur-md ${
+          isDark ? 'bg-gray-950/90 border-gray-800' : 'bg-white/95 border-gray-200'
+        } pb-[max(env(safe-area-inset-bottom,0px),0.75rem)]`}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+          <div className="min-w-0">
+            <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              {language === 'bn' ? 'দাম' : 'Price'}
+            </p>
+            <p className={`text-lg font-bold truncate ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              {formatBDT(discountedPrice)}
+            </p>
+          </div>
+          <button
+            onClick={handleAddToCart}
+            disabled={product.stock_quantity === 0 || !product.is_available}
+            className={`flex-1 min-h-[44px] px-4 rounded-lg font-bold flex items-center justify-center gap-2 transition ${
+              product.stock_quantity === 0 || !product.is_available
+                ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                : 'bg-[#C00000] text-white hover:bg-red-700'
+            }`}
+          >
+            {addedToCart ? <Check size={18} aria-hidden /> : <ShoppingCart size={18} aria-hidden />}
+            {addedToCart
+              ? (language === 'bn' ? 'যোগ হয়েছে!' : 'Added!')
+              : (language === 'bn' ? 'কার্টে যোগ করুন' : 'Add to Cart')}
+          </button>
+        </div>
       </div>
     </motion.div>
   );

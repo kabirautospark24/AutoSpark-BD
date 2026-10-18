@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ScrollToTop } from './components/ScrollToTop';
 import { Layout } from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
-import { GeoBanner } from './components/GeoBanner';
 import { RouteFallback } from './components/RouteFallback';
 import { lazyWithRetry } from './utils/lazyWithRetry';
 
@@ -27,12 +26,27 @@ const PaymentFailPage = lazyWithRetry(() => import('./pages/PaymentFailPage'));
 const PaymentCancelPage = lazyWithRetry(() => import('./pages/PaymentCancelPage'));
 const ThankYouPage = lazyWithRetry(() => import('./pages/ThankYouPage'));
 const SparkPilotPage = lazyWithRetry(() => import('./pages/SparkPilotPage').then(m => ({ default: m.SparkPilotPage })));
+const PrivacyPage = lazyWithRetry(() => import('./pages/LegalPages').then(m => ({ default: m.PrivacyPage })));
+const TermsPage = lazyWithRetry(() => import('./pages/LegalPages').then(m => ({ default: m.TermsPage })));
 
 const NotFound = () => (
-  <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center">
-    <h1 className="text-6xl font-black text-[var(--brand-red,#C00000)] mb-2">404</h1>
-    <p className="text-lg mb-4">Page not found</p>
-    <a href="/" className="px-6 py-2 bg-[var(--brand-red,#C00000)] text-white rounded-lg">Go Home</a>
+  <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 py-16 text-center">
+    <p className="text-[clamp(4rem,15vw,8rem)] font-black leading-none tracking-tighter text-[var(--brand-red,#C00000)] tabular-nums">404</p>
+    <h1 className="mt-3 text-2xl sm:text-3xl font-semibold text-balance">This page drove off</h1>
+    <p className="mt-2 max-w-md text-sm sm:text-base text-gray-500 dark:text-gray-400">
+      The address may be wrong, or the page has moved. Let's get you back on the road.
+    </p>
+    <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="/" className="inline-flex min-h-[44px] items-center rounded-lg bg-[var(--brand-red,#C00000)] px-6 py-3 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.98]">
+        Go home
+      </a>
+      <a href="/inventory" className="inline-flex min-h-[44px] items-center rounded-lg border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 active:scale-[0.98]">
+        Browse inventory
+      </a>
+      <a href="/contact" className="inline-flex min-h-[44px] items-center rounded-lg px-6 py-3 text-sm font-semibold text-[var(--brand-red,#C00000)] transition hover:bg-[var(--brand-red,#C00000)]/10 active:scale-[0.98]">
+        Contact us
+      </a>
+    </div>
   </div>
 );
 
@@ -41,7 +55,6 @@ function App() {
     <Router>
       <ErrorBoundary>
         <ScrollToTop />
-        <GeoBanner />
         <Layout>
           <Routes>
             <Route path="/" element={<Suspense fallback={<RouteFallback />}><HomePage /></Suspense>} />
@@ -69,6 +82,8 @@ function App() {
             <Route path="/thank-you" element={<Suspense fallback={<RouteFallback />}><ThankYouPage /></Suspense>} />
             <Route path="/sparkpilot" element={<Suspense fallback={<RouteFallback />}><SparkPilotPage /></Suspense>} />
             <Route path="/sparkai" element={<Navigate to="/sparkpilot" replace />} />
+            <Route path="/privacy" element={<Suspense fallback={<RouteFallback />}><PrivacyPage /></Suspense>} />
+            <Route path="/terms" element={<Suspense fallback={<RouteFallback />}><TermsPage /></Suspense>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

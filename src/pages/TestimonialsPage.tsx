@@ -798,6 +798,7 @@ export const TestimonialsPage = () => {
   const { theme } = useTheme();
 
   const [testimonials, setTestimonials] = useState<CustomerTestimonial[]>([]);
+  const [isLoadingTestimonials, setIsLoadingTestimonials] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [filterRating, setFilterRating] = useState<FilterRating>(0);
@@ -825,6 +826,8 @@ export const TestimonialsPage = () => {
         }
       } catch {
         setTestimonials(MOCK_TESTIMONIALS);
+      } finally {
+        setIsLoadingTestimonials(false);
       }
     };
     fetchTestimonials();
@@ -999,13 +1002,13 @@ export const TestimonialsPage = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.12 }}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-6 border shadow-sm"
+              className="flex max-w-[92vw] sm:inline-flex flex-wrap items-center justify-center gap-3 px-4 sm:px-6 py-3 rounded-full mb-6 border shadow-sm"
               style={{
                 background: theme === 'dark' ? 'linear-gradient(90deg, rgba(16,185,129,0.08), rgba(34,197,94,0.06))' : 'linear-gradient(90deg, rgba(16,185,129,0.07), rgba(34,197,94,0.05))',
                 borderColor: theme === 'dark' ? 'rgba(16,185,129,0.18)' : 'rgba(34,197,94,0.18)'
               }}
             >
-              <Truck className="text-green-500" size={22} />
+              <Truck className="text-green-500 shrink-0" size={22} />
               <Typewriter
                 text={
                   language === 'en'
@@ -1013,7 +1016,7 @@ export const TestimonialsPage = () => {
                     : 'আমাদের কোম্পানি থেকে এ পর্যন্ত ৭০০+ গাড়ি সরবরাহ করেছি!'
                 }
                 speed={12}
-                className={`text-2xl md:text-3xl font-semibold ${theme === 'dark' ? 'text-green-300' : 'text-green-800'}`}
+                className={`text-lg sm:text-2xl md:text-3xl font-semibold min-w-0 break-words ${theme === 'dark' ? 'text-green-300' : 'text-green-800'}`}
               />
             </motion.div>
 
@@ -1199,12 +1202,16 @@ export const TestimonialsPage = () => {
               )}
             </AnimatePresence>
 
-            {/* Results count */}
-            <p className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
-              {language === 'en'
-                ? `Showing ${filteredTestimonials.length} of ${testimonials.length} reviews`
-                : `${testimonials.length} টি রিভিউ থেকে ${filteredTestimonials.length} টি দেখানো হচ্ছে`}
-            </p>
+            {/* Results count — gated while async fetch is in flight to avoid a "Showing 0 of 0" flash */}
+            {isLoadingTestimonials ? (
+              <div className={`h-5 w-48 rounded ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'} animate-pulse`} role="status" aria-label="Loading reviews" />
+            ) : (
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
+                {language === 'en'
+                  ? `Showing ${filteredTestimonials.length} of ${testimonials.length} reviews`
+                  : `${testimonials.length} টি রিভিউ থেকে ${filteredTestimonials.length} টি দেখানো হচ্ছে`}
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -1213,7 +1220,20 @@ export const TestimonialsPage = () => {
           ALL TESTIMONIALS GRID
           ══════════════════════════════════════════ */}
       <section className="container mx-auto px-4 pb-16 md:pb-20">
-        {filteredTestimonials.length > 0 ? (
+        {isLoadingTestimonials ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" role="status" aria-label="Loading reviews">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className={`rounded-2xl border p-6 space-y-4 animate-pulse ${
+                theme === 'dark' ? 'bg-gray-800/30 border-gray-700/30' : 'bg-white border-gray-200'
+              }`}>
+                <div className={`h-4 w-3/4 rounded ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'}`} />
+                <div className={`h-4 w-full rounded ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'}`} />
+                <div className={`h-4 w-5/6 rounded ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'}`} />
+                <div className={`h-10 w-32 rounded-full ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'}`} />
+              </div>
+            ))}
+          </div>
+        ) : filteredTestimonials.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTestimonials.map((t, i) => (
               <TestimonialCard

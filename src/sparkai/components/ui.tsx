@@ -20,8 +20,36 @@ export function SInput(props: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`w-full rounded-xl px-4 min-h-[44px] text-sm border outline-none focus:ring-2 focus:ring-cyan-400 ${dark ? 'bg-white/5 border-white/10 text-white placeholder:text-slate-500' : 'bg-white border-slate-200 text-slate-900'} ${props.className ?? ''}`}
+      className={`w-full rounded-xl px-4 min-h-[44px] text-base md:text-sm border outline-none focus:ring-2 focus:ring-cyan-400 ${dark ? 'bg-white/5 border-white/10 text-white placeholder:text-slate-500' : 'bg-white border-slate-200 text-slate-900'} ${props.className ?? ''}`}
     />
+  );
+}
+
+/**
+ * Agentic stream-style reveal: assistant words cascade in like a live model
+ * is typing them. Pure CSS (single mount animation), screen-reader safe —
+ * the full text is in the DOM from the first frame. Skipped under reduced motion.
+ */
+export function RevealText({ text, reduce }: { text: string; reduce?: boolean }) {
+  if (reduce || !text) return <>{text}</>;
+  const parts = text.split(/(\s+)/);
+  let word = -1;
+  return (
+    <>
+      {parts.map((seg, i) =>
+        /^\s+$/.test(seg) ? (
+          seg
+        ) : (
+          <span
+            key={i}
+            className="reveal-word"
+            style={{ animationDelay: `${Math.min((word += 1) * 14, 700)}ms` }}
+          >
+            {seg}
+          </span>
+        ),
+      )}
+    </>
   );
 }
 

@@ -356,7 +356,7 @@ export const HomePage = () => {
   }, [pickUniqueColors]);
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0a0a0a]' : 'bg-gray-50'}`}>
+    <div className={`min-h-dvh ${theme === 'dark' ? 'bg-[#0a0a0a]' : 'bg-gray-50'}`}>
       <PageHead
         title={pageTitle}
         description={pageDescription}
@@ -380,6 +380,9 @@ export const HomePage = () => {
             {device.supports3D ? (
               <VideoHero>
                 <div className="flex flex-col items-center gap-6 text-center px-4">
+                  <h1 className="text-[clamp(1.75rem,1.2rem+2.5vw,3.25rem)] font-bold leading-tight text-white text-balance max-w-3xl hero-text-shadow">
+                    {language === 'en' ? 'Premium Cars in Rajshahi' : 'রাজশাহীতে প্রিমিয়াম গাড়ি'}
+                  </h1>
                   <div className="flex flex-row flex-wrap gap-2 sm:gap-3 justify-center">
                     <Link to="/inventory" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-xl text-xs sm:text-sm md:text-base shadow-glow-red transition-all">
                       {t('hero.browse')}<ArrowRight className="ml-1.5 h-3.5 w-3.5 md:h-5 md:w-5" aria-hidden />

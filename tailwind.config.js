@@ -3,6 +3,21 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
+    // Shared container: every `container` usage aligns header → page → footer
+    // (fluid padding, centered, 1440px max to match .container-fluid).
+    container: {
+      center: true,
+      maxWidth: '1440px',
+      padding: {
+        DEFAULT: '1rem',
+        xs: '1rem',
+        sm: '1.25rem',
+        md: '1.5rem',
+        lg: '2rem',
+        xl: '2.5rem',
+        '2xl': '3rem',
+      },
+    },
     extend: {
       colors: {
         // Brand colors - desaturated, single accent

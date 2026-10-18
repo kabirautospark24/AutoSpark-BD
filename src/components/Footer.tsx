@@ -46,7 +46,7 @@ export const Footer = () => {
   };
   return (
     <footer
-      className={`relative z-20 ${theme === 'dark' ? 'bg-black/80 backdrop-blur-lg border-t border-gray-800/60' : 'bg-[#181818] border-t border-gray-800'} text-gray-300 font-inter transition-all duration-300 ${highContrast ? 'bg-yellow-900 text-yellow-200' : ''}`}
+      className={`relative z-20 ${theme === 'dark' ? 'bg-black/80 backdrop-blur-lg border-t border-gray-800/60' : 'bg-[#181818] border-t border-gray-800'} text-gray-300 transition-all duration-300 ${highContrast ? 'bg-yellow-900 text-yellow-200' : ''}`}
       style={{ fontSize: `${fontSize}em` }}
     >
       <div className={`absolute top-0 left-0 right-0 h-[2px] ${theme === 'dark' ? 'bg-gradient-to-r from-transparent via-[#C00000]/60 to-transparent' : 'bg-gradient-to-r from-transparent via-[#C00000]/40 to-transparent'}`} />
@@ -65,31 +65,31 @@ export const Footer = () => {
             <p className="text-sm text-gray-400 mb-2">{t('footer.description')}</p>
             <div className="space-y-1">
               <span className="font-semibold text-xs text-[#C00000]">Showroom:</span>
-              <div className="text-xs text-gray-300">{showroom.address}</div>
-              <div className="text-xs text-gray-400">{showroom.city}</div>
-              <div className="text-xs">Phone: <a href={`tel:${showroom.phone}`} aria-label={`Call showroom ${showroom.phone}`} className="inline-flex items-center px-3 py-2 rounded-lg underline hover:text-[#FF1A1A] touch-target-large">{showroom.phone}</a></div>
-              <div className="text-xs">Email: <a href={`mailto:${showroom.email}`} className="underline hover:text-[#FF1A1A]">{showroom.email}</a></div>
-              <div className="text-xs">Website: <a href={`https://${showroom.website}`} className="underline hover:text-[#FF1A1A]">{showroom.website}</a></div>
+              <div className="text-[13px] leading-relaxed text-gray-300">{showroom.address}</div>
+              <div className="text-[13px] text-gray-400">{showroom.city}</div>
+              <div className="text-[13px]">Phone: <a href={`tel:${showroom.phone}`} aria-label={`Call showroom ${showroom.phone}`} className="inline-flex items-center px-3 py-2 rounded-lg underline hover:text-[#FF1A1A] touch-target-large">{showroom.phone}</a></div>
+              <div className="text-[13px]">Email: <a href={`mailto:${showroom.email}`} className="underline hover:text-[#FF1A1A]">{showroom.email}</a></div>
+              <div className="text-[13px]">Website: <a href={`https://${showroom.website}`} className="underline hover:text-[#FF1A1A]">{showroom.website}</a></div>
             </div>
             <div className="space-y-1 mt-2">
               <span className="font-semibold text-xs text-[#C00000]">Service Center:</span>
-              <div className="text-xs text-gray-300">{serviceCenter.address}</div>
-              <div className="text-xs text-gray-400">{serviceCenter.city}</div>
-              <div className="text-xs">Phone: <a href={`tel:${serviceCenter.phone}`} aria-label={`Call service center ${serviceCenter.phone}`} className="inline-flex items-center px-3 py-2 rounded-lg underline hover:text-[#FF1A1A] touch-target-large">{serviceCenter.phone}</a></div>
-              <div className="text-xs">Email: <a href={`mailto:${serviceCenter.email}`} className="underline hover:text-[#FF1A1A]">{serviceCenter.email}</a></div>
-              <div className="text-xs">Website: <a href={`https://${serviceCenter.website}`} className="underline hover:text-[#FF1A1A]">{serviceCenter.website}</a></div>
+              <div className="text-[13px] leading-relaxed text-gray-300">{serviceCenter.address}</div>
+              <div className="text-[13px] text-gray-400">{serviceCenter.city}</div>
+              <div className="text-[13px]">Phone: <a href={`tel:${serviceCenter.phone}`} aria-label={`Call service center ${serviceCenter.phone}`} className="inline-flex items-center px-3 py-2 rounded-lg underline hover:text-[#FF1A1A] touch-target-large">{serviceCenter.phone}</a></div>
+              <div className="text-[13px]">Email: <a href={`mailto:${serviceCenter.email}`} className="underline hover:text-[#FF1A1A]">{serviceCenter.email}</a></div>
+              <div className="text-[13px]">Website: <a href={`https://${serviceCenter.website}`} className="underline hover:text-[#FF1A1A]">{serviceCenter.website}</a></div>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="md:col-span-1">
             <h3 className="text-white font-semibold text-base mb-4 tracking-wide">{t('footer.quick_links')}</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {quickLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className={`text-sm py-1 inline-block ${theme === 'dark' ? 'hover:text-[#FF1A1A]' : 'hover:text-[#C00000]'} transition-colors font-medium`}
+                    className={`text-sm min-h-[40px] inline-flex items-center ${theme === 'dark' ? 'hover:text-[#FF1A1A]' : 'hover:text-[#C00000]'} transition-colors font-medium`}
                   >
                     {link.label}
                   </Link>
@@ -113,26 +113,26 @@ export const Footer = () => {
           {/* Social & Media */}
           <div className="md:col-span-1 flex flex-col gap-4">
             <h3 className="text-white font-semibold text-base mb-4 tracking-wide">Connect</h3>
-            <div className="flex gap-4 mb-4 flex-wrap">
-              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded">
+            <div className="flex gap-2 mb-4 flex-wrap">
+              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded">
+              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded">
+              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
                 <Youtube className="w-6 h-6" />
               </a>
-              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded">
+              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
                 <Music2 className="w-6 h-6" />
               </a>
-              <a href={`tel:${showroom.phone}`} aria-label={`Call showroom ${showroom.phone}`} className="inline-flex items-center px-2 py-2 rounded-lg hover:text-[#FF1A1A] touch-target-large focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000]">
+              <a href={`tel:${showroom.phone}`} aria-label={`Call showroom ${showroom.phone}`} className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center px-2 rounded-lg hover:text-[#FF1A1A] touch-target-large focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000]">
                 <Phone className="w-6 h-6" />
               </a>
-              <a href={`mailto:${showroom.email}`} aria-label="Email us" className="hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded">
+              <a href={`mailto:${showroom.email}`} aria-label="Email us" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
                 <Mail className="w-6 h-6" />
               </a>
-              <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" aria-label="Visit website" className="hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded">
+              <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" aria-label="Visit website" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
                 <MapPin className="w-6 h-6" />
               </a>
             </div>
@@ -190,7 +190,12 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className={`mt-12 pt-6 border-t border-gray-700 text-center`}> 
+        <div className={`mt-12 pt-6 border-t border-gray-700`}>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mb-3 text-sm">
+            <Link to="/privacy" className="min-h-[40px] inline-flex items-center text-gray-300 hover:text-[#FF1A1A] transition-colors">Privacy Policy</Link>
+            <span aria-hidden className="text-gray-600">·</span>
+            <Link to="/terms" className="min-h-[40px] inline-flex items-center text-gray-300 hover:text-[#FF1A1A] transition-colors">Terms of Service</Link>
+          </div>
           <p className="text-xs sm:text-sm text-gray-400">
             &copy; {currentYear} {t('site.title')}. {t('footer.rights')}
           </p>

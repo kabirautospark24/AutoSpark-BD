@@ -250,7 +250,7 @@
 
   body {
     @apply font-sans antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
     font-display: swap;
     background-color: var(--bg-primary);
     color: var(--text-primary);
@@ -258,6 +258,30 @@
     padding-bottom: var(--safe-area-bottom);
     /* Prevent font boosting on mobile */
     -webkit-text-size-adjust: none;
+  }
+
+  /* Display headings use Geist; Bengali override below still wins via [lang="bn"] */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Geist', 'Outfit', system-ui, sans-serif;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  /* Anchor/jump targets clear the fixed header */
+  #main-content,
+  [id]:not(#root):not(#main-content) {
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Respect reduced-motion preferences globally */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   /* Theme transition only after first paint */
@@ -286,29 +310,6 @@
     outline-offset: 3px;
   }
 
-  /* Skip link - visible on focus for keyboard users */
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
-  .skip-link:focus, .skip-link:not(.sr-only) {
-    left: 1rem;
-    top: 1rem;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    z-index: 9999;
-    background: white;
-    color: black;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  }
-
   /* Images â€” prevent layout shift */
   img, video {
     max-width: 100%;
@@ -330,6 +331,14 @@
     margin-inline: auto;
     padding-inline: var(--container-px);
   }
+
+  /* Safe-area helpers (fixed UI / notch / home indicator) */
+  .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .pb-safe-4 { padding-bottom: max(env(safe-area-inset-bottom, 0px), 1rem); }
+  .pb-safe-6 { padding-bottom: max(env(safe-area-inset-bottom, 0px), 1.5rem); }
+  .bottom-safe { bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); }
+  .top-safe { top: calc(env(safe-area-inset-top, 0px) + 0.5rem); }
 
   /* â”€â”€â”€ Section vertical padding â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   .section-padding {
@@ -905,4 +914,13 @@ iframe {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border-color), transparent);
   margin-block: 0;
+}
+/* SparkPilot agentic message reveal � words cascade in like a live stream */
+@keyframes wordIn {
+  from { opacity: 0; transform: translateY(0.3em); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.reveal-word {
+  display: inline-block;
+  animation: wordIn 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }

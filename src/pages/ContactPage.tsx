@@ -36,11 +36,11 @@ export const ContactPage = () => {
       }]);
       if (error) {
         console.warn('Supabase insert failed', error);
-        setStatus({ type: 'success', message: 'Thanks — we received your message.' });
-      } else {
-        setStatus({ type: 'success', message: 'Thanks — we received your message.' });
-        try { (await import('../lib/analytics')).trackEvent('contact_submitted', { name, email }); } catch (_) {}
+        setStatus({ type: 'error', message: 'Could not send your message — please try again.' });
+        return;
       }
+      setStatus({ type: 'success', message: 'Thanks — we received your message.' });
+      try { (await import('../lib/analytics')).trackEvent('contact_submitted', { name, email }); } catch { /* analytics is non-critical */ }
       setName(''); setEmail(''); setPhone(''); setMessage('');
     } catch (err) {
       console.error(err);
@@ -53,9 +53,6 @@ export const ContactPage = () => {
   return (
     <div>
       <ShowroomCards />
-      <section className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-8 text-center">Contact Form</h2>
-      </section>
       <div className={`min-h-screen ${theme === 'dark' ? 'bg-transparent' : 'bg-gray-50'} pt-20`}>
         <div className="bg-gradient-to-r from-[#0D0D0D] to-[#1a0a0a] text-white py-10 sm:py-12 md:py-16">
           <div className="container mx-auto px-3 sm:px-4 md:px-6">
@@ -107,8 +104,9 @@ export const ContactPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-          <Card className={`p-4 sm:p-6 md:p-8 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
+        <div className="container mx-auto px-4 sm:px-6 pb-12">
+          <div className="max-w-2xl mx-auto">
+            <Card className={`p-4 sm:p-6 md:p-8 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
             <h2 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               {language === 'en' ? 'Send us a Message' : 'আমাদের একটি বার্তা পাঠান'}
             </h2>
@@ -184,6 +182,7 @@ export const ContactPage = () => {
               </Button>
             </form>
           </Card>
+          </div>
         </div>
       </div>
     </div>

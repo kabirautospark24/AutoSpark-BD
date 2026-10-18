@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Upload, DollarSign, CreditCard, AlertCircle, CheckCircle } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Upload, DollarSign, CreditCard, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { Button } from '../components/ui/Button';
@@ -21,62 +21,77 @@ export const SellCarPage = () => {
     description: '',
   });
   const [status, setStatus] = useState<{ type: 'idle' | 'success' | 'error'; message?: string }>({ type: 'idle' });
+  const [submitting, setSubmitting] = useState(false);
+  const errorBannerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll the error banner into view so validation failures aren't missed after a long scroll
+  useEffect(() => {
+    if (status.type === 'error') {
+      errorBannerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [status]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return; // guard against double-submit
+    setSubmitting(true);
     setStatus({ type: 'idle' });
 
-    // Client-side validation
-    if (!formData.customerName.trim() || !formData.customerEmail.trim() || !formData.customerPhone.trim()) {
-      setStatus({ type: 'error', message: 'Please fill in all required fields.' });
-      return;
-    }
-    if (!/^01[3-9]\d{8}$/.test(formData.customerPhone)) {
-      setStatus({ type: 'error', message: 'Enter a valid Bangladesh mobile number (01XXXXXXXXX).' });
-      return;
-    }
-    if (formData.vehicleYear < 1990 || formData.vehicleYear > new Date().getFullYear() + 1) {
-      setStatus({ type: 'error', message: 'Enter a valid vehicle year.' });
-      return;
-    }
-    if (formData.mileage < 0) {
-      setStatus({ type: 'error', message: 'Mileage cannot be negative.' });
-      return;
-    }
-
     try {
-      if (!supabase) throw new Error('Supabase not configured');
-      const { error } = await supabase.from('trade_in_requests').insert({
-        customer_name: formData.customerName,
-        customer_email: formData.customerEmail,
-        customer_phone: formData.customerPhone,
-        vehicle_brand: formData.vehicleBrand,
-        vehicle_model: formData.vehicleModel,
-        vehicle_year: formData.vehicleYear,
-        mileage: formData.mileage,
-        condition: formData.condition,
-        description: formData.description,
-        status: 'pending',
-      });
-
-      if (!error) {
-        setStatus({ type: 'success', message: t('common.success') });
-        setFormData({
-          customerName: '',
-          customerEmail: '',
-          customerPhone: '',
-          vehicleBrand: '',
-          vehicleModel: '',
-          vehicleYear: new Date().getFullYear(),
-          mileage: 0,
-          condition: 'good',
-          description: '',
-        });
-      } else {
-        setStatus({ type: 'error', message: 'Submission failed. Please try again.' });
+      // Client-side validation
+      if (!formData.customerName.trim() || !formData.customerEmail.trim() || !formData.customerPhone.trim()) {
+        setStatus({ type: 'error', message: 'Please fill in all required fields.' });
+        return;
       }
-    } catch {
-      setStatus({ type: 'error', message: 'Submission failed. Please try again later.' });
+      if (!/^01[3-9]\d{8}$/.test(formData.customerPhone)) {
+        setStatus({ type: 'error', message: 'Enter a valid Bangladesh mobile number (01XXXXXXXXX).' });
+        return;
+      }
+      if (formData.vehicleYear < 1990 || formData.vehicleYear > new Date().getFullYear() + 1) {
+        setStatus({ type: 'error', message: 'Enter a valid vehicle year.' });
+        return;
+      }
+      if (formData.mileage < 0) {
+        setStatus({ type: 'error', message: 'Mileage cannot be negative.' });
+        return;
+      }
+
+      try {
+        if (!supabase) throw new Error('Supabase not configured');
+        const { error } = await supabase.from('trade_in_requests').insert({
+          customer_name: formData.customerName,
+          customer_email: formData.customerEmail,
+          customer_phone: formData.customerPhone,
+          vehicle_brand: formData.vehicleBrand,
+          vehicle_model: formData.vehicleModel,
+          vehicle_year: formData.vehicleYear,
+          mileage: formData.mileage,
+          condition: formData.condition,
+          description: formData.description,
+          status: 'pending',
+        });
+
+        if (!error) {
+          setStatus({ type: 'success', message: t('common.success') });
+          setFormData({
+            customerName: '',
+            customerEmail: '',
+            customerPhone: '',
+            vehicleBrand: '',
+            vehicleModel: '',
+            vehicleYear: new Date().getFullYear(),
+            mileage: 0,
+            condition: 'good',
+            description: '',
+          });
+        } else {
+          setStatus({ type: 'error', message: 'Submission failed. Please try again.' });
+        }
+      } catch {
+        setStatus({ type: 'error', message: 'Submission failed. Please try again later.' });
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -122,7 +137,7 @@ export const SellCarPage = () => {
               {t('sell.valuation')}
             </h2>
             {status.type !== 'idle' && (
-              <div role="alert" className={`mb-4 p-3 rounded-lg ${status.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              <div ref={errorBannerRef} role="alert" className={`mb-4 p-3 rounded-lg ${status.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                 {status.type === 'success' ? <CheckCircle size={18} className="inline-block mr-2" /> : <AlertCircle size={18} className="inline-block mr-2" />}
                 {status.message}
               </div>
@@ -263,8 +278,15 @@ export const SellCarPage = () => {
                 ></textarea>
               </div>
 
-              <Button type="submit" size="lg" className="w-full">
-                {t('sell.submit')}
+              <Button type="submit" size="lg" className="w-full" disabled={submitting} aria-busy={submitting || undefined}>
+                {submitting ? (
+                  <>
+                    <Loader2 className="animate-spin" />
+                    {language === 'en' ? 'Submitting…' : 'জমা হচ্ছে…'}
+                  </>
+                ) : (
+                  t('sell.submit')
+                )}
               </Button>
             </form>
           </Card>

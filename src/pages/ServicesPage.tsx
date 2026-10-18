@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import {
@@ -521,6 +521,16 @@ const ServicesPage: React.FC = () => {
   const [customerInfo, setCustomerInfo] = useState({ name: '', phone: '', email: '', carModel: '', notes: '' });
   const [serviceStatusId, setServiceStatusId] = useState('');
   const [serviceStatus, setServiceStatus] = useState<{ step: number; status: string } | null>(null);
+
+  // Booking modal: Escape-to-close
+  useEffect(() => {
+    if (!showBookingModal) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowBookingModal(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [showBookingModal]);
 
   // Categories
   const categories = [
@@ -1386,6 +1396,15 @@ const ServicesPage: React.FC = () => {
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     whileHover={{ y: -10 }}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={selectedServices.includes(service.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+                        e.preventDefault();
+                        toggleService(service.id);
+                      }
+                    }}
                     className={`relative group cursor-pointer rounded-2xl overflow-hidden ${
                       isDark ? 'bg-gray-800' : 'bg-white shadow-lg'
                     } ${selectedServices.includes(service.id) ? 'ring-2 ring-blue-500' : ''}`}
@@ -1489,6 +1508,15 @@ const ServicesPage: React.FC = () => {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
                 onClick={() => selectPackage(pkg.id)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedPackage === pkg.id}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+                    e.preventDefault();
+                    selectPackage(pkg.id);
+                  }
+                }}
                 className={`relative cursor-pointer rounded-3xl overflow-hidden ${
                   pkg.recommended 
                     ? 'ring-2 ring-blue-500 shadow-2xl scale-105' 
@@ -1561,17 +1589,17 @@ const ServicesPage: React.FC = () => {
             isDark ? 'bg-gray-800 border-t border-gray-700' : 'bg-white shadow-2xl'
           }`}
         >
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
+          <div className="container mx-auto px-4 pt-4 pb-[max(env(safe-area-inset-bottom,0px),1rem)]">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                   Estimated Total
                 </span>
-                <div className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {totalPrice} <span className="text-lg">BDT</span>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                   {selectedPackage 
                     ? '1 package selected'
@@ -1582,7 +1610,8 @@ const ServicesPage: React.FC = () => {
                     setSelectedServices([]);
                     setSelectedPackage(null);
                   }}
-                  className={`p-2 rounded-full ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                  aria-label="Clear selection"
+                  className={`p-2 rounded-full min-h-[44px] min-w-[44px] inline-flex items-center justify-center ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
                 >
                   <X size={20} className={isDark ? 'text-gray-400' : 'text-gray-500'} />
                 </button>
@@ -1590,7 +1619,7 @@ const ServicesPage: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowBookingModal(true)}
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl"
+                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl"
                 >
                   Book Now
                 </motion.button>
@@ -1789,6 +1818,11 @@ const ServicesPage: React.FC = () => {
 
             {/* FAQ Items */}
             <div className="space-y-4">
+              {filteredFaqs.length === 0 && (
+                <p className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  No FAQs match “{faqSearch}”. Try a different search.
+                </p>
+              )}
               {filteredFaqs.map((faq) => (
                 <motion.div
                   key={faq.id}
@@ -1842,6 +1876,9 @@ const ServicesPage: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="booking-modal-title"
               className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl ${
                 isDark ? 'bg-gray-800' : 'bg-white'
               }`}
@@ -1850,12 +1887,13 @@ const ServicesPage: React.FC = () => {
               <div className={`sticky top-0 z-10 flex items-center justify-between p-6 border-b ${
                 isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
               }`}>
-                <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h2 id="booking-modal-title" className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   Book Your Appointment
                 </h2>
                 <button
                   onClick={() => setShowBookingModal(false)}
-                  className={`p-2 rounded-full ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+                  aria-label="Close booking modal"
+                  className={`p-2 rounded-full min-h-[44px] min-w-[44px] inline-flex items-center justify-center ${isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
                 >
                   <X size={24} className={isDark ? 'text-gray-400' : 'text-gray-500'} />
                 </button>
@@ -2127,7 +2165,7 @@ const ServicesPage: React.FC = () => {
       </AnimatePresence>
 
       {/* Padding for bottom bar */}
-      {(selectedServices.length > 0 || selectedPackage) && <div className="h-24" />}
+      {(selectedServices.length > 0 || selectedPackage) && <div className="h-32 sm:h-36" />}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { buildWhatsAppUrl, SPARKPILOT_CONFIG } from '../config';
 export function VehicleCard({ v, onAsk, onCompare, onExpert }: { v: DemoVehicle; onAsk: (v: DemoVehicle) => void; onCompare: (v: DemoVehicle) => void; onExpert: (v: DemoVehicle) => void }) {
   const dark = useDark();
   return (
-    <Card className="overflow-hidden w-[270px] shrink-0 snap-start">
+    <Card className="overflow-hidden w-[min(270px,72vw)] lg:w-[270px] shrink-0 snap-start">
       <div className={`h-24 flex items-center justify-center relative ${dark ? 'bg-gradient-to-br from-cyan-950 to-blue-950' : 'bg-gradient-to-br from-cyan-50 to-blue-100'}`}>
         <Car className="w-12 h-12 text-cyan-400" strokeWidth={1.4} aria-hidden />
         <span className="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-black/50 text-white px-2 py-0.5 rounded-full">{v.stock === 'demo' ? 'Featured' : v.stock === 'ready' ? 'Ready stock' : v.stock === 'preorder' ? 'Pre-order' : v.stock}</span>
@@ -23,10 +23,10 @@ export function VehicleCard({ v, onAsk, onCompare, onExpert }: { v: DemoVehicle;
         <ul className="mt-1.5 space-y-0.5 text-xs opacity-80">
           {v.features.slice(0, 3).map((f) => <li key={f} className="flex gap-1.5 items-start"><Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />{f}</li>)}
         </ul>
-        <div className="flex gap-1.5 mt-3">
-          <button onClick={() => onAsk(v)} className="flex-1 text-xs font-semibold rounded-full bg-cyan-500 text-white py-2 min-h-[36px] hover:bg-cyan-400">Ask</button>
-          <button onClick={() => onCompare(v)} className={`flex-1 text-xs font-semibold rounded-full border py-2 min-h-[36px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Compare</button>
-          <button onClick={() => onExpert(v)} aria-label={`Request expert for ${v.make} ${v.model}`} className={`flex-1 text-xs font-semibold rounded-full border py-2 min-h-[36px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Expert</button>
+        <div className="grid grid-cols-3 gap-1.5 mt-3">
+          <button onClick={() => onAsk(v)} className="text-xs font-semibold rounded-full bg-cyan-500 text-white py-2.5 min-h-[44px] hover:bg-cyan-400">Ask</button>
+          <button onClick={() => onCompare(v)} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Compare</button>
+          <button onClick={() => onExpert(v)} aria-label={`Request expert for ${v.make} ${v.model}`} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Expert</button>
         </div>
       </div>
     </Card>
@@ -46,11 +46,12 @@ export function VehicleComparison({ items, onRemove }: { items: DemoVehicle[]; o
   return (
     <div className={`overflow-x-auto rounded-2xl border ${dark ? 'border-white/10' : 'border-slate-200'}`}>
       <table className="w-full text-sm min-w-[420px]">
+        <caption className="sr-only">Vehicle comparison</caption>
         <thead>
           <tr>
-            <th className="text-left p-3 text-xs uppercase tracking-wider opacity-60">Spec</th>
+            <th scope="col" className="text-left p-3 text-xs uppercase tracking-wider opacity-60">Spec</th>
             {items.map((v) => (
-              <th key={v.id} className="p-3 text-left text-xs">{v.make} {v.model}<br /><button onClick={() => onRemove(v.id)} className="text-cyan-500 font-semibold">Remove</button></th>
+              <th key={v.id} scope="col" className="p-3 text-left text-xs">{v.make} {v.model}<br /><button onClick={() => onRemove(v.id)} className="text-cyan-500 font-semibold min-h-[44px]">Remove</button></th>
             ))}
           </tr>
         </thead>

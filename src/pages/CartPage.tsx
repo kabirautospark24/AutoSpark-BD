@@ -242,7 +242,8 @@ const CartPage: React.FC = () => {
                                 whileHover={{ backgroundColor: isDark ? '#374151' : '#f3f4f6' }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="p-1.5 transition-colors"
+                                aria-label={language === 'bn' ? 'পরিমাণ কমান' : 'Decrease quantity'}
+                                className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
                               >
                                 <Minus size={16} className={isDark ? 'text-gray-400' : 'text-gray-600'} />
                               </motion.button>
@@ -253,7 +254,8 @@ const CartPage: React.FC = () => {
                                 whileHover={{ backgroundColor: isDark ? '#374151' : '#f3f4f6' }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="p-1.5 transition-colors"
+                                aria-label={language === 'bn' ? 'পরিমাণ বাড়ান' : 'Increase quantity'}
+                                className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
                               >
                                 <Plus size={16} className={isDark ? 'text-gray-400' : 'text-gray-600'} />
                               </motion.button>
@@ -271,8 +273,9 @@ const CartPage: React.FC = () => {
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
                               onClick={() => removeFromCart(item.id)}
-                              className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors"
+                              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors"
                               title={t('removeItem')}
+                              aria-label={t('removeItem')}
                             >
                               <Trash2 size={18} />
                             </motion.button>
@@ -308,7 +311,7 @@ const CartPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`rounded-2xl p-6 sticky top-24 ${isDark ? 'bg-gray-800' : 'bg-white shadow-lg'}`}
+                className={`rounded-2xl p-6 lg:sticky lg:top-28 lg:self-start ${isDark ? 'bg-gray-800' : 'bg-white shadow-lg'}`}
               >
                 <h3 className={`text-lg font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {t('orderSummary')}
@@ -364,7 +367,7 @@ const CartPage: React.FC = () => {
                       placeholder="e.g., WELCOME10"
                       value={appliedCoupon}
                       onChange={(e) => setAppliedCoupon(e.target.value.toUpperCase())}
-                      className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium border ${
+                      className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-base font-medium border ${
                         isDark
                           ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-500'
                           : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
@@ -374,7 +377,8 @@ const CartPage: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleApplyCoupon(appliedCoupon)}
-                      className="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
+                      aria-label={t('applyCoupon')}
+                      className="px-4 py-2 min-h-[44px] min-w-[44px] bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
                     >
                       <Tag size={16} />
                     </motion.button>

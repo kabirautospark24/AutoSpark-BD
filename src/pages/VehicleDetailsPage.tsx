@@ -185,7 +185,7 @@ export const VehicleDetailsPage = () => {
           jsonLd={jsonLd}
         />
       )}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 pb-32 lg:pb-8">
         <Link to="/inventory" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6">
           <ChevronLeft className="h-5 w-5 mr-1" />
           {language === 'en' ? 'Back to Inventory' : 'ইনভেন্টরিতে ফিরে যান'}
@@ -198,7 +198,7 @@ export const VehicleDetailsPage = () => {
               <img
                 src={currentImage}
                 alt={`${vehicle.brand_name} ${vehicle.model}`}
-                className="w-full h-96 object-cover"
+                className="w-full h-72 sm:h-96 object-cover"
                 width={600}
                 height={384}
                 decoding="async"
@@ -301,10 +301,10 @@ export const VehicleDetailsPage = () => {
                     {t('vehicle.reserve')}
                   </Button>
                 </Link>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <a
                       href={`tel:+8801760401605`}
-                      className="flex items-center justify-center space-x-2 px-4 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-lg transition-colors"
+                      className="flex items-center justify-center space-x-2 px-4 py-3 min-h-[44px] bg-gray-900 hover:bg-gray-800 text-white rounded-lg transition-colors"
                     >
                     <Phone className="h-5 w-5" />
                     <span>{t('vehicle.contact')}</span>
@@ -313,7 +313,7 @@ export const VehicleDetailsPage = () => {
                       href={`https://wa.me/8801760401605?text=${encodeURIComponent(`I'm interested in ${vehicle.brand_name} ${vehicle.model}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center space-x-2 px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+                    className="flex items-center justify-center space-x-2 px-4 py-3 min-h-[44px] bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
                   >
                     <MessageCircle className="h-5 w-5" />
                     <span>{t('vehicle.whatsapp')}</span>
@@ -340,48 +340,48 @@ export const VehicleDetailsPage = () => {
 
             {showEMICalculator && (
               <Card className="mt-4 p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                   {language === 'en' ? 'EMI Calculator' : 'ইএমআই ক্যালকুলেটর'}
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       {language === 'en' ? 'Down Payment' : 'ডাউন পেমেন্ট'}
                     </label>
                     <input
                       type="number"
                       value={emiParams.downPayment}
                       onChange={(e) => setEmiParams({ ...emiParams, downPayment: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                      className="w-full px-4 py-2 min-h-[44px] border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       {language === 'en' ? 'Interest Rate (%)' : 'সুদের হার (%)'}
                     </label>
                     <input
                       type="number"
                       value={emiParams.interestRate}
                       onChange={(e) => setEmiParams({ ...emiParams, interestRate: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                      className="w-full px-4 py-2 min-h-[44px] border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       {language === 'en' ? 'Loan Period (years)' : 'লোনের মেয়াদ (বছর)'}
                     </label>
                     <input
                       type="number"
                       value={emiParams.years}
                       onChange={(e) => setEmiParams({ ...emiParams, years: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                      className="w-full px-4 py-2 min-h-[44px] border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                     />
                   </div>
-                  <div className="pt-4 border-t border-gray-200">
-                    <div className="text-sm text-gray-600 mb-2">
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {language === 'en' ? 'Monthly EMI' : 'মাসিক ইএমআই'}
                     </div>
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                       {formatPrice(calculateMonthlyEMI(), language)}
                     </div>
                   </div>
@@ -441,6 +441,30 @@ export const VehicleDetailsPage = () => {
               </dl>
             </Card>
           </div>
+        </div>
+      </div>
+
+      {/* Sticky mobile buy bar */}
+      <div
+        className={`fixed bottom-0 inset-x-0 z-40 lg:hidden border-t backdrop-blur-md ${
+          isDark ? 'bg-gray-900/90 border-gray-800' : 'bg-white/95 border-gray-200'
+        } pb-[max(env(safe-area-inset-bottom,0px),0.75rem)]`}
+      >
+        <div className="container mx-auto px-4 py-3 flex items-center gap-3">
+          <div className="min-w-0">
+            <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              {language === 'en' ? 'Price' : 'মূল্য'}
+            </p>
+            <p className="text-lg font-bold text-[var(--brand-red,#C00000)] truncate">
+              {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : '—'}
+            </p>
+          </div>
+          <Link
+            to={`/reserve/${vehicle.id}`}
+            className="flex-1 min-h-[44px] px-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-red,#C00000)] text-white font-bold hover:opacity-90 transition-opacity"
+          >
+            {t('vehicle.reserve')}
+          </Link>
         </div>
       </div>
     </div>

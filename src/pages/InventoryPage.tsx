@@ -201,8 +201,9 @@ const AnimatedSearchBar: React.FC<{
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
               onClick={() => onChange('')}
+              aria-label={language === 'en' ? 'Clear search' : 'সার্চ মুছুন'}
               className={`
-                mr-4 p-2 rounded-full
+                mr-4 p-2 rounded-full min-h-[44px] min-w-[44px] inline-flex items-center justify-center
                 ${theme === 'dark' ? 'hover:bg-white/10' : 'hover:bg-gray-100'}
               `}
             >
@@ -793,6 +794,32 @@ export const InventoryPage = () => {
   const location = useLocation();
   const [openVehicleId, setOpenVehicleId] = useState<string | null>(null);
   const [showDrawer, setShowDrawer] = useState(false);
+
+  const closeVehicleDrawer = () => {
+    setShowDrawer(false);
+    setOpenVehicleId(null);
+    const params = new URLSearchParams(searchParams as any);
+    params.delete('open');
+    const search = params.toString();
+    const path = search ? `/inventory?${search}` : '/inventory';
+    navigate(path, { replace: true });
+  };
+
+  // Vehicle drawer: Escape-to-close + body scroll lock while open
+  useEffect(() => {
+    if (!(showDrawer && openVehicleId)) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeVehicleDrawer();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showDrawer, openVehicleId]);
 
 
   // Fetch vehicles
@@ -1523,6 +1550,8 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
               <div className="flex items-center space-x-2">
                 <motion.button
                   onClick={() => setViewMode('grid')}
+                  aria-label={language === 'en' ? 'Grid view' : 'গ্রিড ভিউ'}
+                  aria-pressed={viewMode === 'grid'}
                   className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-blue-500 text-white' : isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-600'}`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -1531,6 +1560,8 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                 </motion.button>
                 <motion.button
                   onClick={() => setViewMode('list')}
+                  aria-label={language === 'en' ? 'List view' : 'লিস্ট ভিউ'}
+                  aria-pressed={viewMode === 'list'}
                   className={`p-2 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-blue-500 text-white' : isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-600'}`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -1595,16 +1626,16 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                         transition={{ duration: 0.4, delay: index * 0.05 }}
                         whileHover={{ y: -5 }}
                       >
-                        <Card hover className={`overflow-hidden ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} ${viewMode === 'list' ? 'flex' : ''}`}>
-                          <Link to={`/vehicle/${vehicle.id}`} className={viewMode === 'list' ? 'flex w-full' : 'w-full'}>
-                            <div className={viewMode === 'list' ? 'w-2/5 shrink-0' : 'w-full'}>
+                        <Card hover className={`overflow-hidden ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} ${viewMode === 'list' ? 'flex flex-col sm:flex-row' : ''}`}>
+                          <Link to={`/vehicle/${vehicle.id}`} className={viewMode === 'list' ? 'flex flex-col sm:flex-row w-full' : 'w-full'}>
+                            <div className={viewMode === 'list' ? 'w-full sm:w-2/5 shrink-0' : 'w-full'}>
                               <div className="relative">
                                 <ImageCarousel
                                   images={carouselImages}
                                   autoPlay={false}
                                   showIndicators={true}
                                   showArrows={carouselImages.length > 1}
-                                  height="aspect-[4/3]"
+                                  height={viewMode === 'list' ? 'h-40 sm:h-auto sm:aspect-[4/3]' : 'aspect-[4/3]'}
                                 />
                                 <div className="absolute top-3 left-3 flex gap-2">
                                   {vehicle.is_featured && (
@@ -1621,7 +1652,7 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                                 </div>
                               </div>
                             </div>
-                            <div className={`p-6 ${viewMode === 'list' ? 'w-3/5' : 'w-full'}`}>
+                            <div className={`p-4 sm:p-6 ${viewMode === 'list' ? 'w-full sm:w-3/5' : 'w-full'}`}>
                               <div className={`text-sm mb-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                                 {t('vehicle.stock')}: {vehicle.stock_number}
                               </div>
@@ -1673,6 +1704,21 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
           </div>
         </div>
       </div>
+      {/* Drawer backdrop overlay */}
+      <AnimatePresence>
+        {showDrawer && openVehicleId && (
+          <motion.div
+            key="vehicle-drawer-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28 }}
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            aria-hidden="true"
+            onClick={closeVehicleDrawer}
+          />
+        )}
+      </AnimatePresence>
       {/* Drawer / detail panel when ?open=<id> is present */}
       <AnimatePresence>
         {showDrawer && openVehicleId && (
@@ -1686,6 +1732,9 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 300 }}
                 transition={{ duration: 0.28 }}
+                role="dialog"
+                aria-modal="true"
+                aria-label={`${vehicle.brand_name} ${vehicle.model} details`}
                 className={`fixed top-0 right-0 h-full w-full sm:w-96 z-50 shadow-2xl p-6 ${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -1694,22 +1743,13 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                     <div className="text-sm text-gray-400">{vehicle.stock_number}</div>
                   </div>
                   <div className="ml-auto flex items-center gap-2">
-                    <Button onClick={() => {
-                      // close and remove query param
-                      setShowDrawer(false);
-                      setOpenVehicleId(null);
-                      const params = new URLSearchParams(searchParams as any);
-                      params.delete('open');
-                      const search = params.toString();
-                      const path = search ? `/inventory?${search}` : '/inventory';
-                      navigate(path, { replace: true });
-                    }} className="rounded-full p-2">
+                    <Button onClick={closeVehicleDrawer} aria-label="Close vehicle details" className="rounded-full p-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-center">
                       <X className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
 
-                <div className="mt-4 space-y-4 overflow-auto h-[calc(100vh-120px)]">
+                <div className="mt-4 space-y-4 overflow-auto h-[calc(100dvh-120px)]">
                   {/* Image / small carousel */}
                         <div className="w-full h-56 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-lg overflow-hidden">
                           {/* Prefer displayImage from router state when present (user clicked a color on landing) */}

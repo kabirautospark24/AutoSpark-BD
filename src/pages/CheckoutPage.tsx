@@ -138,62 +138,76 @@ const CheckoutPage = () => {
 				<form onSubmit={handleSubmit(onSubmit)} className="p-6">
 					<div className="space-y-5">
 						<div className="space-y-1.5">
-							<label htmlFor="customer_name" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-								Full Name
-							</label>
-							<input
-								id="customer_name"
-								{...register('customer_name')}
-								placeholder="e.g. Farhan Kabir"
-								className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-sm transition-all outline-none ${
-									errors.customer_name ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
-								}`}
-							/>
+						<label htmlFor="customer_name" className="text-xs uppercase tracking-wider font-bold text-slate-400">
+							Full Name
+						</label>
+						<input
+							id="customer_name"
+							{...register('customer_name')}
+							placeholder="e.g. Farhan Kabir"
+							aria-invalid={errors.customer_name ? true : undefined}
+							className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base transition-all outline-none ${
+								errors.customer_name ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+							}`}
+						/>
+						{errors.customer_name && (
+							<p role="alert" className="text-xs text-red-500">{errors.customer_name.message}</p>
+						)}
 						</div>
 
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 							<div className="space-y-1.5">
-								<label htmlFor="mobile" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-									Mobile
-								</label>
-								<input
-									id="mobile"
-									type="tel"
-									{...register('mobile')}
-									placeholder="017XXXXXXXX"
-									className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-sm transition-all outline-none ${
-										errors.mobile ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
-									}`}
-								/>
+							<label htmlFor="mobile" className="text-xs uppercase tracking-wider font-bold text-slate-400">
+								Mobile
+							</label>
+							<input
+								id="mobile"
+								type="tel"
+								{...register('mobile')}
+								placeholder="017XXXXXXXX"
+								aria-invalid={errors.mobile ? true : undefined}
+								className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base transition-all outline-none ${
+									errors.mobile ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+								}`}
+							/>
+							{errors.mobile && (
+								<p role="alert" className="text-xs text-red-500">{errors.mobile.message}</p>
+							)}
 							</div>
 
 							<div className="space-y-1.5">
-								<label htmlFor="district" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-									District
-								</label>
-								<Controller
-									name="district"
-									control={control}
-									render={({ field }) => (
-										<select
-											id="district"
-											{...field}
-											className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm outline-none focus:border-indigo-500"
-										>
-											<option value="">Select District</option>
-											{bdDistricts.map((d) => (
-												<option key={d.id} value={d.id}>
-													{d.name}
-												</option>
-											))}
-										</select>
-									)}
-								/>
+							<label htmlFor="district" className="text-xs uppercase tracking-wider font-bold text-slate-400">
+								District
+							</label>
+							<Controller
+								name="district"
+								control={control}
+								render={({ field }) => (
+									<select
+										id="district"
+										{...field}
+										aria-invalid={errors.district ? true : undefined}
+										className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base outline-none ${
+											errors.district ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+										}`}
+									>
+										<option value="">Select District</option>
+										{bdDistricts.map((d) => (
+											<option key={d.id} value={d.id}>
+												{d.name}
+											</option>
+										))}
+									</select>
+								)}
+							/>
+							{errors.district && (
+								<p role="alert" className="text-xs text-red-500">{errors.district.message}</p>
+							)}
 							</div>
 						</div>
 
 						<div className="space-y-1.5">
-							<label htmlFor="thana" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+							<label htmlFor="thana" className="text-xs uppercase tracking-wider font-bold text-slate-400">
 								Thana / Area
 							</label>
 							<Controller
@@ -204,7 +218,10 @@ const CheckoutPage = () => {
 										id="thana"
 										{...field}
 										disabled={!selectedDistrict}
-										className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm outline-none disabled:opacity-50 focus:border-indigo-500"
+										aria-invalid={errors.thana ? true : undefined}
+										className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base outline-none disabled:opacity-50 ${
+											errors.thana ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+										}`}
 									>
 										<option value="">Select Thana</option>
 										{thanas.map((t) => (
@@ -215,10 +232,13 @@ const CheckoutPage = () => {
 									</select>
 								)}
 							/>
+							{errors.thana && (
+								<p role="alert" className="text-xs text-red-500">{errors.thana.message}</p>
+							)}
 						</div>
 
 						<div className="space-y-1.5">
-							<label htmlFor="address" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
+							<label htmlFor="address" className="text-xs uppercase tracking-wider font-bold text-slate-400">
 								Street Address
 							</label>
 							<textarea
@@ -226,8 +246,14 @@ const CheckoutPage = () => {
 								rows={2}
 								{...register('address')}
 								placeholder="House number, street name, etc."
-								className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm outline-none focus:border-indigo-500"
+								aria-invalid={errors.address ? true : undefined}
+								className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base outline-none ${
+									errors.address ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+								}`}
 							/>
+							{errors.address && (
+								<p role="alert" className="text-xs text-red-500">{errors.address.message}</p>
+							)}
 						</div>
 					</div>
 
@@ -242,14 +268,15 @@ const CheckoutPage = () => {
 								type="button"
 								onClick={() => navigate('/cart')}
 								disabled={isSubmitting}
-								className="flex-1 rounded-lg px-5 py-2.5 text-sm font-semibold text-slate-400 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
+								className="flex-1 min-h-[44px] rounded-lg px-5 py-2.5 text-sm font-semibold text-slate-400 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
 							>
 								Cancel
 							</button>
 							<button
 								type="submit"
 								disabled={isSubmitting || cartItems.length === 0}
-								className="flex-1 rounded-lg bg-indigo-600 px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:opacity-50 sm:flex-none"
+								aria-busy={isSubmitting || undefined}
+								className="flex-1 min-h-[44px] rounded-lg bg-indigo-600 px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:opacity-50 sm:flex-none"
 							>
 								{isSubmitting ? 'Redirecting to payment…' : 'Pay Now'}
 							</button>

@@ -122,9 +122,17 @@ function detectIntent(t: string): ConversationIntent {
 const RATE_LIMIT_WAIT_MS = 18000;
 const RATE_LIMIT_RETRIES = 2;
 
+/** True when the error is a user-initiated abort (Stop button), not a failure. */
+export function isAbortError(e: unknown): boolean {
+  return typeof e === 'object' && e !== null && (e as { name?: string }).name === 'AbortError';
+}
+
 /** Live Groq call via server proxy. Returns null on any failure (caller falls back). */
-async function liveRespond(history: ChatMessage[], input: string, prefs: CustomerPreferences): Promise<AIResponse | null> {
+async function liveRespond(history: ChatMessage[], input: string, prefs: CustomerPreferences, external?: AbortSignal): Promise<AIResponse | null> {
+  if (external?.aborted) throw new DOMException('Aborted', 'AbortError');
   const ctrl = new AbortController();
+  const onAbort = () => ctrl.abort();
+  external?.addEventListener('abort', onAbort);
   const timer = setTimeout(() => ctrl.abort(), 70000);
   try {
     const msgs = [...history.slice(-10).map((m) => ({ role: m.role, content: m.text })), { role: 'user', content: input }];
@@ -144,7 +152,8 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
     for (let attempt = 0; r.status === 429 && attempt < RATE_LIMIT_RETRIES; attempt++) {
       // Rate limited (tokens-per-minute) — cool down, then retry.
       await new Promise((res) => setTimeout(res, RATE_LIMIT_WAIT_MS));
-      if (ctrl.signal.aborted) return null;
+      if (external?.aborted) throw new DOMException('Aborted', 'AbortError');
+      if (ctrl.signal.aborted) return null; // internal timeout — fall back to mock
       r = await doFetch();
     }
     if (!r.ok) return null;
@@ -153,10 +162,16 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
     if (!text) return null;
     const t = input.toLowerCase();
     return { text, vehicles: candidates.slice(0, 3), prefs, intent: detectIntent(t) };
-  } catch {
+  } catch (e) {
+    // User pressed Stop → propagate so callers skip the failure message;
+    // any other error (incl. internal timeout) falls back to the mock responder.
+    if (external?.aborted) {
+      throw isAbortError(e) ? e : new DOMException('Aborted', 'AbortError');
+    }
     return null;
   } finally {
     clearTimeout(timer);
+    external?.removeEventListener('abort', onAbort);
   }
 }
 
@@ -165,10 +180,11 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
  * falls back to the deterministic local responder when the live model is unreachable.
  * All callers should use this instead of mockRespond directly.
  */
-export async function respond(history: ChatMessage[], input: string, prefs: CustomerPreferences): Promise<AIResponse> {
+export async function respond(history: ChatMessage[], input: string, prefs: CustomerPreferences, opts?: { signal?: AbortSignal }): Promise<AIResponse> {
   const next = parsePrefs(input, prefs);
-  const live = await liveRespond(history, input, next);
+  const live = await liveRespond(history, input, next, opts?.signal);
   if (live) return { ...live, prefs: next, isLive: true };
+  if (opts?.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
   return { ...(await mockRespond(history, input, next)), isLive: false };
 }
 

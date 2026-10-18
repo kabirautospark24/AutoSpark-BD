@@ -171,7 +171,7 @@ export const AboutPage = () => {
           },
         }}
       />
-      <main>
+      <div>
         <header className="max-w-6xl mx-auto px-4 py-8">
           <h1 className="text-4xl sm:text-5xl font-bold">
             {language === 'en' ? 'About AutoSpark' : 'অটো স্পার্ক সম্পর্কে'}
@@ -243,9 +243,9 @@ export const AboutPage = () => {
         </div>
       </section>
       {/* ...existing code... */}
-      <div className={`min-h-screen ${theme === 'dark' ? 'bg-transparent' : 'bg-gray-50'} pt-20`}>
+      <div className={`min-h-screen ${theme === 'dark' ? 'bg-transparent' : 'bg-gray-50'}`}>
         {/* Hero Section */}
-        <div className="relative h-[500px] overflow-hidden">
+        <div className="relative h-[clamp(420px,75vw,560px)] overflow-hidden">
           {/* Parallax Animated Gradient Background */}
           <motion.div
             className="absolute inset-0 z-0 bg-gradient-to-br from-[#C00000]/30 via-[#181818]/60 to-[#FF1A1A]/20 animate-gradientMove"
@@ -262,7 +262,6 @@ export const AboutPage = () => {
               animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }}
               transition={{ duration: 6, repeat: Infinity }}
               aria-label="Premium Cars"
-              tabIndex={0}
             >
               <Car className="w-10 h-10 text-blue-400 drop-shadow-lg" />
               <span className="sr-only">Premium Cars</span>
@@ -273,7 +272,6 @@ export const AboutPage = () => {
               animate={{ y: [0, 15, 0], scale: [1, 1.08, 1] }}
               transition={{ duration: 5, repeat: Infinity }}
               aria-label="Trusted Dealer"
-              tabIndex={0}
             >
               <Award className="w-10 h-10 text-yellow-400 drop-shadow-lg" />
               <span className="sr-only">Trusted Dealer</span>
@@ -284,7 +282,6 @@ export const AboutPage = () => {
               animate={{ y: [0, -10, 0], scale: [1, 1.05, 1] }}
               transition={{ duration: 7, repeat: Infinity }}
               aria-label="Security & Assurance"
-              tabIndex={0}
             >
               <Shield className="w-10 h-10 text-green-400 drop-shadow-lg" />
               <span className="sr-only">Security & Assurance</span>
@@ -295,7 +292,6 @@ export const AboutPage = () => {
               animate={{ y: [0, 12, 0], scale: [1, 1.12, 1] }}
               transition={{ duration: 6, repeat: Infinity }}
               aria-label="Excellence"
-              tabIndex={0}
             >
               <Star className="w-10 h-10 text-pink-400 drop-shadow-lg" />
               <span className="sr-only">Excellence</span>
@@ -326,14 +322,14 @@ export const AboutPage = () => {
             >
               {language === 'en' ? 'Established 2014' : 'প্রতিষ্ঠিত ২০১৪'}
             </motion.span>
-            <motion.h1
+            <motion.h2
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6"
             >
               {language === 'en' ? 'About Auto Spark BD' : 'অটো স্পার্ক বিডি সম্পর্কে'}
-            </motion.h1>
+            </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1272,7 +1268,7 @@ export const AboutPage = () => {
     </div>
     {/* Close main parent div */}
   </div>
-      </main>
+      </div>
     </>
   );
 };

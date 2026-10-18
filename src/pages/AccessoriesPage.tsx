@@ -965,10 +965,8 @@ const ProductCard: React.FC<{
         )}
       </div>
 
-      {/* Quick Actions */}
-      <div className={`absolute top-3 right-3 z-10 flex flex-col gap-2 transition-all duration-300 ${
-        isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-      }`}>
+      {/* Quick Actions — always visible on touch/small screens; hover-reveal only from lg */}
+      <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 transition-all duration-300 opacity-100 translate-x-0 lg:opacity-0 lg:translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 lg:group-focus-within:opacity-100 lg:group-focus-within:translate-x-0">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -1008,7 +1006,7 @@ const ProductCard: React.FC<{
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => handleImageSearch(product)}
-          className={`p-2 rounded-full shadow-lg transition-colors ${isDark ? 'bg-gray-700 text-white hover:bg-green-500' : 'bg-white text-gray-700 hover:bg-green-500 hover:text-white'}`}
+          className={`absolute top-3 right-14 z-10 p-2 rounded-full shadow-lg transition-colors backdrop-blur-sm ${isDark ? 'bg-black/50 text-white hover:bg-green-600' : 'bg-black/40 text-white hover:bg-green-500'}`}
           aria-label="Search product images"
         >
           <Search size={18} />
@@ -1130,7 +1128,7 @@ const ProductCard: React.FC<{
           }`}>
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className={`p-2 ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
+              className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
               aria-label="Decrease quantity"
             >
               <Minus size={14} />
@@ -1138,7 +1136,7 @@ const ProductCard: React.FC<{
             <span className={`px-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>{quantity}</span>
             <button
               onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
-              className={`p-2 ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
+              className={`p-2 min-w-[44px] min-h-[44px] flex items-center justify-center ${isDark ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
               aria-label="Increase quantity"
             >
               <Plus size={14} />
@@ -1440,7 +1438,7 @@ const ComparePanel: React.FC<{
     <motion.div
       initial={{ y: 100 }}
       animate={{ y: 0 }}
-      className={`fixed bottom-20 left-4 right-4 md:left-auto md:right-4 md:w-96 z-40 rounded-2xl shadow-2xl ${
+      className={`fixed bottom-[calc(6.5rem+env(safe-area-inset-bottom,0px))] left-4 right-4 md:left-auto md:right-4 md:w-96 z-40 rounded-2xl shadow-2xl ${
         isDark ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
       }`}
     >
@@ -1549,11 +1547,11 @@ const FloatingCartBar: React.FC<{
     <motion.div
       initial={{ y: 100 }}
       animate={{ y: 0 }}
-      className={`fixed bottom-0 left-0 right-0 z-50 ${
+      className={`fixed bottom-0 left-0 right-0 z-50 pb-[max(env(safe-area-inset-bottom,0px),1rem)] ${
         isDark ? 'bg-gray-800 border-t border-gray-700' : 'bg-white shadow-2xl'
       }`}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 pt-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -1583,7 +1581,7 @@ const FloatingCartBar: React.FC<{
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenCart}
-              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl flex items-center gap-2"
+              className="px-8 py-3 min-h-[44px] text-sm sm:text-base bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl flex items-center gap-2"
             >
               View Cart
               <ArrowRight size={18} />
@@ -1629,12 +1627,12 @@ const SideCartDrawer: React.FC<{
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25 }}
-            className={`fixed right-0 top-0 bottom-0 w-full max-w-md z-50 ${
+            className={`fixed right-0 top-0 bottom-0 w-full max-w-md z-50 flex flex-col ${
               isDark ? 'bg-gray-800' : 'bg-white'
             }`}
           >
             {/* Header */}
-            <div className={`flex items-center justify-between p-6 border-b ${
+            <div className={`flex items-center justify-between p-6 border-b shrink-0 ${
               isDark ? 'border-gray-700' : 'border-gray-200'
             }`}>
               <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -1649,7 +1647,7 @@ const SideCartDrawer: React.FC<{
             </div>
 
             {/* Items */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            <div className="flex-1 min-h-0 overflow-y-auto p-6 space-y-4" style={{ maxHeight: 'calc(100dvh - 200px)' }}>
               {items.length === 0 ? (
                 <div className="text-center py-12">
                   <ShoppingCart size={48} className={`mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-300'}`} />
@@ -1690,7 +1688,7 @@ const SideCartDrawer: React.FC<{
                           }`}>
                             <button
                               onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                              className="p-1.5"
+                              className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center"
                               aria-label="Decrease quantity"
                             >
                               <Minus size={14} />
@@ -1698,7 +1696,7 @@ const SideCartDrawer: React.FC<{
                             <span className="px-2">{item.quantity}</span>
                             <button
                               onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                              className="p-1.5"
+                              className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center"
                               aria-label="Increase quantity"
                             >
                               <Plus size={14} />
@@ -1721,7 +1719,7 @@ const SideCartDrawer: React.FC<{
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className={`p-6 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+              <div className={`p-6 border-t shrink-0 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
                 <div className="flex items-center justify-between mb-4">
                   <span className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Total</span>
                   <span className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -1763,6 +1761,15 @@ const CheckoutModal: React.FC<{
   onChange: (field: keyof CheckoutFormData, value: string) => void;
   onSubmit: () => void;
 }> = ({ isOpen, isDark, formData, error, isSubmitting, onClose, onChange, onSubmit }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isSubmitting) onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, isSubmitting, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -1780,6 +1787,9 @@ const CheckoutModal: React.FC<{
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.2 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Checkout Details"
             className={`fixed inset-0 z-[61] m-auto flex w-[calc(100vw-1rem)] max-w-xl max-h-[calc(100dvh-1rem)] flex-col overflow-hidden rounded-2xl shadow-2xl sm:w-[92vw] sm:max-h-[92vh] ${
               isDark ? 'bg-gray-900 border border-gray-700' : 'bg-white border border-gray-200'
             }`}
@@ -1798,52 +1808,64 @@ const CheckoutModal: React.FC<{
 
             <div className="flex-1 overflow-y-auto p-3 sm:p-3.5 grid grid-cols-1 sm:grid-cols-2 gap-x-2.5 gap-y-1 sm:gap-y-1.5">
               <div className="sm:col-span-2 space-y-0">
-                <label className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Full Name</label>
+                <label htmlFor="co-customer-name" className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Full Name</label>
                 <input
+                  id="co-customer-name"
+                  type="text"
+                  autoComplete="name"
                   value={formData.customer_name}
                   onChange={(e) => onChange('customer_name', e.target.value)}
-                  className={`w-full px-3 py-1 rounded-lg border text-sm leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                  className={`w-full px-3 py-1 min-h-[44px] rounded-lg border text-base leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                   placeholder="Your full name"
                 />
               </div>
 
               <div className="space-y-0">
-                <label className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Mobile</label>
+                <label htmlFor="co-mobile" className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Mobile</label>
                 <input
+                  id="co-mobile"
+                  type="tel"
+                  autoComplete="tel"
                   value={formData.mobile}
                   onChange={(e) => onChange('mobile', e.target.value)}
-                  className={`w-full px-3 py-1 rounded-lg border text-sm leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                  className={`w-full px-3 py-1 min-h-[44px] rounded-lg border text-base leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                   placeholder="01XXXXXXXXX"
                 />
               </div>
 
               <div className="space-y-0">
-                <label className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>District</label>
+                <label htmlFor="co-district" className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>District</label>
                 <input
+                  id="co-district"
+                  type="text"
+                  autoComplete="address-level2"
                   value={formData.district}
                   onChange={(e) => onChange('district', e.target.value)}
-                  className={`w-full px-3 py-1 rounded-lg border text-sm leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                  className={`w-full px-3 py-1 min-h-[44px] rounded-lg border text-base leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                   placeholder="Dhaka"
                 />
               </div>
 
               <div className="sm:col-span-2 space-y-0">
-                <label className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Thana</label>
+                <label htmlFor="co-thana" className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Thana</label>
                 <input
+                  id="co-thana"
+                  type="text"
                   value={formData.thana}
                   onChange={(e) => onChange('thana', e.target.value)}
-                  className={`w-full px-3 py-1 rounded-lg border text-sm leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                  className={`w-full px-3 py-1 min-h-[44px] rounded-lg border text-base leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                   placeholder="Mirpur"
                 />
               </div>
 
               <div className="sm:col-span-2 space-y-0">
-                <label className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Address</label>
+                <label htmlFor="co-address" className={`block text-xs font-semibold leading-tight ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>Address</label>
                 <textarea
+                  id="co-address"
                   rows={2}
                   value={formData.address}
                   onChange={(e) => onChange('address', e.target.value)}
-                  className={`w-full px-3 py-1 rounded-lg border text-sm leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                  className={`w-full px-3 py-2 min-h-[44px] rounded-lg border text-base leading-tight ${isDark ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                   placeholder="House, road, area"
                 />
               </div>
@@ -1888,6 +1910,7 @@ function AccessoriesPage() {
 
   // State
   const [products, setProducts] = useState<AccessoryProduct[]>([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   // Controlled input separate from the applied search term. Search runs when user clicks Search or presses Enter.
   const [searchInput, setSearchInput] = useState('');
@@ -2052,6 +2075,8 @@ function AccessoriesPage() {
         console.error('❌ Error fetching products:', error);
         // Fallback to demo products on error
         setProducts(dedupeProducts(demoProductsWithP2));
+      } finally {
+        setIsLoadingProducts(false);
       }
     };
     fetchProducts();
@@ -3024,7 +3049,25 @@ function AccessoriesPage() {
               )}
 
               {/* Products */}
-              {filteredProducts.length === 0 ? (
+              {isLoadingProducts ? (
+                <div className={`grid gap-6 ${
+                  viewMode === 'grid'
+                    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+                    : 'grid-cols-1'
+                }`} role="status" aria-label="Loading products">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className={`rounded-2xl overflow-hidden animate-pulse ${isDark ? 'bg-gray-800' : 'bg-white shadow-lg'}`}>
+                      <div className={`h-56 ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                      <div className="p-4 space-y-3">
+                        <div className={`h-4 w-20 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                        <div className={`h-5 w-3/4 rounded ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                        <div className={`h-6 w-24 rounded ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                        <div className={`h-10 w-full rounded-lg ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : filteredProducts.length === 0 ? (
                 <div className={`text-center py-20 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
                   <Package size={64} className={`mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-300'}`} />
                   <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
