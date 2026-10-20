@@ -777,7 +777,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               onClick={() => setShowColorCustomizer(!showColorCustomizer)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 showColorCustomizer
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                  ? 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300'
               }`}
               title="Open Color Customizer"
@@ -831,7 +831,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
             onClick={() => setIsCompareMode(!isCompareMode)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
               isCompareMode
-                ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400'
+                ? 'bg-red-100 dark:bg-red-900/50 text-[#A16207] dark:text-amber-600'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
@@ -900,16 +900,16 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="bg-purple-50 dark:bg-purple-900/20 border-b border-purple-200 dark:border-purple-800 overflow-hidden"
+            className="bg-red-50 dark:bg-red-900/20 border-b border-red-200 dark:border-red-800 overflow-hidden"
           >
             <div className="p-3 flex items-center justify-between">
-              <span className="text-purple-700 dark:text-purple-300 text-sm font-medium">
+              <span className="text-red-700 dark:text-amber-600 text-sm font-medium">
                 Compare with:
               </span>
               <div className="relative">
                 <button
                   onClick={() => setCompareDropdownOpen(!compareDropdownOpen)}
-                  className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-purple-300 dark:border-purple-700 px-4 py-2 rounded-lg text-gray-900 dark:text-white min-w-[200px] justify-between"
+                  className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-amber-600 dark:border-red-700 px-4 py-2 rounded-lg text-gray-900 dark:text-white min-w-[200px] justify-between"
                 >
                   <span>{compareVehicle?.name || 'Select vehicle...'}</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${compareDropdownOpen ? 'rotate-180' : ''}`} />
@@ -934,7 +934,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
                               setCompareDropdownOpen(false);
                             }}
                             className={`w-full flex items-center gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-                              compareVehicleId === vehicle.id ? 'bg-purple-50 dark:bg-purple-900/30' : ''
+                              compareVehicleId === vehicle.id ? 'bg-red-50 dark:bg-red-900/30' : ''
                             }`}
                           >
                             <img 
@@ -954,7 +954,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               </div>
               <button
                 onClick={() => { setIsCompareMode(false); setCompareVehicleId(null); }}
-                className="p-1.5 text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-800 rounded-lg transition-colors"
+                className="p-1.5 text-[#A16207] dark:text-amber-600 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

@@ -150,27 +150,7 @@ export const AboutPage = () => {
 
   return (
     <>
-      <PageHead
-        title={language === 'en' ? 'About — AutoSpark' : 'অটো স্পার্ক সম্পর্কে'}
-        description={language === 'en'
-           ? 'AutoSpark BD — premier premium car dealership and service center in Rajshahi. Learn about our mission, team, and milestones.'
-           : 'অটো স্পার্ক বিডি — রাজশাহীর একটি প্রিমিয়াম গাড়ি ডিলার এবং সার্ভিস সেন্টার। আমাদের মিশন, টিম এবং মাইলস্টোন সম্পর্কে জানুন।'}
-          image="/img/og/about-og.jpg"
-          jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "AutoDealer",
-          name: showroom.name,
-          url: `https://${showroom.website}`,
-          logo: `${import.meta.env.BASE_URL}logo/logoAS3.svg`,
-          telephone: showroom.phone,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: showroom.address,
-            addressLocality: showroom.city,
-            addressCountry: "BD",
-          },
-        }}
-      />
+      <PageHead path="/about" />
       <div>
         <header className="max-w-6xl mx-auto px-4 py-8">
           <h1 className="text-4xl sm:text-5xl font-bold">
@@ -210,7 +190,7 @@ export const AboutPage = () => {
               <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold border border-yellow-300">Award</span>
               <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold border border-blue-300">Verified</span>
               <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold border border-green-300">Security</span>
-              <span className="inline-flex items-center px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs font-semibold border border-purple-300">Certificate</span>
+              <span className="inline-flex items-center px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold border border-amber-600">Certificate</span>
             </div>
           </Card>
           {/* Service Center Card */}
@@ -237,7 +217,7 @@ export const AboutPage = () => {
               <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold border border-yellow-300">Award</span>
               <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold border border-blue-300">Verified</span>
               <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold border border-green-300">Security</span>
-              <span className="inline-flex items-center px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs font-semibold border border-purple-300">Certificate</span>
+              <span className="inline-flex items-center px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold border border-amber-600">Certificate</span>
             </div>
           </Card>
         </div>
@@ -248,7 +228,7 @@ export const AboutPage = () => {
         <div className="relative h-[clamp(420px,75vw,560px)] overflow-hidden">
           {/* Parallax Animated Gradient Background */}
           <motion.div
-            className="absolute inset-0 z-0 bg-gradient-to-br from-[#C00000]/30 via-[#181818]/60 to-[#FF1A1A]/20 animate-gradientMove"
+            className="absolute inset-0 z-0 bg-gradient-to-br from-[#C00000]/25 via-[#FF1A1A]/15 to-[#A16207]/10 animate-gradientMove"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}

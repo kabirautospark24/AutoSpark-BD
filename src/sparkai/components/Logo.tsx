@@ -1,4 +1,4 @@
-// The Intelligent Spark — original geometric brand mark (custom vector paths).
+// The Intelligent Spark: original geometric brand mark (custom vector paths).
 export function SparkMark({ size = 36, title = 'SparkPilot symbol' }: { size?: number; title?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" role="img" aria-label={title} aria-hidden={title ? undefined : true}>
@@ -6,7 +6,7 @@ export function SparkMark({ size = 36, title = 'SparkPilot symbol' }: { size?: n
         <linearGradient id="spark-g" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#22D3EE" />
           <stop offset="0.55" stopColor="#2563EB" />
-          <stop offset="1" stopColor="#7C3AED" />
+          <stop offset="1" stopColor="#A16207" />
         </linearGradient>
       </defs>
       <rect x="2" y="2" width="44" height="44" rx="13" fill="#0B1220" />

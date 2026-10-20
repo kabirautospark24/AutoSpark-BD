@@ -21,9 +21,9 @@ export function BudgetPlanner({ onExpert }: { onExpert: (summary: string) => voi
       <dl className="text-sm grid grid-cols-2 gap-2 rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-3">
         <div><dt className="text-[11px] opacity-60 uppercase">Down payment</dt><dd className="font-bold">{formatBDT(est.downPaymentBDT)}</dd></div>
         <div><dt className="text-[11px] opacity-60 uppercase">Loan needed</dt><dd className="font-bold">{formatBDT(est.loanBDT)}</dd></div>
-        <div className="col-span-2"><dt className="text-[11px] opacity-60 uppercase">Monthly installment (est.)</dt><dd className="font-bold text-base">{est.monthlyBDT != null ? formatBDT(est.monthlyBDT) : '— unavailable (no verified rate configured)'}</dd></div>
+        <div className="col-span-2"><dt className="text-[11px] opacity-60 uppercase">Monthly installment (est.)</dt><dd className="font-bold text-base">{est.monthlyBDT != null ? formatBDT(est.monthlyBDT) : ', unavailable (no verified rate configured)'}</dd></div>
       </dl>
-      <p className="text-[11px] opacity-60">Estimate only — not an offer, loan approval, or bank rate. Verified financing terms are not configured; confirm with an expert.</p>
+      <p className="text-[11px] opacity-60">Estimate only, not an offer, loan approval, or bank rate. Verified financing terms are not configured; confirm with an expert.</p>
       <SButton variant="outline" onClick={() => onExpert(`Budget plan: ${price} lakh, ${down}% down, ${months} months`)}>Ask expert to review my plan</SButton>
     </div>
   );

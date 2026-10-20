@@ -10,7 +10,7 @@ if (import.meta.env.DEV && (!supabaseUrl || !supabaseAnonKey)) {
 }
 
 // Bullet-proof: createClient THROWS on missing/invalid url+key, which would crash
-// every lazy chunk that imports this module at load time. Never let that happen —
+// every lazy chunk that imports this module at load time. Never let that happen,
 // callers must handle a null client (e.g. fall back to local/demo data).
 let client: SupabaseClient | null = null;
 try {

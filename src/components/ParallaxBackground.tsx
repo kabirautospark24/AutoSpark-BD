@@ -25,7 +25,7 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
         className={`absolute inset-0 bg-gradient-to-br ${
           theme === 'dark'
             ? 'from-gray-900 via-blue-900/20 to-gray-900'
-            : 'from-blue-50 via-purple-50/30 to-indigo-50'
+            : 'from-blue-50 via-red-50/30 to-sky-50'
         }`}
         animate={{
           backgroundPosition: ['0% 0%', '100% 100%'],
@@ -58,8 +58,8 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
       <motion.div
         className={`absolute inset-0 bg-gradient-to-b ${
           theme === 'dark'
-            ? 'from-purple-500/10 via-transparent to-purple-500/10'
-            : 'from-purple-400/5 via-transparent to-purple-400/5'
+            ? 'from-amber-700/10 via-transparent to-amber-700/10'
+            : 'from-amber-600/5 via-transparent to-amber-600/5'
         }`}
         style={{ y: layer2Y }}
         animate={{
@@ -115,7 +115,7 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
         }}
       >
         <svg
-          className="w-72 h-72 text-purple-600"
+          className="w-72 h-72 text-[#A16207]"
           viewBox="0 0 400 200"
           fill="currentColor"
         >
@@ -142,7 +142,7 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
         }}
       >
         <svg
-          className="w-80 h-80 text-indigo-600"
+          className="w-80 h-80 text-[#0061EB]"
           viewBox="0 0 400 200"
           fill="currentColor"
         >
@@ -171,7 +171,7 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
 
       <motion.div
         className={`absolute bottom-20 right-10 w-80 h-80 rounded-full blur-3xl opacity-20 ${
-          theme === 'dark' ? 'bg-purple-500' : 'bg-purple-300'
+          theme === 'dark' ? 'bg-amber-700' : 'bg-amber-600'
         }`}
         animate={{
           scale: [1, 1.15, 1],
@@ -188,7 +188,7 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
       {/* Top right bokeh */}
       <motion.div
         className={`absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-15 ${
-          theme === 'dark' ? 'bg-indigo-500' : 'bg-indigo-300'
+          theme === 'dark' ? 'bg-sky-500' : 'bg-sky-300'
         }`}
         animate={{
           scale: [1, 1.1, 1],

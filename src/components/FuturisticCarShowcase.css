@@ -317,7 +317,7 @@
 
 .dimensional-cta:hover {
   background: rgba(139, 92, 246, 0.15);
-  border-color: #8b5cf6;
+  border-color: #A16207;
   box-shadow: 
     0 0 20px rgba(139, 92, 246, 0.5),
     inset 0 0 20px rgba(139, 92, 246, 0.1);
@@ -338,7 +338,7 @@
   position: absolute;
   inset: 0;
   border: 2px solid;
-  border-image: linear-gradient(90deg, #8b5cf6, #a78bfa, #8b5cf6) 0;
+  border-image: linear-gradient(90deg, #A16207, #CA8A04, #A16207) 0;
   border-radius: 6px;
   opacity: 0;
   will-change: opacity;

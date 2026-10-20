@@ -25,7 +25,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(() => {
     // M-03 fix: respect user preference + stored value, no hostname override.
     // Wrapped in try/catch: localStorage throws (SecurityError) in some
-    // private-mode / blocked-cookie browsers — must never crash the app.
+    // private-mode / blocked-cookie browsers: must never crash the app.
     try {
       if (typeof window !== 'undefined') {
         const stored = localStorage.getItem('theme');
@@ -36,7 +36,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
       }
     } catch {
-      /* storage unavailable — fall through to default */
+      /* storage unavailable: fall through to default */
     }
     return 'dark';
   });
@@ -51,7 +51,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     }
   }, [theme]);
 
-  // M-03: hostname override removed — user preference persists
+  // M-03: hostname override removed: user preference persists
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));

@@ -15,11 +15,11 @@ export interface KbPayload {
 
 const SERVICES_RE =
   /service|servicing|maintenance|repair|overhaul|diagnos|oil change|engine oil|brake|battery|a\/c|ac service|air.?cond|coolant|radiator|suspension|gearbox|gear box|polish|polishing|paint|dent|wash|wax|ceramic|ppf|warranty|pickup|drop.?off|mechanic|সার্ভিস|মেরামত|রিপেয়ার|ব্রেক|ব্যাটারি|ঠান্ডা|পলিশ|ওয়াশ/i;
-// Strong sales signals: specific models/body types/fuel/finance — the word
+// Strong sales signals: specific models/body types/fuel/finance: the word
 // "price" alone is generic (a service question can say price too).
 const SALES_STRONG_RE =
   /buy|purchase|budget|suggest|recommend|lakh|lac\b|hybrid|petrol|sedan|suv|mpv|hatchback|wagon|7.?seat|toyota|honda|nissan|mazda|suzuki|lexus|axio|aqua|noah|vezel|grace|prius|fielder|premio|allion|sienta|esquire|harrier|civic|insight|axela|x-?trail|c-hr|corolla|yaris|crown|prado|pre.?order|preorder|auction|import|japan|financ|loan|emi|installment|down.?payment|test.?drive|ready stock|inventory|কিনা|কিনতে|বাজেট|হাইব্রিড|প্রি-?অর্ডার|আমদানি|লোন|কিস্তি|টেস্ট/i;
-// Generic commercial words — sales only when no service terms present.
+// Generic commercial words: sales only when no service terms present.
 const SALES_RE =
   /price|cost|charge|quote|buy|purchase|car|vehicle|গাড়ি|দাম/i;
 
@@ -43,7 +43,7 @@ export function detectKbTopic(input: string, history: ChatMessage[] = []): KbTop
 /** Build the KB system-prompt blocks for one chat request. */
 export function buildKbPayload(input: string, history: ChatMessage[] = []): KbPayload {
   const recent = [...history.slice(-4).map((m) => m.text), input].join('\n');
-  // Pure greetings/smalltalk need no KB — the persona alone answers them.
+  // Pure greetings/smalltalk need no KB: the persona alone answers them.
   // (Also keeps requests small for Groq's free-tier tokens-per-minute limit.)
   if (!SERVICES_RE.test(recent) && !SALES_STRONG_RE.test(recent) && !SALES_RE.test(recent)) return {};
   const topic = detectKbTopic(input, history);

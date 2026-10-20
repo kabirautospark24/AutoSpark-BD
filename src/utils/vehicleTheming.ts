@@ -199,7 +199,7 @@ export const getVehicleTheme = (category: VehicleCategory, isDark: boolean): The
           'linear-gradient(135deg, rgba(250, 245, 255, 0.4) 0%, rgba(230, 210, 255, 0.3) 50%, rgba(200, 150, 240, 0.2) 100%)',
         gradientDark:
           'linear-gradient(135deg, rgba(45, 35, 55, 0.8) 0%, rgba(55, 40, 65, 0.8) 50%, rgba(45, 35, 55, 0.8) 100%)',
-        accentColor: '#A855F7', // Vibrant Purple
+        accentColor: '#D97706', // Vibrant Gold
         secondaryAccent: '#C0C0C0', // Silver
         borderColor: 'rgba(168, 85, 247, 0.3)',
         shadowColor: 'rgba(168, 85, 247, 0.15)',
@@ -211,7 +211,7 @@ export const getVehicleTheme = (category: VehicleCategory, isDark: boolean): The
           'linear-gradient(135deg, rgba(25, 20, 35, 0.9) 0%, rgba(40, 30, 55, 0.9) 50%, rgba(30, 20, 40, 0.9) 100%)',
         gradientDark:
           'linear-gradient(135deg, rgba(12, 8, 20, 0.95) 0%, rgba(30, 20, 45, 0.95) 50%, rgba(18, 10, 30, 0.95) 100%)',
-        accentColor: '#D8B4FE', // Light Purple
+        accentColor: '#FDE68A', // Light Gold
         secondaryAccent: '#E2E8F0', // Light Gray
         borderColor: 'rgba(168, 85, 247, 0.25)',
         shadowColor: 'rgba(168, 85, 247, 0.12)',

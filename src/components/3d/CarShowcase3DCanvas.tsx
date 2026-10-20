@@ -130,7 +130,7 @@ function FerrariModel({ color, tier }: { color: string; tier: DeviceTier }) {
   const [model, setModel] = useState<Group | null>(null);
   const wheelsRef = useRef<Object3D[]>([]);
 
-  // Stable material — created once with the INITIAL color, then kept in sync.
+  // Stable material: created once with the INITIAL color, then kept in sync.
   // useRef initializer only runs on first render, so we also sync it below.
   const bodyMaterialRef = useRef<MeshPhysicalMaterial>(
     new MeshPhysicalMaterial({
@@ -164,7 +164,7 @@ function FerrariModel({ color, tier }: { color: string; tier: DeviceTier }) {
     targetColorRef.current.copy(newTarget);
 
     if (isFirstColorRef.current) {
-      // SNAP: apply immediately — no visible transition on first load
+      // SNAP: apply immediately: no visible transition on first load
       bodyMaterialRef.current.color.copy(newTarget);
       bodyMaterialRef.current.needsUpdate = true;
       isFirstColorRef.current = false;
@@ -330,7 +330,7 @@ function SimpleFloor() {
   );
 }
 
-// Lazy-loaded MeshReflectorMaterial — only rendered for high-tier devices.
+// Lazy-loaded MeshReflectorMaterial: only rendered for high-tier devices.
 // Since CarShowcase3DCanvas.tsx is itself dynamically imported (only for mid/high),
 // and MeshReflectorMaterial is bundled into the same 'three' chunk by manualChunks,
 // the real code-split already happens at the wrapper level. ReflectiveFloor is only
@@ -373,7 +373,7 @@ function Scene({
   // When PerformanceMonitor triggers, degrade high→mid (not to 'low').
   // 'low' tier has completely different lighting which causes a visible
   // color shift on the car body. We never drop below 'mid' inside the
-  // Canvas — the 'low' path is only for the static image fallback.
+  // Canvas: the 'low' path is only for the static image fallback.
   const effectiveTier: DeviceTier = degraded && tier === 'high' ? 'mid' : tier;
 
   useEffect(() => {
@@ -407,7 +407,7 @@ function Scene({
       <pointLight position={[0, 10, 0]} intensity={0.5} />
       {effectiveTier === 'high' && <pointLight position={[5, 3, 5]} intensity={0.3} color="#ff6600" />}
 
-      {/* Environment — inline lighting (no external HDR fetch) */}
+      {/* Environment: inline lighting (no external HDR fetch) */}
       <directionalLight position={[5, 8, 5]} intensity={effectiveTier === 'high' ? 1.4 : 1.2} color="#ffffff" />
       <directionalLight position={[-5, 5, -5]} intensity={0.6} color="#8888ff" />
       <hemisphereLight args={['#ffffff', '#444444', effectiveTier === 'low' ? 0.8 : 1.0]} />

@@ -34,7 +34,7 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
   const [showControls, setShowControls] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
-  // Ensure video is always playing — covers tab switch, back/forward,
+  // Ensure video is always playing: covers tab switch, back/forward,
   // mobile background/foreground, orientation change, and SPA navigation.
   useEffect(() => {
     const v = videoRef.current;
@@ -76,7 +76,7 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-black">
-      {/* Subtle Ken Burns drift — very slow zoom + pan for a living feel */}
+      {/* Subtle Ken Burns drift: very slow zoom + pan for a living feel */}
       <div className="absolute inset-[-2%] animate-hero-drift will-change-transform" style={{ animationPlayState: prefersReducedMotion ? 'paused' : 'running' }}>
         <video
           ref={videoRef}
@@ -149,7 +149,7 @@ const LightweightHero = ({
       <p className="text-lg sm:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
         {language === 'en'
           ? "North Bengal's most trusted premium car dealership since 2014."
-          : 'উত্তরবঙ্গের সবচেয়ে বিশ্বস্ত প্রিমিয়াম গাড়ির শোরুম — ২০১৪ থেকে।'}
+          : 'উত্তরবঙ্গের সবচেয়ে বিশ্বস্ত প্রিমিয়াম গাড়ির শোরুম, ২০১৪ থেকে।'}
       </p>
       <div className="flex flex-wrap gap-3 justify-center">
         <Link to="/inventory">
@@ -171,10 +171,10 @@ const LightweightHero = ({
 
 // (Removed unused SmallPlaceholder and StatCard helpers to avoid including
 // extra code in the initial bundle; they were not referenced anywhere.)
-// Phase A: duplicate flip-card showcase, SHOWCASE_VEHICLES + CAROUSEL_IMAGES removed —
+// Phase A: duplicate flip-card showcase, SHOWCASE_VEHICLES + CAROUSEL_IMAGES removed,
 // single unified <FeaturedVehicles /> is the only featured showcase.
 
-// ─── ScrollReveal replaces old FadeIn — uses Framer Motion whileInView ──
+// ─── ScrollReveal replaces old FadeIn: uses Framer Motion whileInView ──
 
 // ══════════════════════════════════════════════════════════════════
 // MAIN COMPONENT
@@ -202,10 +202,6 @@ export const HomePage = () => {
   const heroBlur = useTransform(scrollY, [0, 400], [0, 8]);
   const heroBlurFilter = useMotionTemplate`blur(${heroBlur}px)`;
 
-  const pageTitle = language === 'en' ? 'Autospark — Premium Cars in Rajshahi' : 'রাজশাহী প্রিমিয়াম গাড়ি — অটোস্পার্ক';
-  const pageDescription = language === 'en'
-    ? "Autospark — Rajshahi's trusted premium car dealership. Browse curated Toyota, Honda and luxury imports with transparent pricing and certified service."
-    : 'অটোস্পার্ক — রাজশাহীর বিশ্বাসযোগ্য প্রিমিয়াম গাড়ি ডিলারশিপ। কিউরেটেড টয়োটা, হোন্ডা ও লাক্সারি ইম্পোর্টস।';
 
   useEffect(() => {
     fetchFeaturedVehicles();
@@ -234,7 +230,7 @@ export const HomePage = () => {
       }
       if (data) setFeaturedVehicles(data);
     } catch (err) {
-      // Network or import errors — fail gracefully
+      // Network or import errors: fail gracefully
        
       console.warn('fetchFeaturedVehicles failed:', err);
       setFeaturedVehicles([]);
@@ -357,18 +353,7 @@ export const HomePage = () => {
 
   return (
     <div className={`min-h-dvh ${theme === 'dark' ? 'bg-[#0a0a0a]' : 'bg-gray-50'}`}>
-      <PageHead
-        title={pageTitle}
-        description={pageDescription}
-        url={'https://autosparkbd.com/'}
-        image={'https://images.pexels.com/photos/36318402/pexels-photo-36318402.png?auto=compress&cs=tinysrgb&w=1200&fm=webp'}
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: 'Autospark',
-          url: 'https://autosparkbd.com',
-        }}
-      />
+      <PageHead path="/" />
 
         {/* ══ HERO ══════════════════════════════════════════════════ */}
         <section className="relative h-dvh overflow-hidden">
@@ -428,7 +413,7 @@ export const HomePage = () => {
           </motion.button>
         </section>
 
-        {/* ══ FEATURED VEHICLES — single unified showcase (DB with carSlides fallback) ═ */}
+        {/* ══ FEATURED VEHICLES: single unified showcase (DB with carSlides fallback) ═ */}
         <div ref={featuredSectionRef}>
           <LazySection minHeight="500px" rootMargin="300px">
             <FeaturedVehicles
@@ -622,7 +607,7 @@ export const HomePage = () => {
                 { label: language === 'en' ? 'Horsepower' : 'হর্সপাওয়ার', values: { prado:282,harrier:246,crown:248,yaris:120,chr:144,premio:110,noah:144 }, icon: <Zap className="w-6 h-6" />, color: 'text-orange-500' },
                 { label: language === 'en' ? 'Fuel Efficiency' : 'জ্বালানি দক্ষতা', values: { prado:10,harrier:17,crown:16,yaris:20,chr:18,premio:21,noah:18 }, icon: <Fuel className="w-6 h-6" />, color: 'text-green-500', unit: 'km/l' },
                 { label: language === 'en' ? 'Safety Rating' : 'সেফটি রেটিং', values: { prado:5,harrier:5,crown:5,yaris:4,chr:4,premio:4,noah:4 }, icon: <Shield className="w-6 h-6" />, color: 'text-blue-500', unit: '/5' },
-                { label: language === 'en' ? 'Value Rating' : 'মূল্য রেটিং', values: { prado:95,harrier:92,crown:90,yaris:88,chr:85,premio:90,noah:87 }, icon: <Award className="w-6 h-6" />, color: 'text-purple-500' },
+                { label: language === 'en' ? 'Value Rating' : 'মূল্য রেটিং', values: { prado:95,harrier:92,crown:90,yaris:88,chr:85,premio:90,noah:87 }, icon: <Award className="w-6 h-6" />, color: 'text-amber-700' },
               ].map((metric, index) => (
                 <ScrollReveal key={index} delay={index * 0.1}>
                   <PerformanceGauge
@@ -729,7 +714,7 @@ export const HomePage = () => {
                   {
                     icon: <MapPinIcon className="w-8 h-8 text-[#C00000]" />,
                     title: language === 'en' ? 'Address' : 'ঠিকানা',
-                    content: 'AutoSpark — Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia, Rajshahi 6207',
+                    content: 'AutoSpark, Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia, Rajshahi 6207',
                   },
                   {
                     icon: <Clock className="w-8 h-8 text-[#C00000]" />,
@@ -763,7 +748,7 @@ export const HomePage = () => {
                 </a>
               </div>
 
-              {/* Map embed — loaded lazily */}
+              {/* Map embed: loaded lazily */}
               <div className="relative rounded-2xl overflow-hidden shadow-xl min-h-[350px] sm:min-h-[400px]">
                 <iframe
                   title="Auto Spark Location"

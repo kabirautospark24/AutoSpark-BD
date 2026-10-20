@@ -30,6 +30,7 @@ export function SparkPilotPage() {
 
   return (
     <main aria-label="SparkPilot by AutoSpark">
+      <h1 className="sr-only">SparkPilot Assistant</h1>
       <SparkPilotApp />
     </main>
   );

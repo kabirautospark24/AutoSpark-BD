@@ -95,8 +95,8 @@ export const CarouselPlaceholder = ({
       <motion.div
         className={`absolute inset-0 ${
           theme === 'dark'
-            ? 'bg-gradient-to-br from-blue-500/5 to-purple-500/5'
-            : 'bg-gradient-to-br from-blue-300/5 to-purple-300/5'
+            ? 'bg-gradient-to-br from-blue-500/5 to-amber-700/5'
+            : 'bg-gradient-to-br from-blue-300/5 to-amber-600/5'
         }`}
         animate={{
           opacity: [0.3, 0.6, 0.3],

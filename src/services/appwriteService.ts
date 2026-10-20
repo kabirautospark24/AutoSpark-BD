@@ -108,7 +108,7 @@ export const getPaymentById = async (documentId: string) => {
   }
 };
 
-// Get all payments — cursor pagination (preferred over offset)
+// Get all payments: cursor pagination (preferred over offset)
 export const getAllPayments = async (limit = 25, cursorAfter?: string) => {
   assertAppwriteEnv();
   try {

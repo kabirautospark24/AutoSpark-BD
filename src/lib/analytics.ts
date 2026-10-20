@@ -1,4 +1,4 @@
-// Lightweight analytics wrapper — no-op by default but easy to wire to Plausible/Fathom/GA or custom server
+// Lightweight analytics wrapper: no-op by default but easy to wire to Plausible/Fathom/GA or custom server
 type EventProps = Record<string, any>;
 
 const debug = false;
@@ -16,7 +16,7 @@ export function trackEvent(name: string, props: EventProps = {}) {
 
     // TODO: wire to your server endpoint or third-party analytics here
   } catch (e) {
-    // swallow analytics errors — they must not affect UX
+    // swallow analytics errors: they must not affect UX
     if (debug) console.warn('analytics error', e);
   }
 }

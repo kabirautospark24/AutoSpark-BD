@@ -64,8 +64,8 @@ export const DriveIntoTunnel: React.FC<DriveIntoTunnelProps> = ({ className = ''
         {/* Gradient Sky */}
         <div className={`absolute inset-0 ${
           isDark 
-            ? 'bg-gradient-to-b from-slate-950 via-indigo-950/80 to-purple-950/60'
-            : 'bg-gradient-to-b from-orange-200 via-rose-300/50 to-purple-400/30'
+            ? 'bg-gradient-to-b from-slate-950 via-blue-950/80 to-red-950/60'
+            : 'bg-gradient-to-b from-orange-200 via-rose-300/50 to-amber-600/30'
         }`} />
 
         {/* Stars (dark mode) / Sun rays (light mode) */}

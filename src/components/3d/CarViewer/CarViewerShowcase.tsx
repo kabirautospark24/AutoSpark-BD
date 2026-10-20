@@ -86,7 +86,7 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
         py-16 relative overflow-hidden
         ${isDark 
           ? 'bg-gradient-to-br from-gray-900 via-gray-850 to-gray-900' 
-          : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
+          : 'bg-gradient-to-br from-blue-50 via-white to-red-50'
         }
         ${className}
       `}
@@ -98,7 +98,7 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className={`absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl ${isDark ? 'bg-blue-900/20' : 'bg-blue-200/40'}`} />
-        <div className={`absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl ${isDark ? 'bg-purple-900/20' : 'bg-purple-200/40'}`} />
+        <div className={`absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl ${isDark ? 'bg-red-900/20' : 'bg-red-200/40'}`} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -268,7 +268,7 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
                     </div>
                     
                     <div className={`p-3 rounded-xl ${isDark ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
-                      <Car className={`w-4 h-4 mb-1 ${isDark ? 'text-purple-400' : 'text-purple-500'}`} />
+                      <Car className={`w-4 h-4 mb-1 ${isDark ? 'text-amber-600' : 'text-amber-700'}`} />
                       <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t.transmission}</p>
                       <p className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         {selectedVehicle.specs.transmission}
@@ -307,8 +307,8 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
                     w-full mt-6 py-3 px-4 rounded-xl font-semibold
                     flex items-center justify-center gap-2
                     ${isDark
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-500 hover:to-purple-500'
-                      : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600'
+                      ? 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:from-blue-500 hover:to-amber-700'
+                      : 'bg-gradient-to-r from-blue-500 to-amber-700 text-white hover:from-blue-600 hover:to-[#A16207]'
                     }
                     shadow-lg transition-all
                   `}

@@ -108,7 +108,7 @@ function Spec({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-/** Quick-view dialog — replaces the old hover flip-card with an accessible modal. */
+/** Quick-view dialog: replaces the old hover flip-card with an accessible modal. */
 function QuickViewModal({
   vehicle,
   onClose,
@@ -406,7 +406,7 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
 
   return (
     <section aria-label={bn ? 'বৈশিষ্ট্যযুক্ত গাড়ি' : 'Featured vehicles'} className={`fv-section relative overflow-hidden ${dark ? 'bg-[#070707]' : 'bg-[#fafafa]'}`}>
-      {/* ambient background — transform-only drift, disabled when reduced motion */}
+      {/* ambient background: transform-only drift, disabled when reduced motion */}
       {supportsRichAnimations && (
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="fv-orb fv-orb-a" />
@@ -430,8 +430,8 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
             </h2>
             <p className={`mt-3 max-w-xl text-base leading-relaxed sm:text-lg ${dark ? 'text-white/55' : 'text-gray-600'}`}>
               {bn
-                ? 'তাত্ক্ষণিক ডেলিভারির জন্য হাতে বাছাই করা প্রিমিয়াম গাড়ি — স্বচ্ছ মূল্য, যাচাইকৃত ইতিহাস।'
-                : 'Hand-picked premium vehicles ready for immediate delivery — transparent pricing, verified history.'}
+                ? 'তাত্ক্ষণিক ডেলিভারির জন্য হাতে বাছাই করা প্রিমিয়াম গাড়ি, স্বচ্ছ মূল্য, যাচাইকৃত ইতিহাস।'
+                : 'Hand-picked premium vehicles ready for immediate delivery, with transparent pricing and a verified history.'}
             </p>
           </div>
 
@@ -498,7 +498,7 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
           </div>
         )}
 
-        {/* grid — hero + rest */}
+        {/* grid: hero + rest */}
         {filtered.length === 0 ? (
           <p className={`rounded-2xl border border-dashed p-10 text-center ${dark ? 'border-white/15 text-white/50' : 'border-black/15 text-gray-500'}`}>
             {bn ? 'এই ফিল্টারে কোনো গাড়ি নেই।' : 'No vehicles match this filter yet.'}

@@ -7,8 +7,8 @@ import { visualizer } from 'rollup-plugin-visualizer';
 export default defineConfig({
   plugins: [
     react(),
-    // bundle visualizer - generates dist/stats.html to inspect bundle composition
-    visualizer({ filename: 'dist/stats.html', gzipSize: true, brotliSize: true, open: false }),
+    // bundle visualizer - writes outside dist so the report is never deployed
+    visualizer({ filename: 'stats/bundle-stats.html', gzipSize: true, brotliSize: true, open: false }),
     // Gzip pre-compression for all assets > 1KB
     viteCompression({
       algorithm: 'gzip',
@@ -51,6 +51,12 @@ export default defineConfig({
           changeOrigin: true,
           secure: false,
           ws: false,
+        },
+        '/api/geo': {
+          target: 'http://localhost:8787',
+          changeOrigin: true,
+          secure: false,
+          ws: false,
         }
       }
     },
@@ -68,6 +74,9 @@ export default defineConfig({
     // Optimize chunk size
     rollupOptions: {
       output: {
+        // Merge the many tiny shared modules (lucide icons, ui primitives)
+        // into a handful of chunks instead of one file per module.
+        experimentalMinChunkSize: 20000,
         manualChunks: (id) => {
           // Core vendor chunks
           if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
@@ -91,7 +100,7 @@ export default defineConfig({
           if (id.includes('@google/model-viewer') || id.includes('model-viewer')) {
             return 'model-viewer';
           }
-          // UI components
+          // Icons: one shared, cacheable chunk instead of one file per icon.
           if (id.includes('lucide-react')) {
             return 'icons';
           }
@@ -100,7 +109,7 @@ export default defineConfig({
             return 'supabase';
           }
           if (id.includes('react-helmet-async')) return 'helmet';
-          if (id.includes('react-hook-form') || id.includes('@hookform') || id.includes('zod')) return 'form';
+          if (id.includes('react-hook-form') || id.includes('@hookform')) return 'form';
           if (id.includes('@react-three/drei')) return 'drei';
         },
         // Optimize asset file names

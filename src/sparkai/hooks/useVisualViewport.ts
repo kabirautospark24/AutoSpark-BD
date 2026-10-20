@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
  * - iOS Safari: fixed UI must move with the visual viewport (nothing resizes).
  * - Chrome Android: `interactive-widget=resizes-content` already resizes the
  *   layout viewport, so this hook's values stay null there (scale stays 1,
- *   height ≈ innerHeight) — no double compensation.
+ *   height ≈ innerHeight): no double compensation.
  */
 export function useVisualViewport(enabled: boolean): { h: number; top: number } | null {
   const [vv, setVv] = useState<{ h: number; top: number } | null>(null);

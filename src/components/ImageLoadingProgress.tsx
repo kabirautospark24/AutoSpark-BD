@@ -57,8 +57,8 @@ export const ImageLoadingProgress = ({
       <motion.div
         className={`absolute top-0 left-0 h-1 ${
           theme === 'dark'
-            ? 'bg-gradient-to-r from-blue-500 to-purple-500'
-            : 'bg-gradient-to-r from-blue-600 to-purple-600'
+            ? 'bg-gradient-to-r from-blue-500 to-amber-700'
+            : 'bg-gradient-to-r from-blue-600 to-[#A16207]'
         }`}
         initial={{ width: '0%' }}
         animate={{ width: `${clampedProgress}%` }}

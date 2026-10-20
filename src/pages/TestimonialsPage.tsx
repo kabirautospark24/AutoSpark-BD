@@ -97,9 +97,9 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'কামাল হোসেন চৌধুরী',
     rating: 5,
     review_en:
-      'I have bought 3 cars from Auto Spark over the past 5 years. Every single time the experience has been outstanding. My latest purchase — a Toyota Harrier — is an absolute dream. The premium interior, smooth ride, and advanced features are beyond what I expected at this price point. Auto Spark truly understands what customers in this region need.',
+      'I have bought 3 cars from Auto Spark over the past 5 years. Every single time the experience has been outstanding. My latest purchase, a Toyota Harrier, is an absolute dream. The premium interior, smooth ride, and advanced features are beyond what I expected at this price point. Auto Spark truly understands what customers in this region need.',
     review_bn:
-      'গত ৫ বছরে আমি অটো স্পার্ক থেকে ৩টি গাড়ি কিনেছি। প্রতিবারই অভিজ্ঞতা অসাধারণ ছিল। আমার সর্বশেষ কেনা — একটি টয়োটা হ্যারিয়ার — একেবারে স্বপ্নের মতো। প্রিমিয়াম ইন্টেরিয়র, মসৃণ রাইড এবং উন্নত ফিচার আমার প্রত্যাশার চেয়ে বেশি।',
+      'গত ৫ বছরে আমি অটো স্পার্ক থেকে ৩টি গাড়ি কিনেছি। প্রতিবারই অভিজ্ঞতা অসাধারণ ছিল। আমার সর্বশেষ কেনা, একটি টয়োটা হ্যারিয়ার, একেবারে স্বপ্নের মতো। প্রিমিয়াম ইন্টেরিয়র, মসৃণ রাইড এবং উন্নত ফিচার আমার প্রত্যাশার চেয়ে বেশি।',
     customer_image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
     vehicle_purchased: 'Toyota Harrier',
     vehicle_model: 'Harrier Z Leather',
@@ -121,7 +121,7 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'শহীদুল আলম',
     rating: 4,
     review_en:
-      'Great experience buying my Toyota Crown from Auto Spark. The car was in excellent condition and the price was very competitive compared to Dhaka dealers. Minor paperwork delay during registration, but the team handled it efficiently. The Crown rides like a luxury sedan should — smooth, quiet, and powerful. Highly recommended for anyone looking for a premium sedan.',
+      'Great experience buying my Toyota Crown from Auto Spark. The car was in excellent condition and the price was very competitive compared to Dhaka dealers. Minor paperwork delay during registration, but the team handled it efficiently. The Crown rides like a luxury sedan should: smooth, quiet, and powerful. Highly recommended for anyone looking for a premium sedan.',
     review_bn:
       'অটো স্পার্ক থেকে আমার টয়োটা ক্রাউন কেনার দুর্দান্ত অভিজ্ঞতা। গাড়িটি চমৎকার অবস্থায় ছিল এবং দাম ঢাকার ডিলারদের তুলনায় খুবই প্রতিযোগিতামূলক ছিল। রেজিস্ট্রেশনের সময় সামান্য কাগজপত্রের বিলম্ব হয়েছিল, কিন্তু দল এটি দক্ষতার সাথে সামলেছে।',
     customer_image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
@@ -145,9 +145,9 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'নাজমুল হাসান',
     rating: 5,
     review_en:
-      'I traded in my old car and purchased a Toyota Noah from Auto Spark. The trade-in value they offered was the best in the region. The Noah is perfect for my family of 6 — spacious, comfortable, and very fuel efficient. The sliding doors make it so easy for the kids. Auto Spark even arranged a free first service. What more can you ask for?',
+      'I traded in my old car and purchased a Toyota Noah from Auto Spark. The trade-in value they offered was the best in the region. The Noah is perfect for my family of 6 , spacious, comfortable, and very fuel efficient. The sliding doors make it so easy for the kids. Auto Spark even arranged a free first service. What more can you ask for?',
     review_bn:
-      'আমি আমার পুরানো গাড়ি ট্রেড-ইন করে অটো স্পার্ক থেকে একটি টয়োটা নোহা কিনেছি। তারা যে ট্রেড-ইন মূল্য দিয়েছে তা এই অঞ্চলে সেরা ছিল। ৬ জনের পরিবারের জন্য নোহা একদম পারফেক্ট — প্রশস্ত, আরামদায়ক এবং খুবই জ্বালানি সাশ্রয়ী।',
+      'আমি আমার পুরানো গাড়ি ট্রেড-ইন করে অটো স্পার্ক থেকে একটি টয়োটা নোহা কিনেছি। তারা যে ট্রেড-ইন মূল্য দিয়েছে তা এই অঞ্চলে সেরা ছিল। ৬ জনের পরিবারের জন্য নোহা একদম পারফেক্ট, প্রশস্ত, আরামদায়ক এবং খুবই জ্বালানি সাশ্রয়ী।',
     customer_image_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
     vehicle_purchased: 'Toyota Noah',
     vehicle_model: 'Noah S-Z Hybrid',
@@ -169,9 +169,9 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'আনিসুর রহমান',
     rating: 5,
     review_en:
-      'Being from Bogura, I was initially hesitant about buying from Rajshahi. But Auto Spark arranged everything — I video-called to inspect the car, they handled all the paperwork, and even delivered the Toyota Premio to my doorstep! The level of service was beyond anything I have experienced. The car runs perfectly and I could not be happier.',
+      'Being from Bogura, I was initially hesitant about buying from Rajshahi. But Auto Spark arranged everything. I video-called to inspect the car, they handled all the paperwork, and even delivered the Toyota Premio to my doorstep! The level of service was beyond anything I have experienced. The car runs perfectly and I could not be happier.',
     review_bn:
-      'বগুড়া থেকে হওয়ায় রাজশাহী থেকে কেনা নিয়ে প্রথমে দ্বিধা ছিল। কিন্তু অটো স্পার্ক সবকিছু ব্যবস্থা করেছে — ভিডিও কলে গাড়ি দেখেছি, সব কাগজপত্র তারা সামলেছে, এমনকি টয়োটা প্রিমিও আমার বাড়িতে পৌঁছে দিয়েছে!',
+      'বগুড়া থেকে হওয়ায় রাজশাহী থেকে কেনা নিয়ে প্রথমে দ্বিধা ছিল। কিন্তু অটো স্পার্ক সবকিছু ব্যবস্থা করেছে, ভিডিও কলে গাড়ি দেখেছি, সব কাগজপত্র তারা সামলেছে, এমনকি টয়োটা প্রিমিও আমার বাড়িতে পৌঁছে দিয়েছে!',
     customer_image_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face',
     vehicle_purchased: 'Toyota Premio',
     vehicle_model: 'Premio F EX Package',
@@ -193,7 +193,7 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'তানভীর আহমেদ',
     rating: 5,
     review_en:
-      'I am a car enthusiast and I was looking for a specific Toyota C-HR in metallic blue. Auto Spark not only found the exact specification I wanted but got it at a price lower than what dealers in Dhaka were quoting. The hybrid technology is incredible — I am getting amazing fuel economy. The team really knows their cars!',
+      'I am a car enthusiast and I was looking for a specific Toyota C-HR in metallic blue. Auto Spark not only found the exact specification I wanted but got it at a price lower than what dealers in Dhaka were quoting. The hybrid technology is incredible. I am getting amazing fuel economy. The team really knows their cars!',
     review_bn:
       'আমি একজন গাড়ি উৎসাহী এবং আমি মেটালিক নীল রঙের একটি নির্দিষ্ট টয়োটা সি-এইচআর খুঁজছিলাম। অটো স্পার্ক শুধু আমার চাওয়া সঠিক স্পেসিফিকেশনই খুঁজে পায়নি, ঢাকার ডিলারদের চেয়ে কম দামে পেয়েছে।',
     customer_image_url: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face',
@@ -217,9 +217,9 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'মাসুদা খাতুন',
     rating: 5,
     review_en:
-      'My husband and I visited Auto Spark to buy our first family car. The showroom experience was wonderful — clean, professional, and no-pressure sales. We chose a Toyota Allion and the financing assistance they provided made the process so much easier. Six months later, the car is running beautifully and we have zero complaints.',
+      'My husband and I visited Auto Spark to buy our first family car. The showroom experience was wonderful: clean, professional, and no-pressure sales. We chose a Toyota Allion and the financing assistance they provided made the process so much easier. Six months later, the car is running beautifully and we have zero complaints.',
     review_bn:
-      'আমি এবং আমার স্বামী আমাদের প্রথম পারিবারিক গাড়ি কিনতে অটো স্পার্কে গিয়েছিলাম। শোরুমের অভিজ্ঞতা চমৎকার ছিল — পরিষ্কার, পেশাদার এবং চাপমুক্ত। আমরা একটি টয়োটা এলিয়ন বেছে নিয়েছি এবং তাদের ফাইন্যান্সিং সহায়তা প্রক্রিয়াটিকে অনেক সহজ করেছে।',
+      'আমি এবং আমার স্বামী আমাদের প্রথম পারিবারিক গাড়ি কিনতে অটো স্পার্কে গিয়েছিলাম। শোরুমের অভিজ্ঞতা চমৎকার ছিল, পরিষ্কার, পেশাদার এবং চাপমুক্ত। আমরা একটি টয়োটা এলিয়ন বেছে নিয়েছি এবং তাদের ফাইন্যান্সিং সহায়তা প্রক্রিয়াটিকে অনেক সহজ করেছে।',
     customer_image_url: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face',
     vehicle_purchased: 'Toyota Allion',
     vehicle_model: 'Allion A20',
@@ -241,9 +241,9 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'জাহাঙ্গীর আলম',
     rating: 4,
     review_en:
-      'Purchased a reconditioned Toyota Axio from Auto Spark. The reconditioning quality was impressive — the car looked almost brand new. Price was fair and the team was upfront about everything including minor wear items. Only giving 4 stars because the initial test drive wait was a bit long on a busy day, but otherwise fantastic service.',
+      'Purchased a reconditioned Toyota Axio from Auto Spark. The reconditioning quality was impressive. The car looked almost brand new. Price was fair and the team was upfront about everything including minor wear items. Only giving 4 stars because the initial test drive wait was a bit long on a busy day, but otherwise fantastic service.',
     review_bn:
-      'অটো স্পার্ক থেকে একটি রিকন্ডিশনড টয়োটা এক্সিও কিনেছি। রিকন্ডিশনিং মান চিত্তাকর্ষক ছিল — গাড়িটি প্রায় একেবারে নতুনের মতো দেখাচ্ছিল। দাম ন্যায্য ছিল এবং দল সবকিছু সম্পর্কে সৎ ছিল।',
+      'অটো স্পার্ক থেকে একটি রিকন্ডিশনড টয়োটা এক্সিও কিনেছি। রিকন্ডিশনিং মান চিত্তাকর্ষক ছিল, গাড়িটি প্রায় একেবারে নতুনের মতো দেখাচ্ছিল। দাম ন্যায্য ছিল এবং দল সবকিছু সম্পর্কে সৎ ছিল।',
     customer_image_url: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face',
     vehicle_purchased: 'Toyota Axio',
     vehicle_model: 'Axio X Grade',
@@ -265,7 +265,7 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'ইমরান খান',
     rating: 5,
     review_en:
-      'I drove all the way from Rangpur to buy a Toyota Harrier from Auto Spark because of their reputation. It was worth every kilometer! The car was exactly as shown in photos, the test drive sealed the deal. What impressed me most was their after-sales — they even called to check how I was enjoying the car weeks later. This is what customer service should be!',
+      'I drove all the way from Rangpur to buy a Toyota Harrier from Auto Spark because of their reputation. It was worth every kilometer! The car was exactly as shown in photos, the test drive sealed the deal. What impressed me most was their after-sales service. They even called to check how I was enjoying the car weeks later. This is what customer service should be!',
     review_bn:
       'অটো স্পার্কের সুনামের কারণে আমি রংপুর থেকে একটি টয়োটা হ্যারিয়ার কিনতে এসেছিলাম। প্রতিটি কিলোমিটার সার্থক ছিল! গাড়িটি ঠিক ফটোতে দেখানোর মতোই ছিল। যা আমাকে সবচেয়ে বেশি মুগ্ধ করেছে তা হলো তাদের বিক্রয়-পরবর্তী সেবা!',
     customer_image_url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop&crop=face',
@@ -313,9 +313,9 @@ const MOCK_TESTIMONIALS: CustomerTestimonial[] = [
     customer_name_bn: 'সাদিয়া রহমান',
     rating: 5,
     review_en:
-      'As a young professional, I wanted something stylish yet practical. The Auto Spark team recommended the Toyota C-HR Hybrid and it was the perfect choice. The fuel savings alone have been incredible — I spend half of what I used to! The showroom staff treated me with so much respect, unlike some other dealerships I visited.',
+      'As a young professional, I wanted something stylish yet practical. The Auto Spark team recommended the Toyota C-HR Hybrid and it was the perfect choice. The fuel savings alone have been incredible. I spend half of what I used to! The showroom staff treated me with so much respect, unlike some other dealerships I visited.',
     review_bn:
-      'একজন তরুণ পেশাদার হিসেবে আমি স্টাইলিশ অথচ ব্যবহারিক কিছু চাইছিলাম। অটো স্পার্ক দল টয়োটা সি-এইচআর হাইব্রিড সুপারিশ করেছিল এবং এটি ছিল নিখুঁত পছন্দ। শুধু জ্বালানি সঞ্চয়ই অবিশ্বাস্য — আমি আগের অর্ধেক খরচ করি!',
+      'একজন তরুণ পেশাদার হিসেবে আমি স্টাইলিশ অথচ ব্যবহারিক কিছু চাইছিলাম। অটো স্পার্ক দল টয়োটা সি-এইচআর হাইব্রিড সুপারিশ করেছিল এবং এটি ছিল নিখুঁত পছন্দ। শুধু জ্বালানি সঞ্চয়ই অবিশ্বাস্য, আমি আগের অর্ধেক খরচ করি!',
     customer_image_url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
     vehicle_purchased: 'Toyota C-HR',
     vehicle_model: 'C-HR S Hybrid',
@@ -441,7 +441,7 @@ const StatsOverview = ({ testimonials, theme, language }: { testimonials: Custom
       icon: TrendingUp,
       value: '98%',
       label: language === 'en' ? 'Would Recommend' : 'সুপারিশ করবেন',
-      color: 'text-purple-500',
+      color: 'text-amber-700',
     },
   ];
 
@@ -550,7 +550,7 @@ const FeaturedTestimonialCard = ({
     </div>
 
     <div className="flex flex-col">
-      {/* Vehicle Image — full width, natural height */}
+      {/* Vehicle Image: full width, natural height */}
       {t.vehicle_image && (
         <div className="relative w-full">
           <img
@@ -807,7 +807,7 @@ export const TestimonialsPage = () => {
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
   const topRef = useRef<HTMLDivElement>(null);
 
-  // Fetch testimonials — tries Supabase first, falls back to mock data
+  // Fetch testimonials: tries Supabase first, falls back to mock data
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
@@ -942,14 +942,14 @@ export const TestimonialsPage = () => {
         <div className={`absolute inset-0 ${
           theme === 'dark'
             ? 'bg-gradient-to-br from-gray-900 via-blue-950/30 to-gray-900'
-            : 'bg-gradient-to-br from-blue-50 via-white to-indigo-50'
+            : 'bg-gradient-to-br from-blue-50 via-white to-sky-50'
         }`} />
         {/* Decorative circles */}
         <div className={`absolute top-10 -right-20 w-72 h-72 rounded-full blur-3xl opacity-20 ${
           theme === 'dark' ? 'bg-blue-600' : 'bg-blue-300'
         }`} />
         <div className={`absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-20 ${
-          theme === 'dark' ? 'bg-purple-600' : 'bg-purple-300'
+          theme === 'dark' ? 'bg-[#A16207]' : 'bg-amber-600'
         }`} />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -977,12 +977,12 @@ export const TestimonialsPage = () => {
               {language === 'en' ? (
                 <>
                   Our Customers{' '}
-                  <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Love Us</span>
+                  <span className="bg-gradient-to-r from-[#C00000] to-[#A16207] bg-clip-text text-transparent">Love Us</span>
                 </>
               ) : (
                 <>
                   আমাদের গ্রাহকরা{' '}
-                  <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">আমাদের ভালোবাসেন</span>
+                  <span className="bg-gradient-to-r from-[#C00000] to-[#A16207] bg-clip-text text-transparent">আমাদের ভালোবাসেন</span>
                 </>
               )}
             </h1>
@@ -1202,7 +1202,7 @@ export const TestimonialsPage = () => {
               )}
             </AnimatePresence>
 
-            {/* Results count — gated while async fetch is in flight to avoid a "Showing 0 of 0" flash */}
+            {/* Results count: gated while async fetch is in flight to avoid a "Showing 0 of 0" flash */}
             {isLoadingTestimonials ? (
               <div className={`h-5 w-48 rounded ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'} animate-pulse`} role="status" aria-label="Loading reviews" />
             ) : (
@@ -1336,12 +1336,12 @@ export const TestimonialsPage = () => {
       </section>
 
       {/* ══════════════════════════════════════════
-          CTA — Share Your Story
+          CTA , Share Your Story
           ══════════════════════════════════════════ */}
       <section className={`py-12 md:py-16 ${
         theme === 'dark'
-          ? 'bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-t border-b border-gray-800/50'
-          : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-t border-b border-gray-200'
+          ? 'bg-gradient-to-r from-blue-900/30 to-red-900/30 border-t border-b border-gray-800/50'
+          : 'bg-gradient-to-r from-blue-50 to-sky-50 border-t border-b border-gray-200'
       }`}>
         <div className="container mx-auto px-4 text-center">
           <motion.div

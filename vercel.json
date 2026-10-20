@@ -3,8 +3,18 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/vehicle/:id", "destination": "/spa-shell" },
+    { "source": "/product/:id", "destination": "/spa-shell" }
+  ],
+  "redirects": [
+    { "source": "/shop", "destination": "/accessories", "permanent": true },
+    { "source": "/sparkai", "destination": "/sparkpilot", "permanent": true },
+    { "source": "/payment/success", "destination": "/payment-success", "permanent": true },
+    { "source": "/payment/fail", "destination": "/payment-fail", "permanent": true },
+    { "source": "/payment/cancel", "destination": "/payment-cancel", "permanent": true }
   ],
   "headers": [
     {
@@ -14,9 +24,25 @@
       ]
     },
     {
+      "source": "/og/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800" }
+      ]
+    },
+    {
       "source": "/api/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self)" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
       ]
     }
   ]

@@ -1244,7 +1244,7 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                     confirmAndInitiateBooking();
                   }}
                   disabled={isSubmittingBooking}
-                  className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
                 >
                   {isSubmittingBooking ? 'Redirecting...' : 'Confirm & Pay Booking Money'}
                 </button>

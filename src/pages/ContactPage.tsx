@@ -30,21 +30,21 @@ export const ContactPage = () => {
       const { error } = await supabase.from('service_appointments').insert([{
         customer_name: name,
         phone,
-        notes: `${email} — ${message}`,
+        notes: `${email}: ${message}`,
         service_type: 'general_inquiry',
         preferred_date: new Date().toISOString().slice(0, 10)
       }]);
       if (error) {
         console.warn('Supabase insert failed', error);
-        setStatus({ type: 'error', message: 'Could not send your message — please try again.' });
+        setStatus({ type: 'error', message: 'Could not send your message. Please try again.' });
         return;
       }
-      setStatus({ type: 'success', message: 'Thanks — we received your message.' });
+      setStatus({ type: 'success', message: 'Thanks, we received your message.' });
       try { (await import('../lib/analytics')).trackEvent('contact_submitted', { name, email }); } catch { /* analytics is non-critical */ }
       setName(''); setEmail(''); setPhone(''); setMessage('');
     } catch (err) {
-      console.error(err);
-      setStatus({ type: 'error', message: 'Submission failed — please try again later.' });
+      console.warn('Could not send the message:', err);
+      setStatus({ type: 'error', message: 'Submission failed. Please try again later.' });
     } finally {
       setSubmitting(false);
     }

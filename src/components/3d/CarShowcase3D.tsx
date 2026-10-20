@@ -1,5 +1,5 @@
 /**
- * CarShowcase3D.tsx — THIN WRAPPER
+ * CarShowcase3D.tsx: THIN WRAPPER
  * ─────────────────────────────────────────────
  * Zero Three.js imports. Detects device tier, then:
  *  • Low-tier  → static image (0 KB Three.js)
@@ -19,7 +19,7 @@ function getDeviceTier(): DeviceTier {
   const w = window.innerWidth;
   const isTablet = w >= 768 && w < 1024;
 
-  // Check for truly old/weak GPUs — only these get 'low'
+  // Check for truly old/weak GPUs: only these get 'low'
   try {
     const canvas = document.createElement('canvas');
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
@@ -34,19 +34,19 @@ function getDeviceTier(): DeviceTier {
         }
       }
     }
-  } catch { /* WebGL probe failed — still allow mid tier */ }
+  } catch { /* WebGL probe failed, still allow mid tier */ }
 
   const cores = navigator.hardwareConcurrency || 4;
   const memory = (navigator as { deviceMemory?: number }).deviceMemory || 4;
 
-  // Modern phones & tablets can handle Three.js fine — default to 'mid'
+  // Modern phones & tablets can handle Three.js fine, default to 'mid'
   // Only desktop with powerful hardware gets 'high'
   if (isTablet) return 'mid';
   if (cores >= 8 && memory >= 8) return 'high';
   return 'mid';
 }
 
-// ── Lazy Canvas import — only for mid/high tier ──
+// ── Lazy Canvas import: only for mid/high tier ──
 const CarShowcase3DCanvas = lazy(() => import('./CarShowcase3DCanvas'));
 
 // ── Color options (no Three.js dependency) ──
@@ -181,7 +181,7 @@ export default function CarShowcase3D({ ctaButtons }: { ctaButtons?: React.React
 
         {/* ─── TOP SECTION (mobile: brand + text compact | desktop: brand bar) ─── */}
         <div className="absolute top-0 left-0 right-0 z-10">
-          {/* Brand bar — always visible */}
+          {/* Brand bar: always visible */}
           <div className="flex items-start justify-between px-4 pt-4 md:px-10 md:pt-8">
             <div className="flex items-center gap-2 md:gap-3">
               <div className="w-1 h-8 md:h-10 bg-gradient-to-b from-red-600 to-red-900 rounded-full" />
@@ -204,7 +204,7 @@ export default function CarShowcase3D({ ctaButtons }: { ctaButtons?: React.React
 
         </div>
 
-        {/* ─── MOBILE ONLY — Hero headline + typewriter (independently positioned) ─── */}
+        {/* ─── MOBILE ONLY: Hero headline + typewriter (independently positioned) ─── */}
         <div className="absolute left-0 right-0 top-[22%] z-10 px-5 md:hidden">
           <h2 className="text-[1.65rem] font-black text-white tracking-tight leading-[1]">
             EXPERIENCE{' '}
@@ -216,7 +216,7 @@ export default function CarShowcase3D({ ctaButtons }: { ctaButtons?: React.React
           <TypewriterMobile />
         </div>
 
-        {/* ─── DESKTOP ONLY — LEFT SIDE Hero Text (vertically centered) ─── */}
+        {/* ─── DESKTOP ONLY: LEFT SIDE Hero Text (vertically centered) ─── */}
         <div className="absolute left-10 top-1/2 -translate-y-1/2 z-10 max-w-sm lg:max-w-md hidden md:block">
           <h2 className="text-5xl lg:text-6xl font-black text-white tracking-tight leading-[0.95] mb-4">
             EXPERIENCE
@@ -232,7 +232,7 @@ export default function CarShowcase3D({ ctaButtons }: { ctaButtons?: React.React
           </p>
         </div>
 
-        {/* ─── RIGHT SIDE — Specs (desktop only) ─── */}
+        {/* ─── RIGHT SIDE: Specs (desktop only) ─── */}
         <div className="absolute right-10 top-1/2 -translate-y-[30%] z-10 hidden lg:flex flex-col gap-2 items-end">
           {[
             { label: 'Engine', value: '4.5L V8' },
@@ -250,16 +250,16 @@ export default function CarShowcase3D({ ctaButtons }: { ctaButtons?: React.React
           ))}
         </div>
 
-        {/* ─── BOTTOM ZONE — CTA buttons + color picker ─── */}
+        {/* ─── BOTTOM ZONE: CTA buttons + color picker ─── */}
         <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center gap-2 pb-4 md:pb-6">
-          {/* CTA buttons — injected from parent */}
+          {/* CTA buttons: injected from parent */}
           {ctaButtons && (
             <div className="pointer-events-auto w-full px-4 md:px-0">
               {ctaButtons}
             </div>
           )}
 
-          {/* Color Selector — hidden on low-tier (no 3D model to colorize) */}
+          {/* Color Selector: hidden on low-tier (no 3D model to colorize) */}
           {tier !== 'low' && (
           <div className="pointer-events-auto max-w-[calc(100vw-2rem)]">
             <div

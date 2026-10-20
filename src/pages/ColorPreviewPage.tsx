@@ -55,7 +55,7 @@ export const ColorPreviewPage: React.FC = () => {
       <div className="max-w-6xl mx-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <button onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/'); }} className="px-3 py-2 rounded-md border min-h-[44px] min-w-[44px]" aria-label="Go back">Back</button>
-          <h1 className="text-xl font-bold">{selectedColor?.name ? `${vehicleModel} — ${selectedColor.name}` : vehicleModel}</h1>
+          <h1 className="text-xl font-bold">{selectedColor?.name ? `${vehicleModel} - ${selectedColor.name}` : vehicleModel}</h1>
           <div />
         </div>
 

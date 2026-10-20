@@ -86,7 +86,7 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
         />
       )}
 
-      {/* Actual image — P-01: srcSet/sizes for pexels + WebP */}
+      {/* Actual image: P-01: srcSet/sizes for pexels + WebP */}
       {(() => {
         const isPexels = src.includes('pexels.com');
         const srcSet = isPexels ? `${src.replace(/w=\d+/, 'w=400')} 400w, ${src.replace(/w=\d+/, 'w=800')} 800w, ${src.replace(/w=\d+/, 'w=1200')} 1200w` : undefined;

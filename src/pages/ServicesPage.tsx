@@ -599,7 +599,7 @@ const ServicesPage: React.FC = () => {
     setSelectedPackage(prev => prev === packageId ? null : packageId);
   };
 
-  // Check service status — looks up locally-created bookings only; never fabricates.
+  // Check service status: looks up locally-created bookings only; never fabricates.
   const checkServiceStatus = () => {
     if (serviceStatusId) {
       try {
@@ -609,10 +609,10 @@ const ServicesPage: React.FC = () => {
         if (found) {
           setServiceStatus({ step: found.step ?? 1, status: found.status ?? 'Received' });
         } else {
-          setServiceStatus({ step: 0, status: 'Not found — check your booking ID or contact the showroom.' });
+          setServiceStatus({ step: 0, status: 'Not found. Check your booking ID or contact the showroom.' });
         }
       } catch {
-        setServiceStatus({ step: 0, status: 'Not found — check your booking ID or contact the showroom.' });
+        setServiceStatus({ step: 0, status: 'Not found. Check your booking ID or contact the showroom.' });
       }
     }
   };
@@ -667,7 +667,7 @@ const ServicesPage: React.FC = () => {
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className={`absolute w-80 h-80 rounded-full blur-3xl ${isDark ? 'bg-purple-600/15' : 'bg-purple-400/10'}`}
+            className={`absolute w-80 h-80 rounded-full blur-3xl ${isDark ? 'bg-[#A16207]/15' : 'bg-amber-600/10'}`}
             style={{ bottom: '20%', right: '15%' }}
             animate={{ 
               scale: [1, 1.2, 1],
@@ -863,7 +863,7 @@ const ServicesPage: React.FC = () => {
                     transition={{ delay: 1 + i * 0.2, duration: 0.3 }}
                   >
                     <div className={`h-1.5 rounded-full ${
-                      i === 0 ? 'bg-green-500' : i === 1 ? 'bg-blue-500' : i === 2 ? 'bg-yellow-500' : i === 3 ? 'bg-cyan-500' : 'bg-purple-500'
+                      i === 0 ? 'bg-green-500' : i === 1 ? 'bg-blue-500' : i === 2 ? 'bg-yellow-500' : i === 3 ? 'bg-cyan-500' : 'bg-amber-700'
                     }`} style={{ width: `${30 + Math.random() * 50}%` }} />
                   </motion.div>
                 ))}
@@ -949,25 +949,25 @@ const ServicesPage: React.FC = () => {
             <svg viewBox="0 0 100 100" className="w-full h-full">
               <defs>
                 <linearGradient id="gearGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor={isDark ? '#6366F1' : '#818CF8'} />
-                  <stop offset="100%" stopColor={isDark ? '#4F46E5' : '#6366F1'} />
+                  <stop offset="0%" stopColor={isDark ? '#0061EB' : '#3B82F6'} />
+                  <stop offset="100%" stopColor={isDark ? '#0052C2' : '#0061EB'} />
                 </linearGradient>
               </defs>
               <path
                 d="M50 15 L55 15 L58 8 L62 15 L68 15 L72 22 L80 22 L82 30 L88 35 L85 42 L90 50 L85 58 L88 65 L82 70 L80 78 L72 78 L68 85 L62 85 L58 92 L55 85 L50 85 L45 85 L42 92 L38 85 L32 85 L28 78 L20 78 L18 70 L12 65 L15 58 L10 50 L15 42 L12 35 L18 30 L20 22 L28 22 L32 15 L38 15 L42 8 L45 15 L50 15 Z"
                 fill="url(#gearGrad2)"
-                stroke={isDark ? '#312E81' : '#4338CA'}
+                stroke={isDark ? '#062B63' : '#0A3D8F'}
                 strokeWidth="1"
               />
-              <circle cx="50" cy="50" r="18" fill={isDark ? '#312E81' : '#4338CA'} />
-              <circle cx="50" cy="50" r="8" fill={isDark ? '#4F46E5' : '#6366F1'} />
+              <circle cx="50" cy="50" r="18" fill={isDark ? '#062B63' : '#0A3D8F'} />
+              <circle cx="50" cy="50" r="8" fill={isDark ? '#0052C2' : '#0061EB'} />
             </svg>
           </motion.div>
           
           {/* Label */}
           <motion.div
             className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${
-              isDark ? 'bg-indigo-500/20 text-indigo-400' : 'bg-indigo-100 text-indigo-600'
+              isDark ? 'bg-sky-500/20 text-sky-400' : 'bg-sky-100 text-[#0061EB]'
             }`}
             animate={{ opacity: [0.7, 1, 0.7] }}
             transition={{ duration: 2, repeat: Infinity, delay: 1 }}
@@ -1099,8 +1099,8 @@ const ServicesPage: React.FC = () => {
               <motion.div
                 className={`w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-sm ${
                   isDark 
-                    ? 'bg-gradient-to-br from-blue-500/30 to-purple-500/20 border border-blue-400/30' 
-                    : 'bg-gradient-to-br from-blue-100 to-purple-100 border border-blue-200'
+                    ? 'bg-gradient-to-br from-blue-500/30 to-amber-700/20 border border-blue-400/30' 
+                    : 'bg-gradient-to-br from-blue-100 to-red-100 border border-blue-200'
                 }`}
                 style={{ 
                   boxShadow: isDark 
@@ -1116,7 +1116,7 @@ const ServicesPage: React.FC = () => {
                 {element.id === 'lift' && <Car className={isDark ? 'text-blue-400' : 'text-blue-600'} size={24} />}
                 {element.id === 'diagnostic' && <Settings className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} animate-spin`} style={{ animationDuration: '8s' }} size={24} />}
                 {element.id === 'tools' && <Wrench className={isDark ? 'text-yellow-400' : 'text-yellow-600'} size={24} />}
-                {element.id === 'engine' && <Cog className={`${isDark ? 'text-purple-400' : 'text-purple-600'} animate-spin`} style={{ animationDuration: '4s' }} size={24} />}
+                {element.id === 'engine' && <Cog className={`${isDark ? 'text-amber-600' : 'text-[#A16207]'} animate-spin`} style={{ animationDuration: '4s' }} size={24} />}
                 {element.id === 'tires' && <CircleDot className={isDark ? 'text-green-400' : 'text-green-600'} size={24} />}
               </motion.div>
               <motion.span
@@ -1212,7 +1212,7 @@ const ServicesPage: React.FC = () => {
             <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Professional Care
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C00000] to-[#A16207]">
                 For Your Car
               </span>
             </h1>
@@ -1226,7 +1226,7 @@ const ServicesPage: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowBookingModal(true)}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
               >
                 <Calendar size={20} />
                 Book Now
@@ -1426,7 +1426,7 @@ const ServicesPage: React.FC = () => {
 
                     {/* Glow Effect on Hover */}
                     <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      isDark ? 'bg-gradient-to-br from-blue-500/20 to-purple-500/20' : 'bg-gradient-to-br from-blue-100/50 to-purple-100/50'
+                      isDark ? 'bg-gradient-to-br from-blue-500/20 to-amber-700/20' : 'bg-gradient-to-br from-blue-100/50 to-red-100/50'
                     }`} />
 
                     <div className="relative p-6">
@@ -1482,7 +1482,7 @@ const ServicesPage: React.FC = () => {
       </section>
 
       {/* Service Packages */}
-      <section className={`py-20 ${isDark ? 'bg-gray-800/50' : 'bg-gradient-to-br from-blue-50 to-indigo-50'}`}>
+      <section className={`py-20 ${isDark ? 'bg-gray-800/50' : 'bg-gradient-to-br from-blue-50 to-sky-50'}`}>
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1529,7 +1529,7 @@ const ServicesPage: React.FC = () => {
               >
                 {/* Recommended Badge */}
                 {pkg.recommended && (
-                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm font-bold">
+                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-[#A16207] text-white text-center py-2 text-sm font-bold">
                     Most Popular
                   </div>
                 )}
@@ -1565,7 +1565,7 @@ const ServicesPage: React.FC = () => {
                   <button
                     className={`w-full py-4 rounded-xl font-semibold transition-all ${
                       pkg.recommended
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg'
+                        ? 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:shadow-lg'
                         : isDark
                           ? 'bg-gray-700 text-white hover:bg-gray-600'
                           : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -1619,7 +1619,7 @@ const ServicesPage: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowBookingModal(true)}
-                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl"
+                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold rounded-xl"
                 >
                   Book Now
                 </motion.button>
@@ -2153,7 +2153,7 @@ const ServicesPage: React.FC = () => {
                   className={`flex-1 py-4 rounded-xl font-semibold transition-all ${
                     bookingStep === 1 && !selectedTime
                       ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg'
+                      : 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:shadow-lg'
                   }`}
                 >
                   {bookingStep === 3 ? 'Confirm Booking' : 'Next'}

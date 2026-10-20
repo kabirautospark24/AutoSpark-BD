@@ -915,7 +915,7 @@ iframe {
   background: linear-gradient(90deg, transparent, var(--border-color), transparent);
   margin-block: 0;
 }
-/* SparkPilot agentic message reveal � words cascade in like a live stream */
+/* SparkPilot agentic message reveal: words cascade in like a live stream */
 @keyframes wordIn {
   from { opacity: 0; transform: translateY(0.3em); filter: blur(3px); }
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
@@ -923,4 +923,48 @@ iframe {
 .reveal-word {
   display: inline-block;
   animation: wordIn 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Ambient background blobs. SVG geometry (r/cx/cy) is animated with CSS so
+   no runtime animation library writes "undefined" into those attributes. */
+@keyframes asBlob1 {
+  0%, 100% { r: 150px; cx: 200px; cy: 200px; }
+  50% { r: 200px; cx: 250px; cy: 150px; }
+}
+@keyframes asBlob2 {
+  0%, 100% { r: 180px; cx: 800px; cy: 300px; }
+  50% { r: 220px; cx: 750px; cy: 350px; }
+}
+@keyframes asBlob3 {
+  0%, 100% { r: 200px; cx: 500px; cy: 800px; }
+  50% { r: 250px; cx: 450px; cy: 750px; }
+}
+@keyframes asPulse {
+  0%, 100% { r: 50px; opacity: 0.1; }
+  50% { r: 100px; opacity: 0.05; }
+}
+@keyframes asMorphPoly {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(14deg) scale(0.9); }
+}
+
+/* Slow moving backdrop gradient used by the story and footer sections. */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradientMove {
+  background-size: 200% 200%;
+  animation: gradientMove 14s ease infinite;
+}
+
+.as-blob-1 { animation: asBlob1 8s ease-in-out infinite; }
+.as-blob-2 { animation: asBlob2 10s ease-in-out infinite 1s; }
+.as-blob-3 { animation: asBlob3 12s ease-in-out infinite 2s; }
+.as-pulse { animation: asPulse 3s ease-in-out infinite; }
+.as-morph-poly {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: asMorphPoly 6s ease-in-out infinite;
 }

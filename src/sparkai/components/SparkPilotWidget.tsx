@@ -16,11 +16,11 @@ import type { ChatMessage, CustomerPreferences } from '../types';
 const uid = () => Math.random().toString(36).slice(2, 10);
 const SEED: ChatMessage = {
   id: 'seed', role: 'assistant', createdAt: Date.now(), kind: 'welcome',
-  text: "Hi, I'm SparkPilot — I know everything about AutoSpark car sales and car services. What would you like to know?",
+  text: "Hi, I'm SparkPilot. I know everything about AutoSpark car sales and car services. What would you like to know?",
 };
 
 /**
- * Floating SparkPilot assistant — fixed on the RIGHT side of every page.
+ * Floating SparkPilot assistant: fixed on the RIGHT side of every page.
  * Full-screen sheet on phones, docked card from sm up; full experience at /sparkpilot.
  */
 export function SparkPilotWidget() {
@@ -111,7 +111,7 @@ export function SparkPilotWidget() {
     } catch (e) {
       // User pressed Stop → end the turn silently; real failures get a retry UI.
       if (!isAbortError(e)) {
-        setMessages((p) => [...p, { id: uid(), role: 'assistant', text: 'Sorry — SparkPilot failed to respond. Please retry; nothing was submitted.', createdAt: Date.now(), status: 'failed' }]);
+        setMessages((p) => [...p, { id: uid(), role: 'assistant', text: 'Sorry, SparkPilot failed to respond. Please retry; nothing was submitted.', createdAt: Date.now(), status: 'failed' }]);
       }
     } finally {
       setBusy(false);
@@ -158,7 +158,7 @@ export function SparkPilotWidget() {
 
   return (
     <>
-      {/* Floating entry point — RIGHT side, above safe area */}
+      {/* Floating entry point: RIGHT side, above safe area */}
       {!open && (
         <motion.button
           id="sparkpilot-launcher"
@@ -167,7 +167,7 @@ export function SparkPilotWidget() {
           onClick={() => { setOpen(true); setUnread(false); }}
           aria-label="Open SparkPilot assistant"
           className="fixed z-toast right-4 sm:right-6 rounded-full p-[3px] shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
-          style={{ bottom: 'calc(env(safe-area-inset-bottom,0px) + 16px)', background: 'linear-gradient(135deg,#22D3EE,#2563EB,#7C3AED)' }}
+          style={{ bottom: 'calc(env(safe-area-inset-bottom,0px) + 16px)', background: 'linear-gradient(135deg,#22D3EE,#2563EB,#A16207)' }}
         >
           <span className={`relative flex items-center gap-2 rounded-full pl-1.5 pr-4 py-1.5 ${dark ? 'bg-[#0B1322]' : 'bg-white'}`}>
             <SparkMark size={36} />

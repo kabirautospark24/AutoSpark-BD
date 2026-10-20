@@ -6,13 +6,13 @@ import {
 } from '../kb';
 import { SALES_SYSTEM_PROMPT } from '../../../api/sparkai/chat';
 
-// Server injection caps — must match api/sparkai/chat.ts / server/dev-server.js.
+// Server injection caps: must match api/sparkai/chat.ts / server/dev-server.js.
 const SALES_CAP = 24000;
 const SERVICES_CAP = 16000;
 
-describe('Dual KB — topic routing', () => {
+describe('Dual KB , topic routing', () => {
   it('routes service questions to the services KB', () => {
-    expect(detectKbTopic('My brake is making noise — how much for a brake service?')).toBe('services');
+    expect(detectKbTopic('My brake is making noise , how much for a brake service?')).toBe('services');
     expect(detectKbTopic('A/C gas recharge কত টাকা?')).toBe('services');
     expect(detectKbTopic('সার্ভিস কবে দিতে হবে?')).toBe('services');
   });
@@ -45,7 +45,7 @@ describe('Dual KB — topic routing', () => {
   });
 });
 
-describe('Car Sales KB — official price sheet', () => {
+describe('Car Sales KB , official price sheet', () => {
   const text = buildSalesKbText();
 
   it('covers all 23 models from the price sheet', () => {
@@ -97,7 +97,7 @@ describe('Car Sales KB — official price sheet', () => {
   });
 });
 
-describe('Car Services KB — official price list', () => {
+describe('Car Services KB , official price list', () => {
   const text = buildServicesKbText();
 
   it('contains every service price from the official list', () => {
@@ -147,7 +147,7 @@ describe('Sales-expert persona contract (server system prompt)', () => {
     expect(SALES_SYSTEM_PROMPT).toContain('AUTOSPARK CAR SERVICES KNOWLEDGE BASE');
     expect(SALES_SYSTEM_PROMPT).toContain('Never invent stock');
     expect(SALES_SYSTEM_PROMPT).toContain('never fake scarcity');
-    expect(SALES_SYSTEM_PROMPT).toContain('NEVER ₹'); // ৳ only — never rupee/dollar signs
+    expect(SALES_SYSTEM_PROMPT).toContain('NEVER ₹'); // ৳ only, never rupee/dollar signs
     expect(SALES_SYSTEM_PROMPT).toContain('never markdown tables');
   });
 });

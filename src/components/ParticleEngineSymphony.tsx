@@ -127,21 +127,21 @@ export const ParticleEngineSymphony: React.FC<ParticleEngineSymphonyProps> = ({
     if (isDark) {
       const colors = [
         'rgba(59, 130, 246, 1)',   // Blue
-        'rgba(139, 92, 246, 1)',   // Purple  
+        'rgba(161, 98, 7, 1)',   // Gold  
         'rgba(6, 182, 212, 1)',    // Cyan
         'rgba(236, 72, 153, 1)',   // Pink
         'rgba(34, 211, 238, 1)',   // Light cyan
-        'rgba(167, 139, 250, 1)', // Light purple
+        'rgba(202, 138, 4, 1)', // Light gold
       ];
       return colors[index % colors.length];
     } else {
       const colors = [
         'rgba(37, 99, 235, 1)',    // Blue
-        'rgba(109, 40, 217, 1)',   // Purple
+        'rgba(122, 74, 5, 1)',   // Gold
         'rgba(8, 145, 178, 1)',    // Cyan
         'rgba(219, 39, 119, 1)',   // Pink
         'rgba(14, 165, 233, 1)',   // Sky
-        'rgba(124, 58, 237, 1)',   // Violet
+        'rgba(161, 98, 7, 1)',   // Bronze
       ];
       return colors[index % colors.length];
     }
@@ -432,7 +432,7 @@ export const ParticleEngineSymphony: React.FC<ParticleEngineSymphonyProps> = ({
           isDark ? 'bg-blue-600/10' : 'bg-blue-400/10'
         }`} style={{ top: '10%', left: '10%' }} />
         <div className={`absolute w-[500px] h-[500px] rounded-full blur-3xl ${
-          isDark ? 'bg-purple-600/10' : 'bg-purple-400/10'
+          isDark ? 'bg-[#A16207]/10' : 'bg-amber-600/10'
         }`} style={{ bottom: '10%', right: '10%' }} />
         <div className={`absolute w-[400px] h-[400px] rounded-full blur-3xl ${
           isDark ? 'bg-cyan-500/8' : 'bg-cyan-400/8'

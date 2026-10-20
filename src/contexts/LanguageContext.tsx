@@ -38,7 +38,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     try {
       localStorage.setItem('language', language);
     } catch {
-      /* storage unavailable (private mode) — non-critical */
+      /* storage unavailable (private mode): non-critical */
     }
     try {
       document.documentElement.lang = language;
@@ -177,6 +177,42 @@ const translations: Record<Language, Record<string, string>> = {
     'common.edit': 'Edit',
     'common.view': 'View',
     'common.bdt': 'BDT',
+
+    'cart': 'Your Cart',
+    'emptyCart': 'Your cart is empty',
+    'emptyCartDesc': 'Browse our accessories and add the parts you need for your car.',
+    'continueShop': 'Continue shopping',
+    'orderSummary': 'Order summary',
+    'subtotal': 'Subtotal',
+    'shipping': 'Shipping',
+    'dhakaShipping': 'Inside Dhaka',
+    'outsideShipping': 'Outside Dhaka',
+    'discount': 'Discount',
+    'grandTotal': 'Grand total',
+    'couponCode': 'Coupon code',
+    'applyCoupon': 'Apply coupon',
+    'checkout': 'Checkout',
+    'quantity': 'Quantity',
+    'price': 'Price',
+    'product': 'Product',
+    'removeItem': 'Remove',
+    'secureBadge': 'Secure checkout',
+
+    'inventory': 'Inventory',
+    'status': 'Status',
+    'stock': 'Stock',
+    'category': 'Category',
+    'productName': 'Product',
+    'search': 'Search',
+    'actions': 'Actions',
+    'inStock': 'In stock',
+    'lowStock': 'Low stock',
+    'outOfStock': 'Out of stock',
+    'noResults': 'No results found',
+    'totalProducts': 'Total products',
+    'totalValue': 'Total value',
+
+    'form.send': 'Send message',
   },
   bn: {
     'site.title': 'অটো স্পার্ক বিডি',
@@ -290,5 +326,41 @@ const translations: Record<Language, Record<string, string>> = {
     'common.edit': 'সম্পাদনা',
     'common.view': 'দেখুন',
     'common.bdt': '৳',
+
+    'cart': 'আপনার কার্ট',
+    'emptyCart': 'আপনার কার্ট খালি',
+    'emptyCartDesc': 'আমাদের এক্সেসরিজ দেখুন এবং আপনার গাড়ির প্রয়োজনীয় পার্ট কার্টে যোগ করুন।',
+    'continueShop': 'কেনাকাটা চালিয়ে যান',
+    'orderSummary': 'অর্ডার সারসংক্ষেপ',
+    'subtotal': 'সাব-টোটাল',
+    'shipping': 'ডেলিভারি চার্জ',
+    'dhakaShipping': 'ঢাকার ভিতরে',
+    'outsideShipping': 'ঢাকার বাইরে',
+    'discount': 'ছাড়',
+    'grandTotal': 'সর্বমোট',
+    'couponCode': 'কুপন কোড',
+    'applyCoupon': 'কুপন প্রয়োগ করুন',
+    'checkout': 'চেকআউট',
+    'quantity': 'পরিমাণ',
+    'price': 'মূল্য',
+    'product': 'পণ্য',
+    'removeItem': 'সরান',
+    'secureBadge': 'নিরাপদ চেকআউট',
+
+    'inventory': 'স্টক তালিকা',
+    'status': 'অবস্থা',
+    'stock': 'স্টক',
+    'category': 'ক্যাটাগরি',
+    'productName': 'পণ্যের নাম',
+    'search': 'অনুসন্ধান',
+    'actions': 'করণীয়',
+    'inStock': 'স্টকে আছে',
+    'lowStock': 'স্টক কম',
+    'outOfStock': 'স্টক শেষ',
+    'noResults': 'কোনো ফলাফল পাওয়া যায়নি',
+    'totalProducts': 'মোট পণ্য',
+    'totalValue': 'মোট মূল্য',
+
+    'form.send': 'বার্তা পাঠান',
   },
 };

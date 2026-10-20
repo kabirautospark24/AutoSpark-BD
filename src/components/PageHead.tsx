@@ -1,43 +1,57 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
+import { buildHeadTags } from '../lib/headTags';
+import { matchRoute, type RouteSeo } from '../lib/seo';
 
 type Props = {
-  title: string;
-  description?: string;
-  url?: string;
-  image?: string;
-  twitterHandle?: string;
-  jsonLd?: object | null;
+  /** Route path override. Defaults to the current location pathname. */
+  path?: string;
+  /** Per-page overrides, useful for dynamic routes (vehicle id, product id). */
+  seo?: Partial<RouteSeo>;
+  /** Force noindex regardless of the route manifest. */
+  noindex?: boolean;
+  /** Extra JSON-LD entity merged into the structured data graph. */
+  jsonLd?: Record<string, unknown> | null;
 };
 
-export const PageHead: React.FC<Props> = ({ title, description, url, image, twitterHandle, jsonLd }) => {
-  const canonical = url || (typeof window !== 'undefined' ? window.location.href : undefined);
-  const desc = description || 'Autospark — Premium car showroom and services in Rajshahi, Bangladesh.';
+/**
+ * Renders the full head block for a page: title, description, robots, canonical,
+ * Open Graph, Twitter card and the JSON-LD graph (business, website, breadcrumbs).
+ *
+ * The tag set is built by src/lib/headTags.ts, the same builder the build-time
+ * prerenderer uses, so the static HTML and the hydrated document always agree.
+ */
+export const PageHead: React.FC<Props> = ({ path, seo, noindex, jsonLd }) => {
+  const location = useLocation();
+  const routePath = path ?? location.pathname;
+
+  const route = useMemo<RouteSeo>(() => {
+    const base = matchRoute(routePath);
+    const merged: RouteSeo = seo ? { ...base, ...seo, path: routePath } : { ...base, path: routePath };
+    if (noindex) merged.noindex = true;
+    const extra = [...(merged.extraSchema ?? [])];
+    if (jsonLd) extra.push(jsonLd);
+    if (extra.length) merged.extraSchema = extra;
+    return merged;
+  }, [routePath, seo, noindex, jsonLd]);
+
+  const tags = useMemo(() => buildHeadTags(route), [route]);
 
   return (
     <Helmet>
-      <title>{title}</title>
-      <meta name="description" content={desc} />
-      {canonical && <link rel="canonical" href={canonical} />}
-
-      {/* Open Graph */}
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={desc} />
-      {image && <meta property="og:image" content={image} />}
-      {canonical && <meta property="og:url" content={canonical} />}
-
-      {/* Twitter Card */}
-      <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
-      {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={desc} />
-      {image && <meta name="twitter:image" content={image} />}
-
-      {/* Minimal structured data when provided */}
-      {jsonLd && (
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      )}
+      {tags.map((tag, index) => {
+        if (tag.tag === 'title') return <title key={index}>{tag.text}</title>;
+        if (tag.tag === 'script') {
+          return (
+            <script key={index} {...tag.attrs}>
+              {tag.text}
+            </script>
+          );
+        }
+        if (tag.tag === 'link') return <link key={index} {...tag.attrs} />;
+        return <meta key={index} {...tag.attrs} />;
+      })}
     </Helmet>
   );
 };

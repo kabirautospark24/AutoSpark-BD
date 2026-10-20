@@ -53,7 +53,7 @@ export const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         {/* Animated gradient/parallax background */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="w-full h-full bg-gradient-to-br from-[#C00000]/10 via-[#181818]/60 to-[#FF1A1A]/10 animate-gradientMove" />
+          <div className="w-full h-full bg-gradient-to-br from-[#C00000]/15 via-[#DA1609]/10 to-[#A16207]/10 animate-gradientMove" />
         </div>
         <div className="relative grid grid-cols-1 md:grid-cols-4 gap-10 z-10">
           {/* Brand & Info */}
@@ -141,7 +141,7 @@ export const Footer = () => {
               <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700">🏆 Award</span>
               <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold border border-blue-300 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700">✔️ Verified</span>
               <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold border border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700">🛡️ Security</span>
-              <span className="inline-flex items-center px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs font-semibold border border-purple-300 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-700">📄 Certificate</span>
+              <span className="inline-flex items-center px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold border border-amber-600 dark:bg-red-900/30 dark:text-amber-600 dark:border-red-700">📄 Certificate</span>
             </div>
             {/* Mini Gallery/Instagram Feed */}
             <div className="mb-4">

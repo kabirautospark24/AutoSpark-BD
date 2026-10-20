@@ -109,8 +109,8 @@ const CheckoutPage = () => {
 		<div className="min-h-screen bg-[#030b1e] flex items-start justify-center px-4 py-12 text-slate-100 sm:px-6">
 			<div className="w-full max-w-[550px] rounded-2xl border border-slate-700/50 bg-[#07132b] shadow-2xl">
 				<div className="border-b border-slate-700/50 px-6 py-4">
-					<h2 className="text-lg font-bold text-white">Checkout</h2>
-					<p className="text-xs text-slate-400">Shipping & Billing Information</p>
+					<h1 className="text-lg font-bold text-white">Checkout</h1>
+					<p className="text-xs text-slate-400">Shipping &amp; Billing Information</p>
 				</div>
 
 				{error && (
@@ -147,7 +147,7 @@ const CheckoutPage = () => {
 							placeholder="e.g. Farhan Kabir"
 							aria-invalid={errors.customer_name ? true : undefined}
 							className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base transition-all outline-none ${
-								errors.customer_name ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+								errors.customer_name ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-sky-500'
 							}`}
 						/>
 						{errors.customer_name && (
@@ -167,7 +167,7 @@ const CheckoutPage = () => {
 								placeholder="017XXXXXXXX"
 								aria-invalid={errors.mobile ? true : undefined}
 								className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base transition-all outline-none ${
-									errors.mobile ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+									errors.mobile ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-sky-500'
 								}`}
 							/>
 							{errors.mobile && (
@@ -188,7 +188,7 @@ const CheckoutPage = () => {
 										{...field}
 										aria-invalid={errors.district ? true : undefined}
 										className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base outline-none ${
-											errors.district ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+											errors.district ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-sky-500'
 										}`}
 									>
 										<option value="">Select District</option>
@@ -220,7 +220,7 @@ const CheckoutPage = () => {
 										disabled={!selectedDistrict}
 										aria-invalid={errors.thana ? true : undefined}
 										className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base outline-none disabled:opacity-50 ${
-											errors.thana ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+											errors.thana ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-sky-500'
 										}`}
 									>
 										<option value="">Select Thana</option>
@@ -248,7 +248,7 @@ const CheckoutPage = () => {
 								placeholder="House number, street name, etc."
 								aria-invalid={errors.address ? true : undefined}
 								className={`w-full rounded-lg border bg-slate-900/50 px-4 py-2.5 text-base outline-none ${
-									errors.address ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-indigo-500'
+									errors.address ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700 focus:border-sky-500'
 								}`}
 							/>
 							{errors.address && (
@@ -260,7 +260,7 @@ const CheckoutPage = () => {
 					<div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-700/50 pt-6 sm:flex-row">
 						<div className="text-center sm:text-left">
 							<p className="text-[10px] uppercase tracking-widest text-slate-500">Total Payable</p>
-							<p className="text-lg font-black text-indigo-400">{cartTotal.toLocaleString()} BDT</p>
+							<p className="text-lg font-black text-sky-400">{cartTotal.toLocaleString()} BDT</p>
 						</div>
 
 						<div className="flex w-full gap-3 sm:w-auto">
@@ -276,7 +276,7 @@ const CheckoutPage = () => {
 								type="submit"
 								disabled={isSubmitting || cartItems.length === 0}
 								aria-busy={isSubmitting || undefined}
-								className="flex-1 min-h-[44px] rounded-lg bg-indigo-600 px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:opacity-50 sm:flex-none"
+								className="flex-1 min-h-[44px] rounded-lg bg-[#0061EB] px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-500 disabled:opacity-50 sm:flex-none"
 							>
 								{isSubmitting ? 'Redirecting to payment…' : 'Pay Now'}
 							</button>

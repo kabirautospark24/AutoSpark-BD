@@ -85,7 +85,7 @@ export const HeroText = memo<HeroTextProps>(({ title, subtitle, className = '' }
                       }}
                       style={{
                         // Gradient text with animation
-                        background: 'linear-gradient(135deg, #ffffff 0%, #60a5fa 25%, #ffffff 50%, #a78bfa 75%, #ffffff 100%)',
+                        background: 'linear-gradient(135deg, #ffffff 0%, #60a5fa 25%, #ffffff 50%, #CA8A04 75%, #ffffff 100%)',
                         backgroundSize: '200% 200%',
                         WebkitBackgroundClip: 'text',
                         backgroundClip: 'text',
@@ -132,7 +132,7 @@ export const HeroText = memo<HeroTextProps>(({ title, subtitle, className = '' }
           <motion.div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, #3b82f6 20%, #8b5cf6 50%, #ec4899 80%, transparent 100%)',
+              background: 'linear-gradient(90deg, transparent 0%, #3b82f6 20%, #A16207 50%, #ec4899 80%, transparent 100%)',
             }}
             animate={{
               opacity: [0.5, 1, 0.5],

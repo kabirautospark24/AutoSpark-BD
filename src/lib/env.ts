@@ -1,33 +1,58 @@
-// A-05: Central env validation — warn in PROD for static hosting (GitHub Pages), fail only for server builds
-import { z } from 'zod';
+// A-05: Central env validation. Malformed values fail the build.
+// Secrets and DB credentials live in the Vercel server functions, so they are
+// intentionally absent from the client bundle. The client falls back to
+// same-origin endpoints (see src/config/payment.ts), so a missing variable is
+// not an error and must not spam the browser console.
+//
+// The validation is hand written on purpose: pulling a schema library into the
+// entry chunk added ~100 KB to every page load for nine optional strings.
 
-const envSchema = z.object({
-  VITE_SUPABASE_URL: z.string().url().optional(),
-  VITE_SUPABASE_ANON_KEY: z.string().min(10).optional(),
-  VITE_APPWRITE_ENDPOINT: z.string().url().optional(),
-  VITE_APPWRITE_PROJECT_ID: z.string().min(1).optional(),
-  VITE_APPWRITE_DATABASE_ID: z.string().min(1).optional(),
-  VITE_APPWRITE_COLLECTION_ID: z.string().min(1).optional(),
-  VITE_APPWRITE_FUNCTION_ID: z.string().min(1).optional(),
-  VITE_PAYMENT_API_URL: z.string().url().optional(),
-  VITE_PAYMENT_INIT_URL: z.string().url().optional(),
-});
+const URL_LIKE = /^(https?:\/\/|\/)/i;
 
-export const env = envSchema.parse(import.meta.env);
+type EnvKey =
+  | 'VITE_SUPABASE_URL'
+  | 'VITE_SUPABASE_ANON_KEY'
+  | 'VITE_APPWRITE_ENDPOINT'
+  | 'VITE_APPWRITE_PROJECT_ID'
+  | 'VITE_APPWRITE_DATABASE_ID'
+  | 'VITE_APPWRITE_COLLECTION_ID'
+  | 'VITE_APPWRITE_FUNCTION_ID'
+  | 'VITE_PAYMENT_API_URL'
+  | 'VITE_PAYMENT_INIT_URL';
 
-// For static hosting (GitHub Pages), we don't require DB credentials at build time
-// since API endpoints (Vercel functions) handle server-side secrets.
-// Only VITE_PAYMENT_API_URL is needed client-side for payment initiation.
-if (import.meta.env.PROD) {
-  const required = ['VITE_PAYMENT_API_URL'] as const;
-  const missing = required.filter(k => !env[k as keyof typeof env]);
-  if (missing.length) {
-    console.warn(`[env] Missing in PROD (using fallback): ${missing.join(', ')}`);
+const OPTIONAL_KEYS: EnvKey[] = [
+  'VITE_SUPABASE_URL',
+  'VITE_SUPABASE_ANON_KEY',
+  'VITE_APPWRITE_ENDPOINT',
+  'VITE_APPWRITE_PROJECT_ID',
+  'VITE_APPWRITE_DATABASE_ID',
+  'VITE_APPWRITE_COLLECTION_ID',
+  'VITE_APPWRITE_FUNCTION_ID',
+  'VITE_PAYMENT_API_URL',
+  'VITE_PAYMENT_INIT_URL',
+];
+
+const raw = import.meta.env as Record<string, string | undefined>;
+
+const env = {} as Record<EnvKey, string | undefined>;
+
+for (const key of OPTIONAL_KEYS) {
+  const value = raw[key];
+  if (value === undefined || value === '') {
+    env[key] = undefined;
+    continue;
   }
-  // Warn about missing DB credentials but don't throw
-  const dbRequired = ['VITE_SUPABASE_URL', 'VITE_SUPABASE_ANON_KEY', 'VITE_APPWRITE_DATABASE_ID', 'VITE_APPWRITE_COLLECTION_ID'] as const;
-  const dbMissing = dbRequired.filter(k => !env[k as keyof typeof env]);
-  if (dbMissing.length) {
-    console.warn(`[env] DB credentials not set at build time (expected for static hosting): ${dbMissing.join(', ')}`);
+  if ((key.endsWith('_URL') || key.endsWith('_ENDPOINT')) && !URL_LIKE.test(value)) {
+    throw new Error(`Invalid ${key}: expected an absolute URL`);
+  }
+  env[key] = value;
+}
+
+export { env };
+
+if (import.meta.env.DEV) {
+  const missing = OPTIONAL_KEYS.filter((k) => !env[k]);
+  if (missing.length) {
+    console.info(`[env] Optional client vars not set, using same-origin fallbacks: ${missing.join(', ')}`);
   }
 }

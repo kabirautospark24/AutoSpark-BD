@@ -119,7 +119,7 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
           }
         });
       })
-      .catch(() => {/* SW registration failed — non-critical */});
+      .catch(() => {/* SW registration failed, non-critical */});
   });
 }
 
@@ -181,7 +181,7 @@ if ('serviceWorker' in navigator && !import.meta.env.PROD) {
         })
         .catch(() => {/* ignore */});
     } catch (err) {
-      // Ignore — best effort only
+      // Ignore: best effort only
     }
   });
 }

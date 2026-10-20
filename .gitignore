@@ -34,3 +34,9 @@ assistant-next/
 .env
 .env.local
 .env.*.local
+
+# Bundle reports and prerender scratch space
+stats/
+.prerender/
+test-results/
+playwright-report/

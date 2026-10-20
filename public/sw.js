@@ -1,17 +1,19 @@
 // Service Worker — Cache-first for static assets, network-first for API calls
 // Bump CACHE_VERSION when deploying breaking changes to cached assets.
-// Old caches are cleaned up on activate. v2: purges stale v1 JS chunks that
-// caused "Something went wrong" after deploys (old hashed chunks served
-// alongside a fresh index.html).
-const CACHE_VERSION = 'v2';
+// Old caches are cleaned up on activate. v3: prerendered per-route HTML, new
+// favicon set and share images.
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `autospark-${CACHE_VERSION}`;
 
 // Assets to precache on install (only lightweight critical assets)
 // Ferrari GLB + DRACO removed — cached on-demand when 3D scene loads
 const PRECACHE_URLS = [
   '/',
+  '/favicon.svg',
+  '/favicon-32x32.png',
+  '/apple-touch-icon.png',
+  '/og/og-default.png',
   '/logo/logoAS3.svg',
-  '/preview/preview-image.webp',
 ];
 
 // Cache-first patterns (static assets that rarely change)

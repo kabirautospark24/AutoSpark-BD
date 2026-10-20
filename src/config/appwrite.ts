@@ -1,7 +1,7 @@
 import { Client, Functions } from 'appwrite';
 import { env } from '../lib/env';
 
-/** Appwrite configuration — no hardcoded project fallback. */
+/** Appwrite configuration: no hardcoded project fallback. */
 const APPWRITE_ENDPOINT = env.VITE_APPWRITE_ENDPOINT as string;
 const APPWRITE_PROJECT_ID = env.VITE_APPWRITE_PROJECT_ID as string;
 

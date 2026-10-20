@@ -52,27 +52,27 @@ export async function mockRespond(_history: ChatMessage[], input: string, prefs:
     : '\n\n_Note: please confirm price & availability with an expert before booking._';
 
   if (/^(hi|hello|salam|assalam|hey|adab|nomoskar|হাই|হ্যালো|আসসালামু|সালাম)/.test(t.trim())) {
-    return { text: bn || /salam|assalam/.test(t) ? 'ওয়ালাইকুম আসসালাম! আমি SparkPilot — AutoSpark-এর সেলস ও সার্ভিস এক্সপার্ট। AutoSpark-এর গাড়ি বিক্রি ও কার সার্ভিস — সবকিছু জানি। কী জানতে চান?' : "Hello! I'm SparkPilot — I know everything about AutoSpark car sales and car services. What would you like to know?", prefs: next, intent: 'general' };
+    return { text: bn || /salam|assalam/.test(t) ? 'ওয়ালাইকুম আসসালাম! আমি SparkPilot , AutoSpark-এর সেলস ও সার্ভিস এক্সপার্ট। AutoSpark-এর গাড়ি বিক্রি ও কার সার্ভিস , সবকিছু জানি। কী জানতে চান?' : "Hello! I'm SparkPilot , I know everything about AutoSpark car sales and car services. What would you like to know?", prefs: next, intent: 'general' };
   }
   if (/pre.?order|japan|auction|import/.test(t)) {
-    return { text: bn ? 'জাপান প্রি-অর্ডার নিয়ে সাহায্য করছি। কোন গাড়ি (মডেল + বছর), বাজেট, আর কবে নাগাদ চান — জানাবেন?' : 'I can help with a Japan pre-order. Which model + year, your budget, and your timeline?', prefs: next, intent: 'preorder', followUp: 'preorder' };
+    return { text: bn ? 'জাপান প্রি-অর্ডার নিয়ে সাহায্য করছি। কোন গাড়ি (মডেল + বছর), বাজেট, আর কবে নাগাদ চান , জানাবেন?' : 'I can help with a Japan pre-order. Which model + year, your budget, and your timeline?', prefs: next, intent: 'preorder', followUp: 'preorder' };
   }
   if (/service|battery|diagnos|maintenance|repair|সার্ভিস|ব্যাটারি/.test(t)) {
-    return { text: bn ? 'সার্ভিসের জন্য: গাড়ির মডেল/বছর আর সমস্যাটা (যেমন হাইব্রিড ব্যাটারি চেক, ডায়াগনসিস, জেনারেল সার্ভিস) জানান — এক্সপার্ট ফলো-আপের ব্যবস্থা করছি।' : 'For service: please share your model/year and the concern (e.g. hybrid battery check, diagnostics, general service) — I will arrange expert follow-up.', prefs: next, intent: 'service', followUp: 'service' };
+    return { text: bn ? 'সার্ভিসের জন্য: গাড়ির মডেল/বছর আর সমস্যাটা (যেমন হাইব্রিড ব্যাটারি চেক, ডায়াগনসিস, জেনারেল সার্ভিস) জানান , এক্সপার্ট ফলো-আপের ব্যবস্থা করছি।' : 'For service: please share your model/year and the concern (e.g. hybrid battery check, diagnostics, general service) , I will arrange expert follow-up.', prefs: next, intent: 'service', followUp: 'service' };
   }
   if (/financ|loan|installment|down ?payment|emi|কিস্তি|লোন/.test(t) || /budget|বাজেট/.test(t)) {
     if (next.budgetLakh) {
       const v = pick();
-      return { text: `${bn ? `আপনার ${next.budgetLakh} লাখ বাজেট নোট করেছি` : `Noted your budget of ${formatLakh(next.budgetLakh)}`}.${v.length ? (bn ? ` এই বাজেটে ${v.length}টি অপশন:` : ` Here are ${v.length} options in range:`) : (bn ? ' এই বাজেটে মিল পাইনি — বাজেট একটু বাড়িয়ে দেখবেন?' : ' No matches in that range — shall we stretch the budget slightly?')}${demoNote}`, vehicles: v, prefs: next, intent: 'budget' };
+      return { text: `${bn ? `আপনার ${next.budgetLakh} লাখ বাজেট নোট করেছি` : `Noted your budget of ${formatLakh(next.budgetLakh)}`}.${v.length ? (bn ? ` এই বাজেটে ${v.length}টি অপশন:` : ` Here are ${v.length} options in range:`) : (bn ? ' এই বাজেটে মিল পাইনি , বাজেট একটু বাড়িয়ে দেখবেন?' : ' No matches in that range , shall we stretch the budget slightly?')}${demoNote}`, vehicles: v, prefs: next, intent: 'budget' };
     }
     return { text: bn ? 'আপনার আনুমানিক বাজেট কত (লাখে)? আর Hybrid পছন্দ করেন?' : 'What is your approximate budget (in lakh), and do you prefer hybrid?', prefs: next, intent: 'budget' };
   }
   if (/compare|vs |difference|পার্থক্য|তুলনা/.test(t)) {
     const v = DEMO_VEHICLES.slice(0, 2);
-    return { text: (bn ? 'দুটি জনপ্রিয় অপশনের তুলনা দিলাম — Compare ট্যাবে বিস্তারিত দেখুন।' : 'Here is a comparison of two popular options — see the Compare tab for detail.') + demoNote, vehicles: v, prefs: next, intent: 'compare', followUp: 'compare' };
+    return { text: (bn ? 'দুটি জনপ্রিয় অপশনের তুলনা দিলাম , Compare ট্যাবে বিস্তারিত দেখুন।' : 'Here is a comparison of two popular options , see the Compare tab for detail.') + demoNote, vehicles: v, prefs: next, intent: 'compare', followUp: 'compare' };
   }
   if (/expert|human|call|phone|whatsapp|যোগাযোগ|কথা বলতে/.test(t)) {
-    return { text: bn ? 'অবশ্যই! নিচের ফর্মে আপনার নাম ও WhatsApp নম্বর দিন — AutoSpark এক্সপার্ট শীঘ্রই যোগাযোগ করবেন।' : 'Of course! Please share your name and WhatsApp number below — an AutoSpark expert will follow up shortly.', prefs: next, intent: 'expert', followUp: 'lead' };
+    return { text: bn ? 'অবশ্যই! নিচের ফর্মে আপনার নাম ও WhatsApp নম্বর দিন , AutoSpark এক্সপার্ট শীঘ্রই যোগাযোগ করবেন।' : 'Of course! Please share your name and WhatsApp number below , an AutoSpark expert will follow up shortly.', prefs: next, intent: 'expert', followUp: 'lead' };
   }
   if (/family|7.?seat|noah|mpv|বাচ্চা|পরিবার/.test(t)) {
     const v = filterDemoVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: 'MPV' });
@@ -82,12 +82,12 @@ export async function mockRespond(_history: ChatMessage[], input: string, prefs:
   if (b || /hybrid/.test(t) || next.manufacturer || next.bodyType || /car|gari|গাড়ি|suv|sedan|toyota|honda/.test(t)) {
     const v = pick();
     if (!next.budgetLakh) {
-      return { text: bn ? `ধন্যবাদ! ${next.manufacturer ?? ''} ${next.bodyType ?? 'গাড়ি'} পছন্দ নোট করেছি। আপনার বাজেট আনুমানিক কত (লাখে)?` : `Thanks — noted your interest in ${next.manufacturer ?? ''} ${next.bodyType ?? 'cars'}. What is your approximate budget (in lakh)?`, vehicles: v.length ? v : undefined, prefs: next, intent: 'find-car' };
+      return { text: bn ? `ধন্যবাদ! ${next.manufacturer ?? ''} ${next.bodyType ?? 'গাড়ি'} পছন্দ নোট করেছি। আপনার বাজেট আনুমানিক কত (লাখে)?` : `Thanks , noted your interest in ${next.manufacturer ?? ''} ${next.bodyType ?? 'cars'}. What is your approximate budget (in lakh)?`, vehicles: v.length ? v : undefined, prefs: next, intent: 'find-car' };
     }
-    return { text: `${bn ? `আপনার পছন্দ মনে রাখছি — বাজেট ${next.budgetLakh} লাখ${next.hybrid ? ', Hybrid' : ''}. এই অপশনগুলো দেখুন:` : `Keeping your preferences — budget ${formatLakh(next.budgetLakh)}${next.hybrid ? ', hybrid' : ''}. Consider these options:`}${demoNote}`, vehicles: v, prefs: next, intent: 'find-car' };
+    return { text: `${bn ? `আপনার পছন্দ মনে রাখছি , বাজেট ${next.budgetLakh} লাখ${next.hybrid ? ', Hybrid' : ''}. এই অপশনগুলো দেখুন:` : `Keeping your preferences , budget ${formatLakh(next.budgetLakh)}${next.hybrid ? ', hybrid' : ''}. Consider these options:`}${demoNote}`, vehicles: v, prefs: next, intent: 'find-car' };
   }
   const v = pick();
-  return { text: bn ? 'বুঝতে পেরেছি। সেরা সাজেশন দিতে — বাজেট (লাখে) আর Hybrid চান কিনা জানাবেন?' : "Got it. To suggest the best options — could you share your budget (in lakh) and whether you'd like hybrid?", vehicles: v.length ? v.slice(0, 2) : undefined, prefs: next, intent: 'general' };
+  return { text: bn ? 'বুঝতে পেরেছি। সেরা সাজেশন দিতে , বাজেট (লাখে) আর Hybrid চান কিনা জানাবেন?' : "Got it. To suggest the best options , could you share your budget (in lakh) and whether you'd like hybrid?", vehicles: v.length ? v.slice(0, 2) : undefined, prefs: next, intent: 'general' };
 }
 
 /** Parse prefs deterministically (shared by mock + live path so memory never regresses). */
@@ -118,7 +118,7 @@ function detectIntent(t: string): ConversationIntent {
   return 'general';
 }
 
-/** Groq free-tier TPM can throttle mid-conversation — wait and retry (up to 2). */
+/** Groq free-tier TPM can throttle mid-conversation, wait and retry (up to 2). */
 const RATE_LIMIT_WAIT_MS = 18000;
 const RATE_LIMIT_RETRIES = 2;
 
@@ -136,7 +136,7 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
   const timer = setTimeout(() => ctrl.abort(), 70000);
   try {
     const msgs = [...history.slice(-10).map((m) => ({ role: m.role, content: m.text })), { role: 'user', content: input }];
-    // Candidates only drive the chat's vehicle cards — the KB (not this list) is
+    // Candidates only drive the chat's vehicle cards, the KB (not this list) is
     // what SparkPilot recommends from, so no conflicting context is sent.
     const candidates = filterDemoVehicles({ maxBudgetLakh: prefs.budgetLakh, hybrid: prefs.hybrid, bodyType: prefs.bodyType, make: prefs.manufacturer }).slice(0, 6);
     // Dual knowledge base: route to Car Sales KB and/or Car Services KB per the conversation.
@@ -150,10 +150,10 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
       });
     let r = await doFetch();
     for (let attempt = 0; r.status === 429 && attempt < RATE_LIMIT_RETRIES; attempt++) {
-      // Rate limited (tokens-per-minute) — cool down, then retry.
+      // Rate limited (tokens-per-minute): cool down, then retry.
       await new Promise((res) => setTimeout(res, RATE_LIMIT_WAIT_MS));
       if (external?.aborted) throw new DOMException('Aborted', 'AbortError');
-      if (ctrl.signal.aborted) return null; // internal timeout — fall back to mock
+      if (ctrl.signal.aborted) return null; // internal timeout, fall back to mock
       r = await doFetch();
     }
     if (!r.ok) return null;
@@ -176,7 +176,7 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
 }
 
 /**
- * Unified entry — tries real Groq (Polished Sales AI Expert) first,
+ * Unified entry: tries real Groq (Polished Sales AI Expert) first,
  * falls back to the deterministic local responder when the live model is unreachable.
  * All callers should use this instead of mockRespond directly.
  */

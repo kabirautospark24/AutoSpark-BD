@@ -27,7 +27,7 @@ export function SInput(props: InputHTMLAttributes<HTMLInputElement>) {
 
 /**
  * Agentic stream-style reveal: assistant words cascade in like a live model
- * is typing them. Pure CSS (single mount animation), screen-reader safe —
+ * is typing them. Pure CSS (single mount animation), screen-reader safe,
  * the full text is in the DOM from the first frame. Skipped under reduced motion.
  */
 export function RevealText({ text, reduce }: { text: string; reduce?: boolean }) {
@@ -70,5 +70,5 @@ export function LiveBadge() {
   );
 }
 
-/** @deprecated Use LiveBadge — kept for backwards compatibility. */
+/** @deprecated Use LiveBadge: kept for backwards compatibility. */
 export const DemoBadge = LiveBadge;

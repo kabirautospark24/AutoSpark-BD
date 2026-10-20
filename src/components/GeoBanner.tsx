@@ -37,12 +37,14 @@ export function GeoBanner() {
     if (import.meta.env.DEV) return;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
-    fetch('https://ipapi.co/json/', { signal: controller.signal })
-      .then(r => r.json())
-      .then(data => {
-        const allowed = data?.country_code === 'BD';
+    // Same-origin endpoint: the geo lookup runs server side, so the browser
+    // makes no cross-origin request and logs no CORS error.
+    fetch('/api/geo', { signal: controller.signal })
+      .then(r => (r.ok ? r.json() : { country: null }))
+      .then((data: { country?: string | null }) => {
+        const allowed = data?.country === 'BD';
         try { localStorage.setItem(CACHE_KEY, JSON.stringify({ allowed, ts: Date.now() })); } catch { /* ignore */ }
-        if (!allowed) setShow(true);
+        if (!allowed && data?.country) setShow(true);
       })
       .catch(() => { /* fail-open: legitimate users never blocked */ })
       .finally(() => clearTimeout(timeout));

@@ -65,11 +65,11 @@ export function LeadForm({ interestDefault = '', onDone }: { interestDefault?: s
       {input({ ...register('notes'), placeholder: 'Optional: colors, features, questions…' }, 'Additional notes (optional)')}
       <label className="flex gap-2.5 items-start text-xs cursor-pointer">
         <input type="checkbox" {...register('consent')} className="mt-1 w-4 h-4 accent-cyan-500" />
-        <span>I agree to be contacted by AutoSpark on WhatsApp about this inquiry. <span className="opacity-60">(Required — numbers are never stored in browser storage.)</span></span>
+        <span>I agree to be contacted by AutoSpark on WhatsApp about this inquiry. <span className="opacity-60">(Required. Numbers are never stored in browser storage.)</span></span>
       </label>
       {errors.consent && <span role="alert" className="block text-red-500 text-xs font-medium">{errors.consent.message}</span>}
       {error && <p role="alert" className="text-xs font-semibold text-red-500 bg-red-500/10 border border-red-500/30 rounded-xl px-3 py-2">{error}</p>}
-      {ok && <p role="status" className="text-xs font-semibold text-emerald-600 bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-2">Submitted! Reference {ok} — an expert will follow up shortly.</p>}
+      {ok && <p role="status" className="text-xs font-semibold text-emerald-600 bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-2">Submitted! Reference {ok} , an expert will follow up shortly.</p>}
       <SButton type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting…' : 'Request expert callback'}</SButton>
     </form>
   );

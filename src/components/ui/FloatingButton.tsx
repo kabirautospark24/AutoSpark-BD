@@ -164,7 +164,7 @@ export const FloatingButton = ({
     boxSizing: 'content-box',
     // touch optimizations
     touchAction: 'manipulation',
-    // WebKit tap highlight removal — set via string index to avoid TS typing issues
+    // WebKit tap highlight removal: set via string index to avoid TS typing issues
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     WebkitTapHighlightColor: 'transparent',

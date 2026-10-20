@@ -1,13 +1,13 @@
-/* AutoSpark Design Tokens — Generated Phase 1 from design-system/autospark/MASTER.md + taste-skill Ethereal Glass variance */
+/* AutoSpark Design Tokens: Generated Phase 1 from design-system/autospark/MASTER.md + taste-skill Ethereal Glass variance */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Geist:wght@400;500;600&display=swap');
 
 :root {
-  /* Palette — MASTER.md */
+  /* Palette: MASTER.md */
   --color-primary: #1C1917;
   --color-on-primary: #FFFFFF;
   --color-secondary: #44403C;
   --color-on-secondary: #FFFFFF;
-  --color-accent: #A16207; /* gold CTA — maps legacy #C00000 */
+  --color-accent: #A16207; /* gold CTA, maps legacy #C00000 */
   --color-on-accent: #FFFFFF;
   --color-background: #FAFAF9;
   --color-foreground: #0C0A09;
@@ -19,12 +19,12 @@
   --color-destructive: #DC2626;
   --color-ring: #1C1917;
 
-  /* Legacy alias — keep C00000 references working while migrating */
+  /* Legacy alias: keep C00000 references working while migrating */
   --brand-red: var(--color-accent);
   --bg-deep: #050505;
   --bg-ink: #000000;
 
-  /* Spacing — density 4/10 */
+  /* Spacing: density 4/10 */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -45,13 +45,13 @@
   --font-sans: "Montserrat", "Geist", system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
 
-  /* Effects — Liquid Glass */
+  /* Effects: Liquid Glass */
   --glass-bg: rgba(12,10,9,0.45);
   --glass-border: rgba(255,255,255,0.10);
   --glass-blur: blur(24px);
   --noise-opacity: 0.03;
 
-  /* Motion — variance 7 / motion 6 */
+  /* Motion: variance 7 / motion 6 */
   --ease-premium: cubic-bezier(0.32,0.72,0,1);
   --ease-out-quint: cubic-bezier(0.22,1,0.36,1);
   --duration-micro: 180ms;

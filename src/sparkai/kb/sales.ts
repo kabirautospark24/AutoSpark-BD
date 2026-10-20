@@ -1,5 +1,5 @@
 // ============================================================================
-// KB #1 — CAR SALES KNOWLEDGE BASE
+// KB #1: CAR SALES KNOWLEDGE BASE
 // Source of truth: KB/All Car Model, Package, Price & Details.md
 // ----------------------------------------------------------------------------
 // Every vehicle SparkPilot may recommend lives in CAR_MODELS below:
@@ -17,9 +17,9 @@ export interface KbOffer {
   years: string;
   /** Japanese auction grade as listed (e.g. '3.5/R' ready-stock, '4/4.5' pre-order). */
   grade: string;
-  /** Price in lakh as listed — may be a single figure, a range, or per-variant figures. */
+  /** Price in lakh as listed: may be a single figure, a range, or per-variant figures. */
   priceLakh: string;
-  /** Mileage exactly as listed on the source sheet (auction notation — confirm exact km with an expert). */
+  /** Mileage exactly as listed on the source sheet (auction notation, confirm exact km with an expert). */
   mileage: string;
 }
 
@@ -98,7 +98,7 @@ export const CAR_MODELS: KbCarModel[] = [
     ],
   },
   {
-    name: 'Mazda Axela', make: 'Mazda', body: 'Hatchback', variants: '—', cc: 1800, fuel: 'Hybrid',
+    name: 'Mazda Axela', make: 'Mazda', body: 'Hatchback', variants: '-', cc: 1800, fuel: 'Hybrid',
     unavailable: ['Non-Hybrid'],
     offers: [
       { availability: R, type: 'Hybrid', years: '2021', grade: '3.5/R', priceLakh: '32.50', mileage: '1.20' },
@@ -244,7 +244,7 @@ export const CAR_MODELS: KbCarModel[] = [
   },
 ];
 
-/** Lowest listed price (lakh) for a model — used for the budget index. */
+/** Lowest listed price (lakh) for a model: used for the budget index. */
 export function entryPriceLakh(m: KbCarModel): number {
   let min = Infinity;
   for (const o of m.offers) {
@@ -255,12 +255,12 @@ export function entryPriceLakh(m: KbCarModel): number {
 }
 
 export const SALES_KB_SOURCE_NOTE =
-  'Source: AutoSpark official price sheet — KB/All Car Model, Package, Price & Details.md.';
+  'Source: AutoSpark official price sheet , KB/All Car Model, Package, Price & Details.md.';
 
 function lineupText(): string {
   const lines: string[] = [];
   for (const m of CAR_MODELS) {
-    lines.push(`## ${m.name} | ${m.variants !== '—' ? `variants ${m.variants}, ` : ''}${m.cc} cc | ${m.fuel} | ${m.body}`);
+    lines.push(`## ${m.name} | ${m.variants !== '-' ? `variants ${m.variants}, ` : ''}${m.cc} cc | ${m.fuel} | ${m.body}`);
     for (const o of m.offers) {
       lines.push(
         `- ${o.availability} · ${o.type} · Years ${o.years} · Grade ${o.grade} · ৳${o.priceLakh} lakh · Mileage ${o.mileage}`,
@@ -281,18 +281,18 @@ function priceIndexText(): string {
 /** Flatten the sales KB into a single system-prompt-ready text block. */
 export function buildSalesKbText(): string {
   return [
-    '### AUTOSPARK CAR SALES KNOWLEDGE BASE (verified — the ONLY vehicles SparkPilot may recommend) ###',
+    '### AUTOSPARK CAR SALES KNOWLEDGE BASE (verified , the ONLY vehicles SparkPilot may recommend) ###',
     'NOTATION:',
-    '- Prices are in Bangladeshi lakh (৳ lakh). Some entries show per-grade or per-variant figures (e.g. "43/44/47/48") or a range — present the range and confirm the exact variant price with an expert.',
+    '- Prices are in Bangladeshi lakh (৳ lakh). Some entries show per-grade or per-variant figures (e.g. "43/44/47/48") or a range , present the range and confirm the exact variant price with an expert.',
     '- Grade is the Japanese auction grade as listed: "3.5/R" = typical ready-stock grade (body/interior), "4/4.5" = typical pre-order grade.',
-    '- Mileage is exactly as listed on the source auction sheet (e.g. "1.20", "60/70") — never convert or invent exact km; tell customers an expert can confirm the exact reading.',
+    '- Mileage is exactly as listed on the source auction sheet (e.g. "1.20", "60/70") , never convert or invent exact km; tell customers an expert can confirm the exact reading.',
     '- "Ready Stock" = car is in Bangladesh now. "Pre-order" = sourced via Japan auction/import; price and grade are typical, final vehicle is confirmed per order.',
     '- Never claim a model, variant, year, grade, fuel type, or price that is not listed below. If a customer wants something unlisted, offer Japan pre-order sourcing via an expert.',
     '',
     '[FULL MODEL MATRIX]',
     lineupText(),
     '',
-    '[BUDGET QUICK INDEX — lowest listed price per model]',
+    '[BUDGET QUICK INDEX , lowest listed price per model]',
     priceIndexText(),
     '',
     '[ABOUT AUTOSPARK SALES]',
@@ -301,13 +301,13 @@ export function buildSalesKbText(): string {
       'Showroom hours: Saturday–Thursday, 9:00–18:00. Expert/WhatsApp: +880 1760-401605.',
     ].join('\n'),
     '',
-    '[JAPAN PRE-ORDER / AUCTION IMPORT — how it works]',
+    '[JAPAN PRE-ORDER / AUCTION IMPORT , how it works]',
     [
       '1) Customer shares desired model + variant + year + budget.',
       '2) AutoSpark sources Japanese auction/dealer options and shares verified listings with photos, auction-sheet translation, and landed-cost estimate.',
       '3) Customer confirms the vehicle and pays the agreed booking amount.',
       '4) AutoSpark handles purchase, export documents, shipping, customs, registration support, and delivery in Bangladesh.',
-      'Never quote a fixed delivery date — promise an expert-confirmed timeline instead.',
+      'Never quote a fixed delivery date , promise an expert-confirmed timeline instead.',
     ].join('\n'),
     '',
     '[FINANCING]',
@@ -325,10 +325,10 @@ export function buildSalesKbText(): string {
     '[SALES FAQS]',
     [
       '1. Q: Are the listed prices final? A: They are the official listed prices; the expert confirms the exact variant price and availability before booking.',
-      '2. Q: Do you offer test drives? A: Yes — share your name and WhatsApp number and an expert will arrange a test drive in Rajshahi.',
+      '2. Q: Do you offer test drives? A: Yes , share your name and WhatsApp number and an expert will arrange a test drive in Rajshahi.',
       '3. Q: What is ready stock vs pre-order? A: Ready stock is already in Bangladesh and can be viewed/booked now; pre-order is sourced fresh from Japan (typical grade/price shown, final vehicle confirmed per order).',
-      '4. Q: Do you take trade-ins? A: An expert can evaluate your current car for exchange — share details via WhatsApp (+880 1760-401605).',
-      '5. Q: Why are pre-order mileage figures different? A: Pre-order cars are sourced per order; the listed figure is typical — the exact vehicle is confirmed with photos and auction sheet.',
+      '4. Q: Do you take trade-ins? A: An expert can evaluate your current car for exchange , share details via WhatsApp (+880 1760-401605).',
+      '5. Q: Why are pre-order mileage figures different? A: Pre-order cars are sourced per order; the listed figure is typical , the exact vehicle is confirmed with photos and auction sheet.',
     ].join('\n'),
     '',
     SALES_KB_SOURCE_NOTE,

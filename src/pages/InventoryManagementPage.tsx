@@ -20,7 +20,7 @@ const STAT_COLOR_CLASSES: Record<string, string> = {
   green: 'text-green-500',
   yellow: 'text-yellow-500',
   red: 'text-red-500',
-  purple: 'text-purple-500',
+  gold: 'text-amber-700',
 };
 
 type FilterStatus = 'all' | 'in-stock' | 'low-stock' | 'out-of-stock';
@@ -118,7 +118,7 @@ const InventoryManagementPage: React.FC = () => {
         ];
         setProducts(mockProducts);
       } catch (error) {
-        console.error('Error loading products:', error);
+        console.warn('Products could not be loaded:', error);
       } finally {
         setLoading(false);
       }
@@ -195,7 +195,7 @@ const InventoryManagementPage: React.FC = () => {
             { label: t('inStock'), value: stats.inStock, icon: TrendingUp, color: 'green' },
             { label: t('lowStock'), value: stats.lowStock, icon: AlertTriangle, color: 'yellow' },
             { label: t('outOfStock'), value: stats.outOfStock, icon: Eye, color: 'red' },
-            { label: t('totalValue'), value: `৳${(stats.totalValue / 1000).toFixed(0)}K`, icon: Package, color: 'purple' },
+            { label: t('totalValue'), value: `৳${(stats.totalValue / 1000).toFixed(0)}K`, icon: Package, color: 'gold' },
           ].map((stat, index) => (
             <motion.div
               key={index}
@@ -259,7 +259,7 @@ const InventoryManagementPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Products — Mobile Card Layout */}
+        {/* Products: Mobile Card Layout */}
         <div className="md:hidden space-y-3">
           <AnimatePresence>
             {filteredProducts.length > 0 ? (
@@ -340,7 +340,7 @@ const InventoryManagementPage: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {/* Products Table — Desktop */}
+        {/* Products Table: Desktop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

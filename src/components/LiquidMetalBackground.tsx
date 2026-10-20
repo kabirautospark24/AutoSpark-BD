@@ -152,7 +152,7 @@ export const LiquidMetalBackground = ({
       vec3 baseColorDark, highlightColorDark, accentColorDark;
       vec3 baseColorLight, highlightColorLight, accentColorLight;
       
-      // Dark mode - deep metallic chrome with blue/purple tints
+      // Dark mode - deep metallic chrome with blue/gold tints
       baseColorDark = vec3(0.08, 0.09, 0.12);
       highlightColorDark = vec3(0.4, 0.45, 0.55);
       accentColorDark = vec3(0.3, 0.5, 0.9);

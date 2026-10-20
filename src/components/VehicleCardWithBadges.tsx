@@ -63,7 +63,7 @@ export const VehicleCardWithBadges = ({
         animation: { scale: [1, 1.15, 1] },
       },
       'featured': {
-        bg: 'bg-gradient-to-r from-purple-500 to-indigo-600',
+        bg: 'bg-gradient-to-r from-amber-700 to-[#0061EB]',
         icon: <Star className="w-4 h-4" />,
         label: language === 'en' ? 'Featured' : 'বৈশিষ্ট্যযুক্ত',
         animation: { rotate: [0, 360] },

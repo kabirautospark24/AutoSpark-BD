@@ -76,7 +76,7 @@ export const FloatingParticlesBackground = ({
         case 'star':
           return 'text-yellow-400/30';
         case 'circle':
-          return 'text-purple-400/30';
+          return 'text-amber-600/30';
         case 'geometric':
           return 'text-cyan-400/30';
         default:
@@ -89,7 +89,7 @@ export const FloatingParticlesBackground = ({
         case 'star':
           return 'text-yellow-300/20';
         case 'circle':
-          return 'text-purple-300/20';
+          return 'text-amber-600/20';
         case 'geometric':
           return 'text-cyan-300/20';
         default:
@@ -225,7 +225,9 @@ export const FloatingParticlesBackground = ({
               ease: 'easeInOut',
             }}
           >
-            {/* Morphing geometric shape */}
+            {/* Morphing geometric shape. The shape is rotated with CSS: the
+                animation engine cannot interpolate an SVG points string and
+                wrote "undefined" into the attribute. */}
             <svg
               viewBox="0 0 100 100"
               className="w-full h-full"
@@ -233,20 +235,10 @@ export const FloatingParticlesBackground = ({
               stroke="currentColor"
               strokeWidth="1.5"
             >
-              <motion.polygon
+              <polygon
+                className="as-morph-poly"
+                style={{ animationDuration: `${particle.duration}s` }}
                 points="50,10 90,40 70,90 30,90 10,40"
-                animate={{
-                  points: [
-                    '50,10 90,40 70,90 30,90 10,40',
-                    '50,20 85,35 75,85 25,85 15,35',
-                    '50,10 90,40 70,90 30,90 10,40',
-                  ],
-                }}
-                transition={{
-                  duration: particle.duration,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
               />
             </svg>
           </motion.div>
@@ -270,7 +262,7 @@ export const FloatingParticlesBackground = ({
         className={`absolute inset-0 ${
           theme === 'dark'
             ? 'bg-gradient-to-br from-gray-900/50 via-transparent to-gray-900/50'
-            : 'bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/30'
+            : 'bg-gradient-to-br from-blue-50/30 via-transparent to-red-50/30'
         }`}
       />
 
@@ -290,95 +282,58 @@ export const FloatingParticlesBackground = ({
         {particles.map((particle) => renderParticle(particle))}
       </motion.div>
 
-      {/* Morphing circles background elements */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        viewBox="0 0 1000 1000"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        {/* Animated morphing blob 1 */}
-        <motion.circle
-          cx="200"
-          cy="200"
-          r="150"
-          fill={theme === 'dark' ? '#3b82f6' : '#dbeafe'}
-          opacity="0.03"
-          animate={{
-            r: [150, 200, 150],
-            cx: [200, 250, 200],
-            cy: [200, 150, 200],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-
-        {/* Animated morphing blob 2 */}
-        <motion.circle
-          cx="800"
-          cy="300"
-          r="180"
-          fill={theme === 'dark' ? '#a855f7' : '#e9d5ff'}
-          opacity="0.03"
-          animate={{
-            r: [180, 220, 180],
-            cx: [800, 750, 800],
-            cy: [300, 350, 300],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 1,
-          }}
-        />
-
-        {/* Animated morphing blob 3 */}
-        <motion.circle
-          cx="500"
-          cy="800"
-          r="200"
-          fill={theme === 'dark' ? '#06b6d4' : '#cffafe'}
-          opacity="0.02"
-          animate={{
-            r: [200, 250, 200],
-            cx: [500, 450, 500],
-            cy: [800, 750, 800],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 2,
-          }}
-        />
-
-        {/* Pulsing gradient circles */}
-        {[1, 2, 3, 4].map((circle) => (
-          <motion.circle
-            key={`pulse-${circle}`}
-            cx={250 * circle}
-            cy={250 * circle}
-            r="50"
-            fill="none"
-            stroke={theme === 'dark' ? '#3b82f6' : '#60a5fa'}
-            strokeWidth="1"
-            opacity="0.1"
-            animate={{
-              r: [50, 100, 50],
-              opacity: [0.1, 0.05, 0.1],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: circle * 0.5,
-            }}
+        {/* Morphing circles background elements.
+            These animate SVG geometry (r/cx/cy) with CSS keyframes: the motion
+            engine writes "undefined" into those attributes on the first frame,
+            which produced <circle> attribute errors in the console. */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <circle
+            className="as-blob-1"
+            cx="200"
+            cy="200"
+            r="150"
+            fill={theme === 'dark' ? '#3b82f6' : '#dbeafe'}
+            opacity="0.03"
           />
-        ))}
-      </svg>
+
+          <circle
+            className="as-blob-2"
+            cx="800"
+            cy="300"
+            r="180"
+            fill={theme === 'dark' ? '#D97706' : '#FDE68A'}
+            opacity="0.03"
+          />
+
+          <circle
+            className="as-blob-3"
+            cx="500"
+            cy="800"
+            r="200"
+            fill={theme === 'dark' ? '#06b6d4' : '#cffafe'}
+            opacity="0.02"
+          />
+
+          {/* Pulsing gradient circles */}
+          {[1, 2, 3, 4].map((circle) => (
+            <circle
+              key={`pulse-${circle}`}
+              className="as-pulse"
+              style={{ animationDelay: `${circle * 0.5}s` }}
+              cx={250 * circle}
+              cy={250 * circle}
+              r="50"
+              fill="none"
+              stroke={theme === 'dark' ? '#3b82f6' : '#60a5fa'}
+              strokeWidth="1"
+              opacity="0.1"
+            />
+          ))}
+        </svg>
     </div>
   );
 };

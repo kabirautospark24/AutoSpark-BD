@@ -80,7 +80,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             transition={{ duration: 3, repeat: Infinity }}
           />
 
-          {/* Floating particles — reduced for performance */}
+          {/* Floating particles: reduced for performance */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(6)].map((_, i) => (
               <motion.div
@@ -106,7 +106,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             ))}
           </div>
 
-          {/* Light rays — reduced for performance */}
+          {/* Light rays: reduced for performance */}
           <div className="absolute inset-0 overflow-hidden">
             {[...Array(3)].map((_, i) => (
               <motion.div

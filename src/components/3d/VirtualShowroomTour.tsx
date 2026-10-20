@@ -113,9 +113,9 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
       className="w-full bg-white rounded-2xl overflow-hidden shadow-xl"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-6 md:p-8 text-white">
+      <div className="bg-gradient-to-r from-[#A16207] to-red-800 p-6 md:p-8 text-white">
         <h2 className="text-3xl font-bold mb-2">Virtual Showroom Tour</h2>
-        <p className="text-purple-100">Explore our facilities in 360°</p>
+        <p className="text-red-100">Explore our facilities in 360°</p>
       </div>
 
       {/* Main Viewer */}

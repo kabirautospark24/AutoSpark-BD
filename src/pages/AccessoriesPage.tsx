@@ -739,7 +739,7 @@ const categoryData: { id: string; name: string; icon: LucideIcon; color: string 
   { id: 'all', name: 'All Products', icon: Grid, color: 'from-gray-500 to-gray-700' },
   { id: 'Interior', name: 'Interior', icon: Package, color: 'from-blue-500 to-blue-700' },
   { id: 'Exterior', name: 'Exterior', icon: Shield, color: 'from-green-500 to-green-700' },
-  { id: 'Electronics', name: 'Electronics', icon: Zap, color: 'from-purple-500 to-purple-700' },
+  { id: 'Electronics', name: 'Electronics', icon: Zap, color: 'from-amber-700 to-red-700' },
   { id: 'Lighting', name: 'Lighting', icon: Sparkles, color: 'from-yellow-500 to-orange-500' },
   { id: 'Performance', name: 'Performance', icon: TrendingUp, color: 'from-red-500 to-red-700' },
   { id: 'Oils & Lubricants', name: 'Oils & Lubricants', icon: Droplet, color: 'from-amber-500 to-orange-600' }
@@ -877,7 +877,7 @@ const PriceRangeSlider: React.FC<{
       <div className="relative h-2">
         <div className={`absolute w-full h-2 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
         <div
-          className="absolute h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+          className="absolute h-2 bg-gradient-to-r from-blue-500 to-amber-700 rounded-full"
           style={{ left: `${minPercent}%`, width: `${maxPercent - minPercent}%` }}
         />
         <input
@@ -898,7 +898,7 @@ const PriceRangeSlider: React.FC<{
           onChange={handleMaxChange}
           onMouseUp={handleMouseUp}
           onTouchEnd={handleMouseUp}
-          className="absolute w-full h-2 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-purple-500 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
+          className="absolute w-full h-2 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-amber-700 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
         />
       </div>
       <div className="flex justify-between">
@@ -965,7 +965,7 @@ const ProductCard: React.FC<{
         )}
       </div>
 
-      {/* Quick Actions — always visible on touch/small screens; hover-reveal only from lg */}
+      {/* Quick Actions: always visible on touch/small screens; hover-reveal only from lg */}
       <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 transition-all duration-300 opacity-100 translate-x-0 lg:opacity-0 lg:translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 lg:group-focus-within:opacity-100 lg:group-focus-within:translate-x-0">
         <motion.button
           whileHover={{ scale: 1.1 }}
@@ -995,8 +995,8 @@ const ProductCard: React.FC<{
           onClick={() => onToggleCompare(product)}
           className={`p-2 rounded-full shadow-lg transition-colors ${
             isInCompare
-              ? 'bg-purple-500 text-white'
-              : isDark ? 'bg-gray-700 text-white hover:bg-purple-500' : 'bg-white text-gray-700 hover:bg-purple-500 hover:text-white'
+              ? 'bg-amber-700 text-white'
+              : isDark ? 'bg-gray-700 text-white hover:bg-amber-700' : 'bg-white text-gray-700 hover:bg-amber-700 hover:text-white'
           }`}
         >
           <RefreshCw size={18} />
@@ -1150,7 +1150,7 @@ const ProductCard: React.FC<{
             className={`flex-1 py-2 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors ${
               product.stock_quantity === 0
                 ? 'bg-gray-400 cursor-not-allowed text-gray-200'
-                : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg'
+                : 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:shadow-lg'
             }`}
           >
             <ShoppingCart size={16} />
@@ -1378,7 +1378,7 @@ const QuickViewModal: React.FC<{
                     className={`flex-1 py-3 px-6 rounded-xl font-semibold flex items-center justify-center gap-2 ${
                       product.stock_quantity === 0
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                        : 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white'
                     }`}
                   >
                     <ShoppingCart size={20} />
@@ -1449,7 +1449,7 @@ const ComparePanel: React.FC<{
         }`}
       >
         <div className="flex items-center gap-2">
-          <RefreshCw className="text-purple-500" size={20} />
+          <RefreshCw className="text-amber-700" size={20} />
           <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
             Compare ({items.length})
           </span>
@@ -1513,7 +1513,7 @@ const ComparePanel: React.FC<{
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl"
+                  className="w-full py-3 bg-gradient-to-r from-[#A16207] to-blue-600 text-white font-semibold rounded-xl"
                 >
                   Compare Now
                 </motion.button>
@@ -1581,7 +1581,7 @@ const FloatingCartBar: React.FC<{
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenCart}
-              className="px-8 py-3 min-h-[44px] text-sm sm:text-base bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl flex items-center gap-2"
+              className="px-8 py-3 min-h-[44px] text-sm sm:text-base bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold rounded-xl flex items-center gap-2"
             >
               View Cart
               <ArrowRight size={18} />
@@ -1731,7 +1731,7 @@ const SideCartDrawer: React.FC<{
                   whileTap={{ scale: 0.98 }}
                   onClick={onCheckout}
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-lg transition-shadow disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-bold rounded-xl hover:shadow-lg transition-shadow disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -1888,7 +1888,7 @@ const CheckoutModal: React.FC<{
               <button
                 onClick={onSubmit}
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
               >
                 {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
                 {isSubmitting ? 'Redirecting...' : 'Confirm & Pay'}
@@ -2072,7 +2072,7 @@ function AccessoriesPage() {
           console.log('⚠️ Database empty, using demo products:', fallbackProducts.length, 'products');
         }
       } catch (error) {
-        console.error('❌ Error fetching products:', error);
+        console.warn('Products could not be loaded, showing the local catalogue:', error);
         // Fallback to demo products on error
         setProducts(dedupeProducts(demoProductsWithP2));
       } finally {
@@ -2083,7 +2083,7 @@ function AccessoriesPage() {
     // No return value here
   }, []);
 
-  // Cart functions — synced to global cart (A-02)
+  // Cart functions: synced to global cart (A-02)
   const addToCart = useCallback((product: AccessoryProduct, quantity: number = 1) => {
     setCart(prev => {
       const existing = prev.find(item => item.product.id === product.id);
@@ -2745,8 +2745,8 @@ function AccessoriesPage() {
                     onClick={() => { setSearchInput(tag); setSearchTerm(tag); }}
                     className={`px-4 py-2 rounded-full text-sm transition-colors ${
                       isDark
-                        ? 'bg-gray-800 text-gray-300 hover:bg-purple-500/20 hover:text-purple-400'
-                        : 'bg-white/80 text-gray-600 hover:bg-purple-100 hover:text-purple-600'
+                        ? 'bg-gray-800 text-gray-300 hover:bg-amber-700/20 hover:text-amber-600'
+                        : 'bg-white/80 text-gray-600 hover:bg-red-100 hover:text-[#A16207]'
                     }`}
                   >
                     {tag}
@@ -2777,7 +2777,7 @@ function AccessoriesPage() {
               transition={{ delay: 0.5 + i * 0.1 }}
               className={`p-4 rounded-2xl ${isDark ? 'bg-white/5 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm shadow-lg'}`}
             >
-              <stat.icon className={`mx-auto mb-2 ${isDark ? 'text-purple-400' : 'text-purple-600'}`} size={28} />
+              <stat.icon className={`mx-auto mb-2 ${isDark ? 'text-amber-600' : 'text-[#A16207]'}`} size={28} />
               <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{stat.value}</div>
               <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
             </motion.div>
@@ -2867,7 +2867,7 @@ function AccessoriesPage() {
                   </h3>
                   <button
                     onClick={clearAllFilters}
-                    className={`text-sm ${isDark ? 'text-purple-400' : 'text-purple-600'}`}
+                    className={`text-sm ${isDark ? 'text-amber-600' : 'text-[#A16207]'}`}
                   >
                     Clear All
                   </button>
@@ -2898,7 +2898,7 @@ function AccessoriesPage() {
                         key={brand}
                         className={`flex items-center gap-3 cursor-pointer p-2 rounded-lg transition-colors ${
                           selectedBrands.includes(brand)
-                            ? isDark ? 'bg-purple-500/20' : 'bg-purple-50'
+                            ? isDark ? 'bg-amber-700/20' : 'bg-red-50'
                             : ''
                         }`}
                       >
@@ -2912,7 +2912,7 @@ function AccessoriesPage() {
                                 : [...prev, brand]
                             );
                           }}
-                          className="w-4 h-4 rounded text-purple-600"
+                          className="w-4 h-4 rounded text-[#A16207]"
                         />
                         <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           {brand}
@@ -2934,7 +2934,7 @@ function AccessoriesPage() {
                         onClick={() => setMinRating(rating === minRating ? 0 : rating)}
                         className={`flex items-center gap-2 w-full p-2 rounded-lg transition-colors ${
                           minRating === rating
-                            ? isDark ? 'bg-purple-500/20' : 'bg-purple-50'
+                            ? isDark ? 'bg-amber-700/20' : 'bg-red-50'
                             : isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
                         }`}
                       >
@@ -2956,7 +2956,7 @@ function AccessoriesPage() {
                     <div
                       onClick={() => setInStockOnly(!inStockOnly)}
                       className={`relative w-12 h-6 rounded-full transition-colors ${
-                        inStockOnly ? 'bg-purple-600' : isDark ? 'bg-gray-600' : 'bg-gray-300'
+                        inStockOnly ? 'bg-[#A16207]' : isDark ? 'bg-gray-600' : 'bg-gray-300'
                       }`}
                     >
                       <motion.div
@@ -3011,14 +3011,14 @@ function AccessoriesPage() {
                   <div className={`flex rounded-lg overflow-hidden ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
                     <button
                       onClick={() => setViewMode('grid')}
-                      className={`p-2 ${viewMode === 'grid' ? 'bg-purple-600 text-white' : ''}`}
+                      className={`p-2 ${viewMode === 'grid' ? 'bg-[#A16207] text-white' : ''}`}
                       aria-label="Grid view"
                     >
                       <Grid size={18} />
                     </button>
                     <button
                       onClick={() => setViewMode('list')}
-                      className={`p-2 ${viewMode === 'list' ? 'bg-purple-600 text-white' : ''}`}
+                      className={`p-2 ${viewMode === 'list' ? 'bg-[#A16207] text-white' : ''}`}
                       aria-label="List view"
                     >
                       <List size={18} />
@@ -3036,7 +3036,7 @@ function AccessoriesPage() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm ${
-                        isDark ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'
+                        isDark ? 'bg-amber-700/20 text-amber-600' : 'bg-red-100 text-[#A16207]'
                       }`}
                     >
                       {filter.label}
@@ -3078,7 +3078,7 @@ function AccessoriesPage() {
                   </p>
                   <button
                     onClick={clearAllFilters}
-                    className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg"
+                    className="mt-4 px-6 py-2 bg-[#A16207] text-white rounded-lg"
                   >
                     Clear Filters
                   </button>
@@ -3140,7 +3140,7 @@ function AccessoriesPage() {
                   <h3 className={`font-medium text-sm line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {product.name_en}
                   </h3>
-                  <p className={`text-sm font-bold mt-1 ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
+                  <p className={`text-sm font-bold mt-1 ${isDark ? 'text-amber-600' : 'text-[#A16207]'}`}>
                     {formatPrice(product.price)}
                   </p>
                 </motion.div>

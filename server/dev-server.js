@@ -298,6 +298,18 @@ async function handleSparkPilot(req, res) {
 app.post('/api/sparkai/chat', handleSparkPilot);
 app.post('/api/agent', handleSparkPilot);
 
+// Mirrors api/geo.ts so the regional banner behaves the same in local dev.
+app.get('/api/geo', async (_req, res) => {
+  try {
+    const response = await fetch('https://api.country.is/', { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`lookup failed with status ${response.status}`);
+    const data = await response.json();
+    return res.status(200).json({ country: data?.country ?? null });
+  } catch {
+    return res.status(200).json({ country: null });
+  }
+});
+
 app.post('/api/lead/submit', (req, res) => {
   const { name, whatsapp, language, interest, budgetRange, timeline, notes, consent } = req.body ?? {};
   if (!name || name.trim().length < 2) return res.status(400).json({ error: 'Name is required' });

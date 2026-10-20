@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 interface ProgressBarProps {
   progress: number;
   theme: string;
-  color?: 'blue' | 'green' | 'red' | 'yellow' | 'purple';
+  color?: 'blue' | 'green' | 'red' | 'yellow' | 'gold';
   showLabel?: boolean;
   animated?: boolean;
   striped?: boolean;
@@ -15,7 +15,7 @@ const colorClasses = {
   green: 'bg-gradient-to-r from-green-400 to-green-600',
   red: 'bg-gradient-to-r from-red-400 to-red-600',
   yellow: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
-  purple: 'bg-gradient-to-r from-purple-400 to-purple-600',
+  gold: 'bg-gradient-to-r from-amber-600 to-[#A16207]',
 };
 
 export const ProgressBar = ({
@@ -81,7 +81,7 @@ interface MultiProgressBarProps {
   sections: {
     label: string;
     value: number;
-    color: 'blue' | 'green' | 'red' | 'yellow' | 'purple';
+    color: 'blue' | 'green' | 'red' | 'yellow' | 'gold';
   }[];
   theme: string;
   height?: number;
@@ -144,7 +144,7 @@ interface CircularProgressProps {
   size?: number;
   strokeWidth?: number;
   showLabel?: boolean;
-  color?: 'blue' | 'green' | 'red' | 'yellow' | 'purple';
+  color?: 'blue' | 'green' | 'red' | 'yellow' | 'gold';
 }
 
 export const CircularProgress = ({
@@ -165,7 +165,7 @@ export const CircularProgress = ({
     green: '#10b981',
     red: '#ef4444',
     yellow: '#f59e0b',
-    purple: '#a855f7',
+    gold: '#D97706',
   };
 
   const bgColor = theme === 'dark' ? '#374151' : '#e5e7eb';

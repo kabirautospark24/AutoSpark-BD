@@ -1,13 +1,6 @@
-import { Link } from 'react-router-dom';
-
 function LegalShell({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) {
   return (
     <div className="container mx-auto px-4 sm:px-6 py-section-md">
-      <nav aria-label="Breadcrumb" className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-        <Link to="/" className="hover:text-[var(--brand-red,#C00000)]">Home</Link>
-        <span aria-hidden className="mx-2">/</span>
-        <span aria-current="page">{title}</span>
-      </nav>
       <h1 className="text-[clamp(1.75rem,4vw,2.75rem)] font-bold tracking-tight text-balance">{title}</h1>
       <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Last updated: {updated}</p>
       <article className="mt-8 max-w-[65ch] space-y-6 text-[15px] leading-relaxed text-gray-700 dark:text-gray-300 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-gray-900 [&_h2]:mt-10 [&_h2]:mb-2 [&_h2]:text-balance [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1">
@@ -26,8 +19,8 @@ export function PrivacyPage() {
       </p>
       <h2>Information you give us</h2>
       <ul>
-        <li>Contact & sell-your-car forms: name, phone, email, and your message — used only to reply to your enquiry.</li>
-        <li>Checkout: delivery name, phone, district, thana, and address — used to fulfil your order. Payments are processed by SSLCommerz; we never store your card details.</li>
+        <li>Contact & sell-your-car forms: name, phone, email, and your message , used only to reply to your enquiry.</li>
+        <li>Checkout: delivery name, phone, district, thana, and address , used to fulfil your order. Payments are processed by SSLCommerz; we never store your card details.</li>
         <li>SparkPilot assistant chats stay in your browser session and are sent to our AI provider only to generate a reply. Don't share passwords or card numbers in chat.</li>
       </ul>
       <h2>Information collected automatically</h2>
@@ -61,7 +54,7 @@ export function TermsPage() {
       </p>
       <h2>Vehicles & pricing</h2>
       <ul>
-        <li>Prices, specifications, and availability are confirmed by an AutoSpark expert before any booking — website prices are indicative until confirmed in writing.</li>
+        <li>Prices, specifications, and availability are confirmed by an AutoSpark expert before any booking , website prices are indicative until confirmed in writing.</li>
         <li>Ready-stock and pre-order vehicles are labelled as such. Pre-order is a request to source a vehicle from Japan, not a confirmed booking or auction win.</li>
         <li>Import duties, registration, and delivery charges, if applicable, are communicated before confirmation.</li>
       </ul>
@@ -82,7 +75,7 @@ export function TermsPage() {
       </p>
       <h2>Contact</h2>
       <p>
-        AutoSpark BD, Station Road (Sheroil), Boalia, Rajshahi —{' '}
+        AutoSpark BD, Station Road (Sheroil), Boalia, Rajshahi{' '}
         <a href="mailto:autosparkbd@gmail.com" className="text-[var(--brand-red,#C00000)] underline">autosparkbd@gmail.com</a> ·{' '}
         <a href="tel:+8801760401605" className="text-[var(--brand-red,#C00000)] underline">+880 1760-401605</a>.
       </p>

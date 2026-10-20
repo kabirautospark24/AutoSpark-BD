@@ -37,7 +37,7 @@ const badgeConfig: Record<BadgeType, {
   },
   'featured': {
     icon: <Sparkles className="w-4 h-4" />,
-    colors: { bg: 'bg-purple-100', text: 'text-purple-700', darkBg: 'dark:bg-purple-900/30', darkText: 'dark:text-purple-400' },
+    colors: { bg: 'bg-red-100', text: 'text-red-700', darkBg: 'dark:bg-red-900/30', darkText: 'dark:text-amber-600' },
     animation: 'pulse',
   },
 };

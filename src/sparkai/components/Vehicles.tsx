@@ -74,7 +74,7 @@ export function ExpertHandoff({ interest }: { interest?: string }) {
   return (
     <div className="flex flex-col gap-2">
       <SButton onClick={() => window.open(buildWhatsAppUrl(msg), '_blank', 'noopener')}>
-        Open WhatsApp — {SPARKPILOT_CONFIG.phoneDisplay}
+        Open WhatsApp , {SPARKPILOT_CONFIG.phoneDisplay}
       </SButton>
       <p className="text-[11px] opacity-60">Opens WhatsApp with a pre-filled message. Submitting the lead form below is a separate step and notifies our team directly.</p>
     </div>

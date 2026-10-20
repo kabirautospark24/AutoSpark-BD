@@ -58,7 +58,7 @@ export const PaymentSuccessPage = () => {
           }
         } catch (err) {
           if (!isMounted) return;
-          console.error('Error checking payment status:', err);
+          console.warn('Could not read the payment status:', err);
         }
 
         await new Promise((resolve) => setTimeout(resolve, 3000));

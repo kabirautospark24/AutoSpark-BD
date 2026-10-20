@@ -85,7 +85,7 @@ export function lazyWithRetry<T extends ComponentType<any>>(
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
         const mod = await importer();
-        // Successful load — allow future chunk errors to reload again.
+        // Successful load: allow future chunk errors to reload again.
         clearChunkReloadFlag();
         return mod;
       } catch (err) {

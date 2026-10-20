@@ -43,7 +43,7 @@ export const VehicleSpecCardBack = ({
     'Petrol': 'bg-orange-500',
     'Diesel': 'bg-green-700',
     'Hybrid': 'bg-blue-600',
-    'Electric': 'bg-purple-600',
+    'Electric': 'bg-[#A16207]',
   };
 
   const safetyStars = vehicle.safetyRating ? Array(Math.min(vehicle.safetyRating, 5)).fill(0) : [];

@@ -180,13 +180,13 @@ export const GradientOrbs = ({ theme }: GradientOrbsProps) => {
   const colors =
     theme === 'dark'
       ? [
-        { color: 'from-blue-600 to-purple-600', x: '-20%', y: '-30%' },
-        { color: 'from-purple-600 to-pink-600', x: '50%', y: '-60%' },
+        { color: 'from-blue-600 to-[#A16207]', x: '-20%', y: '-30%' },
+        { color: 'from-[#A16207] to-pink-600', x: '50%', y: '-60%' },
         { color: 'from-pink-600 to-orange-600', x: '80%', y: '10%' },
       ]
       : [
-        { color: 'from-blue-400 to-purple-400', x: '-20%', y: '-30%' },
-        { color: 'from-purple-400 to-pink-400', x: '50%', y: '-60%' },
+        { color: 'from-blue-400 to-amber-600', x: '-20%', y: '-30%' },
+        { color: 'from-amber-600 to-pink-400', x: '50%', y: '-60%' },
         { color: 'from-pink-400 to-orange-400', x: '80%', y: '10%' },
       ];
 

@@ -1,7 +1,7 @@
 // ============================================================================
-// KB #2 — CAR SERVICES KNOWLEDGE BASE
+// KB #2: CAR SERVICES KNOWLEDGE BASE
 // Source of truth: KB/All Car Model, Package, Price & Details.md (official
-// price list) — all prices below are VERIFIED against that list.
+// price list): all prices below are VERIFIED against that list.
 // ----------------------------------------------------------------------------
 // ► TO EXTEND: add only services with a confirmed price (e.g. hybrid battery
 //   health check, PPF) to the catalog with their real charge. Never quote a
@@ -25,9 +25,9 @@ export interface ServicesKb {
 
 export const CAR_SERVICES_KB: ServicesKb = {
   about: [
-    'AutoSpark Service Center — professional car care in Rajshahi, Bangladesh. All brands serviced (including Japanese hybrids), by certified technicians.',
+    'AutoSpark Service Center , professional car care in Rajshahi, Bangladesh. All brands serviced (including Japanese hybrids), by certified technicians.',
     'Service hours: Saturday–Thursday, 9:00–18:00. Booking/WhatsApp: +880 1760-401605.',
-    'All prices below are from the official AutoSpark price list. If a requested service is not listed, do not invent a price — say an expert will confirm.',
+    'All prices below are from the official AutoSpark price list. If a requested service is not listed, do not invent a price , say an expert will confirm.',
     // ► TODO(owner): add technician count, equipment (OBD scanners, hybrid-battery
     //   tester…), genuine-parts policy, and any brand specializations.
   ].join('\n'),
@@ -53,8 +53,8 @@ export const CAR_SERVICES_KB: ServicesKb = {
     { name: 'Full Car Polish (High Quality)', priceTk: 6000, duration: '6–8 hours', includes: 'Multi-stage polish, paint correction, ceramic sealant, long-lasting shine' },
     { name: '1 Part Color (White & Silver)', priceTk: 5000, duration: '1–2 days', includes: 'Color matching, premium paint, clear coat, buffing finish' },
     { name: '1 Part Color (Any Other Color)', priceTk: 7000, duration: '1–2 days', includes: 'Perfect color match, metallic options, premium finish, quality guarantee' },
-    { name: 'Full Body Color (White/Silver)', priceTk: 60000, duration: '5–7 days', includes: 'Without denting work — full body prep, premium paint, multiple clear coats, professional finish' },
-    { name: 'Full Body Color (Any Other Color)', priceTk: 80000, duration: '7–10 days', includes: 'Without denting work — color customization, metallic & pearl, show quality finish, full warranty' },
+    { name: 'Full Body Color (White/Silver)', priceTk: 60000, duration: '5–7 days', includes: 'Without denting work , full body prep, premium paint, multiple clear coats, professional finish' },
+    { name: 'Full Body Color (Any Other Color)', priceTk: 80000, duration: '7–10 days', includes: 'Without denting work , color customization, metallic & pearl, show quality finish, full warranty' },
   ],
 
   packages: [
@@ -74,11 +74,11 @@ export const CAR_SERVICES_KB: ServicesKb = {
 
   faqs: [
     { q: 'How long does a full car detailing take?', a: 'A full detailing typically takes 4–6 hours depending on vehicle size and condition; premium detailing with paint correction may take 1–2 days.' },
-    { q: 'Do you offer pickup and drop-off?', a: 'Yes — complimentary within a 20 km radius for services over ৳500 BDT; Premium package customers get unlimited free pickup.' },
+    { q: 'Do you offer pickup and drop-off?', a: 'Yes , complimentary within a 20 km radius for services over ৳500 BDT; Premium package customers get unlimited free pickup.' },
     { q: 'What warranty do you provide on repairs?', a: 'All repairs carry a minimum 12-month or 20,000 km warranty. Ceramic coatings have 5-year and PPF 10-year warranties.' },
-    { q: 'Can I wait while my car is serviced?', a: 'Yes — free WiFi, refreshments and TV in the waiting lounge; VIP lounge with workstations for Premium customers.' },
-    { q: 'How often should I change my oil?', a: 'Synthetic oil: every 10,000–15,000 km or 12 months. Conventional oil: every 5,000–7,000 km or 6 months — whichever comes first.' },
-    { q: 'Do you service all car brands?', a: 'Yes, all makes and models including Japanese hybrids and luxury brands — technicians are certified for multiple brands.' },
+    { q: 'Can I wait while my car is serviced?', a: 'Yes , free WiFi, refreshments and TV in the waiting lounge; VIP lounge with workstations for Premium customers.' },
+    { q: 'How often should I change my oil?', a: 'Synthetic oil: every 10,000–15,000 km or 12 months. Conventional oil: every 5,000–7,000 km or 6 months , whichever comes first.' },
+    { q: 'Do you service all car brands?', a: 'Yes, all makes and models including Japanese hybrids and luxury brands , technicians are certified for multiple brands.' },
     // ► TODO(owner): add every recurring service question + official answer.
   ],
 };
@@ -96,6 +96,6 @@ export function buildServicesKbText(): string {
     '[POLICIES & GUIDANCE]', k.policies,
     '[SERVICE FAQS]',
     k.faqs.map((f, i) => `${i + 1}. Q: ${f.q}\n   A: ${f.a}`).join('\n'),
-    'Source: AutoSpark official price list — KB/All Car Model, Package, Price & Details.md.',
+    'Source: AutoSpark official price list , KB/All Car Model, Package, Price & Details.md.',
   ].join('\n\n');
 }

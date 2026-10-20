@@ -395,7 +395,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={activateAR}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium shadow-lg"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-[#A16207] text-white rounded-xl font-medium shadow-lg"
             >
               <Smartphone className="w-4 h-4" />
               <span className="hidden sm:inline">
@@ -715,7 +715,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
                 theme === 'dark' ? 'bg-gray-800/50' : 'bg-white/80'
               }`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Box className={`w-4 h-4 ${theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}`} />
+                  <Box className={`w-4 h-4 ${theme === 'dark' ? 'text-amber-600' : 'text-[#A16207]'}`} />
                   <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     {language === 'en' ? 'AR Mode' : 'এআর মোড'}
                   </span>

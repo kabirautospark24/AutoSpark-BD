@@ -57,7 +57,7 @@ const WISHLIST_KEY = 'autospark_wishlist';
 const isFiniteNumber = (v: unknown): v is number =>
   typeof v === 'number' && Number.isFinite(v);
 
-/** Sanitize the :id route param — reject empty/malformed values before any fetch. */
+/** Sanitize the:id route param: reject empty/malformed values before any fetch. */
 function sanitizeId(raw: string | undefined): string | null {
   if (!raw) return null;
   const id = raw.trim().slice(0, MAX_ID_LENGTH);
@@ -183,7 +183,7 @@ export const ProductDetailPage = () => {
     };
   }, []);
 
-  // Fetch product — race-safe, timed out, and never sets state after unmount.
+  // Fetch product: race-safe, timed out, and never sets state after unmount.
   useEffect(() => {
     // Per-product UI reset on navigation between products.
     setProduct(null);
@@ -247,7 +247,7 @@ export const ProductDetailPage = () => {
           }
           // Fall through to demo data on query error / invalid row.
         } catch (err) {
-          // Timeout or network failure — fall through to demo data.
+          // Timeout or network failure: fall through to demo data.
           timedOut = err instanceof Error && err.message === 'fetch timeout';
           if (import.meta.env.DEV) console.warn('[product] backend fetch failed, trying demo data:', err);
         }
@@ -324,7 +324,7 @@ export const ProductDetailPage = () => {
         priceCurrency: 'BDT',
         price: discountedPrice.toFixed(0),
         availability:
-          product.stock_quantity > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          product.stock_quantity > 0 ? 'https://schema.org/InStock': 'https://schema.org/OutOfStock',
       },
       aggregateRating:
         product.rating && product.reviews
@@ -367,7 +367,7 @@ export const ProductDetailPage = () => {
           : list.filter((x) => x !== product.id);
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(updated));
       } catch {
-        /* storage unavailable — wishlist just won't persist */
+        /* storage unavailable: wishlist just won't persist */
       }
       return next;
     });
@@ -383,7 +383,7 @@ export const ProductDetailPage = () => {
       }
       throw new Error('Web Share unavailable');
     } catch (err) {
-      // User cancelled the native sheet — not an error.
+      // User cancelled the native sheet: not an error.
       if (err instanceof DOMException && err.name === 'AbortError') return;
       try {
         await navigator.clipboard.writeText(url);
@@ -393,7 +393,7 @@ export const ProductDetailPage = () => {
           if (mountedRef.current) setShared(false);
         }, 2000);
       } catch {
-        // Clipboard blocked (permissions) — fall back to a prompt the user can copy from.
+        // Clipboard blocked (permissions): fall back to a prompt the user can copy from.
         try {
           window.prompt('Copy product link:', url);
         } catch {
@@ -485,9 +485,13 @@ export const ProductDetailPage = () => {
       className={`min-h-screen ${isDark ? 'bg-[#050505]' : 'bg-gray-50'}`}
     >
       <PageHead
-        title={`${productName} | Auto Spark BD`}
-        description={productDesc || `${productName} — ${product.category} at Auto Spark BD, Rajshahi.`}
-        image={product.images?.[0]?.image_url}
+        path={`/product/${product?.id ?? ''}`}
+        seo={{
+          title: productName,
+          description: productDesc || `${productName} in the ${product?.category ?? 'accessories'} range at Auto Spark BD, Rajshahi.`,
+          h1: productName,
+          image: product.images?.[0]?.image_url,
+        }}
         jsonLd={jsonLd}
       />
 
@@ -732,7 +736,7 @@ export const ProductDetailPage = () => {
                 {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
               </button>
 
-              {/* Ask SparkPilot — right-side assistant entry point for this product */}
+              {/* Ask SparkPilot: right-side assistant entry point for this product */}
               <button
                 onClick={() => openSparkPilot(`I have a question about "${productName}" (৳${discountedPrice.toLocaleString()}, ${product.category}). Is it compatible with my car, and is it worth the price?`)}
                 className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"

@@ -20,7 +20,7 @@ const SectionLoader = () => (
 );
 
 /**
- * LazySection — defers rendering of below-fold sections until they are
+ * LazySection: defers rendering of below-fold sections until they are
  * within `rootMargin` of the viewport. Uses IntersectionObserver for
  * zero-cost idle tracking. Once visible, the section stays mounted.
  *

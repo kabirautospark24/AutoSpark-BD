@@ -15,7 +15,7 @@ const SALES_MSG = "I'd like to explore AutoSpark car sales options.";
 const SERVICES_MSG = 'I have a question about car services.';
 
 /**
- * SparkPilot's rich welcome — introduces the assistant as a modern,
+ * SparkPilot's rich welcome: introduces the assistant as a modern,
  * elegant sales expert with two knowledge domains (Car Sales · Car Services).
  */
 export function WelcomeCard({ compact = false, onAsk, reduceMotion = false }: WelcomeCardProps) {
@@ -52,7 +52,7 @@ export function WelcomeCard({ compact = false, onAsk, reduceMotion = false }: We
         className={`group text-left rounded-2xl border px-3.5 py-3 transition ${chip}`}
       >
         <span className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-blue-600 text-white shrink-0">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-amber-700 to-blue-600 text-white shrink-0">
             <Wrench className="w-4 h-4" />
           </span>
           <span className="min-w-0">
@@ -83,7 +83,7 @@ export function WelcomeCard({ compact = false, onAsk, reduceMotion = false }: We
       <div className={`relative inline-block ${compact ? '' : 'mb-3'}`}>
         <span
           className="absolute inset-0 rounded-[18px] blur-lg opacity-60"
-          style={{ background: 'linear-gradient(135deg,#22D3EE,#2563EB,#7C3AED)' }}
+          style={{ background: 'linear-gradient(135deg,#22D3EE,#2563EB,#A16207)' }}
           aria-hidden
         />
         <span className="relative block">
@@ -94,7 +94,7 @@ export function WelcomeCard({ compact = false, onAsk, reduceMotion = false }: We
       <div className={compact ? 'mt-2.5' : ''}>
         <p className={`${compact ? 'text-base' : 'text-2xl sm:text-3xl'} font-extrabold tracking-tight leading-tight`}>
           Hi, I&rsquo;m{' '}
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-amber-700 bg-clip-text text-transparent">
             SparkPilot
           </span>
         </p>
@@ -104,7 +104,7 @@ export function WelcomeCard({ compact = false, onAsk, reduceMotion = false }: We
         <p className={`${compact ? 'text-[12.5px] mt-1' : 'text-sm mt-2'} leading-relaxed ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
           I know everything about AutoSpark{' '}
           <span className="font-semibold text-cyan-500">car sales</span> and{' '}
-          <span className="font-semibold text-violet-500">car services</span>. What would you like to know?
+          <span className="font-semibold text-amber-700">car services</span>. What would you like to know?
         </p>
       </div>
 

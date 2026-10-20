@@ -24,7 +24,7 @@ const now = () => Date.now();
 
 const GREETING: ChatMessage = {
   id: 'greet', role: 'assistant', createdAt: now(), kind: 'welcome',
-  text: "Hi, I'm SparkPilot — I know everything about AutoSpark car sales and car services. What would you like to know?",
+  text: "Hi, I'm SparkPilot. I know everything about AutoSpark car sales and car services. What would you like to know?",
 };
 
 function newConversation(): Conversation {
@@ -152,9 +152,9 @@ export function SparkPilotApp() {
       if (r.followUp === 'lead' || r.intent === 'expert' || r.followUp === 'preorder' || r.followUp === 'service') setPanel('expert');
       if (r.intent === 'budget') setPanel('budget');
     } catch (e) {
-      // User pressed Stop — don't surface a failure; the turn just ends.
+      // User pressed Stop: don't surface a failure; the turn just ends.
       if (!isAbortError(e)) {
-        patch(conv.id, (c) => ({ ...c, messages: [...c.messages, { id: uid(), role: 'assistant', text: 'Something went wrong reaching SparkPilot. Please retry — nothing was submitted.', createdAt: now(), status: 'failed' }] }));
+        patch(conv.id, (c) => ({ ...c, messages: [...c.messages, { id: uid(), role: 'assistant', text: 'Something went wrong reaching SparkPilot. Please retry. Nothing was submitted.', createdAt: now(), status: 'failed' }] }));
       }
     } finally {
       setBusy(false);
@@ -265,11 +265,11 @@ export function SparkPilotApp() {
             <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer min-h-[44px]"><input type="checkbox" checked={filters.hybrid === true} onChange={(e) => setFilters((f) => ({ ...f, hybrid: e.target.checked ? true : undefined }))} className="w-4 h-4 accent-cyan-500" /> Hybrid only</label>
             <div className="space-y-2.5">
               {discovered.map((v) => <VehicleCard key={v.id} v={v} onAsk={askVehicle} onCompare={(x) => { setCompare((p) => [...p.filter((y) => y.id !== x.id), x].slice(-3)); setPanel('compare'); }} onExpert={expertVehicle} />)}
-              {!discovered.length && <p className="text-xs opacity-60">No matches — widen the budget or clear filters.</p>}
+              {!discovered.length && <p className="text-xs opacity-60">No matches. Widen the budget or clear filters.</p>}
             </div>
             {(conv.preferences.budgetLakh || conv.preferences.bodyType) && (
               <Card className="p-3 text-xs"><p className="font-bold mb-1">Your preferences (this chat)</p>
-                <p className="opacity-70">{[conv.preferences.budgetLakh && `≤ ${conv.preferences.budgetLakh} lakh`, conv.preferences.hybrid && 'Hybrid', conv.preferences.bodyType, conv.preferences.manufacturer].filter(Boolean).join(' · ') || '—'}</p>
+                <p className="opacity-70">{[conv.preferences.budgetLakh && `≤ ${conv.preferences.budgetLakh} lakh`, conv.preferences.hybrid && 'Hybrid', conv.preferences.bodyType, conv.preferences.manufacturer].filter(Boolean).join(' · ') || '-'}</p>
               </Card>
             )}
           </div>
@@ -449,7 +449,7 @@ export function SparkPilotApp() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); void send(input); } }}
-                placeholder="Ask in English or Bangla — e.g. Family hybrid under 25 lakh…"
+                placeholder="Ask in English or Bangla, for example: Family hybrid under 25 lakh..."
                 rows={1}
                 disabled={busy}
                 enterKeyHint="send"
@@ -460,11 +460,11 @@ export function SparkPilotApp() {
                 ? <button type="button" aria-label="Stop response" onClick={stop} className="p-3 rounded-xl bg-red-500/15 text-red-500 min-w-[48px] min-h-[48px] flex items-center justify-center"><Square className="w-4 h-4" /></button>
                 : <button type="submit" aria-label="Send message" disabled={!input.trim()} className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white disabled:opacity-40 min-w-[48px] min-h-[48px] flex items-center justify-center"><Send className="w-4 h-4" /></button>}
             </div>
-            <p className="text-[10px] opacity-50 mt-1.5 px-1 flex items-center gap-1"><Sparkles className="w-3 h-3 shrink-0" /> SparkPilot sales & service expert — prices & availability confirmed by an AutoSpark expert before booking.</p>
+            <p className="text-[10px] opacity-50 mt-1.5 px-1 flex items-center gap-1"><Sparkles className="w-3 h-3 shrink-0" /> SparkPilot sales and service expert. Prices and availability are confirmed by an AutoSpark expert before booking.</p>
           </form>
         </section>
 
-        {/* Contextual panel — desktop rail */}
+        {/* Contextual panel: desktop rail */}
         <aside className={`hidden lg:flex flex-col rounded-2xl border p-4 min-h-0 ${panelBg}`} aria-label="Discovery panel">
           {panelBody}
         </aside>
@@ -505,7 +505,7 @@ function PreorderMini({ step, setStep, onSend }: { step: number; setStep: (n: nu
       {step === 0 && <input aria-label="Desired vehicle" value={form.vehicle} onChange={(e) => setForm({ ...form, vehicle: e.target.value })} placeholder="e.g. Toyota Axio Hybrid" className="mt-2 w-full rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px]" />}
       {step === 1 && <div className="grid grid-cols-2 gap-2 mt-2"><input aria-label="Budget in lakh" value={form.budget} onChange={(e) => setForm({ ...form, budget: e.target.value })} placeholder="Budget (lakh)" className="rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px] min-w-0" /><input aria-label="Model year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} placeholder="Year" className="rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px] min-w-0" /></div>}
       {step === 2 && <select aria-label="Timeline" value={form.timeline} onChange={(e) => setForm({ ...form, timeline: e.target.value })} className="mt-2 w-full rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px]"><option>Immediately</option><option>Within 1 month</option><option>1–3 months</option><option>Flexible</option></select>}
-      {step === 3 && <p className="text-xs mt-2 opacity-80">Request: <b>{form.vehicle || '—'}</b> · {form.year || '—'} · {form.budget || '—'} lakh · {form.timeline}. Submitting creates a <b>request</b>, not a confirmed booking or auction win.</p>}
+      {step === 3 && <p className="text-xs mt-2 opacity-80">Request: <b>{form.vehicle || '-'}</b> · {form.year || '-'} · {form.budget || '-'} lakh · {form.timeline}. Submitting creates a <b>request</b>, not a confirmed booking or auction win.</p>}
       <div className="flex gap-2 mt-3">
         {step > 0 && <SButton variant="outline" onClick={() => setStep(step - 1)}>Back</SButton>}
         {step < 3

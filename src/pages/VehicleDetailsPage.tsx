@@ -83,7 +83,7 @@ export const VehicleDetailsPage = () => {
       return;
     }
     
-    // Fallback to Supabase if not found locally — dynamically import to keep initial bundle small
+    // Fallback to Supabase if not found locally: dynamically import to keep initial bundle small
     try {
       const mod = await import('../lib/supabase');
       const { supabase } = mod as any;
@@ -101,7 +101,7 @@ export const VehicleDetailsPage = () => {
         if (data) setVehicle(data);
       }
     } catch (error) {
-      console.error('Error fetching vehicle:', error);
+      console.warn('Vehicle could not be loaded:', error);
     }
     
     setLoading(false);
@@ -168,8 +168,8 @@ export const VehicleDetailsPage = () => {
       "@type": "Offer",
       priceCurrency: "BDT",
       price: vehicle.price > 0 ? String(vehicle.price) : undefined,
-      availability: vehicle.is_available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      url: typeof window !== 'undefined' ? window.location.href : `https://autosparkbd.com/vehicle/${vehicle.id}`,
+      availability: vehicle.is_available ? "https://schema.org/InStock": "https://schema.org/OutOfStock",
+      url: typeof window !== 'undefined' ? window.location.href : `https://www.autosparkbd.com/vehicle/${vehicle.id}`,
     },
     image: (vehicle.images || []).map(img => img.image_url)
   } : null;
@@ -178,10 +178,16 @@ export const VehicleDetailsPage = () => {
     <div className={`min-h-screen pt-20 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {vehicle && (
         <PageHead
-          title={`${vehicle.brand_name} ${vehicle.model} — Autospark`}
-          description={language === 'en' ? vehicle.description_en : (vehicle.description_bn || vehicle.description_en)}
-          url={`https://autosparkbd.com/vehicle/${vehicle.id}`}
-          image={encodeURI(currentImage)}
+          path={`/vehicle/${vehicle.id}`}
+          seo={{
+            title: `${vehicle.brand_name} ${vehicle.model}`,
+            description:
+              language === 'en'
+                ? vehicle.description_en
+                : vehicle.description_bn || vehicle.description_en,
+            h1: `${vehicle.brand_name} ${vehicle.model}`,
+            image: encodeURI(currentImage),
+          }}
           jsonLd={jsonLd}
         />
       )}
@@ -319,7 +325,7 @@ export const VehicleDetailsPage = () => {
                     <span>{t('vehicle.whatsapp')}</span>
                   </a>
                 </div>
-                {/* Ask SparkPilot — right-side assistant entry point for this vehicle */}
+                {/* Ask SparkPilot: right-side assistant entry point for this vehicle */}
                 <button
                   onClick={() => openSparkPilot(`I'm interested in the ${vehicle.brand_name} ${vehicle.model} (${vehicle.year}, ৳${Number(vehicle.price).toLocaleString()}). Is it a good fit for me?`)}
                   className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-white font-semibold transition bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
@@ -456,7 +462,7 @@ export const VehicleDetailsPage = () => {
               {language === 'en' ? 'Price' : 'মূল্য'}
             </p>
             <p className="text-lg font-bold text-[var(--brand-red,#C00000)] truncate">
-              {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : '—'}
+              {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : '-'}
             </p>
           </div>
           <Link

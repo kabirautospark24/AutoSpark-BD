@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-/** Subtle 3D tilt — pointer-only, rAF-throttled, transform-only (GPU). */
+/** Subtle 3D tilt: pointer-only, rAF-throttled, transform-only (GPU). */
 export function useTilt(enabled: boolean) {
   const raf = useRef(0);
   const onMove = (e: React.MouseEvent<HTMLElement>) => {

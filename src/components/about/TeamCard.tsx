@@ -25,7 +25,7 @@ const TeamCard: React.FC<{ person: Person; language: string; theme: string; show
               const isRemote = person.image.startsWith('http');
               // Fix: don't double-append query string if URL already has params (Farhan/Abu Hasan URLs already contain ?auto=...)
               const buildUrl = (base: string, w: number) => {
-                if (base.includes('?')) return base; // already has query — use as-is
+                if (base.includes('?')) return base; // already has query, use as-is
                 return `${base}?auto=compress&cs=tinysrgb&w=${w}&fm=webp`;
               };
               const src = isRemote ? buildUrl(person.image, 600) : person.image;

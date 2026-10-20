@@ -92,8 +92,8 @@ export const ScrollTriggerCounter = ({
       <motion.div
         className={`absolute inset-0 ${
           theme === 'dark'
-            ? 'bg-gradient-to-br from-blue-500/10 to-purple-500/10'
-            : 'bg-gradient-to-br from-blue-500/5 to-purple-500/5'
+            ? 'bg-gradient-to-br from-blue-500/10 to-amber-700/10'
+            : 'bg-gradient-to-br from-blue-500/5 to-amber-700/5'
         }`}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -173,8 +173,8 @@ export const ScrollTriggerCounter = ({
       <motion.div
         className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity ${
           theme === 'dark'
-            ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20'
-            : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10'
+            ? 'bg-gradient-to-r from-blue-500/20 to-amber-700/20'
+            : 'bg-gradient-to-r from-blue-500/10 to-amber-700/10'
         }`}
       />
     </motion.div>

@@ -413,7 +413,7 @@ const SceneLighting: React.FC<SceneLightingProps> = ({
         color={preset.directionalColor}
       />
       
-      {/* Environment lighting — inline (no external HDR fetch) */}
+      {/* Environment lighting: inline (no external HDR fetch) */}
       <directionalLight position={[0, 10, -8]} intensity={0.5} color="#ffd4a6" />
       <hemisphereLight args={['#ffffff', '#444444', 1.0]} />
     </>

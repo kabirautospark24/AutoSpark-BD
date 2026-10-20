@@ -5,7 +5,7 @@ import { ALL_VEHICLES } from '../hooks/vehicleDataAll';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 
-// Lazy-load heavy 3D components — they pull in Three.js (~1 MB)
+// Lazy-load heavy 3D components: they pull in Three.js (~1 MB)
 const InteractiveVehicleComparison = lazy(() => import('../components/3d/InteractiveVehicleComparison').then(m => ({ default: m.InteractiveVehicleComparison })));
 const VirtualShowroomTour = lazy(() => import('../components/3d/VirtualShowroomTour').then(m => ({ default: m.VirtualShowroomTour })));
 
@@ -14,7 +14,7 @@ export const VehicleExperiencePage = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
-  // Map ALL_VEHICLES to InteractiveVehicleComparison format — memoized to avoid recomputation
+  // Map ALL_VEHICLES to InteractiveVehicleComparison format, memoized to avoid recomputation
   const comparisonVehicles = useMemo(() => {
     const vehicles = ALL_VEHICLES.map(v => ({
       id: v.id,

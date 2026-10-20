@@ -2,7 +2,7 @@ import type { DemoVehicle, QuickAction } from '../types';
 
 // Chat-card inventory shown by SparkPilot. Values aligned with the official
 // price sheet (KB/All Car Model, Package, Price & Details.md); the Sales KB
-// remains the authority — prices/availability confirmed by an expert before booking.
+// remains the authority: prices/availability confirmed by an expert before booking.
 export const DEMO_VEHICLES: DemoVehicle[] = [
   { id: 'demo-axio-hybrid', make: 'Toyota', model: 'Axio', year: 2020, variant: 'EX Hybrid', fuel: 'Hybrid · Petrol', hybrid: true, transmission: 'CVT', bodyType: 'Sedan', budgetLakh: 22.5, stock: 'demo', features: ['Hybrid synergy drive', 'Push start', 'Reverse camera', 'Toyota Safety Sense'], demo: true },
   { id: 'demo-aqua', make: 'Toyota', model: 'Aqua', year: 2020, variant: 'S Hybrid', fuel: 'Hybrid · Petrol', hybrid: true, transmission: 'CVT', bodyType: 'Hatchback', budgetLakh: 18.0, stock: 'demo', features: ['Excellent city mileage', 'Compact parking', 'Push start'], demo: true },

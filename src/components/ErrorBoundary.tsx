@@ -101,7 +101,7 @@ class ErrorBoundaryInner extends React.Component<Props, State> {
             <p className="text-sm text-gray-300 mb-6">
               {chunkError
                 ? 'A new version of the site was just published. Reload to load the latest files.'
-                : 'An unexpected error occurred while loading the app. You can try reloading the page — this will fetch the latest files from the network.'}
+                : 'An unexpected error occurred while loading the app. You can try reloading the page to fetch the latest files from the network.'}
             </p>
             <div className="flex gap-3 justify-center">
               <button onClick={this.handleReload} className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-white font-semibold">Reload</button>
