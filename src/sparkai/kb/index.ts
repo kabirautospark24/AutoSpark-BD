@@ -2,7 +2,7 @@ import type { ChatMessage } from '../types';
 import { buildSalesKbText } from './sales';
 import { buildServicesKbText } from './services';
 
-export { CAR_MODELS, entryPriceLakh, buildSalesKbText } from './sales';
+export { CAR_MODELS, entryPriceLakh, hasListedPrice, buildSalesKbText } from './sales';
 export type { KbCarModel, KbOffer } from './sales';
 export { CAR_SERVICES_KB, buildServicesKbText } from './services';
 

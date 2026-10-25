@@ -27,7 +27,7 @@ export const CAR_SERVICES_KB: ServicesKb = {
   about: [
     'AutoSpark Service Center , professional car care in Rajshahi, Bangladesh. All brands serviced (including Japanese hybrids), by certified technicians.',
     'Service hours: Saturday–Thursday, 9:00–18:00. Booking/WhatsApp: +880 1760-401605.',
-    'All prices below are from the official AutoSpark price list. If a requested service is not listed, do not invent a price , say an expert will confirm.',
+    'All prices below are from the official AutoSpark price list. If a requested service is not listed, do not invent a price , say an expert will confirm and share the WhatsApp number: +880 1760-401605 (wa.me/8801760401605).',
     // ► TODO(owner): add technician count, equipment (OBD scanners, hybrid-battery
     //   tester…), genuine-parts policy, and any brand specializations.
   ].join('\n'),

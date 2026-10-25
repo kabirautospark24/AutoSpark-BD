@@ -1,6 +1,6 @@
 import type { ChatMessage, ConversationIntent, CustomerPreferences, DemoVehicle } from '../types';
 import { DEMO_VEHICLES, filterDemoVehicles, formatLakh } from '../data/demo';
-import { SPARKPILOT_GROQ } from '../config';
+import { SPARKPILOT_GROQ, SPARKPILOT_CONFIG } from '../config';
 import { buildKbPayload } from '../kb';
 
 export interface AIResponse {
@@ -25,6 +25,12 @@ const num = (t: string): number | undefined => {
   return v > 5 && v < 300 ? Math.round(v * 10) / 10 : undefined;
 };
 
+/** WhatsApp expert handoff line: shown whenever the matter is outside the KB. */
+const expertHandoff = (bn: boolean) =>
+  bn
+    ? `\n\n_বিস্তারিত বা এক্সপার্টের সিদ্ধান্ত দরকার হলে WhatsApp করুন: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber})._`
+    : `\n\n_Needs an expert? WhatsApp ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber})._`;
+
 /**
  * Deterministic fallback responder used only when the live Groq model is unreachable.
  * Rule: remembers stated prefs, asks one question at a time, never invents stock.
@@ -48,22 +54,22 @@ export async function mockRespond(_history: ChatMessage[], input: string, prefs:
 
   const pick = (n = 3) => filterDemoVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: next.bodyType, make: next.manufacturer }).slice(0, n);
   const demoNote = bn
-    ? '\n\n_নোট: দাম ও স্টক এক্সপার্টের সাথে যাচাই করে নিন।_'
-    : '\n\n_Note: please confirm price & availability with an expert before booking._';
+    ? `\n\n_নোট: দাম ও স্টক এক্সপার্টের সাথে যাচাই করে নিন। WhatsApp: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber})._`
+    : `\n\n_Note: confirm price & availability with an expert before booking. WhatsApp ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber})._`;
 
   if (/^(hi|hello|salam|assalam|hey|adab|nomoskar|হাই|হ্যালো|আসসালামু|সালাম)/.test(t.trim())) {
     return { text: bn || /salam|assalam/.test(t) ? 'ওয়ালাইকুম আসসালাম! আমি SparkPilot , AutoSpark-এর সেলস ও সার্ভিস এক্সপার্ট। AutoSpark-এর গাড়ি বিক্রি ও কার সার্ভিস , সবকিছু জানি। কী জানতে চান?' : "Hello! I'm SparkPilot , I know everything about AutoSpark car sales and car services. What would you like to know?", prefs: next, intent: 'general' };
   }
   if (/pre.?order|japan|auction|import/.test(t)) {
-    return { text: bn ? 'জাপান প্রি-অর্ডার নিয়ে সাহায্য করছি। কোন গাড়ি (মডেল + বছর), বাজেট, আর কবে নাগাদ চান , জানাবেন?' : 'I can help with a Japan pre-order. Which model + year, your budget, and your timeline?', prefs: next, intent: 'preorder', followUp: 'preorder' };
+    return { text: (bn ? 'জাপান প্রি-অর্ডার নিয়ে সাহায্য করছি। কোন গাড়ি (মডেল + বছর), বাজেট, আর কবে নাগাদ চান , জানাবেন?' : 'I can help with a Japan pre-order. Which model + year, your budget, and your timeline?') + expertHandoff(bn), prefs: next, intent: 'preorder', followUp: 'preorder' };
   }
   if (/service|battery|diagnos|maintenance|repair|সার্ভিস|ব্যাটারি/.test(t)) {
-    return { text: bn ? 'সার্ভিসের জন্য: গাড়ির মডেল/বছর আর সমস্যাটা (যেমন হাইব্রিড ব্যাটারি চেক, ডায়াগনসিস, জেনারেল সার্ভিস) জানান , এক্সপার্ট ফলো-আপের ব্যবস্থা করছি।' : 'For service: please share your model/year and the concern (e.g. hybrid battery check, diagnostics, general service) , I will arrange expert follow-up.', prefs: next, intent: 'service', followUp: 'service' };
+    return { text: (bn ? 'সার্ভিসের জন্য: গাড়ির মডেল/বছর আর সমস্যাটা (যেমন হাইব্রিড ব্যাটারি চেক, ডায়াগনসিস, জেনারেল সার্ভিস) জানান , এক্সপার্ট ফলো-আপের ব্যবস্থা করছি।' : 'For service: please share your model/year and the concern (e.g. hybrid battery check, diagnostics, general service) , I will arrange expert follow-up.') + expertHandoff(bn), prefs: next, intent: 'service', followUp: 'service' };
   }
   if (/financ|loan|installment|down ?payment|emi|কিস্তি|লোন/.test(t) || /budget|বাজেট/.test(t)) {
     if (next.budgetLakh) {
       const v = pick();
-      return { text: `${bn ? `আপনার ${next.budgetLakh} লাখ বাজেট নোট করেছি` : `Noted your budget of ${formatLakh(next.budgetLakh)}`}.${v.length ? (bn ? ` এই বাজেটে ${v.length}টি অপশন:` : ` Here are ${v.length} options in range:`) : (bn ? ' এই বাজেটে মিল পাইনি , বাজেট একটু বাড়িয়ে দেখবেন?' : ' No matches in that range , shall we stretch the budget slightly?')}${demoNote}`, vehicles: v, prefs: next, intent: 'budget' };
+      return { text: `${bn ? `আপনার ${next.budgetLakh} লাখ বাজেট নোট করেছি` : `Noted your budget of ${formatLakh(next.budgetLakh)}`}.${v.length ? (bn ? ` এই বাজেটে ${v.length}টি অপশন:` : ` Here are ${v.length} options in range:`) : (bn ? ' এই বাজেটে মিল পাইনি , বাজেট একটু বাড়িয়ে দেখবেন?' : ' No matches in that range , shall we stretch the budget slightly?')}${demoNote}${v.length ? '' : expertHandoff(bn)}`, vehicles: v, prefs: next, intent: 'budget' };
     }
     return { text: bn ? 'আপনার আনুমানিক বাজেট কত (লাখে)? আর Hybrid পছন্দ করেন?' : 'What is your approximate budget (in lakh), and do you prefer hybrid?', prefs: next, intent: 'budget' };
   }
@@ -72,7 +78,7 @@ export async function mockRespond(_history: ChatMessage[], input: string, prefs:
     return { text: (bn ? 'দুটি জনপ্রিয় অপশনের তুলনা দিলাম , Compare ট্যাবে বিস্তারিত দেখুন।' : 'Here is a comparison of two popular options , see the Compare tab for detail.') + demoNote, vehicles: v, prefs: next, intent: 'compare', followUp: 'compare' };
   }
   if (/expert|human|call|phone|whatsapp|যোগাযোগ|কথা বলতে/.test(t)) {
-    return { text: bn ? 'অবশ্যই! নিচের ফর্মে আপনার নাম ও WhatsApp নম্বর দিন , AutoSpark এক্সপার্ট শীঘ্রই যোগাযোগ করবেন।' : 'Of course! Please share your name and WhatsApp number below , an AutoSpark expert will follow up shortly.', prefs: next, intent: 'expert', followUp: 'lead' };
+    return { text: (bn ? `অবশ্যই! নিচের ফর্মে আপনার নাম ও WhatsApp নম্বর দিন , AutoSpark এক্সপার্ট শীঘ্রই যোগাযোগ করবেন। সরাসরি WhatsApp করতে পারেন: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber}).` : `Of course! Please share your name and WhatsApp number below , an AutoSpark expert will follow up shortly. Or WhatsApp us directly: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber}).`), prefs: next, intent: 'expert', followUp: 'lead' };
   }
   if (/family|7.?seat|noah|mpv|বাচ্চা|পরিবার/.test(t)) {
     const v = filterDemoVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: 'MPV' });

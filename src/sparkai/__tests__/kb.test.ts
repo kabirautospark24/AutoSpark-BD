@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   detectKbTopic, buildKbPayload,
-  CAR_MODELS, entryPriceLakh, buildSalesKbText,
+  CAR_MODELS, entryPriceLakh, hasListedPrice, buildSalesKbText,
   CAR_SERVICES_KB, buildServicesKbText,
 } from '../kb';
 import { SALES_SYSTEM_PROMPT } from '../../../api/sparkai/chat';
@@ -54,13 +54,20 @@ describe('Car Sales KB , official price sheet', () => {
   });
 
   it('carries verified prices for spot-checked models', () => {
-    expect(text).toContain('৳22.50 lakh');   // Axio ready stock hybrid
-    expect(text).toContain('৳18/19.50');     // Aqua ready stock by grade
-    expect(text).toContain('৳43/44/47/48');   // Premio by variant
-    expect(text).toContain('৳30.58 lakh');    // Noah non-hybrid ready stock
-    expect(text).toContain('৳40 lakh');       // Vezel pre-order
-    expect(text).toContain('৳138 lakh');      // Prado TX (source 1.38 crore)
-    expect(text).toContain('৳115 lakh');      // Lexus R-300 (source 1.15 crore)
+    expect(text).toContain('৳26.5/26 lakh');   // Axio ready stock hybrid
+    expect(text).toContain('৳25/27');          // Aqua ready stock by grade
+    expect(text).toContain('৳53/57');          // Premio ready stock by variant
+    expect(text).toContain('৳38.5/39');        // Noah ready stock X non-hybrid
+    expect(text).toContain('৳38 lakh');        // Vezel pre-order hybrid
+    expect(text).toContain('৳138 lakh');       // Prado TX (source 1.38 Crore)
+    expect(text).toContain('৳145 lakh');       // Prado TXL (source 1.45 Crore)
+  });
+
+  it('never guesses a price the sheet leaves blank (hands off to WhatsApp)', () => {
+    const unpriced = CAR_MODELS.filter((m) => !hasListedPrice(m));
+    expect(unpriced.map((m) => m.name).sort()).toEqual(['Lexus NX', 'Toyota Sienta']);
+    expect(text).toContain('[PRICE NOT LISTED');
+    expect(text).toContain('price not listed , WhatsApp an AutoSpark expert: +880 1760-401605');
   });
 
   it('includes both Ready Stock and Pre-order channels', () => {
@@ -84,10 +91,10 @@ describe('Car Sales KB , official price sheet', () => {
   });
 
   it('budget quick index is sorted ascending by entry price', () => {
-    expect(entryPriceLakh(CAR_MODELS.find((m) => m.name === 'Toyota Aqua')!)).toBe(18);
-    const indexBlock = text.split('[BUDGET QUICK INDEX')[1]?.split('[')[0] ?? '';
+    expect(entryPriceLakh(CAR_MODELS.find((m) => m.name === 'Toyota Aqua')!)).toBe(23);
+    const indexBlock = text.split('[BUDGET QUICK INDEX')[1]?.split('[PRICE NOT LISTED')[0] ?? '';
     const prices = [...indexBlock.matchAll(/৳(\d+(?:\.\d+)?) lakh/g)].map((m) => parseFloat(m[1]));
-    expect(prices.length).toBe(CAR_MODELS.length);
+    expect(prices.length).toBe(CAR_MODELS.filter(hasListedPrice).length);
     const sorted = [...prices].sort((a, b) => a - b);
     expect(prices).toEqual(sorted);
   });
@@ -149,5 +156,18 @@ describe('Sales-expert persona contract (server system prompt)', () => {
     expect(SALES_SYSTEM_PROMPT).toContain('never fake scarcity');
     expect(SALES_SYSTEM_PROMPT).toContain('NEVER ₹'); // ৳ only, never rupee/dollar signs
     expect(SALES_SYSTEM_PROMPT).toContain('never markdown tables');
+  });
+
+  it('stays one consistent AI Sales Expert and never breaks character', () => {
+    expect(SALES_SYSTEM_PROMPT).toContain('CONSISTENCY');
+    expect(SALES_SYSTEM_PROMPT).toContain('never break character');
+    expect(SALES_SYSTEM_PROMPT).toContain('Never switch persona');
+  });
+
+  it('always shows the WhatsApp number when a matter is outside the KB', () => {
+    expect(SALES_SYSTEM_PROMPT).toContain('EXPERT HANDOFF');
+    expect(SALES_SYSTEM_PROMPT).toContain('+880 1760-401605');
+    expect(SALES_SYSTEM_PROMPT).toContain('wa.me/8801760401605');
+    expect(SALES_SYSTEM_PROMPT).toContain('Never answer an out-of-KB question without the number');
   });
 });
