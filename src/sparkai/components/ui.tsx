@@ -1,5 +1,12 @@
 import { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
+import { MessageCircle } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
+import { segmentMessage, type WaSegment } from './waText';
+
+export { segmentMessage } from './waText';
+
+/** Mock handoff lines are wrapped in _emphasis_; bubbles render plain text. */
+const stripEmphasis = (t: string) => t.replace(/(^|\n)_(.+?)_(?=\n|$)/g, '$1$2');
 
 export const useDark = () => useTheme().theme === 'dark';
 
@@ -25,32 +32,56 @@ export function SInput(props: InputHTMLAttributes<HTMLInputElement>) {
   );
 }
 
+/** One tap on the number opens WhatsApp with the AutoSpark expert. */
+export function WaLink({ href, label }: WaSegment) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open WhatsApp to chat with an AutoSpark expert (${label})`}
+      className="mx-0.5 my-0.5 inline-flex min-h-[28px] items-center gap-1 rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-2 align-middle font-bold text-emerald-600 transition hover:bg-emerald-500/25 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200"
+    >
+      <MessageCircle className="h-3.5 w-3.5 shrink-0" aria-hidden />
+      <span className="whitespace-nowrap">{label}</span>
+    </a>
+  );
+}
+
 /**
  * Agentic stream-style reveal: assistant words cascade in like a live model
  * is typing them. Pure CSS (single mount animation), screen-reader safe,
  * the full text is in the DOM from the first frame. Skipped under reduced motion.
+ * Expert WhatsApp numbers inside the reply render as tappable wa.me links.
  */
 export function RevealText({ text, reduce }: { text: string; reduce?: boolean }) {
-  if (reduce || !text) return <>{text}</>;
-  const parts = text.split(/(\s+)/);
+  if (!text) return <>{text}</>;
+  const segments = segmentMessage(stripEmphasis(text));
   let word = -1;
-  return (
-    <>
-      {parts.map((seg, i) =>
-        /^\s+$/.test(seg) ? (
-          seg
-        ) : (
-          <span
-            key={i}
-            className="reveal-word"
-            style={{ animationDelay: `${Math.min((word += 1) * 14, 700)}ms` }}
-          >
-            {seg}
-          </span>
-        ),
-      )}
-    </>
-  );
+  const delay = () => `${Math.min((word += 1) * 14, 700)}ms`;
+  const nodes: ReactNode[] = [];
+  segments.forEach((s, i) => {
+    if ('href' in s) {
+      nodes.push(
+        reduce
+          ? <WaLink key={`w${i}`} {...s} />
+          : <span key={`w${i}`} className="reveal-word" style={{ animationDelay: delay() }}><WaLink {...s} /></span>,
+      );
+      return;
+    }
+    s.value.split(/(\s+)/).filter((seg) => seg !== '').forEach((seg, j) => {
+      if (/^\s+$/.test(seg)) {
+        nodes.push(seg);
+      } else if (reduce) {
+        nodes.push(seg);
+      } else {
+        nodes.push(
+          <span key={`w${i}-${j}`} className="reveal-word" style={{ animationDelay: delay() }}>{seg}</span>,
+        );
+      }
+    });
+  });
+  return <>{nodes}</>;
 }
 
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
