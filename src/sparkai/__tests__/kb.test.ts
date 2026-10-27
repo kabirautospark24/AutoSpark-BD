@@ -54,7 +54,7 @@ describe('Car Sales KB , official price sheet', () => {
   });
 
   it('carries verified prices for spot-checked models', () => {
-    expect(text).toContain('৳26.5/26 lakh');   // Axio ready stock hybrid
+    expect(text).toContain('৳26/26.5 lakh');   // Axio ready stock hybrid
     expect(text).toContain('৳25/27');          // Aqua ready stock by grade
     expect(text).toContain('৳53/57');          // Premio ready stock by variant
     expect(text).toContain('৳38.5/39');        // Noah ready stock X non-hybrid

@@ -14,20 +14,20 @@ export function VehicleCard({ v, onAsk, onCompare, onExpert }: { v: DemoVehicle;
         <span className="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-black/50 text-white px-2 py-0.5 rounded-full">{stockLabel}</span>
       </div>
       <div className="p-3.5">
-        <p className={`font-bold text-sm ${dark ? 'text-white' : 'text-slate-900'}`}>{v.make} {v.model}</p>
+        <p className={`font-bold text-sm ${dark ? 'text-white' : 'text-slate-900'}`}>{v.model}</p>
         <p className="text-xs opacity-70">{v.variant} · {v.bodyType}</p>
         <div className="flex flex-wrap gap-1.5 mt-2 text-[11px]">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20"><Fuel className="w-3 h-3" />{v.fuel}</span>
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20"><Fuel className="w-3 h-3" />{v.fuel}</span>
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-500/10 border border-slate-500/20 opacity-80"><Cog className="w-3 h-3" />{v.transmission}</span>
         </div>
-        <p className="mt-2 font-extrabold text-cyan-600 dark:text-cyan-300">{vehiclePriceLabel(v)} <span className="text-[10px] font-medium opacity-60">{v.priceKnown === false ? 'expert quotes' : 'ask expert'}</span></p>
+        <p className="mt-2 font-extrabold text-cyan-700 dark:text-cyan-300">{vehiclePriceLabel(v)} <span className="text-[10px] font-medium opacity-60">{v.priceKnown === false ? 'expert quotes' : 'ask expert'}</span></p>
         <ul className="mt-1.5 space-y-0.5 text-xs opacity-80">
           {v.features.slice(0, 3).map((f) => <li key={f} className="flex gap-1.5 items-start"><Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />{f}</li>)}
         </ul>
         <div className="grid grid-cols-3 gap-1.5 mt-3">
           <button onClick={() => onAsk(v)} className="text-xs font-semibold rounded-full bg-cyan-500 text-white py-2.5 min-h-[44px] hover:bg-cyan-400">Ask</button>
           <button onClick={() => onCompare(v)} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Compare</button>
-          <button onClick={() => onExpert(v)} aria-label={`Request expert for ${v.make} ${v.model}`} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Expert</button>
+          <button onClick={() => onExpert(v)} aria-label={`Request expert for ${v.model}`} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Expert</button>
         </div>
       </div>
     </Card>
@@ -54,7 +54,7 @@ export function VehicleComparison({ items, onRemove }: { items: DemoVehicle[]; o
           <tr>
             <th scope="col" className="text-left p-3 text-xs uppercase tracking-wider opacity-60">Spec</th>
             {items.map((v) => (
-              <th key={v.id} scope="col" className="p-3 text-left text-xs">{v.make} {v.model}<br /><button onClick={() => onRemove(v.id)} className="text-cyan-500 font-semibold min-h-[44px]">Remove</button></th>
+              <th key={v.id} scope="col" className="p-3 text-left text-xs">{v.model}<br /><button onClick={() => onRemove(v.id)} className="text-cyan-500 font-semibold min-h-[44px]">Remove</button></th>
             ))}
           </tr>
         </thead>

@@ -19,6 +19,17 @@ describe('SparkPilot skeleton', () => {
     expect(r.every((v) => v.budgetLakh <= 25 && v.hybrid)).toBe(true);
   });
 
+  it('catalog IDs are unique (hybrid/non-hybrid no longer collide)', () => {
+    const ids = CATALOG_VEHICLES.map((v) => v.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('Axio ready hybrid min price is 26 lakh (CSV order)', () => {
+    const axio = CATALOG_VEHICLES.find((v) => v.id.includes('axio') && v.id.includes('hybrid') && !v.id.includes('non-hybrid') && v.stock === 'ready')!;
+    expect(axio.budgetLakh).toBe(26);
+    expect(axio.priceLabel).toBe('৳26–26.5 lakh');
+  });
+
   it('calculates finance with real math + null rate state', () => {
     const e = estimateFinance(25, 30, 12, 48);
     expect(e.downPaymentBDT).toBe(750000);

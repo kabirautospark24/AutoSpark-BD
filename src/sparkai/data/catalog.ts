@@ -40,8 +40,10 @@ const MODEL_META: Record<string, { transmission: string; features: string[] }> =
   'Toyota Crown': { transmission: 'e-CVT', features: ['Flagship sedan', 'Twin-turbo option', 'Executive comfort'] },
 };
 
+// Parenthetical suffixes MUST stay in the slug ("X (Hybrid)" vs "X (Non-Hybrid)"
+// previously both collapsed to "x" → 12 duplicate React keys).
 const slug = (s: string) =>
-  s.toLowerCase().replace(/\(.*?\)/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  s.toLowerCase().replace(/[()]/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 /** Offer powertrain → hybrid flag (named trims inherit the model's fuel type). */
 function offerHybrid(m: KbCarModel, o: KbOffer): boolean {
@@ -104,8 +106,19 @@ function toCard(m: KbCarModel, o: KbOffer): DemoVehicle {
   };
 }
 
-/** Full chat-card inventory: one card per KB offer, all 23 models covered. */
-export const CATALOG_VEHICLES: DemoVehicle[] = CAR_MODELS.flatMap((m) => m.offers.map((o) => toCard(m, o)));
+/** Full chat-card inventory: one card per KB offer, all 23 models covered.
+ *  IDs are guaranteed unique even if the KB ever repeats a type+stock combo. */
+export const CATALOG_VEHICLES: DemoVehicle[] = (() => {
+  const seen = new Map<string, number>();
+  return CAR_MODELS.flatMap((m) =>
+    m.offers.map((o) => {
+      const card = toCard(m, o);
+      const n = seen.get(card.id) ?? 0;
+      seen.set(card.id, n + 1);
+      return n === 0 ? card : { ...card, id: `${card.id}-${n + 1}` };
+    }),
+  );
+})();
 
 /** Distinct makes across the catalog (for filter dropdowns). */
 export const CATALOG_MAKES: string[] = [...new Set(CATALOG_VEHICLES.map((v) => v.make))];

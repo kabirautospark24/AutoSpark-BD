@@ -34,6 +34,7 @@ export function SparkPilotWidget() {
   const [busy, setBusy] = useState(false);
   const [unread, setUnread] = useState(false);
   const [showJump, setShowJump] = useState(false);
+const [aiLive, setAiLive] = useState<boolean | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -102,10 +103,12 @@ export function SparkPilotWidget() {
     setMessages((p) => [...p, { id: uid(), role: 'user', text, createdAt: Date.now(), status: 'sent' }]);
     setInput('');
     if (inputRef.current) inputRef.current.style.height = 'auto';
+abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
     try {
       const r = await respond(history, text, prefs, { signal: controller.signal });
+      setAiLive(r.isLive !== false);
       setPrefs((p) => ({ ...p, ...r.prefs }));
       setMessages((p) => [...p, { id: uid(), role: 'assistant', text: r.text, createdAt: Date.now(), status: 'sent', vehicles: r.vehicles }]);
       if (!open) setUnread(true);
@@ -213,7 +216,7 @@ export function SparkPilotWidget() {
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Online · AI expert
                   </p>
                 </div>
-                <span className="hidden xs:inline-flex"><DemoBadge /></span>
+                <span className="hidden xs:inline-flex"><DemoBadge isLive={aiLive !== false} /></span>
                 <Link to="/sparkpilot" aria-label="Open full SparkPilot page" className="hidden sm:inline-flex p-2.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 min-w-[44px] min-h-[44px] items-center justify-center" onClick={() => setOpen(false)}>
                   <Maximize2 className="w-4 h-4" />
                 </Link>
@@ -249,10 +252,10 @@ export function SparkPilotWidget() {
                             {m.vehicles.map((v) => (
                               <button
                                 key={v.id}
-                                onClick={() => void send(`Tell me more about the ${v.make} ${v.model} ${v.variant}.`)}
+                                onClick={() => void send(`Tell me more about the ${v.model} ${v.variant}.`)}
                                 className={`block w-full text-left text-xs font-semibold rounded-lg px-2.5 min-h-[44px] border ${dark ? 'border-cyan-500/30 bg-cyan-500/10' : 'border-cyan-600/30 bg-cyan-50'}`}
                               >
-                                {v.make} {v.model} · {vehiclePriceLabel(v)} · {v.stock === 'ready' ? 'Ready' : 'Pre-order'} <span className="opacity-60 font-normal">· verify with expert</span>
+                                {v.model} · {vehiclePriceLabel(v)} · {v.stock === 'ready' ? 'Ready' : 'Pre-order'} <span className="opacity-60 font-normal">· verify with expert</span>
                               </button>
                             ))}
                           </div>
@@ -307,7 +310,7 @@ export function SparkPilotWidget() {
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); void send(input); } }}
+                    onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(input); } }}
                     placeholder="Ask about this product…"
                     rows={1}
                     disabled={busy}
@@ -321,7 +324,7 @@ export function SparkPilotWidget() {
                     : <button type="submit" aria-label="Send message" disabled={!input.trim() || busy} className="p-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white disabled:opacity-40 min-w-[44px] min-h-[44px] flex items-center justify-center"><Send className="w-4 h-4" /></button>}
                 </div>
                 <div className="flex items-center justify-between mt-1.5 px-0.5 gap-2">
-                  <Link to="/sparkpilot" onClick={() => setOpen(false)} className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-300 hover:underline min-h-[32px] inline-flex items-center">Open full SparkPilot →</Link>
+                  <Link to="/sparkpilot" onClick={() => setOpen(false)} className="text-[11px] font-semibold text-cyan-700 dark:text-cyan-300 hover:underline min-h-[32px] inline-flex items-center">Open full SparkPilot →</Link>
                   <a href={buildWhatsAppUrl('Hello AutoSpark! I need help with a product.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[11px] font-semibold opacity-70 hover:opacity-100 min-h-[32px]">
                     <MessageCircle className="w-3 h-3" /> {SPARKPILOT_CONFIG.phoneDisplay}
                   </a>

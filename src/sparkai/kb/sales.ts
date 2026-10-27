@@ -58,7 +58,7 @@ export const CAR_MODELS: KbCarModel[] = [
     name: 'Toyota Axio', make: 'Toyota', body: 'Sedan', variants: 'EX', cc: 1500, fuel: 'Hybrid & Non-Hybrid',
     offers: [
       { availability: R, type: 'Non-Hybrid', years: Y, grade: G, priceLakh: '27.5/28', mileage: KM },
-      { availability: R, type: 'Hybrid', years: Y, grade: G, priceLakh: '26.5/26', mileage: KM },
+      { availability: R, type: 'Hybrid', years: Y, grade: G, priceLakh: '26/26.5', mileage: KM },
       { availability: P, type: 'Non-Hybrid', years: Y, grade: G, priceLakh: '25.5/26', mileage: KM },
       { availability: P, type: 'Hybrid', years: Y, grade: G, priceLakh: '24.50/25', mileage: KM },
     ],
@@ -67,7 +67,7 @@ export const CAR_MODELS: KbCarModel[] = [
     name: 'Toyota Fielder', make: 'Toyota', body: 'Wagon', variants: 'EX', cc: 1500, fuel: 'Hybrid & Non-Hybrid',
     offers: [
       { availability: R, type: 'Non-Hybrid', years: Y, grade: G, priceLakh: '27.5/28', mileage: KM },
-      { availability: R, type: 'Hybrid', years: Y, grade: G, priceLakh: '26.5/26', mileage: KM },
+      { availability: R, type: 'Hybrid', years: Y, grade: G, priceLakh: '26/26.5', mileage: KM },
       { availability: P, type: 'Non-Hybrid', years: Y, grade: G, priceLakh: '25.5/26', mileage: KM },
       { availability: P, type: 'Hybrid', years: Y, grade: G, priceLakh: '24.50/25', mileage: KM },
     ],
@@ -117,7 +117,7 @@ export const CAR_MODELS: KbCarModel[] = [
     ],
   },
   {
-    name: 'Mazda Axela', make: 'Mazda', body: 'Hatchback', variants: '-', cc: 1800, fuel: 'Hybrid & Non-Hybrid',
+    name: 'Mazda Axela', make: 'Mazda', body: 'Hatchback', variants: '-', cc: 1800, fuel: 'Non-Hybrid',
     unavailable: ['Hybrid'],
     offers: [
       { availability: R, type: 'Non-Hybrid', years: Y, grade: G, priceLakh: '36.50', mileage: KM },
@@ -266,7 +266,8 @@ export const CAR_MODELS: KbCarModel[] = [
     ],
   },
   {
-    name: 'Toyota Land Cruiser Prado', make: 'Toyota', body: 'SUV', variants: 'TX, TXL', cc: 2500, fuel: 'Hybrid & Non-Hybrid',
+    name: 'Toyota Land Cruiser Prado', make: 'Toyota', body: 'SUV', variants: 'TX, TXL', cc: 2500, fuel: 'Non-Hybrid',
+    unavailable: ['Hybrid'],
     offers: [
       { availability: R, type: 'TX', years: Y, grade: G, priceLakh: '138', mileage: KM },
       { availability: R, type: 'TXL', years: Y, grade: G, priceLakh: '145', mileage: KM },

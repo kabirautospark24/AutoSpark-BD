@@ -31,7 +31,7 @@ export function SparkPilotLogo({ dark = true, compact = false }: { dark?: boolea
       <SparkMark size={36} />
       <span style={{ lineHeight: 1.05 }}>
         <span style={{ display: 'block', fontWeight: 800, fontSize: 19, letterSpacing: '-0.02em', color: fg }}>
-          Spark<span style={{ color: '#22D3EE' }}>AI</span>
+          Spark<span style={{ color: '#22D3EE' }}>Pilot</span>
         </span>
         <span style={{ display: 'block', fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: sub }}>
           by AutoSpark

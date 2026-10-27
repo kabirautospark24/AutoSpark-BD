@@ -60,7 +60,10 @@ export function SparkPilotApp() {
   const [convs, setConvs] = useState<Conversation[]>(() => {
     try {
       const raw = sessionStorage.getItem('sparkai-convs');
-      if (raw) { const p = JSON.parse(raw); if (Array.isArray(p) && p.length) return p; }
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (Array.isArray(p) && p.length && p.every((c) => c && typeof c.id === 'string' && Array.isArray(c.messages))) return p;
+      }
     } catch { /* session-only */ }
     return [newConversation()];
   });
@@ -142,6 +145,7 @@ export function SparkPilotApp() {
     }));
     setInput('');
     if (inputRef.current) inputRef.current.style.height = 'auto';
+abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
     try {
@@ -189,7 +193,10 @@ export function SparkPilotApp() {
     const fromChat = conv.messages.flatMap((m) => m.vehicles ?? []);
     // Fallback: one best offer per model across the full KB catalog.
     const base = fromChat.length ? fromChat : pickVehicles({}, 12);
+const seen = new Set<string>();
     return base.filter((v) => {
+      if (seen.has(v.id)) return false;
+      seen.add(v.id);
       if (filters.maxBudgetLakh != null && v.budgetLakh > filters.maxBudgetLakh) return false;
       if (filters.hybrid === true && !v.hybrid) return false;
       if (filters.make && v.make !== filters.make) return false;
@@ -197,8 +204,8 @@ export function SparkPilotApp() {
     });
   }, [conv.messages, filters]);
 
-  const askVehicle = (v: DemoVehicle) => send(`Tell me more about the ${v.make} ${v.model} ${v.year} ${v.variant}.`);
-  const expertVehicle = (v: DemoVehicle) => { setPanel('expert'); setToast(`Expert panel opened for ${v.make} ${v.model}.`); setTimeout(() => setToast(null), 2500); };
+  const askVehicle = (v: DemoVehicle) => send(`Tell me more about the ${v.model} ${v.year} ${v.variant}.`);
+  const expertVehicle = (v: DemoVehicle) => { setPanel('expert'); setToast(`Expert panel opened for ${v.model}.`); setTimeout(() => setToast(null), 2500); };
 
   const shell = dark ? 'bg-[#070C18] text-slate-100' : 'bg-slate-100 text-slate-900';
   const panelBg = dark ? 'bg-[#0B1322]/95 border-white/10' : 'bg-white border-slate-200';
@@ -282,7 +289,7 @@ export function SparkPilotApp() {
           <div className="space-y-4">
             <ExpertHandoff interest={conv.preferences.bodyType ?? conv.title} />
             <PreorderMini step={preorderStep} setStep={setPreorderStep} onSend={send} />
-            <LeadForm interestDefault={conv.title === 'New conversation' ? '' : conv.title} onDone={(ref) => { setToast(`Lead ${ref} submitted.`); setTimeout(() => setToast(null), 3000); }} />
+            <LeadForm key={conv.id} interestDefault={conv.title === 'New conversation' ? '' : conv.title} onDone={(ref) => { setToast(`Lead ${ref} submitted.`); setTimeout(() => setToast(null), 3000); }} />
             <p className="text-[11px] opacity-50">{SPARKPILOT_CONFIG.productName} {SPARKPILOT_CONFIG.attribution} · {SPARKPILOT_CONFIG.showroom} · {SPARKPILOT_CONFIG.hours}</p>
           </div>
         )}
@@ -338,7 +345,7 @@ export function SparkPilotApp() {
               </p>
             </div>
             <div className="ml-auto flex items-center gap-1.5">
-              <span className="hidden sm:block"><DemoBadge /></span>
+              <span className="hidden sm:block"><DemoBadge isLive={aiLive !== false} /></span>
               <button
                 ref={toolsRef}
                 className="lg:hidden p-2.5 min-w-[44px] min-h-[44px] rounded-lg hover:bg-black/5 dark:hover:bg-white/10"
@@ -450,7 +457,7 @@ export function SparkPilotApp() {
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); void send(input); } }}
+                onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(input); } }}
                 placeholder="Ask in English or Bangla, for example: Family hybrid under 25 lakh..."
                 rows={1}
                 disabled={busy}

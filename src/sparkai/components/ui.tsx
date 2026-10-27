@@ -40,7 +40,7 @@ export function WaLink({ href, label }: WaSegment) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Open WhatsApp to chat with an AutoSpark expert (${label})`}
-      className="mx-0.5 my-0.5 inline-flex min-h-[28px] items-center gap-1 rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-2 align-middle font-bold text-emerald-600 transition hover:bg-emerald-500/25 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200"
+      className="mx-0.5 my-0.5 inline-flex min-h-[28px] items-center gap-1 rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-2 align-middle font-bold text-emerald-700 transition hover:bg-emerald-500/25 hover:text-emerald-700 dark:text-emerald-300 dark:hover:text-emerald-200"
     >
       <MessageCircle className="h-3.5 w-3.5 shrink-0" aria-hidden />
       <span className="whitespace-nowrap">{label}</span>
@@ -93,10 +93,10 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
   );
 }
 
-export function LiveBadge() {
+export function LiveBadge({ isLive = true }: { isLive?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-1 uppercase tracking-wider">
-      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live · AI expert
+    <span className={`inline-flex items-center gap-1.5 rounded-full border text-[11px] font-bold px-2.5 py-1 uppercase tracking-wider ${isLive ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-700 dark:text-emerald-300' : 'bg-amber-500/15 border-amber-500/30 text-amber-700 dark:text-amber-300'}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} /> {isLive ? 'Live · AI expert' : 'Connecting…'}
     </span>
   );
 }

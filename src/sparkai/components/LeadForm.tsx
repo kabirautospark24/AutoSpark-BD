@@ -69,8 +69,8 @@ export function LeadForm({ interestDefault = '', onDone }: { interestDefault?: s
       </label>
       {errors.consent && <span role="alert" className="block text-red-500 text-xs font-medium">{errors.consent.message}</span>}
       {error && <p role="alert" className="text-xs font-semibold text-red-500 bg-red-500/10 border border-red-500/30 rounded-xl px-3 py-2">{error}</p>}
-      {ok && <p role="status" className="text-xs font-semibold text-emerald-600 bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-2">Submitted! Reference {ok} , an expert will follow up shortly.</p>}
-      <SButton type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting…' : 'Request expert callback'}</SButton>
+      {ok && <p role="status" className="text-xs font-semibold text-emerald-700 bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-3 py-2">Submitted! Reference {ok} , an expert will follow up shortly.</p>}
+      <SButton type="submit" disabled={isSubmitting || !!ok}>{isSubmitting ? 'Submitting…' : ok ? 'Submitted' : 'Request expert callback'}</SButton>
     </form>
   );
 }
