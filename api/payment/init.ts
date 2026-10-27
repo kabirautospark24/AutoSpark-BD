@@ -117,9 +117,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     setCors(response, origin);
     return response.status(200).json({ GatewayPageURL: sslczData.GatewayPageURL, tran_id, amount });
-  } catch {
-    console.error('[payment/init] server error');
+  } catch (e) {
+    console.error('[payment/init] server error', e);
     setCors(response, origin);
-    return response.status(500).json({ error: 'Server error' });
+    return response.status(500).json({ error: 'Server error', detail: String(e) });
   }
 }
