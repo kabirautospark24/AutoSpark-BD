@@ -245,7 +245,7 @@ app.get('/health', (req, res) => {
 });
 
 // --- SparkPilot → Groq proxy (keeps GROQ_API_KEY server-side) ---
-// NOTE: keep in sync with api/sparkai/chat.ts (SALES_SYSTEM_PROMPT).
+// NOTE: keep in sync with api/sparkai/chat.ts (SALES_SYSTEM_PROMPT, caps, hygiene).
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const SALES_SYSTEM_PROMPT = `You are SparkPilot — AutoSpark's interactive, modern, and elegant sales-expert AI assistant for AutoSpark (Rajshahi, Bangladesh), the Japanese-car specialist for vehicle sales AND full car servicing.
 IDENTITY: When greeted or asked who you are, introduce yourself warmly in this spirit: "I'm SparkPilot — I know everything about AutoSpark car sales and car services. What would you like to know?" Never present yourself as a generic chatbot. CONSISTENCY: you are one character in every reply — the same AutoSpark AI Sales Expert (same name, same warm consultative tone, same rules); never switch persona, never claim to be another assistant/model, never break character.
@@ -257,13 +257,53 @@ SALES PLAYBOOK: 1) Discover budget/use/body-type/fuel/brand/timeline. 2) Recomme
 SERVICES PLAYBOOK: Ask model/year + concern (one question at a time), match to SERVICES KB (name + price + duration), then offer booking, pickup/drop-off, or expert follow-up.
 GUARDRAILS: Never invent stock, prices, mileage, grades, delivery dates, service prices, or loan approvals. Never pressure or create false urgency. Output plain text only.`;
 
+// Server-side KB (same source as production api/sparkai/chat.ts): bundle the
+// TS KB once via esbuild (already present as a Vite dependency) and import it.
+// Client KB text is never trusted — the client only sends a topic enum.
+let kbModule; // undefined = not tried, false = failed, object = loaded
+async function loadKbModule() {
+  if (kbModule !== undefined) return kbModule;
+  try {
+    const esbuild = await import('esbuild');
+    const out = await esbuild.build({
+      entryPoints: [path.join(__dirname, '..', 'src', 'sparkai', 'kb', 'index.ts')],
+      bundle: true,
+      format: 'esm',
+      platform: 'node',
+      write: false,
+      logLevel: 'silent',
+    });
+    const code = out.outputFiles[0].text;
+    kbModule = await import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`);
+    console.log('✅ SparkPilot KB loaded for dev (server-side, same source as production)');
+  } catch (e) {
+    console.warn('⚠️  SparkPilot KB load failed — replies will lack knowledge-base context:', e.message);
+    kbModule = false;
+  }
+  return kbModule;
+}
+
 async function handleSparkPilot(req, res) {
   try {
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'GROQ_API_KEY not set in server env (.env).' });
-    const { messages, prefs, context, kb } = req.body ?? {};
+    const { messages, prefs, kbTopic } = req.body ?? {};
     if (!Array.isArray(messages) || !messages.length) return res.status(400).json({ error: 'messages[] required' });
-    const slim = messages.slice(-12).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '').slice(0, 2000) }));
+    if (messages.length > 50) return res.status(400).json({ error: 'Too many messages' });
+    const slim = messages
+      .slice(-12)
+      .map((m) => ({ role: m.role, content: String(m.content || '').slice(0, 2000) }))
+      .filter((m) => (m.role === 'user' || m.role === 'assistant') && m.content.trim() !== '');
+    if (!slim.length) return res.status(400).json({ error: 'messages[] required' });
+    // Rebuild KB from the topic enum (mirrors api/sparkai/chat.ts validateChatRequest).
+    const kbBlocks = [];
+    const kb = await loadKbModule();
+    if (kb && (kbTopic === 'sales' || kbTopic === 'both')) {
+      kbBlocks.push({ role: 'system', content: kb.buildSalesKbText().slice(0, 24000) });
+    }
+    if (kb && (kbTopic === 'services' || kbTopic === 'both')) {
+      kbBlocks.push({ role: 'system', content: kb.buildServicesKbText().slice(0, 16000) });
+    }
     const model = process.env.GROQ_MODEL || 'openai/gpt-oss-20b';
     const groqRes = await fetch(GROQ_URL, {
       method: 'POST',
@@ -272,10 +312,8 @@ async function handleSparkPilot(req, res) {
         model, temperature: 0.6, max_tokens: 1200,
         messages: [
           { role: 'system', content: SALES_SYSTEM_PROMPT },
-          ...(kb?.sales ? [{ role: 'system', content: String(kb.sales).slice(0, 24000) }] : []),
-          ...(kb?.services ? [{ role: 'system', content: String(kb.services).slice(0, 16000) }] : []),
-          ...(context ? [{ role: 'system', content: `Verified vehicle context (never claim beyond this list):\n${String(context).slice(0, 4000)}` }] : []),
-          ...(prefs ? [{ role: 'system', content: `Known customer prefs: ${JSON.stringify(prefs).slice(0, 800)}` }] : []),
+          ...kbBlocks,
+          ...(prefs && typeof prefs === 'object' ? [{ role: 'system', content: `Known customer prefs: ${JSON.stringify(prefs).slice(0, 800)}` }] : []),
           ...slim,
         ],
       }),
@@ -284,7 +322,11 @@ async function handleSparkPilot(req, res) {
       const t = await groqRes.text().catch(() => '');
       console.error('[sparkai] groq http', groqRes.status, t.slice(0, 300));
       // Pass rate limits through so the client can wait and retry.
-      if (groqRes.status === 429) return res.status(429).json({ error: 'rate_limited' });
+      if (groqRes.status === 429) {
+        const ra = groqRes.headers.get('retry-after');
+        res.setHeader('Retry-After', ra && /^\d+$/.test(ra) ? ra : '18');
+        return res.status(429).json({ error: 'rate_limited' });
+      }
       return res.status(502).json({ error: 'AI provider error' });
     }
     const data = await groqRes.json();
@@ -293,14 +335,17 @@ async function handleSparkPilot(req, res) {
     return res.json({ text, model: data?.model || model });
   } catch (e) {
     console.error('[sparkai] error', e.message);
-    return res.status(500).json({ error: e.message });
+    return res.status(500).json({ error: 'Server error' });
   }
 }
 app.post('/api/sparkai/chat', handleSparkPilot);
 app.post('/api/agent', handleSparkPilot);
 
 // Mirrors api/geo.ts so the regional banner behaves the same in local dev.
-app.get('/api/geo', async (_req, res) => {
+app.get('/api/geo', async (req, res) => {
+  // Mirror the Vercel edge header (present behind their proxy in staging).
+  const edgeCountry = String(req.headers['x-vercel-ip-country'] || '').toUpperCase();
+  if (/^[A-Z]{2}$/.test(edgeCountry)) return res.status(200).json({ country: edgeCountry });
   try {
     const response = await fetch('https://api.country.is/', { headers: { Accept: 'application/json' } });
     if (!response.ok) throw new Error(`lookup failed with status ${response.status}`);
@@ -311,16 +356,26 @@ app.get('/api/geo', async (_req, res) => {
   }
 });
 
+// Mirrors api/lead/submit.ts field caps (DB insert is production-only).
 app.post('/api/lead/submit', (req, res) => {
-  const { name, whatsapp, language, interest, budgetRange, timeline, notes, consent } = req.body ?? {};
-  if (!name || name.trim().length < 2) return res.status(400).json({ error: 'Name is required' });
+  const body = req.body ?? {};
+  const cap = (v, max) => String(v ?? '').trim().slice(0, max);
+  const name = cap(body.name, 100);
+  const whatsapp = cap(body.whatsapp, 20);
+  const language = cap(body.language, 20) || 'en';
+  const interest = cap(body.interest, 200);
+  const budgetRange = cap(body.budgetRange, 40);
+  const timeline = cap(body.timeline, 40);
+  const notes = cap(body.notes, 500);
+  const consent = Boolean(body.consent);
+  if (name.length < 2) return res.status(400).json({ error: 'Name is required' });
   if (!whatsapp || whatsapp.trim().length < 10) return res.status(400).json({ error: 'Valid WhatsApp number is required' });
-  if (!interest || interest.trim().length < 2) return res.status(400).json({ error: 'Interest/vehicle is required' });
+  if (interest.length < 2) return res.status(400).json({ error: 'Interest/vehicle is required' });
   if (!budgetRange) return res.status(400).json({ error: 'Budget range is required' });
   if (!timeline) return res.status(400).json({ error: 'Timeline is required' });
   if (!consent) return res.status(400).json({ error: 'Consent is required' });
-  const reference = `SPARK-${Date.now().toString(36).toUpperCase()}`;
-  console.log('Lead submitted:', { name, whatsapp, interest, budgetRange, timeline, reference });
+  const reference = `SPK-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 10)}`;
+  console.log('Lead submitted:', { name, whatsapp, interest, budgetRange, timeline, language, notes: notes.slice(0, 80), reference });
   return res.status(200).json({ ok: true, reference });
 });
 

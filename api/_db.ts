@@ -83,6 +83,24 @@ export async function upsertOrder(row: OrderRow): Promise<boolean> {
   }
 }
 
+export async function getOrder(tranId: string): Promise<OrderRow | null> {
+  if (!dbEnabled() || !tranId) return null;
+  try {
+    const r = await request(`/rest/v1/orders?tran_id=eq.${encodeURIComponent(tranId)}&select=*&limit=1`, {
+      method: 'GET',
+    });
+    if (!r.ok) {
+      console.error('[db/getOrder]', r.status, (await r.text()).slice(0, 200));
+      return null;
+    }
+    const rows = (await r.json()) as OrderRow[];
+    return Array.isArray(rows) && rows[0] ? rows[0] : null;
+  } catch (e) {
+    console.error('[db/getOrder] failed', e);
+    return null;
+  }
+}
+
 export async function updateOrderStatus(
   tranId: string,
   status: OrderRow['status'],
@@ -90,7 +108,12 @@ export async function updateOrderStatus(
 ): Promise<boolean> {
   if (!dbEnabled() || !tranId) return false;
   try {
-    const r = await request(`/rest/v1/orders?tran_id=eq.${encodeURIComponent(tranId)}`, {
+    // Paid is terminal: fail/cancel/IPN-failed callbacks can never downgrade it.
+    const filter =
+      status === 'paid'
+        ? `tran_id=eq.${encodeURIComponent(tranId)}`
+        : `tran_id=eq.${encodeURIComponent(tranId)}&status=neq.paid`;
+    const r = await request(`/rest/v1/orders?${filter}`, {
       method: 'PATCH',
       headers: { Prefer: 'return=minimal' },
       body: JSON.stringify({ status, ...extra, updated_at: new Date().toISOString() }),

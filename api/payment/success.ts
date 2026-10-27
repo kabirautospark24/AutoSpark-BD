@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { corsOrigin, setCors, validateWithSSLCommerz } from './_helpers.js';
-import { updateOrderStatus } from '../_db.js';
+import { getOrder, updateOrderStatus } from '../_db.js';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   const origin = corsOrigin(request.headers.origin as string | undefined);
@@ -27,8 +27,17 @@ export default async function handler(request: VercelRequest, response: VercelRe
       setCors(response, origin);
       return response.status(402).json({ error: 'Payment verification failed', tran_id });
     }
-    // Amount match guard (tolerance 1 BDT)
-    if (amount !== undefined && check.amount !== undefined && Math.abs(Number(amount) - check.amount) > 1) {
+    // Bind the validation to OUR transaction (a valid val_id from another order must not mark this one paid).
+    if (!check.tranId || check.tranId !== tran_id) {
+      console.error('[payment/success] tran_id bind mismatch', String(tran_id).slice(0, 40), 'vs', String(check.tranId).slice(0, 40));
+      setCors(response, origin);
+      return response.status(402).json({ error: 'Transaction mismatch', tran_id });
+    }
+    // Amount must match the stored order (server truth) when the row exists;
+    // otherwise fall back to the gateway-validated amount vs the callback amount.
+    const order = await getOrder(tran_id);
+    const expected = order?.amount ?? (amount !== undefined && Number.isFinite(Number(amount)) ? Number(amount) : check.amount);
+    if (Number.isFinite(Number(check.amount)) && Number.isFinite(Number(expected)) && Math.abs(Number(check.amount) - Number(expected)) > 1) {
       console.error('[payment/success] amount mismatch for', String(tran_id).slice(0, 40));
       setCors(response, origin);
       return response.status(402).json({ error: 'Amount mismatch', tran_id });

@@ -1,5 +1,7 @@
+import { randomUUID } from 'node:crypto';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { insertLead } from '../_db.js';
+import { normalizeWhatsApp } from '../../src/sparkai/config.js';
 
 const cors = (res: VercelResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -7,36 +9,49 @@ const cors = (res: VercelResponse) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 };
 
+const cap = (v: unknown, max: number) => String(v ?? '').trim().slice(0, max);
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, whatsapp, language, interest, budgetRange, timeline, notes, consent } = req.body ?? {};
-  const errors: string[] = [];
+  const body = req.body ?? {};
+  const name = cap(body.name, 100);
+  const whatsapp = normalizeWhatsApp(cap(body.whatsapp, 20));
+  const language = cap(body.language, 20) || 'en';
+  const interest = cap(body.interest, 200);
+  const budgetRange = cap(body.budgetRange, 40);
+  const timeline = cap(body.timeline, 40);
+  const notes = cap(body.notes, 500);
+  const consent = Boolean(body.consent);
 
-  if (!name || String(name).trim().length < 2) errors.push('Name is required');
-  if (!whatsapp || String(whatsapp).trim().length < 10) errors.push('Valid WhatsApp number is required');
-  if (!interest || String(interest).trim().length < 2) errors.push('Interest/vehicle is required');
+  const errors: string[] = [];
+  if (name.length < 2) errors.push('Name is required');
+  if (!whatsapp) errors.push('Valid WhatsApp number is required');
+  if (interest.length < 2) errors.push('Interest/vehicle is required');
   if (!budgetRange) errors.push('Budget range is required');
   if (!timeline) errors.push('Timeline is required');
   if (!consent) errors.push('Consent is required');
 
-  if (errors.length) return res.status(400).json({ error: errors.join('. ') });
+  if (errors.length || !whatsapp) return res.status(400).json({ error: errors.length ? errors.join('. ') : 'Valid WhatsApp number is required' });
 
-  const reference = `SPARK-${Date.now().toString(36).toUpperCase()}`;
+  const reference = `SPK-${Date.now().toString(36).toUpperCase()}-${randomUUID().slice(0, 8)}`;
 
-  await insertLead({
-    name: String(name).trim(),
-    whatsapp: String(whatsapp).trim(),
-    language: language || 'en',
-    interest: String(interest).trim(),
+  const saved = await insertLead({
+    name,
+    whatsapp,
+    language,
+    interest,
     budget_range: budgetRange,
     timeline,
-    notes: notes || '',
+    notes,
     reference,
     source: 'sparkai',
   });
+
+  // A lead that was never persisted must not look like a success to the customer.
+  if (!saved) return res.status(502).json({ error: 'Could not save your request. Please retry or WhatsApp us directly.' });
 
   return res.status(200).json({ ok: true, reference });
 }

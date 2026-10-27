@@ -2,7 +2,7 @@ import type { ChatMessage, ConversationIntent, CustomerPreferences, DemoVehicle 
 import { pickVehicles, formatLakh } from '../data/demo';
 import { CAR_MODELS } from '../kb/sales';
 import { SPARKPILOT_GROQ, SPARKPILOT_CONFIG } from '../config';
-import { buildKbPayload } from '../kb';
+import { resolveKbTopic } from '../kb';
 
 export interface AIResponse {
   text: string;
@@ -51,8 +51,10 @@ const expertHandoff = (bn: boolean) =>
  * Deterministic fallback responder used only when the live Groq model is unreachable.
  * Rule: remembers stated prefs, asks one question at a time, never invents stock.
  */
-export async function mockRespond(_history: ChatMessage[], input: string, prefs: CustomerPreferences): Promise<AIResponse> {
+export async function mockRespond(_history: ChatMessage[], input: string, prefs: CustomerPreferences, opts?: { signal?: AbortSignal }): Promise<AIResponse> {
+  if (opts?.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
   await new Promise((r) => setTimeout(r, 500 + Math.random() * 500));
+  if (opts?.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
   const t = input.toLowerCase();
   const bn = hasBn(input);
   const next: CustomerPreferences = { ...prefs };
@@ -169,19 +171,30 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
       { maxBudgetLakh: prefs.budgetLakh, hybrid: prefs.hybrid, bodyType: prefs.bodyType, make: prefs.manufacturer, model: prefs.model },
       CARD_LIMIT,
     );
-    // Dual knowledge base: route to Car Sales KB and/or Car Services KB per the conversation.
-    const kb = buildKbPayload(input, history);
+    // Dual knowledge base: send only a topic ENUM — the server rebuilds the
+    // KB text itself (client KB text is never trusted / never injected).
+    const kbTopic = resolveKbTopic(input, history);
+    // Prefs slimmed to known scalar keys (matches the server's slimPrefs contract).
+    const prefsOut: Record<string, string | number | boolean> = {};
+    if (typeof prefs.budgetLakh === 'number' && Number.isFinite(prefs.budgetLakh)) prefsOut.budgetLakh = prefs.budgetLakh;
+    if (typeof prefs.hybrid === 'boolean') prefsOut.hybrid = prefs.hybrid;
+    for (const k of ['bodyType', 'manufacturer', 'model', 'language', 'timeline'] as const) {
+      const v = prefs[k];
+      if (typeof v === 'string' && v.trim()) prefsOut[k] = v.trim().slice(0, 60);
+    }
     const doFetch = () =>
       fetch(SPARKPILOT_GROQ.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: msgs, prefs, kb }),
+        body: JSON.stringify({ messages: msgs, prefs: prefsOut, kbTopic }),
         signal: ctrl.signal,
       });
     let r = await doFetch();
     for (let attempt = 0; r.status === 429 && attempt < RATE_LIMIT_RETRIES; attempt++) {
-      // Rate limited (tokens-per-minute): cool down, then retry.
-      await new Promise((res) => setTimeout(res, RATE_LIMIT_WAIT_MS));
+      // Rate limited (tokens-per-minute): honor Retry-After when present, else cool down.
+      const ra = Number(r.headers.get('retry-after'));
+      const waitMs = Number.isFinite(ra) && ra > 0 ? Math.min(ra, 60) * 1000 : RATE_LIMIT_WAIT_MS;
+      await new Promise((res) => setTimeout(res, waitMs));
       if (external?.aborted) throw new DOMException('Aborted', 'AbortError');
       if (ctrl.signal.aborted) return null; // internal timeout, fall back to mock
       r = await doFetch();
@@ -215,35 +228,25 @@ export async function respond(history: ChatMessage[], input: string, prefs: Cust
   const live = await liveRespond(history, input, next, opts?.signal);
   if (live) return { ...live, prefs: next, isLive: true };
   if (opts?.signal?.aborted) throw new DOMException('Aborted', 'AbortError');
-  return { ...(await mockRespond(history, input, next)), isLive: false };
-}
-
-/** Check if Groq API is reachable (for UI status indicator). */
-export async function checkLiveStatus(): Promise<boolean> {
-  try {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 5000);
-    const r = await fetch(SPARKPILOT_GROQ.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{ role: 'user', content: 'hi' }] }),
-      signal: ctrl.signal,
-    });
-    clearTimeout(timer);
-    return r.ok;
-  } catch {
-    return false;
-  }
+  return { ...(await mockRespond(history, input, next, { signal: opts?.signal })), isLive: false };
 }
 
 export function estimateFinance(priceLakh: number, downPct: number, annualRatePct: number | null, months: number) {
-  const price = priceLakh * 100000;
-  const down = Math.round((price * downPct) / 100);
-  const loan = price - down;
-  if (annualRatePct == null || annualRatePct <= 0 || months <= 0) {
-    return { priceLakh, downPct, annualRatePct, months, downPaymentBDT: down, loanBDT: loan, monthlyBDT: null };
+  // Clamp math inputs; echo the clamped months (a 0/240-month plan is meaningless).
+  const safePrice = Math.min(Math.max(priceLakh, 0), 500) * 100000;
+  const pct = Math.min(Math.max(downPct, 0), 100);
+  const m = Math.min(Math.max(Math.round(months || 0), 12), 84);
+  const down = Math.round((safePrice * pct) / 100);
+  const loan = safePrice - down;
+  if (annualRatePct == null) {
+    // Rate unknown → no EMI shown (deterministic "null rate" UI state).
+    return { priceLakh, downPct, annualRatePct, months: m, downPaymentBDT: down, loanBDT: loan, monthlyBDT: null };
+  }
+  if (annualRatePct <= 0) {
+    // Explicit 0% financing: even split of the loan (previously rendered as blank EMI).
+    return { priceLakh, downPct, annualRatePct, months: m, downPaymentBDT: down, loanBDT: loan, monthlyBDT: Math.round(loan / m) };
   }
   const r = annualRatePct / 100 / 12;
-  const monthly = Math.round((loan * r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1));
-  return { priceLakh, downPct, annualRatePct, months, downPaymentBDT: down, loanBDT: loan, monthlyBDT: monthly };
+  const monthly = Math.round((loan * r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1));
+  return { priceLakh, downPct, annualRatePct, months: m, downPaymentBDT: down, loanBDT: loan, monthlyBDT: monthly };
 }

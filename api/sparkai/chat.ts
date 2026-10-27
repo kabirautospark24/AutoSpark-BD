@@ -1,8 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { corsOrigin, setCors } from '../_cors.js';
+import { buildSalesKbText, buildServicesKbText } from '../../src/sparkai/kb/index.js';
 
 // SparkPilot — interactive, modern, elegant Sales Expert AI. Groq proxy. Keeps GROQ_API_KEY server-side.
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const MODEL = process.env.GROQ_MODEL || 'openai/gpt-oss-20b';
+
+/** Vercel function timeout: the client gives up at 70s — keep headroom under that. */
+export const config = { maxDuration: 60 };
 
 export const SALES_SYSTEM_PROMPT = `You are SparkPilot — AutoSpark's interactive, modern, and elegant sales-expert AI assistant for AutoSpark (Rajshahi, Bangladesh), the Japanese-car specialist for vehicle sales AND full car servicing.
 
@@ -57,41 +62,111 @@ GUARDRAILS:
 - Never invent stock, prices, mileage, auction grades, delivery dates, service prices, or loan approvals. Never pressure, shame, mislead, or create false urgency.
 - Output plain text only (the frontend renders whitespace). Keep Bangla fluent and respectful.`;
 
-function cors(res: VercelResponse, origin = '*') {
-  res.setHeader('Access-Control-Allow-Origin', origin);
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+const KB_TOPICS = new Set(['sales', 'services', 'both', 'none']);
+const MAX_MESSAGES = 50;
+const MAX_CONTENT_CHARS = 2000;
+const MAX_BODY_CHARS = 100_000;
+const SALES_KB_CAP = 24000;
+const SERVICES_KB_CAP = 16000;
+const DEFAULT_RETRY_AFTER_S = '18';
+
+export interface ChatRequestPayload {
+  messages: { role: 'user' | 'assistant'; content: string }[];
+  prefs: Record<string, string | number | boolean>;
+  kbBlocks: { role: 'system'; content: string }[];
+}
+
+/** Slim client prefs to a JSON-safe known-key subset (never trust arbitrary shapes). */
+export function slimPrefs(prefs: unknown): Record<string, string | number | boolean> {
+  const p = (prefs ?? {}) as Record<string, unknown>;
+  const out: Record<string, string | number | boolean> = {};
+  if (typeof p.budgetLakh === 'number' && Number.isFinite(p.budgetLakh)) out.budgetLakh = p.budgetLakh;
+  if (typeof p.hybrid === 'boolean') out.hybrid = p.hybrid;
+  for (const k of ['bodyType', 'manufacturer', 'model', 'language', 'timeline'] as const) {
+    const v = p[k];
+    if (typeof v === 'string' && v.trim()) out[k] = v.trim().slice(0, 60);
+  }
+  return out;
+}
+
+/**
+ * Pure request validator (unit-tested): allowlisted CORS, message caps,
+ * server-side KB build from a topic enum (client strings are never trusted),
+ * and prefs slimmed to known keys.
+ */
+export function validateChatRequest(
+  origin: string | undefined,
+  body: unknown,
+): { ok: true; origin: string; payload: ChatRequestPayload } | { ok: false; origin: string; status: number; error: string } {
+  const cors = corsOrigin(origin);
+  const b = (body ?? {}) as { messages?: unknown; prefs?: unknown; kbTopic?: unknown };
+  if (!Array.isArray(b.messages) || b.messages.length === 0) {
+    return { ok: false, origin: cors, status: 400, error: 'messages[] required' };
+  }
+  if (b.messages.length > MAX_MESSAGES) {
+    return { ok: false, origin: cors, status: 400, error: 'Too many messages' };
+  }
+  // Only user/assistant messages are accepted — client "system" roles are dropped (injection vector),
+  // and empty contents never reach the model.
+  const slim = b.messages
+    .map((m) => {
+      const role = (m as { role?: string })?.role;
+      if (role !== 'user' && role !== 'assistant') return null;
+      const content = String((m as { content?: unknown })?.content ?? '').slice(0, MAX_CONTENT_CHARS);
+      return content.trim() === '' ? null : ({ role, content } as { role: 'user' | 'assistant'; content: string });
+    })
+    .filter((m): m is { role: 'user' | 'assistant'; content: string } => m !== null);
+  if (!slim.length) return { ok: false, origin: cors, status: 400, error: 'messages[] required' };
+
+  // Knowledge base is built HERE from a validated topic enum — client KB text is ignored.
+  const topic = typeof b.kbTopic === 'string' && KB_TOPICS.has(b.kbTopic) ? b.kbTopic : 'none';
+  const kbBlocks: { role: 'system'; content: string }[] = [];
+  if (topic === 'sales' || topic === 'both') {
+    kbBlocks.push({ role: 'system', content: buildSalesKbText().slice(0, SALES_KB_CAP) });
+  }
+  if (topic === 'services' || topic === 'both') {
+    kbBlocks.push({ role: 'system', content: buildServicesKbText().slice(0, SERVICES_KB_CAP) });
+  }
+
+  return { ok: true, origin: cors, payload: { messages: slim, prefs: slimPrefs(b.prefs), kbBlocks } };
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const origin = (req.headers.origin as string) || '*';
+  const origin = corsOrigin(req.headers.origin as string | undefined);
   if (req.method === 'OPTIONS') {
-    cors(res, origin);
+    setCors(res, origin);
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     return res.status(200).end();
   }
   if (req.method !== 'POST') {
-    cors(res, origin);
+    setCors(res, origin);
     return res.status(405).json({ error: 'Method not allowed' });
   }
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    cors(res, origin);
+    setCors(res, origin);
     return res.status(500).json({ error: 'GROQ_API_KEY not configured on server.' });
   }
-  const { messages, prefs, context, kb } = (req.body ?? {}) as {
-    messages?: { role: string; content: string }[];
-    prefs?: Record<string, unknown>;
-    context?: string;
-    kb?: { sales?: string; services?: string };
-  };
-  if (!Array.isArray(messages) || !messages.length) {
-    cors(res, origin);
-    return res.status(400).json({ error: 'messages[] required' });
+  try {
+    if (JSON.stringify(req.body ?? {}).length > MAX_BODY_CHARS) {
+      setCors(res, origin);
+      return res.status(413).json({ error: 'Request too large' });
+    }
+  } catch {
+    setCors(res, origin);
+    return res.status(400).json({ error: 'Invalid JSON body' });
   }
-  const slim = messages.slice(-12).map((m) => ({
-    role: m.role === 'assistant' ? 'assistant' : 'user',
-    content: String(m.content || '').slice(0, 2000),
-  }));
+  const result = validateChatRequest(req.headers.origin as string | undefined, req.body);
+  setCors(res, result.origin);
+  if (!result.ok) return res.status(result.status).json({ error: result.error });
+  const { messages, prefs, kbBlocks } = result.payload;
+
+  // Cancel the upstream Groq spend when the client disconnects (Stop button / tab close).
+  const abort = new AbortController();
+  const onClose = () => abort.abort();
+  req.on('close', onClose);
+
   try {
     const groqRes = await fetch(GROQ_URL, {
       method: 'POST',
@@ -102,33 +177,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         max_tokens: 1200,
         messages: [
           { role: 'system', content: SALES_SYSTEM_PROMPT },
-          ...(kb?.sales ? [{ role: 'system' as const, content: String(kb.sales).slice(0, 24000) }] : []),
-          ...(kb?.services ? [{ role: 'system' as const, content: String(kb.services).slice(0, 16000) }] : []),
-          ...(context ? [{ role: 'system' as const, content: `Verified vehicle context (never claim beyond this list):\n${String(context).slice(0, 4000)}` }] : []),
-          ...(prefs ? [{ role: 'system' as const, content: `Known customer prefs: ${JSON.stringify(prefs).slice(0, 800)}` }] : []),
-          ...slim,
+          ...kbBlocks,
+          ...(Object.keys(prefs).length
+            ? [{ role: 'system' as const, content: `Known customer prefs: ${JSON.stringify(prefs).slice(0, 800)}` }]
+            : []),
+          ...messages,
         ],
       }),
+      signal: abort.signal,
     });
+    if (abort.signal.aborted) return res.status(499).end();
     if (!groqRes.ok) {
       const t = await groqRes.text().catch(() => '');
       console.error('[sparkai] groq http', groqRes.status, t.slice(0, 300));
-      cors(res, origin);
       // Pass rate limits through so the client can wait and retry.
-      if (groqRes.status === 429) return res.status(429).json({ error: 'rate_limited' });
-      return res.status(502).json({ error: 'AI provider error', detail: t.slice(0, 300) });
+      if (groqRes.status === 429) {
+        const ra = groqRes.headers.get('retry-after');
+        res.setHeader('Retry-After', ra && /^\d+$/.test(ra) ? ra : DEFAULT_RETRY_AFTER_S);
+        return res.status(429).json({ error: 'rate_limited' });
+      }
+      // Never leak upstream error detail to the client.
+      return res.status(502).json({ error: 'AI provider error' });
     }
     const data = await groqRes.json();
     const text: string = data?.choices?.[0]?.message?.content?.trim() || '';
     if (!text) {
-      cors(res, origin);
       return res.status(502).json({ error: 'Empty AI response' });
     }
-    cors(res, origin);
     return res.status(200).json({ text, model: data?.model || MODEL });
   } catch (e) {
+    if (abort.signal.aborted) return res.status(499).end();
     console.error('[sparkai] server error', e);
-    cors(res, origin);
     return res.status(500).json({ error: 'Server error' });
+  } finally {
+    req.off?.('close', onClose);
   }
 }

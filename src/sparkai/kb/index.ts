@@ -6,7 +6,7 @@ export { CAR_MODELS, entryPriceLakh, hasListedPrice, buildSalesKbText } from './
 export type { KbCarModel, KbOffer } from './sales';
 export { CAR_SERVICES_KB, buildServicesKbText } from './services';
 
-export type KbTopic = 'sales' | 'services' | 'both';
+export type KbTopic = 'sales' | 'services' | 'both' | 'none';
 
 export interface KbPayload {
   sales?: string;
@@ -29,7 +29,7 @@ const SALES_RE =
  * - Strong sales signal → sales KB.
  * - Generic commercial wording or unclear → sales; greeting/other → both.
  */
-export function detectKbTopic(input: string, history: ChatMessage[] = []): KbTopic {
+export function detectKbTopic(input: string, history: ChatMessage[] = []): Exclude<KbTopic, 'none'> {
   const recent = [...history.slice(-4).map((m) => m.text), input].join('\n');
   const services = SERVICES_RE.test(recent);
   const salesStrong = SALES_STRONG_RE.test(recent);
@@ -40,13 +40,21 @@ export function detectKbTopic(input: string, history: ChatMessage[] = []): KbTop
   return 'both';
 }
 
-/** Build the KB system-prompt blocks for one chat request. */
-export function buildKbPayload(input: string, history: ChatMessage[] = []): KbPayload {
+/**
+ * Like detectKbTopic but returns 'none' for pure greetings/smalltalk —
+ * no KB needs to be loaded (persona alone answers, and it saves Groq TPM).
+ * The server rebuilds KB text from this topic enum; the client never sends KB text.
+ */
+export function resolveKbTopic(input: string, history: ChatMessage[] = []): KbTopic {
   const recent = [...history.slice(-4).map((m) => m.text), input].join('\n');
-  // Pure greetings/smalltalk need no KB: the persona alone answers them.
-  // (Also keeps requests small for Groq's free-tier tokens-per-minute limit.)
-  if (!SERVICES_RE.test(recent) && !SALES_STRONG_RE.test(recent) && !SALES_RE.test(recent)) return {};
-  const topic = detectKbTopic(input, history);
+  if (!SERVICES_RE.test(recent) && !SALES_STRONG_RE.test(recent) && !SALES_RE.test(recent)) return 'none';
+  return detectKbTopic(input, history);
+}
+
+/** Build the KB system-prompt blocks for one chat request (client-side/tests). */
+export function buildKbPayload(input: string, history: ChatMessage[] = []): KbPayload {
+  const topic = resolveKbTopic(input, history);
+  if (topic === 'none') return {};
   const payload: KbPayload = {};
   if (topic === 'sales' || topic === 'both') payload.sales = buildSalesKbText();
   if (topic === 'services' || topic === 'both') payload.services = buildServicesKbText();

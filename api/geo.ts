@@ -13,6 +13,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === 'OPTIONS') return res.status(204).end();
 
+  // Vercel injects the visitor country at the edge — no third-party call needed.
+  const edgeCountry = String(req.headers['x-vercel-ip-country'] ?? '').toUpperCase();
+  if (/^[A-Z]{2}$/.test(edgeCountry)) {
+    return res.status(200).json({ country: edgeCountry });
+  }
+
   try {
     const response = await fetch('https://api.country.is/', {
       headers: { Accept: 'application/json' },

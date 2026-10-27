@@ -36,7 +36,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     // Server-generated unique id (ignore client tran_id to prevent fixation)
     const tran_id = newTranId();
     const product_name = Array.isArray(cart)
-      ? cart.map((item: any) => String(item.name || 'Item').slice(0, 60)).join(', ').slice(0, 200)
+      ? cart.map((item: { name?: string }) => String(item.name || 'Item').slice(0, 60)).join(', ').slice(0, 200)
       : 'Order';
     const safeEmail = typeof email === 'string' && email.includes('@') ? email.slice(0, 100) : 'customer@autosparkbd.com';
 
@@ -117,7 +117,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     setCors(response, origin);
     return response.status(200).json({ GatewayPageURL: sslczData.GatewayPageURL, tran_id, amount });
-  } catch (error) {
+  } catch {
     console.error('[payment/init] server error');
     setCors(response, origin);
     return response.status(500).json({ error: 'Server error' });

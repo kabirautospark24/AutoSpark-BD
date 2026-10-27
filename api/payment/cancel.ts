@@ -37,7 +37,7 @@ export default async function handler(
         status,
         timestamp: new Date().toISOString(),
       });
-  } catch (error) {
+  } catch {
     console.error('Payment cancel handler error');
     return response
       .status(500)
