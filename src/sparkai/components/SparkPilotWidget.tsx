@@ -8,7 +8,7 @@ import { vehiclePriceLabel } from '../data/demo';
 import { useVisualViewport } from '../hooks/useVisualViewport';
 import { SPARKPILOT_CONFIG, buildWhatsAppUrl } from '../config';
 import { SparkMark } from './Logo';
-import { DemoBadge } from './ui';
+import { DemoBadge, useFocusTrap } from './ui';
 import { RevealText } from './ui';
 import { WelcomeCard } from './WelcomeCard';
 import { SPARKPILOT_OPEN_EVENT } from './openSparkPilot';
@@ -42,6 +42,7 @@ const [aiLive, setAiLive] = useState<boolean | null>(null);
   const stickRef = useRef(true);
   const abortRef = useRef<AbortController | null>(null);
   const reduceMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+useFocusTrap(open, sectionRef);
   // Pin the sheet to the visual viewport while the soft keyboard is open (iOS).
   const vv = useVisualViewport(open);
 

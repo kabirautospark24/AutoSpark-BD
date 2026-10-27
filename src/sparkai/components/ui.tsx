@@ -1,4 +1,31 @@
+import { useEffect } from 'react';
 import { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
+
+/** Traps keyboard focus inside `ref` while `active` is true (modal/dialog a11y). */
+export function useFocusTrap(active: boolean, ref: React.RefObject<HTMLElement>) {
+  useEffect(() => {
+    if (!active || !ref.current) return;
+    const el = ref.current;
+    const selector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = Array.from(el.querySelectorAll<HTMLElement>(selector)).filter((n) => n.offsetParent !== null || n === document.activeElement);
+      if (!focusable.length) { e.preventDefault(); return; }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    el.addEventListener('keydown', onKey);
+    // Move focus into the dialog on open.
+    const focusable = el.querySelectorAll<HTMLElement>(selector);
+    if (focusable.length) focusable[0].focus();
+    return () => el.removeEventListener('keydown', onKey);
+  }, [active, ref]);
+}
 import { MessageCircle } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { segmentMessage, type WaSegment } from './waText';

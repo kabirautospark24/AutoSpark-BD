@@ -228,11 +228,11 @@ const seen = new Set<string>();
           </button>
         ))}
       </nav>
-      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="mt-auto space-y-3 min-h-0">
+      <div className="mt-auto space-y-3 min-h-0">
         <p className="text-xs font-bold uppercase tracking-wider opacity-50 px-1">History (session only)</p>
-        {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="space-y-1 max-h-44 overflow-y-auto" role="list">
+        <div className="space-y-1 max-h-44 overflow-y-auto" role="list">
           {convs.map((c) => (
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} key={c.id} role="listitem" className={`group flex items-center gap-1 rounded-lg px-2 py-1 text-xs ${c.id === activeId ? 'bg-cyan-500/15 font-semibold' : ''}`}>
+            <div key={c.id} role="listitem" className={`group flex items-center gap-1 rounded-lg px-2 py-1 text-xs ${c.id === activeId ? 'bg-cyan-500/15 font-semibold' : ''}`}>
               <button onClick={() => { setActiveId(c.id); setSidebar(false); }} className="flex-1 text-left truncate min-h-[40px]">{c.title}</button>
               {convs.length > 1 && (
                 <button
@@ -246,7 +246,7 @@ const seen = new Set<string>();
             </div>
           ))}
         </div>
-        {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex items-center justify-between pt-2 border-t border-current/10" style={{ borderColor: dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.08)' }}>
+        <div className="flex items-center justify-between pt-2 border-t border-current/10" style={{ borderColor: dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.08)' }}>
           <button onClick={toggleTheme} aria-label="Toggle theme" className="inline-flex items-center gap-2 text-xs font-semibold px-3 min-h-[44px] rounded-full border border-current/20">
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} {theme === 'dark' ? 'Light' : 'Dark'}
           </button>
@@ -258,21 +258,21 @@ const seen = new Set<string>();
 
   const panelBody = (
     <div className="flex flex-col min-h-0 flex-1 gap-3">
-      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex gap-1 p-1 rounded-full bg-black/5 dark:bg-white/5" role="tablist" aria-label="Panel tabs">
+      <div className="flex gap-1 p-1 rounded-full bg-black/5 dark:bg-white/5" role="tablist" aria-label="Panel tabs">
         {(['discover', 'compare', 'budget', 'expert'] as const).map((t) => (
           <button key={t} role="tab" aria-selected={panel === t} onClick={() => setPanel(t)} className={`flex-1 text-[11px] font-bold uppercase tracking-wide rounded-full py-2.5 min-h-[44px] capitalize ${panel === t ? 'bg-cyan-500 text-white' : 'opacity-60 hover:opacity-100'}`}>{t}</button>
         ))}
       </div>
 
-      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="min-h-0 flex-1 overflow-y-auto pr-0.5">
+      <div className="min-h-0 flex-1 overflow-y-auto pr-0.5">
         {panel === 'discover' && (
-          {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="space-y-3">
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="grid grid-cols-2 gap-2 text-xs">
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-2 text-xs">
               <label className="font-semibold">Max budget (lakh)<select value={filters.maxBudgetLakh ?? ''} onChange={(e) => setFilters((f) => ({ ...f, maxBudgetLakh: e.target.value ? Number(e.target.value) : undefined }))} className="mt-1 w-full rounded-lg border bg-transparent px-2 py-2.5 min-h-[44px] text-base"><option value="">Any</option><option value="25">≤ 25</option><option value="30">≤ 30</option><option value="35">≤ 35</option><option value="45">≤ 45</option><option value="55">≤ 55</option><option value="75">≤ 75</option><option value="150">≤ 150</option></select></label>
               <label className="font-semibold">Make<select value={filters.make ?? ''} onChange={(e) => setFilters((f) => ({ ...f, make: e.target.value || undefined }))} className="mt-1 w-full rounded-lg border bg-transparent px-2 py-2.5 min-h-[44px] text-base"><option value="">All</option>{CATALOG_MAKES.map((m) => <option key={m}>{m}</option>)}</select></label>
             </div>
             <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer min-h-[44px]"><input type="checkbox" checked={filters.hybrid === true} onChange={(e) => setFilters((f) => ({ ...f, hybrid: e.target.checked ? true : undefined }))} className="w-4 h-4 accent-cyan-500" /> Hybrid only</label>
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="space-y-2.5">
+            <div className="space-y-2.5">
               {discovered.map((v) => <VehicleCard key={v.id} v={v} onAsk={askVehicle} onCompare={(x) => { setCompare((p) => [...p.filter((y) => y.id !== x.id), x].slice(-3)); setPanel('compare'); }} onExpert={expertVehicle} />)}
               {!discovered.length && <p className="text-xs opacity-60">No matches. Widen the budget or clear filters.</p>}
             </div>
@@ -286,7 +286,7 @@ const seen = new Set<string>();
         {panel === 'compare' && <VehicleComparison items={compare} onRemove={(id) => setCompare((p) => p.filter((x) => x.id !== id))} />}
         {panel === 'budget' && <BudgetPlanner onExpert={(s) => { setPanel('expert'); void send(`Please have an expert review this plan: ${s}.`); }} />}
         {panel === 'expert' && (
-          {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="space-y-4">
+          <div className="space-y-4">
             <ExpertHandoff interest={conv.preferences.bodyType ?? conv.title} />
             <PreorderMini step={preorderStep} setStep={setPreorderStep} onSend={send} />
             <LeadForm key={conv.id} interestDefault={conv.title === 'New conversation' ? '' : conv.title} onDone={(ref) => { setToast(`Lead ${ref} submitted.`); setTimeout(() => setToast(null), 3000); }} />
@@ -302,10 +302,10 @@ const seen = new Set<string>();
       className={`h-[100dvh] overflow-hidden flex flex-col pt-[env(safe-area-inset-top,0px)] ${shell}`}
       style={vv ? { position: 'fixed', left: 0, right: 0, top: vv.top, height: vv.h, width: '100%' } : undefined}
     >
+      <div aria-live="polite" className="sr-only">{busy ? 'SparkPilot is typing' : ''}</div>
       {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>}
 
-
-      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="w-full max-w-[1440px] mx-auto flex-1 min-h-0 grid grid-rows-[minmax(0,1fr)] gap-3 sm:gap-4 px-3 sm:px-5 py-3 sm:py-4 lg:grid-cols-[250px_minmax(0,1fr)_340px]">
+      <div className="w-full max-w-[1440px] mx-auto flex-1 min-h-0 grid grid-rows-[minmax(0,1fr)] gap-3 sm:gap-4 px-3 sm:px-5 py-3 sm:py-4 lg:grid-cols-[250px_minmax(0,1fr)_340px]">
         {/* Sidebar (desktop) */}
         <aside className={`hidden lg:flex flex-col rounded-2xl border p-4 min-h-0 ${panelBg}`} aria-label="SparkPilot navigation">{sidebarBody}</aside>
 
@@ -319,7 +319,7 @@ const seen = new Set<string>();
                 onClick={(e) => e.stopPropagation()}
                 role="dialog" aria-modal="true" aria-label="SparkPilot menu"
               >
-                {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex justify-end"><button aria-label="Close menu" onClick={() => setSidebar(false)} className="p-2.5 min-w-[44px] min-h-[44px]"><X className="w-5 h-5" /></button></div>
+                <div className="flex justify-end"><button aria-label="Close menu" onClick={() => setSidebar(false)} className="p-2.5 min-w-[44px] min-h-[44px]"><X className="w-5 h-5" /></button></div>
                 {sidebarBody}
               </motion.div>
             </motion.div>
@@ -338,13 +338,13 @@ const seen = new Set<string>();
             </Link>
             <button className="lg:hidden p-2.5 min-w-[44px] min-h-[44px] -ml-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" aria-label="Open menu" onClick={() => setSidebar(true)}><Menu className="w-5 h-5" /></button>
             <SparkMark size={30} />
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="min-w-0">
+            <div className="min-w-0">
               <p className="font-bold text-sm leading-tight truncate">{conv?.title || 'SparkPilot'}</p>
               <p className="text-[11px] opacity-60 flex items-center gap-1.5">
                 <span className={`w-1.5 h-1.5 rounded-full ${aiLive === false ? 'bg-amber-500' : 'bg-emerald-500'}`} /> {aiLive === false ? 'Connecting to AI expert…' : 'Sales & service expert · replies instantly'}
               </p>
             </div>
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="ml-auto flex items-center gap-1.5">
+            <div className="ml-auto flex items-center gap-1.5">
               <span className="hidden sm:block"><DemoBadge isLive={aiLive !== false} /></span>
               <button
                 ref={toolsRef}
@@ -359,8 +359,8 @@ const seen = new Set<string>();
           </header>
 
           {/* Messages (only scroller) + jump-to-bottom */}
-          {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="relative flex-1 min-h-0">
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>}
+          <div className="relative flex-1 min-h-0">
+            <div
               ref={listRef}
               onScroll={(e) => {
                 const el = e.currentTarget;
@@ -380,20 +380,20 @@ const seen = new Set<string>();
                 ) : (
                 <motion.div key={m.id} initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={`flex gap-2.5 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {m.role === 'assistant' && <SparkMark size={28} />}
-                  {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user' ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-md' : dark ? 'bg-white/[0.05] border border-white/10 rounded-bl-md' : 'bg-slate-100 border border-slate-200 rounded-bl-md'}`}>
+                  <div className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${m.role === 'user' ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-md' : dark ? 'bg-white/[0.05] border border-white/10 rounded-bl-md' : 'bg-slate-100 border border-slate-200 rounded-bl-md'}`}>
                     <p>
                       {m.role === 'assistant' && m.status !== 'failed'
                         ? <RevealText text={m.text} reduce={reduceMotion} />
                         : m.text}
                     </p>
                     {m.vehicles && m.vehicles.length > 0 && (
-                      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex gap-2.5 overflow-x-auto snap-x mt-3 -mx-1 px-1 pb-1" role="list" aria-label="Suggested vehicles">
+                      <div className="flex gap-2.5 overflow-x-auto snap-x mt-3 -mx-1 px-1 pb-1" role="list" aria-label="Suggested vehicles">
                         {m.vehicles.map((v) => (
-                          {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} key={v.id} role="listitem"><VehicleCard v={v} onAsk={askVehicle} onCompare={(x) => { setCompare((p) => [...p.filter((y) => y.id !== x.id), x].slice(-3)); setPanel('compare'); }} onExpert={expertVehicle} /></div>
+                          <div key={v.id} role="listitem"><VehicleCard v={v} onAsk={askVehicle} onCompare={(x) => { setCompare((p) => [...p.filter((y) => y.id !== x.id), x].slice(-3)); setPanel('compare'); }} onExpert={expertVehicle} /></div>
                         ))}
                       </div>
                     )}
-                    {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex items-center gap-1 mt-1.5 opacity-70">
+                    <div className="flex items-center gap-1 mt-1.5 opacity-70">
                       <time dateTime={new Date(m.createdAt).toISOString()} className="text-[10px] px-1">{new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</time>
                       {m.role === 'assistant' && m.status !== 'failed' && (
                         <button
@@ -414,9 +414,9 @@ const seen = new Set<string>();
               ))}
 
               {busy && (
-                {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex gap-2.5" aria-label="SparkPilot is typing">
+                <div className="flex gap-2.5" aria-label="SparkPilot is typing">
                   <SparkMark size={28} />
-                  {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className={`rounded-2xl px-4 py-3 flex gap-1.5 ${dark ? 'bg-white/[0.05] border border-white/10' : 'bg-slate-100 border border-slate-200'}`}>
+                  <div className={`rounded-2xl px-4 py-3 flex gap-1.5 ${dark ? 'bg-white/[0.05] border border-white/10' : 'bg-slate-100 border border-slate-200'}`}>
                     {[0, 1, 2].map((i) => <motion.span key={i} className="w-2 h-2 rounded-full bg-cyan-500" animate={reduceMotion ? {} : { opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }} />)}
                   </div>
                 </div>
@@ -438,7 +438,7 @@ const seen = new Set<string>();
           </div>
 
           {/* Quick replies */}
-          {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="px-3 sm:px-5 pb-1 flex gap-2 overflow-x-auto scrollbar-hide" role="group" aria-label="Quick replies">
+          <div className="px-3 sm:px-5 pb-1 flex gap-2 overflow-x-auto scrollbar-hide" role="group" aria-label="Quick replies">
             {['Family car under 25 lakh', 'Hybrid SUV options', 'Car service pricing', 'Japan pre-order', 'Talk to expert'].map((q) => (
               <button key={q} onClick={() => void send(q)} disabled={busy} className={`shrink-0 text-xs font-semibold rounded-full border px-4 min-h-[44px] disabled:opacity-40 transition ${dark ? 'border-white/10 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>{q}</button>
             ))}
@@ -450,7 +450,7 @@ const seen = new Set<string>();
             style={hairline}
             onSubmit={(e) => { e.preventDefault(); void send(input); }}
           >
-            {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className={`flex items-end gap-2 rounded-2xl border p-2 pl-4 ${dark ? 'bg-white/[0.04] border-white/10 focus-within:border-cyan-500/50' : 'bg-slate-50 border-slate-200 focus-within:border-cyan-500'}`}>
+            <div className={`flex items-end gap-2 rounded-2xl border p-2 pl-4 ${dark ? 'bg-white/[0.04] border-white/10 focus-within:border-cyan-500/50' : 'bg-slate-50 border-slate-200 focus-within:border-cyan-500'}`}>
               <label htmlFor="sparkai-input" className="sr-only">Message SparkPilot (Enter to send, Shift+Enter for new line)</label>
               <textarea
                 id="sparkai-input"
@@ -490,7 +490,7 @@ const seen = new Set<string>();
               onClick={(e) => e.stopPropagation()}
               role="dialog" aria-modal="true" aria-label="Discovery tools"
             >
-              {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-1">
                 <p className="font-bold text-sm">Discovery tools</p>
                 <button aria-label="Close tools" onClick={() => setTools(false)} className="p-2.5 min-w-[44px] min-h-[44px]"><X className="w-5 h-5" /></button>
               </div>
@@ -509,13 +509,13 @@ function PreorderMini({ step, setStep, onSend }: { step: number; setStep: (n: nu
   return (
     <Card className="p-3.5">
       <p className="text-xs font-bold uppercase tracking-wider opacity-60">Japan pre-order · step {step + 1} of 4</p>
-      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex gap-1 mt-2" aria-hidden>{steps.map((_, i) => <span key={i} className={`h-1 flex-1 rounded-full ${i <= step ? 'bg-cyan-500' : 'bg-current opacity-15'}`} />)}</div>
+      <div className="flex gap-1 mt-2" aria-hidden>{steps.map((_, i) => <span key={i} className={`h-1 flex-1 rounded-full ${i <= step ? 'bg-cyan-500' : 'bg-current opacity-15'}`} />)}</div>
       <p className="text-sm font-bold mt-2">{steps[step]}</p>
       {step === 0 && <input aria-label="Desired vehicle" value={form.vehicle} onChange={(e) => setForm({ ...form, vehicle: e.target.value })} placeholder="e.g. Toyota Axio Hybrid" className="mt-2 w-full rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px]" />}
       {step === 1 && <div className="grid grid-cols-2 gap-2 mt-2"><input aria-label="Budget in lakh" value={form.budget} onChange={(e) => setForm({ ...form, budget: e.target.value })} placeholder="Budget (lakh)" className="rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px] min-w-0" /><input aria-label="Model year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} placeholder="Year" className="rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px] min-w-0" /></div>}
       {step === 2 && <select aria-label="Timeline" value={form.timeline} onChange={(e) => setForm({ ...form, timeline: e.target.value })} className="mt-2 w-full rounded-xl border bg-transparent px-3 py-2.5 text-base min-h-[44px]"><option>Immediately</option><option>Within 1 month</option><option>1–3 months</option><option>Flexible</option></select>}
       {step === 3 && <p className="text-xs mt-2 opacity-80">Request: <b>{form.vehicle || '-'}</b> · {form.year || '-'} · {form.budget || '-'} lakh · {form.timeline}. Submitting creates a <b>request</b>, not a confirmed booking or auction win.</p>}
-      {toast && <div role="status" className="fixed top-4 left-1/2 -translate-x-1/2 z-toast bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2"><Check className="w-3.5 h-3.5" />{toast}</div>} className="flex gap-2 mt-3">
+      <div className="flex gap-2 mt-3">
         {step > 0 && <SButton variant="outline" onClick={() => setStep(step - 1)}>Back</SButton>}
         {step < 3
           ? <SButton onClick={() => setStep(step + 1)}>Continue</SButton>

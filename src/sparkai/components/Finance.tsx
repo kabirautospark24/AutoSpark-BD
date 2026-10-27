@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import React from 'react';
 import { estimateFinance } from '../services/ai';
 import { formatBDT } from '../data/demo';
 import { SInput, SButton } from './ui';
@@ -13,7 +14,7 @@ export function BudgetPlanner({ onExpert }: { onExpert: (summary: string) => voi
   return (
     <div className="space-y-3 p-1" aria-label="Budget planner">
       <div className="grid grid-cols-2 gap-2.5">
-        <label className="text-xs font-semibold">Price (lakh ৳)<SInput type="number" min={5} max={300} step={0.5} value={price} onChange={(e) => setPrice(Number(e.target.value))} /></label>
+        <label className="text-xs font-semibold">Price (lakh ৳)<SInput type="number" min={5} max={300} step={0.5} value={price} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrice(Number(e.target.value))} /></label>
         <label className="text-xs font-semibold">Down payment %<SInput type="number" min={0} max={90} value={down} onChange={(e) => setDown(Number(e.target.value))} /></label>
         <label className="text-xs font-semibold">Rate %/yr (optional)<SInput type="number" min={0} max={30} step={0.1} placeholder="Not configured" value={rate} onChange={(e) => setRate(e.target.value)} /></label>
         <label className="text-xs font-semibold">Months<SInput type="number" min={6} max={84} value={months} onChange={(e) => setMonths(Number(e.target.value))} /></label>
