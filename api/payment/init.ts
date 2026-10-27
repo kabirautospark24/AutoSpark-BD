@@ -52,7 +52,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       district: String(district),
       cart: Array.isArray(cart) ? cart : [],
       source: 'web',
-    });
+    }).catch((e) => console.error('[payment/init] upsertOrder failed (non-fatal):', e));
 
     const params = new URLSearchParams();
     params.append('store_id', STORE_ID);
