@@ -15,8 +15,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
     return response.status(405).json({ error: 'Method not allowed' });
   }
 
+  let step = 'start';
   try {
+    step = 'parse-body';
     const { cart, customer_name, mobile, email, address, thana, district } = request.body ?? {};
+    step = 'validate';
     const check = validateInitPayload(request.body ?? {});
     if (!check.ok) {
       setCors(response, origin);
@@ -85,6 +88,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     params.append('ship_country', 'Bangladesh');
 
     console.log('[payment/init] init', { tran_id, amount });
+    step = 'ssl-fetch';
     let sslResponse;
     try {
       sslResponse = await fetch('https://securepay.sslcommerz.com/gwprocess/v4/api.php', {
@@ -115,8 +119,8 @@ export default async function handler(request: VercelRequest, response: VercelRe
     setCors(response, origin);
     return response.status(200).json({ GatewayPageURL: sslczData.GatewayPageURL, tran_id, amount });
   } catch (e) {
-    console.error('[payment/init] server error', e);
+    console.error('[payment/init] server error at', step, e);
     setCors(response, origin);
-    return response.status(500).json({ error: 'Server error', detail: String(e) });
+    return response.status(500).json({ error: 'Server error', step, detail: String(e) });
   }
 }
