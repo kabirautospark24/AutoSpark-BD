@@ -157,7 +157,7 @@ export const appwritePaymentApi = {
       };
     }
 
-    const initEndpoints = [`${API_BASE_URL}/payment/init`, `${API_BASE_URL}/init`];
+    const initEndpoints = [`${API_BASE_URL}/api/payment/init`, `${API_BASE_URL}/payment/init`];
 
     let response: Response | null = null;
     let data: PaymentInitResponse | null = null;
@@ -228,8 +228,8 @@ export const appwritePaymentApi = {
     }
 
     const statusEndpoints = [
-      `${API_BASE_URL}/payment/status/${encodeURIComponent(tranId)}`,
-      `${API_BASE_URL}/payment?tran_id=${encodeURIComponent(tranId)}`,
+      `${API_BASE_URL}/api/payment/status/${encodeURIComponent(tranId)}`,
+      `${API_BASE_URL}/api/payment?tran_id=${encodeURIComponent(tranId)}`,
     ];
 
     let response: Response | null = null;
