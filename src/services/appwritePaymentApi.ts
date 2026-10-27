@@ -2,25 +2,17 @@ const resolveApiBaseUrl = (): string => {
   const explicit = (import.meta.env.VITE_SSLCOMMERZ_API_BASE_URL || '').trim();
   if (explicit) return explicit.replace(/\/$/, '');
 
-  const appwriteEndpoint = (import.meta.env.VITE_APPWRITE_ENDPOINT || 'https://sgp.cloud.appwrite.io/v1')
-    .trim()
-    .replace(/\/$/, '');
+  const legacy = (import.meta.env.VITE_PAYMENT_API_URL || '').trim();
+  if (legacy) return legacy.replace(/\/$/, '');
 
-  const fromFunctionId = (import.meta.env.VITE_APPWRITE_FUNCTION_ID || '').trim();
-  if (fromFunctionId) {
-    return `${appwriteEndpoint}/functions/${fromFunctionId}/executions`;
-  }
-
-  const fromLegacy = (import.meta.env.VITE_PAYMENT_API_URL || '').trim();
-  if (fromLegacy) return fromLegacy.replace(/\/$/, '');
-
-  return `${appwriteEndpoint}/functions/sslcommerz-api/executions`;
+  // Pure Vercel deployment (custom domain) — no Appwrite function proxy.
+  return 'https://autosparkbd.com';
 };
 
 const API_BASE_URL = resolveApiBaseUrl();
 const APPWRITE_PROJECT_ID =
   (import.meta.env.VITE_APPWRITE_PROJECT_ID || '69d09ead0018cd1663a7').trim();
-const IS_EXECUTION_ENDPOINT = /\/functions\/[^/]+\/executions$/i.test(API_BASE_URL);
+const IS_EXECUTION_ENDPOINT = false;
 
 if (!API_BASE_URL) {
   // Keep non-throwing for runtime; pages will show friendly error when called.
