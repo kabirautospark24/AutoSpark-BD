@@ -23,6 +23,7 @@ const ComparisonSidebar = lazy(() => import('../components/ComparisonSidebar').t
 import { LazySection } from '../components/LazySection';
 import FeaturedVehicles from '../components/home/FeaturedVehicles';
 import { PerformanceGauge } from '../components/PerformanceGauge';
+import BrandShowcase3D from '../components/BrandShowcase3D';
 
 // ─── Only CarShowcase3D stays lazy (pulls in three.js ≈ 1 MB) ─────
 // const CarShowcase3D = lazy(() => import('../components/3d/CarShowcase3D'));
@@ -788,6 +789,9 @@ export const HomePage = () => {
             </div>
           </div>
         </section>
+
+        {/* ══ BRAND SHOWCASE (3D) ═══════════════════════════════════ */}
+        <BrandShowcase3D />
 
         {/* ══ CTA ═══════════════════════════════════════════════════ */}
         <section className="section-padding relative overflow-hidden bg-gradient-to-r from-red-600 via-red-700 to-red-800">
