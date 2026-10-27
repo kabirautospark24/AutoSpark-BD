@@ -4,6 +4,7 @@ import { Send, X, Maximize2, MessageCircle, RotateCcw, ChevronDown, Square } fro
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { respond, isAbortError } from '../services/ai';
+import { vehiclePriceLabel } from '../data/demo';
 import { useVisualViewport } from '../hooks/useVisualViewport';
 import { SPARKPILOT_CONFIG, buildWhatsAppUrl } from '../config';
 import { SparkMark } from './Logo';
@@ -245,13 +246,13 @@ export function SparkPilotWidget() {
                         <p>{m.role === 'assistant' && m.status !== 'failed' ? <RevealText text={m.text} reduce={reduceMotion} /> : m.text}</p>
                         {m.vehicles && m.vehicles.length > 0 && (
                           <div className="mt-2 space-y-1">
-                            {m.vehicles.slice(0, 3).map((v) => (
+                            {m.vehicles.map((v) => (
                               <button
                                 key={v.id}
-                                onClick={() => void send(`Tell me more about the ${v.make} ${v.model} ${v.year}.`)}
+                                onClick={() => void send(`Tell me more about the ${v.make} ${v.model} ${v.variant}.`)}
                                 className={`block w-full text-left text-xs font-semibold rounded-lg px-2.5 min-h-[44px] border ${dark ? 'border-cyan-500/30 bg-cyan-500/10' : 'border-cyan-600/30 bg-cyan-50'}`}
                               >
-                                {v.make} {v.model} {v.year} · ৳{v.budgetLakh.toFixed(1)} lakh <span className="opacity-60 font-normal">· verify with expert</span>
+                                {v.make} {v.model} · {vehiclePriceLabel(v)} · {v.stock === 'ready' ? 'Ready' : 'Pre-order'} <span className="opacity-60 font-normal">· verify with expert</span>
                               </button>
                             ))}
                           </div>

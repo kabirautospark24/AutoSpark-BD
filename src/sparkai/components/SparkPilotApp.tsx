@@ -8,7 +8,8 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import type { ChatMessage, Conversation, ConversationIntent, DemoVehicle } from '../types';
-import { DEMO_VEHICLES, filterDemoVehicles } from '../data/demo';
+import { pickVehicles } from '../data/demo';
+import { CATALOG_MAKES } from '../data/catalog';
 import { respond, isAbortError } from '../services/ai';
 import { useVisualViewport } from '../hooks/useVisualViewport';
 import { SPARKPILOT_CONFIG } from '../config';
@@ -186,7 +187,8 @@ export function SparkPilotApp() {
 
   const discovered = useMemo(() => {
     const fromChat = conv.messages.flatMap((m) => m.vehicles ?? []);
-    const base = fromChat.length ? fromChat : DEMO_VEHICLES.slice(0, 4);
+    // Fallback: one best offer per model across the full KB catalog.
+    const base = fromChat.length ? fromChat : pickVehicles({}, 12);
     return base.filter((v) => {
       if (filters.maxBudgetLakh != null && v.budgetLakh > filters.maxBudgetLakh) return false;
       if (filters.hybrid === true && !v.hybrid) return false;
@@ -259,8 +261,8 @@ export function SparkPilotApp() {
         {panel === 'discover' && (
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <label className="font-semibold">Max budget (lakh)<select value={filters.maxBudgetLakh ?? ''} onChange={(e) => setFilters((f) => ({ ...f, maxBudgetLakh: e.target.value ? Number(e.target.value) : undefined }))} className="mt-1 w-full rounded-lg border bg-transparent px-2 py-2.5 min-h-[44px] text-base"><option value="">Any</option><option value="18">≤ 18</option><option value="25">≤ 25</option><option value="30">≤ 30</option><option value="35">≤ 35</option></select></label>
-              <label className="font-semibold">Make<select value={filters.make ?? ''} onChange={(e) => setFilters((f) => ({ ...f, make: e.target.value || undefined }))} className="mt-1 w-full rounded-lg border bg-transparent px-2 py-2.5 min-h-[44px] text-base"><option value="">All</option><option>Toyota</option><option>Honda</option><option>Nissan</option></select></label>
+              <label className="font-semibold">Max budget (lakh)<select value={filters.maxBudgetLakh ?? ''} onChange={(e) => setFilters((f) => ({ ...f, maxBudgetLakh: e.target.value ? Number(e.target.value) : undefined }))} className="mt-1 w-full rounded-lg border bg-transparent px-2 py-2.5 min-h-[44px] text-base"><option value="">Any</option><option value="25">≤ 25</option><option value="30">≤ 30</option><option value="35">≤ 35</option><option value="45">≤ 45</option><option value="55">≤ 55</option><option value="75">≤ 75</option><option value="150">≤ 150</option></select></label>
+              <label className="font-semibold">Make<select value={filters.make ?? ''} onChange={(e) => setFilters((f) => ({ ...f, make: e.target.value || undefined }))} className="mt-1 w-full rounded-lg border bg-transparent px-2 py-2.5 min-h-[44px] text-base"><option value="">All</option>{CATALOG_MAKES.map((m) => <option key={m}>{m}</option>)}</select></label>
             </div>
             <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer min-h-[44px]"><input type="checkbox" checked={filters.hybrid === true} onChange={(e) => setFilters((f) => ({ ...f, hybrid: e.target.checked ? true : undefined }))} className="w-4 h-4 accent-cyan-500" /> Hybrid only</label>
             <div className="space-y-2.5">
@@ -517,4 +519,4 @@ function PreorderMini({ step, setStep, onSend }: { step: number; setStep: (n: nu
 }
 
 // Re-export filter helper for tests
-export { filterDemoVehicles };
+export { filterDemoVehicles } from '../data/demo';

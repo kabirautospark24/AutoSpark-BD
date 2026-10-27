@@ -1,17 +1,20 @@
 // ============================================================================
 // KB #1: CAR SALES KNOWLEDGE BASE
-// Source of truth: KB/All Car Model, Package, Price & Details.md
-// (synced from the updated official sheet: KB/All Car Model, Package, Price & Details.docx)
+// Source of truth: KB/updated/All Car Model, Package, Price - Sheet1.csv
+// (the updated official sheet; .xlsx mirror in the same folder)
 // ----------------------------------------------------------------------------
 // Every vehicle SparkPilot may recommend lives in CAR_MODELS below:
-// 23 models × Ready Stock / Pre-order × Hybrid / Non-Hybrid / trim variants.
+// 23 models / 116 sheet rows / 102 priced-or-on-request offers
+// (14 rows with N/A price are folded into model.unavailable[]).
 //
 // ► WHEN STOCK OR PRICES CHANGE: edit the matching entry in CAR_MODELS
-//   (or update the source .md and re-import). Never let SparkPilot quote
+//   (or update the source CSV and re-import). Never let SparkPilot quote
 //   anything that is not listed here.
 // ► A blank priceLakh means the sheet does not publish a price for that
 //   offer: SparkPilot must say "price not listed" and hand off to an expert
 //   on WhatsApp (+880 1760-401605) instead of guessing.
+// ► The chat vehicle cards are DERIVED from this KB (data/catalog.ts);
+//   never hardcode a separate car list anywhere else.
 // ============================================================================
 
 export interface KbOffer {
@@ -207,7 +210,7 @@ export const CAR_MODELS: KbCarModel[] = [
     name: 'Honda Civic', make: 'Honda', body: 'Sedan', variants: 'DX, LX, EX', cc: 1500, fuel: 'Hybrid',
     unavailable: ['Non-Hybrid'],
     offers: [
-      { availability: R, type: 'DX (Hybrid)', years: Y, grade: G, priceLakh: '34.5/25', mileage: KM },
+      { availability: R, type: 'DX (Hybrid)', years: Y, grade: G, priceLakh: '34.5/35', mileage: KM },
       { availability: R, type: 'LX (Hybrid)', years: Y, grade: G, priceLakh: '35.5/36', mileage: KM },
       { availability: R, type: 'EX (Hybrid)', years: Y, grade: G, priceLakh: '36.5/37', mileage: KM },
       { availability: P, type: 'DX (Hybrid)', years: Y, grade: G, priceLakh: '31.5/32', mileage: KM },
@@ -304,7 +307,7 @@ export function entryPriceLakh(m: KbCarModel): number {
 }
 
 export const SALES_KB_SOURCE_NOTE =
-  'Source: AutoSpark official price sheet , KB/All Car Model, Package, Price & Details.md (updated from the official .docx).';
+  'Source: AutoSpark official price sheet , KB/updated/All Car Model, Package, Price - Sheet1.csv (116 variants across 23 models).';
 
 function priceLabel(o: KbOffer): string {
   return o.priceLakh.trim() ? `৳${o.priceLakh} lakh` : `price not listed , ${EXPERT}`;

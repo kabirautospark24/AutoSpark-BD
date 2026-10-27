@@ -1,5 +1,6 @@
 import type { ChatMessage, ConversationIntent, CustomerPreferences, DemoVehicle } from '../types';
-import { DEMO_VEHICLES, filterDemoVehicles, formatLakh } from '../data/demo';
+import { pickVehicles, formatLakh } from '../data/demo';
+import { CAR_MODELS } from '../kb/sales';
 import { SPARKPILOT_GROQ, SPARKPILOT_CONFIG } from '../config';
 import { buildKbPayload } from '../kb';
 
@@ -25,6 +26,21 @@ const num = (t: string): number | undefined => {
   return v > 5 && v < 300 ? Math.round(v * 10) / 10 : undefined;
 };
 
+/** Short model names from the KB, matched as whole words (e.g. 'noah', 'cr-v'). */
+const MODEL_KEYWORDS: { name: string; re: RegExp }[] = CAR_MODELS.map((m) => {
+  const short = m.name.replace(/^(Toyota|Honda|Nissan|Mazda|Lexus) /, '');
+  const esc = short.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return { name: m.name, re: new RegExp(`\\b${esc}\\b`, 'i') };
+});
+
+function detectModel(t: string): string | undefined {
+  for (const { name, re } of MODEL_KEYWORDS) if (re.test(t)) return name;
+  return undefined;
+}
+
+/** Chat cards shown per reply: diverse models first, never the same 3 cars. */
+const CARD_LIMIT = 8;
+
 /** WhatsApp expert handoff line: shown whenever the matter is outside the KB. */
 const expertHandoff = (bn: boolean) =>
   bn
@@ -47,12 +63,15 @@ export async function mockRespond(_history: ChatMessage[], input: string, prefs:
   for (const k of ['sedan', 'suv', 'hatchback', 'mpv', 'wagon', '7-seater', '7 seater']) {
     if (t.includes(k)) next.bodyType = k.includes('7') ? 'MPV' : k[0].toUpperCase() + k.slice(1);
   }
-  for (const m of ['toyota', 'honda', 'nissan', 'mazda', 'suzuki']) {
+  for (const m of ['toyota', 'honda', 'nissan', 'mazda', 'suzuki', 'lexus']) {
     if (t.includes(m)) next.manufacturer = m[0].toUpperCase() + m.slice(1);
   }
+  const mentioned = detectModel(t);
+  if (mentioned) next.model = mentioned;
   if (bn) next.language = 'bn';
 
-  const pick = (n = 3) => filterDemoVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: next.bodyType, make: next.manufacturer }).slice(0, n);
+  const pick = (n = 6) =>
+    pickVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: next.bodyType, make: next.manufacturer, model: next.model }, n);
   const demoNote = bn
     ? `\n\n_নোট: দাম ও স্টক এক্সপার্টের সাথে যাচাই করে নিন। WhatsApp: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber})._`
     : `\n\n_Note: confirm price & availability with an expert before booking. WhatsApp ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber})._`;
@@ -74,26 +93,25 @@ export async function mockRespond(_history: ChatMessage[], input: string, prefs:
     return { text: bn ? 'আপনার আনুমানিক বাজেট কত (লাখে)? আর Hybrid পছন্দ করেন?' : 'What is your approximate budget (in lakh), and do you prefer hybrid?', prefs: next, intent: 'budget' };
   }
   if (/compare|vs |difference|পার্থক্য|তুলনা/.test(t)) {
-    const v = DEMO_VEHICLES.slice(0, 2);
-    return { text: (bn ? 'দুটি জনপ্রিয় অপশনের তুলনা দিলাম , Compare ট্যাবে বিস্তারিত দেখুন।' : 'Here is a comparison of two popular options , see the Compare tab for detail.') + demoNote, vehicles: v, prefs: next, intent: 'compare', followUp: 'compare' };
+    const v = [...pickVehicles({ model: 'Toyota Axio', hybrid: true }, 1), ...pickVehicles({ model: 'Honda Vezel', hybrid: true }, 1)];
+    return { text: (bn ? 'দুটি জনপ্রিয় অপশনের তুলনা দিলাম , Compare ট্যাবে বিস্তারিত দেখুন।' : 'Here is a comparison of two popular options , see the Compare tab for detail.') + demoNote, vehicles: v.length ? v : pick(2), prefs: next, intent: 'compare', followUp: 'compare' };
   }
   if (/expert|human|call|phone|whatsapp|যোগাযোগ|কথা বলতে/.test(t)) {
     return { text: (bn ? `অবশ্যই! নিচের ফর্মে আপনার নাম ও WhatsApp নম্বর দিন , AutoSpark এক্সপার্ট শীঘ্রই যোগাযোগ করবেন। সরাসরি WhatsApp করতে পারেন: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber}).` : `Of course! Please share your name and WhatsApp number below , an AutoSpark expert will follow up shortly. Or WhatsApp us directly: ${SPARKPILOT_CONFIG.phoneDisplay} (wa.me/${SPARKPILOT_CONFIG.whatsappNumber}).`), prefs: next, intent: 'expert', followUp: 'lead' };
   }
   if (/family|7.?seat|noah|mpv|বাচ্চা|পরিবার/.test(t)) {
-    const v = filterDemoVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: 'MPV' });
-    const list = v.length ? v : DEMO_VEHICLES.filter((x) => x.bodyType.includes('MPV'));
-    return { text: (bn ? 'পরিবারের জন্য ৭-সিটের আরামদায়ক অপশন:' : 'Comfortable 7-seater family options:') + demoNote, vehicles: list.slice(0, 3), prefs: { ...next, bodyType: 'MPV' }, intent: 'find-car' };
+    const v = pickVehicles({ maxBudgetLakh: next.budgetLakh, hybrid: next.hybrid, bodyType: 'MPV' }, 6);
+    return { text: (bn ? 'পরিবারের জন্য ৭-সিটের আরামদায়ক অপশন:' : 'Comfortable 7-seater family options:') + demoNote, vehicles: v, prefs: { ...next, bodyType: 'MPV' }, intent: 'find-car' };
   }
-  if (b || /hybrid/.test(t) || next.manufacturer || next.bodyType || /car|gari|গাড়ি|suv|sedan|toyota|honda/.test(t)) {
+  if (b || /hybrid/.test(t) || next.manufacturer || next.bodyType || next.model || /car|gari|গাড়ি|suv|sedan|toyota|honda/.test(t)) {
     const v = pick();
-    if (!next.budgetLakh) {
+    if (!next.budgetLakh && !next.model) {
       return { text: bn ? `ধন্যবাদ! ${next.manufacturer ?? ''} ${next.bodyType ?? 'গাড়ি'} পছন্দ নোট করেছি। আপনার বাজেট আনুমানিক কত (লাখে)?` : `Thanks , noted your interest in ${next.manufacturer ?? ''} ${next.bodyType ?? 'cars'}. What is your approximate budget (in lakh)?`, vehicles: v.length ? v : undefined, prefs: next, intent: 'find-car' };
     }
-    return { text: `${bn ? `আপনার পছন্দ মনে রাখছি , বাজেট ${next.budgetLakh} লাখ${next.hybrid ? ', Hybrid' : ''}. এই অপশনগুলো দেখুন:` : `Keeping your preferences , budget ${formatLakh(next.budgetLakh)}${next.hybrid ? ', hybrid' : ''}. Consider these options:`}${demoNote}`, vehicles: v, prefs: next, intent: 'find-car' };
+    return { text: `${bn ? `আপনার পছন্দ মনে রাখছি${next.budgetLakh ? ` , বাজেট ${next.budgetLakh} লাখ` : ''}${next.hybrid ? ', Hybrid' : ''}. এই অপশনগুলো দেখুন:` : `Keeping your preferences${next.budgetLakh ? `, budget ${formatLakh(next.budgetLakh)}` : ''}${next.hybrid ? ', hybrid' : ''}. Consider these options:`}${demoNote}`, vehicles: v, prefs: next, intent: 'find-car' };
   }
-  const v = pick();
-  return { text: bn ? 'বুঝতে পেরেছি। সেরা সাজেশন দিতে , বাজেট (লাখে) আর Hybrid চান কিনা জানাবেন?' : "Got it. To suggest the best options , could you share your budget (in lakh) and whether you'd like hybrid?", vehicles: v.length ? v.slice(0, 2) : undefined, prefs: next, intent: 'general' };
+  const v = pick(4);
+  return { text: bn ? 'বুঝতে পেরেছি। সেরা সাজেশন দিতে , বাজেট (লাখে) আর Hybrid চান কিনা জানাবেন?' : "Got it. To suggest the best options , could you share your budget (in lakh) and whether you'd like hybrid?", vehicles: v.length ? v : undefined, prefs: next, intent: 'general' };
 }
 
 /** Parse prefs deterministically (shared by mock + live path so memory never regresses). */
@@ -107,9 +125,11 @@ export function parsePrefs(input: string, prefs: CustomerPreferences): CustomerP
   for (const k of ['sedan', 'suv', 'hatchback', 'mpv', 'wagon', '7-seater', '7 seater']) {
     if (t.includes(k)) next.bodyType = k.includes('7') ? 'MPV' : k[0].toUpperCase() + k.slice(1);
   }
-  for (const m of ['toyota', 'honda', 'nissan', 'mazda', 'suzuki']) {
+  for (const m of ['toyota', 'honda', 'nissan', 'mazda', 'suzuki', 'lexus']) {
     if (t.includes(m)) next.manufacturer = m[0].toUpperCase() + m.slice(1);
   }
+  const model = detectModel(t);
+  if (model) next.model = model;
   if (hasBn(input)) next.language = 'bn';
   return next;
 }
@@ -142,9 +162,13 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
   const timer = setTimeout(() => ctrl.abort(), 70000);
   try {
     const msgs = [...history.slice(-10).map((m) => ({ role: m.role, content: m.text })), { role: 'user', content: input }];
-    // Candidates only drive the chat's vehicle cards, the KB (not this list) is
-    // what SparkPilot recommends from, so no conflicting context is sent.
-    const candidates = filterDemoVehicles({ maxBudgetLakh: prefs.budgetLakh, hybrid: prefs.hybrid, bodyType: prefs.bodyType, make: prefs.manufacturer }).slice(0, 6);
+    // Cards cover the FULL KB catalog (diverse models, up to CARD_LIMIT) —
+    // the KB (not this list) is what SparkPilot recommends from, so no
+    // conflicting context is sent to the server.
+    const candidates = pickVehicles(
+      { maxBudgetLakh: prefs.budgetLakh, hybrid: prefs.hybrid, bodyType: prefs.bodyType, make: prefs.manufacturer, model: prefs.model },
+      CARD_LIMIT,
+    );
     // Dual knowledge base: route to Car Sales KB and/or Car Services KB per the conversation.
     const kb = buildKbPayload(input, history);
     const doFetch = () =>
@@ -167,7 +191,7 @@ async function liveRespond(history: ChatMessage[], input: string, prefs: Custome
     const text = String(data?.text || '').trim();
     if (!text) return null;
     const t = input.toLowerCase();
-    return { text, vehicles: candidates.slice(0, 3), prefs, intent: detectIntent(t) };
+    return { text, vehicles: candidates, prefs, intent: detectIntent(t) };
   } catch (e) {
     // User pressed Stop → propagate so callers skip the failure message;
     // any other error (incl. internal timeout) falls back to the mock responder.

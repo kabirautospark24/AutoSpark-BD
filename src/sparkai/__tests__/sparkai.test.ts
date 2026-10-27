@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { normalizeWhatsApp, buildWhatsAppUrl } from '../../sparkai/config';
 import { filterDemoVehicles, formatBDT } from '../../sparkai/data/demo';
+import { CATALOG_VEHICLES, CATALOG_MAKES, pickVehicles, filterCatalog } from '../../sparkai/data/catalog';
+import { CAR_MODELS } from '../../sparkai/kb/sales';
 import { estimateFinance, mockRespond } from '../../sparkai/services/ai';
 import { LeadSchema } from '../../sparkai/services/lead';
 
@@ -44,4 +46,50 @@ describe('SparkPilot skeleton', () => {
     const r2 = await mockRespond([], 'Show me family options', r1.prefs ?? {});
     expect(r2.text).not.toMatch(/budget.*\?.*budget/i);
   }, 10000);
+});
+
+describe('Vehicle catalog derived from the sales KB', () => {
+  it('covers every KB offer across all 23 models', () => {
+    expect(CAR_MODELS.length).toBe(23);
+    expect(CATALOG_VEHICLES.length).toBe(102); // one card per priced/on-request KB offer
+    const models = new Set(CATALOG_VEHICLES.map((v) => v.model));
+    expect(models.size).toBe(23);
+    for (const m of CAR_MODELS) expect(models.has(m.name)).toBe(true);
+    expect(CATALOG_MAKES).toEqual(expect.arrayContaining(['Toyota', 'Honda', 'Nissan', 'Mazda', 'Lexus']));
+  });
+
+  it('carries sheet-accurate labels (price range, stock, grade)', () => {
+    const axio = CATALOG_VEHICLES.find((v) => v.id === 'cat-toyota-axio-hybrid-ready')!;
+    expect(axio.priceLabel).toBe('৳26–26.5 lakh');
+    expect(axio.stock).toBe('ready');
+    expect(axio.grade).toBe('4/4.5');
+    const lexus = CATALOG_VEHICLES.find((v) => v.model === 'Lexus NX')!;
+    expect(lexus.priceKnown).toBe(false);
+    expect(lexus.priceLabel).toBe('On request');
+    // Budget filters must never surface unlisted-price cars as if they had one.
+    expect(filterCatalog({ maxBudgetLakh: 100 }).every((v) => v.priceKnown !== false)).toBe(true);
+  });
+
+  it('pickVehicles spreads picks across DIFFERENT models (no same-family repeats)', () => {
+    const picks = pickVehicles({}, 8);
+    expect(picks.length).toBe(8);
+    expect(new Set(picks.map((v) => v.model)).size).toBe(8);
+  });
+
+  it('pickVehicles respects budget, hybrid and model filters', () => {
+    const hybrid25 = pickVehicles({ maxBudgetLakh: 25, hybrid: true }, 6);
+    expect(hybrid25.length).toBeGreaterThan(0);
+    expect(hybrid25.every((v) => v.hybrid && v.budgetLakh <= 25)).toBe(true);
+    const noah = pickVehicles({ model: 'Toyota Noah' }, 3);
+    expect(noah.length).toBe(3);
+    expect(noah.every((v) => v.model === 'Toyota Noah')).toBe(true);
+    expect(pickVehicles({ maxBudgetLakh: 5 }, 6)).toEqual([]);
+  });
+
+  it('every model family (MPV/SUV/Sedan…) is reachable via body filters', () => {
+    expect(pickVehicles({ bodyType: 'MPV' }, 6).length).toBeGreaterThanOrEqual(3);
+    expect(pickVehicles({ bodyType: 'SUV' }, 8).length).toBeGreaterThanOrEqual(6);
+    expect(pickVehicles({ bodyType: 'Sedan' }, 8).length).toBeGreaterThanOrEqual(4);
+    expect(pickVehicles({ bodyType: 'Hatchback' }, 6).length).toBeGreaterThanOrEqual(3);
+  });
 });

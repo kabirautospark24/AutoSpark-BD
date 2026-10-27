@@ -38,6 +38,8 @@ export interface CustomerPreferences {
   hybrid?: boolean;
   bodyType?: string;
   manufacturer?: string;
+  /** Specific model the customer asked about (e.g. 'Toyota Noah'). */
+  model?: string;
   language?: Language;
   timeline?: string;
 }
@@ -58,6 +60,16 @@ export interface DemoVehicle {
   stock: StockKind;
   features: string[];
   demo: true;
+  /** Human-readable price straight from the sheet (range or 'On request'). */
+  priceLabel?: string;
+  /** Japanese auction grade as listed (e.g. '4/4.5'). */
+  grade?: string;
+  /** Mileage range exactly as listed on the sheet. */
+  mileage?: string;
+  /** Model years as listed on the sheet (e.g. '2021–2022'). */
+  modelYears?: string;
+  /** False when the sheet publishes no price — expert quotes it. */
+  priceKnown?: boolean;
 }
 
 export interface LeadInput {

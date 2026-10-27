@@ -58,6 +58,7 @@ describe('Car Sales KB , official price sheet', () => {
     expect(text).toContain('৳25/27');          // Aqua ready stock by grade
     expect(text).toContain('৳53/57');          // Premio ready stock by variant
     expect(text).toContain('৳38.5/39');        // Noah ready stock X non-hybrid
+    expect(text).toContain('৳34.5/35');        // Civic ready stock DX hybrid
     expect(text).toContain('৳38 lakh');        // Vezel pre-order hybrid
     expect(text).toContain('৳138 lakh');       // Prado TX (source 1.38 Crore)
     expect(text).toContain('৳145 lakh');       // Prado TXL (source 1.45 Crore)
@@ -86,7 +87,7 @@ describe('Car Sales KB , official price sheet', () => {
 
   it('contains notation rules + source note', () => {
     expect(text).toContain('auction grade');
-    expect(text).toContain('KB/All Car Model, Package, Price & Details.md');
+    expect(text).toContain('KB/updated/All Car Model, Package, Price - Sheet1.csv');
     expect(text).toContain('Never claim a model');
   });
 

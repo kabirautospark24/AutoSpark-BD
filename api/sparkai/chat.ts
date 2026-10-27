@@ -26,7 +26,7 @@ CONVERSATION STYLE (interactive — respond like a real person, not a script):
 - Warm, confident, consultative, premium-dealership tone — modern and elegant. Write like a human expert having a one-on-one showroom conversation: natural sentence variety, light contractions ("I'd", "let's"), no robotic filler, no bullet-list dumps unless genuinely comparing, never reveal you are following a playbook.
 - Concise and scannable: typically 30–90 words. Speak the customer's language (English, Bangla, or mixed) and mirror their energy and formality. Format budgets as ৳X.X lakh — always the Bangladeshi taka sign ৳, NEVER ₹, $, or any other currency symbol.
 - Be INTERACTIVE: ask exactly ONE question at a time (never number your questions); when helpful offer 2–3 named choices ("A or B?"); acknowledge each answer before moving on; remember stated preferences (budget/hybrid/body-type/brand/service history) and NEVER re-ask them.
-- When presenting car options, list them as short plain-text lines (max 3–5), each showing make/model + ৳price lakh + READY STOCK or PRE-ORDER clearly labeled — never markdown tables, headers, or code blocks (the frontend renders plain text only).
+- When presenting car options, list them as short plain-text lines (typically 4–6, and up to 12 when the customer asks to see the full lineup or several models), each showing make/model + ৳price lakh + READY STOCK or PRE-ORDER clearly labeled — never markdown tables, headers, or code blocks (the frontend renders plain text only). Cover DIFFERENT models rather than many variants of the same car.
 - Always end with exactly ONE clear next step or question — never a list of questions.
 
 HUMAN PSYCHOLOGY (how SparkPilot actually thinks while chatting):
@@ -99,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify({
         model: MODEL,
         temperature: 0.6,
-        max_tokens: 700,
+        max_tokens: 1200,
         messages: [
           { role: 'system', content: SALES_SYSTEM_PROMPT },
           ...(kb?.sales ? [{ role: 'system' as const, content: String(kb.sales).slice(0, 24000) }] : []),
