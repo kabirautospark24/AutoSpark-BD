@@ -6,6 +6,7 @@ import { Card } from '../components/ui/Card';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageHead from '../components/PageHead';
+import BrandShowcase3D from '../components/BrandShowcase3D';
 import { lazy, Suspense } from 'react';
 const Testimonials = lazy(() => import('../components/about/Testimonials'));
 const TeamCard = lazy(() => import('../components/about/TeamCard'));
@@ -1249,6 +1250,7 @@ export const AboutPage = () => {
     {/* Close main parent div */}
   </div>
       </div>
+    <BrandShowcase3D />
     </>
   );
 };
