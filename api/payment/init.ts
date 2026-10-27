@@ -103,16 +103,13 @@ export default async function handler(request: VercelRequest, response: VercelRe
       return response.status(400).json({ error: 'Payment gateway error' });
     }
     const contentType = sslResponse.headers.get('content-type') ?? '';
-    if (!contentType.includes('application/json')) {
-      console.error('[payment/init] non-json gateway response');
-      setCors(response, origin);
-      return response.status(400).json({ error: 'Invalid gateway response' });
-    }
-    const sslczData = await sslResponse.json();
+    const rawText = await sslResponse.text();
+    console.error('[payment/init] gateway status', sslResponse.status, 'ct', contentType, 'body', rawText.slice(0, 500));
+    let sslczData: any = {};
+    try { sslczData = rawText ? JSON.parse(rawText) : {}; } catch { sslczData = {}; }
     if (sslczData.status !== 'SUCCESS' || !sslczData.GatewayPageURL) {
-      console.error('[payment/init] init failed');
       setCors(response, origin);
-      return response.status(400).json({ error: `Payment failed: ${sslczData.failedreason || 'Unknown error'}` });
+      return response.status(400).json({ error: `Payment failed: ${sslczData.failedreason || 'Unknown error'}`, raw: rawText.slice(0, 300) });
     }
 
     setCors(response, origin);
