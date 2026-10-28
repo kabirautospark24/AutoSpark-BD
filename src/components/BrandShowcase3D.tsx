@@ -11,7 +11,7 @@ const BRANDS: { name: string; logo: string }[] = [
   { name: 'Dhaka University', logo: 'https://sslcommerz.com/wp-content/uploads/2024/05/du-300x150.png' },
   { name: 'UNICEF', logo: 'https://sslcommerz.com/wp-content/uploads/2026/06/unicef.jpg' },
   { name: 'Biddanondo', logo: 'https://sslcommerz.com/wp-content/uploads/2024/05/biddanondo-300x150.png' },
-  { name: 'Domino\u2019s', logo: 'https://sslcommerz.com/wp-content/uploads/2024/05/dominos-300x150.png' },
+  { name: 'Domino’s', logo: 'https://sslcommerz.com/wp-content/uploads/2024/05/dominos-300x150.png' },
   { name: 'LankaBangla Finance', logo: 'https://sslcommerz.com/wp-content/uploads/2024/05/lankabangla-finance-300x150.jpg' },
   { name: 'Toffee', logo: 'https://sslcommerz.com/wp-content/uploads/2024/05/toffee-1-300x150.png' },
   { name: 'bKash', logo: 'https://sslcommerz.com/wp-content/uploads/2024/04/bkash.svg' },
@@ -41,7 +41,7 @@ export default function BrandShowcase3D() {
             Trusted by Leading Brands
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-sm sm:text-base">
-            AutoSpark partners with Bangladesh\u2019s largest payment gateway and the brands already powering the nation.
+            AutoSpark partners with Bangladesh’s largest payment gateway and the brands already powering the nation.
           </p>
         </div>
 
