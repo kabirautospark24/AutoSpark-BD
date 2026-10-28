@@ -52,7 +52,7 @@ export const ARViewer: React.FC<ARViewerProps> = ({
         // Start drawing the augmented car
         drawARScene();
       }
-    } catch (error) {
+    } catch (_error) {
       alert('Unable to access camera. Please check permissions.');
     }
   };

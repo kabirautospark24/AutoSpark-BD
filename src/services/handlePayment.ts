@@ -102,8 +102,3 @@ export const handlePayment = async (orderData: HandlePaymentInput): Promise<void
 
   window.location.href = redirectUrl;
 };
-
-export const checkoutWithAppwriteExecution = handlePayment;
-
-// Backward-compatible alias with the naming style shown in the request.
-export const initiatePayment = handlePayment;

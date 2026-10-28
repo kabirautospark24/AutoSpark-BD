@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
-import usePrefetchOnHover from '../hooks/usePrefetchOnHover';
+import { prefetchResource } from '../utils/prefetch';
 import { useState } from 'react';
 
 interface ComparisonVehicle {
@@ -218,7 +218,8 @@ export const ComparisonSidebar = ({
                           )}
                           <motion.a
                             href="#"
-                            ref={usePrefetchOnHover(`/vehicle/${vehicle.id}`, `/api/vehicle/${vehicle.id}`) as any}
+                            onMouseEnter={() => prefetchResource(`/vehicle/${vehicle.id}`, `/api/vehicle/${vehicle.id}`)}
+                            onFocus={() => prefetchResource(`/vehicle/${vehicle.id}`, `/api/vehicle/${vehicle.id}`)}
                             className={`flex items-center gap-1 mt-2 pt-2 border-t ${
                               theme === 'dark'
                                 ? 'border-gray-600 text-blue-400 hover:text-blue-300'

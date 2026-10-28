@@ -97,7 +97,7 @@ const VehicleFlipCardMotion = ({ vehicle, index, theme, language, isSelected, on
           )}
         </div>
         {/* BACK */}
-        <VehicleSpecCardBack vehicle={vehicle as any} theme={theme} />
+        <VehicleSpecCardBack vehicle={vehicle} theme={theme} />
       </motion.div>
     </motion.div>
   );

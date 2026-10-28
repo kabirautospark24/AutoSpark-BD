@@ -14,7 +14,7 @@ type Person = {
   website?: string;
 };
 
-const TeamCard: React.FC<{ person: Person; language: string; theme: string; showroom: any }> = ({ person, language: _language, theme, showroom }) => {
+const TeamCard: React.FC<{ person: Person; language: string; theme: string; showroom: { website: string; youtube: string; phone: string } }> = ({ person, language: _language, theme, showroom }) => {
   return (
     <Card className={`p-4 sm:p-6 ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800' : 'bg-white'} overflow-hidden group hover:shadow-xl transition-all duration-300`}>
       <div className="flex flex-col md:flex-row md:items-center gap-4">

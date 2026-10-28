@@ -27,7 +27,10 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     try {
       const stored = localStorage.getItem('language');
       if (stored === 'bn' || stored === 'en') return stored as Language;
-      const browserLang = navigator.language || (navigator as any).userLanguage || '';
+      const browserLang =
+        navigator.language ||
+        (navigator as Navigator & { userLanguage?: string }).userLanguage ||
+        '';
       return browserLang.startsWith('bn') ? 'bn' : 'en';
     } catch {
       return 'en';

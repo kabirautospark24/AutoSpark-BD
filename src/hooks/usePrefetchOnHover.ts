@@ -44,7 +44,7 @@ export default function usePrefetchOnHover(pageUrl: string, apiUrl?: string) {
       }, { rootMargin: '200px', threshold: 0.01 });
 
       io.observe(el);
-    } catch (err) {
+    } catch {
       // if IntersectionObserver not supported, ignore
     }
 

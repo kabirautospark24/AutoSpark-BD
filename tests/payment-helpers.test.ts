@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { validateInitPayload, corsOrigin, newTranId } from '../../api/payment/_helpers';
+import {
+  validateInitPayload,
+  corsOrigin,
+  newTranId,
+  isAmountWithinTolerance,
+} from '../api/payment/_helpers';
 
 describe('validateInitPayload', () => {
   const base = {
@@ -35,5 +40,17 @@ describe('corsOrigin', () => {
 describe('newTranId', () => {
   it('generates unique ids', () => {
     expect(newTranId()).not.toBe(newTranId());
+  });
+});
+
+describe('isAmountWithinTolerance', () => {
+  it('accepts exact and 1-BDT drift', () => {
+    expect(isAmountWithinTolerance(1000, 1000)).toBe(true);
+    expect(isAmountWithinTolerance(1000, 1001)).toBe(true);
+    expect(isAmountWithinTolerance(1000, 999)).toBe(true);
+  });
+  it('rejects drift above 1 BDT', () => {
+    expect(isAmountWithinTolerance(1000, 1002)).toBe(false);
+    expect(isAmountWithinTolerance(1000, 997)).toBe(false);
   });
 });

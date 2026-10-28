@@ -114,3 +114,6 @@ export const useCart = () => {
   }
   return context;
 };
+
+/** Cart context when available, null otherwise (for components rendered outside the provider). */
+export const useOptionalCart = (): CartContextType | null => useContext(CartContext) ?? null;

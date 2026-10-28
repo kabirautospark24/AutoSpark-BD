@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import usePrefetchOnHover from '../hooks/usePrefetchOnHover';
+import { prefetchResource } from '../utils/prefetch';
 
 // Mock car data - 5 premium vehicles
 const carData = [
@@ -299,7 +299,8 @@ export const CarShowcaseCarousel = ({ className = '' }: CarShowcaseCarouselProps
                       {/* CTA Button for active car */}
                       {isActive && (
                         <motion.button
-                          ref={usePrefetchOnHover(`/vehicle/${car.id}`, `/api/vehicle/${car.id}`) as any}
+                          onMouseEnter={() => prefetchResource(`/vehicle/${car.id}`, `/api/vehicle/${car.id}`)}
+                          onFocus={() => prefetchResource(`/vehicle/${car.id}`, `/api/vehicle/${car.id}`)}
                           className="w-full mt-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}

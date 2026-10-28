@@ -1,19 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { insertLead } from '../_db.js';
+import { corsOrigin, setCors, handleCorsPreflight } from '../_cors.js';
 import { normalizeWhatsApp } from '../../src/sparkai/config.js';
-
-const cors = (res: VercelResponse) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-};
 
 const cap = (v: unknown, max: number) => String(v ?? '').trim().slice(0, max);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  cors(res);
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  const origin = corsOrigin(req.headers.origin as string | undefined);
+  setCors(res, origin);
+  if (handleCorsPreflight(req, res, origin, 'POST, OPTIONS')) return;
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const body = req.body ?? {};

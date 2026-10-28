@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Star, TrendingUp, Zap, AlertTriangle, Heart } from 'lucide-react';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import styles from './ResponsiveContainer.module.css';
 import { ResponsiveCarImage } from './ResponsiveCarImage';
 import { FluidHeader } from './FluidHeader';
@@ -37,7 +37,7 @@ export const VehicleCardWithBadges = ({
   const getBadgeContent = () => {
     if (badge === 'none') return null;
 
-    const badgeStyles: Record<Exclude<BadgeType, 'none'>, any> = {
+    const badgeStyles: Record<Exclude<BadgeType, 'none'>, { bg: string; icon: ReactNode; label: string; animation: Record<string, number[]> }> = {
       'best-value': {
         bg: 'bg-gradient-to-r from-green-500 to-emerald-600',
         icon: <Star className="w-4 h-4" />,

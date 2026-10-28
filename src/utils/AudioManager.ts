@@ -9,7 +9,10 @@ export class AudioManager {
 
   static initialize() {
     if (!this.audioContext) {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const Ctor =
+        window.AudioContext ??
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (Ctor) this.audioContext = new Ctor();
     }
   }
 
@@ -34,7 +37,7 @@ export class AudioManager {
           // Silently fail if audio can't play (e.g., browser autoplay restriction)
         });
       }
-    } catch (error) {
+    } catch (_error) {
       console.debug('Audio playback not available');
     }
   }
@@ -47,7 +50,7 @@ export class AudioManager {
     try {
       this.userGestureAllowed = true;
       this.initialize();
-    } catch (e) {
+    } catch (_e) {
       /* ignore */
     }
   }
@@ -60,7 +63,7 @@ export class AudioManager {
     try {
       this.enabled = Boolean(flag);
       if (!this.enabled) this.stopAll();
-    } catch (e) {
+    } catch (_e) {
       /* ignore */
     }
   }

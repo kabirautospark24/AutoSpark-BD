@@ -1,3 +1,4 @@
+/** Discounted price in whole BDT (rounded for display). */
 export const calculateDiscount = (price: number, discount: number): number => {
-  return price - (price * (discount / 100));
+  return Math.round(price * (1 - discount / 100));
 };

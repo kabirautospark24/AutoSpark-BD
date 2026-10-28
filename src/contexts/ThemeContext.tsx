@@ -42,7 +42,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   });
 
   useEffect(() => {
-    try { localStorage.setItem('theme', theme); } catch {}
+    try { localStorage.setItem('theme', theme); } catch { /* storage unavailable (private mode): ignore */ }
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');

@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -49,7 +49,7 @@ export const MorphingShapeTransition = ({
     ? 'text-blue-400 border-blue-400'
     : 'text-blue-600 border-blue-600';
 
-  const shapeVariants = {
+  const shapeVariants: Variants = {
     enter: {
       clipPath: shapes === 'circle'
         ? 'circle(0%)'
@@ -161,7 +161,7 @@ export const MorphingShapeTransition = ({
           <motion.div
             key={currentIndex}
             className="absolute inset-0"
-            variants={shapeVariants as any}
+            variants={shapeVariants}
             initial="enter"
             animate="animate"
             exit="exit"

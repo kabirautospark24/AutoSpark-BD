@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test'
 test('streaming response, unread badge, and settings persistence', async ({ page }) => {
   // Inject a fetch mock before any script runs so the app's fetch calls are intercepted
   await page.addInitScript(() => {
-    (window as any).__mockAgent = true
+    (window as unknown as { __mockAgent?: boolean }).__mockAgent = true
     const realFetch = window.fetch.bind(window)
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = typeof input === 'string' ? input : String((input as URL).pathname || input)

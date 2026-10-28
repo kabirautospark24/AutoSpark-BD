@@ -76,7 +76,7 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
  * retries transient failures, then performs ONE hard reload per session
  * when a stale hashed chunk 404s (the classic "sometimes Something went wrong").
  */
-export function lazyWithRetry<T extends ComponentType<any>>(
+export function lazyWithRetry<T extends ComponentType<Record<string, never>>>(
   importer: () => Promise<{ default: T }>,
   retries = MAX_RETRIES,
 ): React.LazyExoticComponent<T> {

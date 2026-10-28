@@ -71,7 +71,7 @@ export const InteractiveColorCustomizer = ({
     // Save to localStorage
     try {
       localStorage.setItem(`vehicle_color_${vehicleModel}`, JSON.stringify(color));
-    } catch (e) {
+    } catch (_e) {
       console.debug('Could not save color preference');
     }
   };
@@ -87,7 +87,7 @@ export const InteractiveColorCustomizer = ({
           handleColorSelect(match);
         }
       }
-    } catch (e) {
+    } catch (_e) {
       console.debug('Could not load saved color');
     }
   }, [vehicleModel, availableColors]);
@@ -98,7 +98,7 @@ export const InteractiveColorCustomizer = ({
     try {
       const saved = localStorage.getItem(`vehicle_color_${vehicleModel}`);
       if (saved) return; // don't override user's saved preference
-    } catch (e) {
+    } catch (_e) {
       // continue if localStorage unavailable
     }
 
@@ -143,7 +143,7 @@ export const InteractiveColorCustomizer = ({
     const focusableSelector = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
     const focusable = modalEl ? Array.from(modalEl.querySelectorAll<HTMLElement>(focusableSelector)) : [];
     if (focusable.length) {
-      try { focusable[0].focus(); } catch (e) { /* ignore focus errors */ }
+      try { focusable[0].focus(); } catch (_e) { /* ignore focus errors */ }
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -174,7 +174,7 @@ export const InteractiveColorCustomizer = ({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = prevOverflow;
-      try { prevActiveRef.current?.focus(); } catch (e) { /* ignore */ }
+      try { prevActiveRef.current?.focus(); } catch (_e) { /* ignore */ }
     };
   }, [isLargeOpen]);
 
@@ -349,9 +349,9 @@ export const InteractiveColorCustomizer = ({
                           if (selectedColor?.name) params.set('color', selectedColor.name);
                           if (openId) params.set('open', openId);
                           const url = `/inventory?${params.toString()}`;
-                          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                           
                           navigate(url, { state: { from: 'personalize', selectedColor, displayImage, openId } });
-                        } catch (e) {
+                        } catch (_e) {
                           // fallback: open the modal if navigation fails
                           setIsLargeOpen(true);
                           setIsNavigating(false);

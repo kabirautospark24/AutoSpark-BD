@@ -591,7 +591,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
                     label: hotspot.label,
                     description: hotspot.description,
                     videoUrl: undefined,
-                    specs: (hotspot as any).specs || {
+                    specs: ('specs' in hotspot ? (hotspot as { specs?: Record<string, string | number> }).specs : undefined) || {
                       'Material': 'Premium aluminum alloy',
                       'Weight': 'Reduced vs standard',
                       'Durability': 'Weather resistant',

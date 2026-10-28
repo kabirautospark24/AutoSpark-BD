@@ -21,3 +21,27 @@ export function setCors(res: VercelResponse, origin: string) {
   res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Vary', 'Origin');
 }
+
+/**
+ * Shared CORS preflight handler. Returns true when the request was an OPTIONS
+ * request and has been fully answered; the caller should then return.
+ *
+ * Usage:
+ *   const origin = corsOrigin(req.headers.origin);
+ *   if (handleCorsPreflight(req, res, origin, 'POST, OPTIONS')) return;
+ */
+export function handleCorsPreflight(
+  req: { method?: string },
+  res: VercelResponse,
+  origin: string,
+  methods = 'GET, POST, OPTIONS'
+): boolean {
+  if (req.method !== 'OPTIONS') return false;
+  res
+    .status(200)
+    .setHeader('Access-Control-Allow-Origin', origin)
+    .setHeader('Access-Control-Allow-Methods', methods)
+    .setHeader('Access-Control-Allow-Headers', 'Content-Type')
+    .end();
+  return true;
+}

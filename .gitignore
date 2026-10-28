@@ -1,4 +1,14 @@
-logs
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+stats/
+.prerender/
+
+# Logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -6,37 +16,38 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Environment files (never commit real values)
+.env
+.env.local
+.env.*.local
 *.local
 
+# Test artifacts (generated)
+test-results/
+playwright-report/
+coverage/
+
+# Generated audit/reports
+pa11y-report.txt
+lh-report.json
+scripts/dns-report.txt
+
+# Editor / OS
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.env
 
-# Ignore old Next.js example projects that confuse Vercel
+# Deployment tooling state
+.vercel/
+.next/
+
+# Legacy example projects that confuse Vercel autodetection
 next-sslcommerz/
 next-sslcommerz-example/
 assistant-next/
-
-# Ignore local build outputs
-.next/
-.vercel/
-.vercel
-.env
-.env.local
-.env.*.local
-
-# Bundle reports and prerender scratch space
-stats/
-.prerender/
-test-results/
-playwright-report/

@@ -7,7 +7,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { Button } from '../components/ui/Button';
 import PageHead from '../components/PageHead';
 import { Card } from '../components/ui/Card';
-import { ALL_VEHICLES } from '../hooks/vehicleDataAll';
+import { ALL_VEHICLES } from '../data/allVehicles';
 import { carSlides } from '../data/carSlides';
 import type { Vehicle } from '../types';
 import { formatPrice, calculateEMI } from '../utils/format';
@@ -46,11 +46,27 @@ export const VehicleDetailsPage = () => {
 
     // If not found in local dataset, try to match against the lightweight carousel slides
     // (some landing carousel items use different IDs than the inventory dataset)
-    const slideMatch: any = carSlides.find((s) => s.id === id);
+    type SlideLike = {
+      id: string;
+      brand?: string;
+      title?: string;
+      model?: string;
+      year?: number;
+      price?: number | string;
+      fuel?: string;
+      transmission?: string;
+      engine_capacity?: string;
+      color?: string;
+      bodyType?: string;
+      tagline?: string;
+      subtitle?: string;
+      image: string;
+    };
+    const slideMatch = carSlides.find((s) => s.id === id) as SlideLike | undefined;
     if (slideMatch) {
       // Convert the slide representation into the Vehicle shape the details page expects
       const parsedPrice = typeof slideMatch.price === 'string' ? Number(String(slideMatch.price).replace(/[^0-9.-]+/g, '')) : (slideMatch.price || 0);
-      const constructed: any = {
+      const constructed: Vehicle = {
         id: slideMatch.id,
         stock_number: slideMatch.id,
         brand_name: slideMatch.brand || slideMatch.title || 'Unknown',
@@ -78,15 +94,14 @@ export const VehicleDetailsPage = () => {
         ]
       };
 
-      setVehicle(constructed as any);
+      setVehicle(constructed);
       setLoading(false);
       return;
     }
     
     // Fallback to Supabase if not found locally: dynamically import to keep initial bundle small
     try {
-      const mod = await import('../lib/supabase');
-      const { supabase } = mod as any;
+      const { supabase } = await import('../lib/supabase');
       if (supabase && supabase.from) {
         const { data } = await supabase
           .from('vehicles')
@@ -302,7 +317,7 @@ export const VehicleDetailsPage = () => {
               </div>
 
               <div className="space-y-3">
-                <Link to={`/reserve/${vehicle.id}`} onClick={() => { try { (async () => (await import('../lib/analytics')).trackEvent('reserve_clicked', { vehicleId: vehicle.id }))(); } catch (_) {} }}>
+                <Link to={`/reserve/${vehicle.id}`} onClick={() => { try { (async () => (await import('../lib/analytics')).trackEvent('reserve_clicked', { vehicleId: vehicle.id }))(); } catch { /* analytics is non-critical */ } }}>
                   <Button className="w-full" size="lg">
                     {t('vehicle.reserve')}
                   </Button>

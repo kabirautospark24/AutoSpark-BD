@@ -35,7 +35,7 @@ cp .env.example .env
 
 ```env
 SSLCZ_STORE_ID=autosparkbd0live
-SSLCZ_STORE_PASSWD=69DBB19BAB55E48107
+SSLCZ_STORE_PASSWD=REDACTED-ROTATE-REQUIRED
 APPWRITE_API_ENDPOINT=https://sgp.cloud.appwrite.io/v1
 APPWRITE_API_KEY=your_api_key
 APPWRITE_PROJECT_ID=your_project_id

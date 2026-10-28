@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type Ref } from 'react';
 import { ChevronLeft, Check } from 'lucide-react';
 
 interface ComparisonSpec {
@@ -205,7 +205,7 @@ export const AnimatedComparisonSlider = ({
 
           {/* Slider Handle */}
           <motion.div
-            ref={handleRef as any}
+            ref={handleRef as Ref<HTMLDivElement>}
             className={`absolute top-0 bottom-0 w-1 bg-white shadow-2xl cursor-col-resize ${
               isDragging ? 'bg-blue-400' : ''
             }`}

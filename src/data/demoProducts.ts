@@ -1,5 +1,26 @@
-// Shared demo products data used across the application
-export const DEMO_PRODUCTS: any[] = [
+// Shared demo products data used across the application.
+// Rows are free-form catalog data validated at the boundary by
+// ProductDetailPage.normalizeProduct (parse, don't trust).
+export interface DemoProduct {
+  id: string;
+  name_en?: string;
+  name_bn?: string;
+  price?: number;
+  category?: string;
+  stock_quantity?: number;
+  is_available?: boolean;
+  images?: unknown[];
+  brand?: string;
+  rating?: number;
+  reviews?: number;
+  discount?: number;
+  compatibility?: string[];
+  isNew?: boolean;
+  isBestseller?: boolean;
+  [key: string]: unknown;
+}
+
+export const DEMO_PRODUCTS: DemoProduct[] = [
   // User-requested accessories (added in order)
   {
     id: '1001', name_en: 'Axio/Fielder Bati High Fiting', name_bn: '', price: 4500, category: 'Accessories', stock_quantity: 10, is_available: true, images: [], brand: '', rating: 0, reviews: 0, discount: 0, compatibility: [], isNew: false, isBestseller: false

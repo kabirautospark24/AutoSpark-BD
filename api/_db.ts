@@ -44,21 +44,24 @@ function supaEnabled(): boolean {
   return Boolean(supabaseUrl() && supabaseKey());
 }
 
-async function neonSql(): Promise<any> {
+/** Minimal structural type of the Neon HTTP client we use (tagged-template SQL over HTTP). */
+type NeonClient = { query: (text: string, params?: unknown[]) => Promise<unknown[]> };
+
+async function neonSql(): Promise<NeonClient | null> {
   try {
-    const mod: any = await import('@neondatabase/serverless');
-    return mod.neon(dbUrl());
+    const mod = await import('@neondatabase/serverless');
+    return mod.neon(dbUrl()) as unknown as NeonClient;
   } catch (e) {
     console.error('[db] neon load failed:', e);
     return null;
   }
 }
 
-async function neonQuery(text: string, params: any[] = []): Promise<any[]> {
+async function neonQuery(text: string, params: unknown[] = []): Promise<unknown[]> {
   const sql = await neonSql();
   if (!sql) return [];
   try {
-    return (await sql.query(text, params)) as any[];
+    return await sql.query(text, params);
   } catch (e) {
     console.error('[db/neon]', e);
     return [];
@@ -122,7 +125,7 @@ export async function getOrder(tranId: string): Promise<OrderRow | null> {
   if (dbEnabled()) {
     try {
       const rows = await neonQuery(`SELECT * FROM orders WHERE tran_id = $1 LIMIT 1`, [tranId]);
-      return (rows && rows[0]) || null;
+      return (rows[0] as OrderRow | undefined) ?? null;
     } catch (e) {
       console.error('[db/getOrder/neon]', e);
     }

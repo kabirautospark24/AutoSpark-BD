@@ -155,7 +155,7 @@ function showUpdateAvailable(registration: ServiceWorkerRegistration) {
           if (registration.waiting) {
             registration.waiting.postMessage({ type: 'SKIP_WAITING' });
           }
-        } catch (e) { /* ignore */ }
+        } catch (_e) { /* ignore */ }
       });
       dismissBtn?.addEventListener('click', () => {
         banner?.remove();
@@ -176,11 +176,11 @@ if ('serviceWorker' in navigator && !import.meta.env.PROD) {
       navigator.serviceWorker.getRegistrations()
         .then((registrations) => {
           registrations.forEach((reg) => {
-            try { reg.unregister(); } catch (e) { /* ignore */ }
+            try { reg.unregister(); } catch (_e) { /* ignore */ }
           });
         })
         .catch(() => {/* ignore */});
-    } catch (err) {
+    } catch (_err) {
       // Ignore: best effort only
     }
   });
@@ -210,7 +210,7 @@ window.addEventListener('load', () => {
 const enableAudioOnUserGesture = () => {
   try {
     import('./utils/AudioManager').then(mod => mod.AudioManager.allowUserGesture()).catch(() => {});
-  } catch (e) {
+  } catch (_e) {
     /* ignore */
   }
 };
@@ -224,7 +224,7 @@ window.addEventListener('touchstart', enableAudioOnUserGesture, { once: true, pa
 const silenceOnScrollLike = () => {
   try {
     import('./utils/AudioManager').then(mod => mod.AudioManager.stopAll()).catch(() => {});
-  } catch (e) {
+  } catch (_e) {
     /* ignore */
   }
 

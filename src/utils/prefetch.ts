@@ -15,7 +15,7 @@ export async function prefetchResource(pageUrl: string, apiUrl?: string) {
         link.href = pageUrl;
         link.as = 'document';
         document.head.appendChild(link);
-      } catch (err) {
+      } catch (_err) {
         // ignore
       }
     }
@@ -26,7 +26,7 @@ export async function prefetchResource(pageUrl: string, apiUrl?: string) {
       // Fire-and-forget fetch; we don't need the data here, just warm the cache
       fetch(apiUrl, { credentials: 'same-origin' }).catch(() => {});
     }
-  } catch (err) {
+  } catch (_err) {
     // swallow so prefetch never crashes UI
     // console.warn('prefetch failed', err);
   }

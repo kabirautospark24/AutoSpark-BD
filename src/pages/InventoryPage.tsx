@@ -24,12 +24,33 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { ImageCarousel } from '../components/ImageCarousel';
 import { FloatingParticlesBackground } from '../components/FloatingParticlesBackground';
-import { useSeedPradoImages } from '../hooks/useSeedPradoImages';
-import { useSeedChrImages } from '../hooks/useSeedChrImages';
-import { ALL_VEHICLES } from '../hooks/vehicleDataAll';
-import type { Vehicle } from '../types';
+import { useSeedVehicleImages } from '../hooks/useSeedVehicleImages';
+import { ALL_VEHICLES } from '../data/allVehicles';
+import type { Vehicle, VehicleImage } from '../types';
 import { formatPrice } from '../utils/format';
+
+interface InventoryRouterState {
+  openId?: string;
+  open?: string;
+  displayImage?: string;
+}
+
+type ImageRow = VehicleImage & { url?: string };
 import { appwritePaymentApi } from '../services/appwritePaymentApi';
+
+// Seed galleries for the two showroom hero vehicles (idempotent, see useSeedVehicleImages).
+const PRADO_IMAGES = [
+  { url: 'https://images.pexels.com/photos/36318402/pexels-photo-36318402.png', order: 1, isPrimary: true },
+  { url: 'https://images.pexels.com/photos/36318403/pexels-photo-36318403.png', order: 2, isPrimary: false },
+  { url: 'https://images.pexels.com/photos/36318404/pexels-photo-36318404.png', order: 3, isPrimary: false },
+  { url: 'https://images.pexels.com/photos/36318405/pexels-photo-36318405.png', order: 4, isPrimary: false },
+];
+const CHR_IMAGES = [
+  { url: 'https://images.pexels.com/photos/36324034/pexels-photo-36324034.png', order: 1, isPrimary: true },
+  { url: 'https://images.pexels.com/photos/36324033/pexels-photo-36324033.png', order: 2, isPrimary: false },
+  { url: 'https://images.pexels.com/photos/36324031/pexels-photo-36324031.png', order: 3, isPrimary: false },
+  { url: 'https://images.pexels.com/photos/36324032/pexels-photo-36324032.png', order: 4, isPrimary: false },
+];
 // --- Booking Modal Types ---
 interface BookingFormData {
   customer_name: string;
@@ -784,8 +805,8 @@ export const InventoryPage = () => {
   });
 
   // Seed vehicle images
-  useSeedPradoImages();
-  useSeedChrImages();
+  useSeedVehicleImages('Prado', 'Toyota', PRADO_IMAGES);
+  useSeedVehicleImages('C-HR', 'Toyota', CHR_IMAGES);
 
   // Refs for each rendered vehicle DOM node so we can scroll/focus them
   const vehicleRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -798,7 +819,7 @@ export const InventoryPage = () => {
   const closeVehicleDrawer = () => {
     setShowDrawer(false);
     setOpenVehicleId(null);
-    const params = new URLSearchParams(searchParams as any);
+    const params = new URLSearchParams(searchParams);
     params.delete('open');
     const search = params.toString();
     const path = search ? `/inventory?${search}` : '/inventory';
@@ -863,7 +884,7 @@ export const InventoryPage = () => {
     }
 
     tryOpen();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [searchParams, vehicles]);
 
   // If URL contains ?model=... or ?color=..., apply filters and focus first matching vehicle
@@ -910,12 +931,12 @@ export const InventoryPage = () => {
     }
 
     tryApply();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [searchParams, vehicles]);
 
   // Also respond to router location.state.openId (navigate state) for immediate open without relying on URL change
   useEffect(() => {
-    const state = (location.state || {}) as any;
+    const state = (location.state || {}) as InventoryRouterState;
     const openId = state?.openId || state?.open || null;
     if (!openId) return;
 
@@ -941,11 +962,11 @@ export const InventoryPage = () => {
     }
 
     tryOpen();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [location, vehicles]);
 
   // Expose router state for use in the drawer (displayImage, selectedColor)
-  const routerState = (location.state || {}) as any;
+  const routerState = (location.state || {}) as InventoryRouterState;
 
   // Calculate counts for filters
   const filterCounts = useMemo(() => {
@@ -1605,10 +1626,13 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                 <AnimatePresence mode="popLayout">
                   {filteredVehicles.map((vehicle, index) => {
                     const carouselImages = (vehicle.images && vehicle.images.length > 0)
-                      ? vehicle.images.map((img: any) => ({
-                          url: img.image_url || img.url || 'https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=800',
-                          alt: `${vehicle.brand_name} ${vehicle.model}`
-                        }))
+                      ? vehicle.images.map((rawImg) => {
+                          const img = rawImg as ImageRow;
+                          return {
+                            url: img.image_url || img.url || 'https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=800',
+                            alt: `${vehicle.brand_name} ${vehicle.model}`
+                          };
+                        })
                       : [{
                           url: 'https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=800',
                           alt: `${vehicle.brand_name} ${vehicle.model}`
@@ -1756,7 +1780,7 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                           {routerState?.displayImage && routerState.openId === vehicle.id ? (
                             <img src={encodeURI(routerState.displayImage)} alt={`${vehicle.brand_name} ${vehicle.model}`} className="w-full h-full object-contain" />
                           ) : vehicle.images && vehicle.images.length > 0 ? (
-                            <img src={encodeURI((vehicle.images[0] as any).image_url || (vehicle.images[0] as any).url)} alt={`${vehicle.brand_name} ${vehicle.model}`} className="w-full h-full object-contain bg-gray-100 dark:bg-gray-900" />
+                            <img src={encodeURI((vehicle.images[0] as ImageRow).image_url || (vehicle.images[0] as ImageRow).url || '')} alt={`${vehicle.brand_name} ${vehicle.model}`} className="w-full h-full object-contain bg-gray-100 dark:bg-gray-900" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-400">No image</div>
                           )}

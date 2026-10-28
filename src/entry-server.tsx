@@ -77,7 +77,7 @@ export function renderPage(url: string): Promise<string> {
         onError(error: unknown) {
           // A failed client-side data fetch is not fatal for the static HTML.
           if (!settled) {
-            // eslint-disable-next-line no-console
+             
             console.warn('[prerender] render warning:', (error as Error)?.message ?? error);
           }
         },

@@ -26,8 +26,11 @@ import {
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-// Declare model-viewer as a custom element
+// Declare model-viewer as a custom element (JSX.IntrinsicElements augmentation for the
+// @google/model-viewer web component loaded from CDN). eslint-disable: namespace JSX is
+// the required pattern for global JSX augmentation (same as DefinitelyTyped packages).
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'model-viewer': React.DetailedHTMLProps<
@@ -174,6 +177,11 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
   const { theme } = useTheme();
   const { language } = useLanguage();
   const modelViewerRef = useRef<HTMLElement>(null);
+
+  const getModelViewer = () => modelViewerRef.current as (HTMLElement & {
+    toBlob?: (options?: { idealAspect?: boolean }) => Promise<Blob>;
+    activateAR?: () => void;
+  }) | null;
   
   // State
   const [selectedVehicle, setSelectedVehicle] = useState(
@@ -198,7 +206,8 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
     const checkARSupport = async () => {
       if ('xr' in navigator) {
         try {
-          const isARSupported = await (navigator as any).xr?.isSessionSupported?.('immersive-ar');
+          const xr = (navigator as Navigator & { xr?: { isSessionSupported?: (mode: string) => Promise<boolean> } }).xr;
+          const isARSupported = await xr?.isSessionSupported?.('immersive-ar');
           setArSupported(!!isARSupported);
         } catch {
           setArSupported(false);
@@ -235,7 +244,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
 
   // Screenshot
   const takeScreenshot = useCallback(() => {
-    const modelViewer = modelViewerRef.current as any;
+    const modelViewer = getModelViewer();
     if (modelViewer?.toBlob) {
       modelViewer.toBlob({ idealAspect: true }).then((blob: Blob) => {
         const url = URL.createObjectURL(blob);
@@ -250,7 +259,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
 
   // Share functionality
   const shareAR = useCallback(async () => {
-    const modelViewer = modelViewerRef.current as any;
+    const modelViewer = getModelViewer();
     if (modelViewer?.toBlob && navigator.share) {
       try {
         const blob = await modelViewer.toBlob({ idealAspect: true });
@@ -262,7 +271,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
             : `${selectedVehicle.name} এআর তে দেখুন!`,
           files: [file],
         });
-      } catch (error) {
+      } catch (_error) {
         console.log('Share cancelled');
       }
     }
@@ -293,7 +302,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
 
   // Activate AR
   const activateAR = useCallback(() => {
-    const modelViewer = modelViewerRef.current as any;
+    const modelViewer = getModelViewer();
     if (modelViewer?.activateAR) {
       modelViewer.activateAR();
     }

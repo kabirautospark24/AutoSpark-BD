@@ -604,8 +604,8 @@ const ServicesPage: React.FC = () => {
     if (serviceStatusId) {
       try {
         const raw = localStorage.getItem('autospark-service-bookings');
-        const bookings = raw ? JSON.parse(raw) : [];
-        const found = bookings.find((b: any) => b.id === serviceStatusId.trim());
+        const bookings = raw ? (JSON.parse(raw) as Array<{ id?: string; step?: number; status?: string }>) : [];
+        const found = bookings.find((b) => b.id === serviceStatusId.trim());
         if (found) {
           setServiceStatus({ step: found.step ?? 1, status: found.status ?? 'Received' });
         } else {

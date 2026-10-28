@@ -16,14 +16,8 @@ coverage/
 !.env.example
 
 # Local test helpers (not needed for cloud runtime)
-local-test-server.ts
-local-test-server-simple.js
 local-test-server-simple.cjs
 
 # Editor / OS artifacts
 .DS_Store
 .vscode/
-
-# Source TS files are not required because runtime entrypoint is main.js
-src/
-tsconfig.json

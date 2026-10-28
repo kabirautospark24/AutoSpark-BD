@@ -1,0 +1,30 @@
+# Build output and caches
+dist
+stats
+.prerender
+node_modules
+package-lock.json
+
+# Generated reports and test artifacts
+test-results
+playwright-report
+pa11y-report.txt
+lh-report.json
+scripts/dns-report.txt
+
+# Static assets and generated HTML (not hand-formatted)
+public
+docs/archive
+*.min.js
+*.webp
+*.png
+*.jpg
+*.svg
+*.mp4
+*.webm
+
+# Third-party / vendored sources
+functions/sslcommerz-api/main.js
+functions/sslcommerz-api/local-test-server-simple.cjs
+server/proxy.cjs
+server/dev-server.js

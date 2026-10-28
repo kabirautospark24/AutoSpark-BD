@@ -236,7 +236,7 @@ export const HomePage = () => {
       console.warn('fetchFeaturedVehicles failed:', err);
       setFeaturedVehicles([]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
 
   const fetchTestimonials = useCallback(async () => {
@@ -260,7 +260,7 @@ export const HomePage = () => {
       console.warn('fetchTestimonials failed:', err);
       setTestimonials([]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
 
   const handleAddToComparison = (vehicle: Vehicle) => {
@@ -663,7 +663,7 @@ export const HomePage = () => {
                 </h2>
               </ScrollReveal>
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" stagger={0.12}>
-                {testimonials.map((testimonial: any) => (
+                {testimonials.map((testimonial) => (
                   <motion.div key={testimonial.id} variants={staggerItemVariants}>
                     <div className={`group relative p-6 rounded-2xl glass gradient-border transition-all duration-300 hover:-translate-y-1 ${
                       theme === 'dark' ? '' : 'bg-white/80'

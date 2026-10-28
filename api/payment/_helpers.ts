@@ -1,5 +1,7 @@
 /** Shared payment helpers: CORS (re-exported from ../_cors), validation, sanitized logging. */
-export { ALLOWED_ORIGINS, corsOrigin, setCors } from '../_cors.js';
+import { getOrder } from '../_db.js';
+
+export { ALLOWED_ORIGINS, corsOrigin, setCors, handleCorsPreflight } from '../_cors.js';
 
 const BD_PHONE = /^01[3-9]\d{8}$/;
 
@@ -95,4 +97,62 @@ export async function validateWithSSLCommerz(valId: string): Promise<SSLValidati
   } catch {
     return { valid: false };
   }
+}
+
+/** Payment amount tolerance: SSLCommerz may round by <= 1 BDT. */
+export function isAmountWithinTolerance(actual: number, expected: number): boolean {
+  return Math.abs(actual - expected) <= 1;
+}
+
+export type PaymentBindFailure = 'invalid' | 'mismatch' | 'amount';
+export type PaymentBindResult =
+  | { ok: true; check: SSLValidation }
+  | { ok: false; reason: PaymentBindFailure; check: SSLValidation };
+
+/**
+ * Shared verification for SSLCommerz success/IPN callbacks:
+ * 1. server-to-server validation of val_id,
+ * 2. binding of the validation to OUR tran_id,
+ * 3. optional rejection of a FAILED gateway status,
+ * 4. amount cross-check against the stored order (server truth), falling back
+ *    to the callback amount and finally the gateway-validated amount.
+ *
+ * The 1-BDT tolerance matches SSLCommerz rounding behaviour.
+ */
+export async function verifyBoundPayment(opts: {
+  valId: string;
+  tranId: string;
+  /** Amount reported by the gateway callback (IPN body / success query). */
+  callbackAmount?: unknown;
+  /** IPN only: treat a FAILED gateway status as a failed verification. */
+  rejectFailedStatus?: boolean;
+  /** Gateway-reported status (IPN body `status`). */
+  gatewayStatus?: unknown;
+}): Promise<PaymentBindResult> {
+  const { valId, tranId, callbackAmount, rejectFailedStatus, gatewayStatus } = opts;
+
+  const check = await validateWithSSLCommerz(valId);
+  if (!check.valid) return { ok: false, reason: 'invalid', check };
+
+  // Bind the validation to OUR transaction (a valid val_id from another order must not mark this one paid).
+  if (!check.tranId || check.tranId !== tranId) return { ok: false, reason: 'mismatch', check };
+
+  if (rejectFailedStatus && String(gatewayStatus ?? '').toUpperCase() === 'FAILED') {
+    return { ok: false, reason: 'invalid', check };
+  }
+
+  // Amount cross-check: stored order row when available, else the callback amount,
+  // else the gateway-validated amount. A verified gateway amount alone is accepted —
+  // the server-to-server validation is authoritative for what was actually charged.
+  if (Number.isFinite(Number(check.amount))) {
+    const order = await getOrder(tranId);
+    const expected =
+      order?.amount ??
+      (Number.isFinite(Number(callbackAmount)) ? Number(callbackAmount) : Number(check.amount));
+    if (Number.isFinite(Number(expected)) && !isAmountWithinTolerance(Number(check.amount), Number(expected))) {
+      return { ok: false, reason: 'amount', check };
+    }
+  }
+
+  return { ok: true, check };
 }

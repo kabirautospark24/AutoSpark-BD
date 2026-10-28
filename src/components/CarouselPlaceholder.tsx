@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 
 interface CarouselPlaceholderProps {
   theme: string;
@@ -13,7 +13,7 @@ export const CarouselPlaceholder = ({
     ? 'linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%)'
     : 'linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%)';
 
-  const shimmerVariants = {
+  const shimmerVariants: Variants = {
     initial: { backgroundPosition: '200% center' },
     animate: {
       backgroundPosition: '-200% center',
@@ -37,7 +37,7 @@ export const CarouselPlaceholder = ({
       {/* Main shimmer overlay */}
       <motion.div
         className="absolute inset-0"
-        variants={shimmerVariants as any}
+        variants={shimmerVariants}
         initial="initial"
         animate="animate"
         style={{

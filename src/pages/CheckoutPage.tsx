@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { bdDistricts, bdThanas } from '../data/bd-locations';
 import { useCart } from '../contexts/CartContext';
-import { initiatePayment } from '../services/handlePayment';
+import { handlePayment } from '../services/handlePayment';
 
 const phoneRegex = new RegExp(/^01[3-9]\d{8}$/);
 
@@ -76,7 +76,7 @@ const CheckoutPage = () => {
 				quantity: item.quantity,
 			}));
 
-			await initiatePayment({
+			await handlePayment({
 				name: data.customer_name,
 				phone: data.mobile,
 				address: data.address,

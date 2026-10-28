@@ -1,15 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { corsOrigin, setCors, validateInitPayload, newTranId } from './_helpers.js';
+import { corsOrigin, setCors, handleCorsPreflight, validateInitPayload, newTranId } from './_helpers.js';
 import { upsertOrder } from '../_db.js';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   const origin = corsOrigin(request.headers.origin as string | undefined);
-  if (request.method === 'OPTIONS') {
-    return response.status(200).setHeader('Access-Control-Allow-Origin', origin)
-      .setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-      .setHeader('Access-Control-Allow-Headers', 'Content-Type')
-      .end();
-  }
+  if (handleCorsPreflight(request, response, origin, 'POST, OPTIONS')) return;
   if (request.method !== 'POST') {
     setCors(response, origin);
     return response.status(405).json({ error: 'Method not allowed' });
@@ -109,7 +104,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     const contentType = sslResponse.headers.get('content-type') ?? '';
     const rawText = await sslResponse.text();
     console.error('[payment/init] gateway status', sslResponse.status, 'ct', contentType, 'body', rawText.slice(0, 500));
-    let sslczData: any = {};
+    let sslczData: { status?: string; GatewayPageURL?: string; failedreason?: string } = {};
     try { sslczData = rawText ? JSON.parse(rawText) : {}; } catch { sslczData = {}; }
     if (sslczData.status !== 'SUCCESS' || !sslczData.GatewayPageURL) {
       setCors(response, origin);

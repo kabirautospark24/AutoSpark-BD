@@ -1,7 +1,7 @@
 import { useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ALL_VEHICLES } from '../hooks/vehicleDataAll';
+import { ALL_VEHICLES } from '../data/allVehicles';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 

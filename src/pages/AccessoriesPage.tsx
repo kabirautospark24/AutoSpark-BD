@@ -33,7 +33,8 @@ import {
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { appwritePaymentApi } from '../services/appwritePaymentApi';
-import { useCart as useGlobalCart } from '../contexts/CartContext';
+import { useOptionalCart as useGlobalCart } from '../contexts/CartContext';
+import { calculateDiscount } from '../utils/calculateDiscount';
 
 // Extended Product interface for accessories with additional UI fields
 interface AccessoryProduct {
@@ -774,10 +775,6 @@ const handleImageSearch = (product: AccessoryProduct) => {
   const query = encodeURIComponent(queryParts.join(' '));
   const url = `https://www.google.com/search?tbm=isch&q=${query}`;
   window.open(url, '_blank');
-};
-
-const calculateDiscount = (price: number, discount: number) => {
-  return Math.round(price * (1 - discount / 100));
 };
 
 // Components
@@ -1924,8 +1921,9 @@ function AccessoriesPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
 
-  // A-02 fix: sync local cart with global CartContext to fix badge drift
-  const globalCart = (() => { try { return useGlobalCart(); } catch { return null; } })();
+  // A-02 fix: sync local cart with global CartContext to fix badge drift.
+  // useOptionalCart returns null when the page renders outside the provider.
+  const globalCart = useGlobalCart();
   // Cart, Wishlist, Compare
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
@@ -2016,7 +2014,7 @@ function AccessoriesPage() {
     const fetchProducts = async () => {
       try {
         // A-04 fix: unified table (try accessories then products), whitelist + limit/order + pagination safety
-        let data: any[] | null = null;
+        let data: AccessoryProduct[] | null = null;
         const tryFetch = async (table: string) => {
           if (!supabase) throw new Error('Supabase not configured');
           const res = await supabase
@@ -2050,7 +2048,7 @@ function AccessoriesPage() {
               } as AccessoryProduct);
               return;
             }
-            const hasImages = Array.isArray((p as any).images) && (p as any).images.length > 0;
+            const hasImages = Array.isArray(p.images) && p.images.length > 0;
             if (!hasImages) {
               // Try to find demo product images by id or name
               const demo = demoProductsWithP2.find(dp => dp.id === p.id || dp.name_en === p.name_en);

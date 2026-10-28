@@ -4,6 +4,12 @@ import { useState, useCallback } from 'react';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
+declare global {
+  interface Window {
+    showToast?: (message: string, type?: ToastType, duration?: number) => void;
+  }
+}
+
 export interface Toast {
   id: string;
   message: string;
@@ -134,7 +140,7 @@ export const ToastContainer = ({ theme }: ToastContainerProps) => {
   }, []);
 
   // Expose globally for easy usage
-  (window as any).showToast = addToast;
+  window.showToast = addToast;
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none">
@@ -155,9 +161,9 @@ export const ToastContainer = ({ theme }: ToastContainerProps) => {
 // Hook for using toast notifications
 export const useToast = () => {
   return {
-    success: (message: string, duration?: number) => (window as any).showToast?.(message, 'success', duration),
-    error: (message: string, duration?: number) => (window as any).showToast?.(message, 'error', duration),
-    info: (message: string, duration?: number) => (window as any).showToast?.(message, 'info', duration),
-    warning: (message: string, duration?: number) => (window as any).showToast?.(message, 'warning', duration),
+    success: (message: string, duration?: number) => window.showToast?.(message, 'success', duration),
+    error: (message: string, duration?: number) => window.showToast?.(message, 'error', duration),
+    info: (message: string, duration?: number) => window.showToast?.(message, 'info', duration),
+    warning: (message: string, duration?: number) => window.showToast?.(message, 'warning', duration),
   };
 };

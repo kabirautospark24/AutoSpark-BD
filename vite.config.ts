@@ -96,10 +96,7 @@ export default defineConfig({
           if (id.includes('three') || id.includes('@react-three')) {
             return 'three';
           }
-          // Model viewer - separate chunk (heavy, rarely used on homepage)
-          if (id.includes('@google/model-viewer') || id.includes('model-viewer')) {
-            return 'model-viewer';
-          }
+          // Model viewer - removed: no longer part of the dependency graph
           // Icons: one shared, cacheable chunk instead of one file per icon.
           if (id.includes('lucide-react')) {
             return 'icons';

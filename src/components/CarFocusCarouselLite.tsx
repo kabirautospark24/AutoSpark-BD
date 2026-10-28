@@ -164,7 +164,7 @@ const CarFocusCarouselInner = ({ initialCarId, onCarChange }: CarFocusCarouselPr
       if (rafId) window.cancelAnimationFrame(rafId);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [isPaused, flippedFullIndex, slides.length]);
 
   // Pointer drag handlers to allow manual swipe/drag to control scroll
@@ -172,7 +172,7 @@ const CarFocusCarouselInner = ({ initialCarId, onCarChange }: CarFocusCarouselPr
     const track = trackRef.current;
     if (!track) return;
     // capture pointer so we continue receiving move/up events
-    try { (e.target as Element).setPointerCapture?.(e.pointerId); } catch {}
+    try { (e.target as Element).setPointerCapture?.(e.pointerId); } catch { /* pointer capture unsupported: ignore */ }
     dragRef.current.active = true;
     dragRef.current.startX = e.clientX;
     dragRef.current.startScrollLeft = track.scrollLeft;
@@ -199,7 +199,7 @@ const CarFocusCarouselInner = ({ initialCarId, onCarChange }: CarFocusCarouselPr
     dragRef.current.active = false;
     // release pointer capture if possible
     if (pointerId != null) {
-      try { track.releasePointerCapture?.(pointerId); } catch {}
+      try { track.releasePointerCapture?.(pointerId); } catch { /* pointer capture unsupported: ignore */ }
     }
     markInteraction();
     // resume autoplay after short delay to avoid immediate takeover
@@ -207,7 +207,7 @@ const CarFocusCarouselInner = ({ initialCarId, onCarChange }: CarFocusCarouselPr
   };
 
 
-  const FlipInner = ({ car, flipped }: { car: any; flipped: boolean }) => {
+  const FlipInner = ({ car, flipped }: { car: typeof carSlides[number]; flipped: boolean }) => {
     const innerStyle: React.CSSProperties = { width: '100%', height: '100%', transformStyle: 'preserve-3d', transition: 'transform 560ms ease', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' };
     const faceStyle: React.CSSProperties = { position: 'absolute', inset: 0, backfaceVisibility: 'hidden' };
     const backStyle: React.CSSProperties = { ...faceStyle, transform: 'rotateY(180deg)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 16 };
@@ -223,7 +223,7 @@ const CarFocusCarouselInner = ({ initialCarId, onCarChange }: CarFocusCarouselPr
               <div className="text-sm text-gray-400">{car.brand} · {car.year}</div>
               <div className="text-2xl font-bold mt-2">{car.model}</div>
               <div className="mt-2 text-sm text-gray-500">{car.subtitle}</div>
-              <div className="mt-4 text-xl font-extrabold">{formatPrice(car.price as any)}</div>
+              <div className="mt-4 text-xl font-extrabold">{formatPrice(car.price)}</div>
               <div className="mt-4 flex gap-2 flex-wrap justify-center">{(car.features || []).slice(0, 6).map((f: string) => (<span key={f} className="text-xs px-2 py-1 bg-white/6 rounded">{f}</span>))}</div>
             </div>
             <div className="mt-6">
@@ -309,7 +309,7 @@ const CarFocusCarouselInner = ({ initialCarId, onCarChange }: CarFocusCarouselPr
                     <div className="rounded-xl p-3 flex items-center justify-between" style={ theme === 'dark' ? { backdropFilter: 'blur(10px)', background: 'rgba(255,255,255,0.12)' } : { background: 'rgba(255,255,255,0.98)', boxShadow: '0 10px 30px rgba(16,24,40,0.08)', border: '1px solid rgba(0,0,0,0.06)' } }>
                       <div>
                         <div className={theme === 'dark' ? 'text-xs text-gray-200' : 'text-xs text-gray-600'}>From</div>
-                        <div className={theme === 'dark' ? 'text-xl font-bold text-white' : 'text-xl font-extrabold text-gray-900'} style={{letterSpacing: '-0.2px'}}>{formatPrice(car.price as any)}</div>
+                        <div className={theme === 'dark' ? 'text-xl font-bold text-white' : 'text-xl font-extrabold text-gray-900'} style={{letterSpacing: '-0.2px'}}>{formatPrice(car.price)}</div>
                       </div>
 
                       <div>
@@ -339,4 +339,4 @@ const CarFocusCarousel = forwardRef<CarFocusCarouselHandle, CarFocusCarouselProp
 CarFocusCarousel.displayName = 'CarFocusCarousel';
 
 export default CarFocusCarousel;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     

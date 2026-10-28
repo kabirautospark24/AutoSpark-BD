@@ -8,6 +8,13 @@ interface FilterOption {
   value: string;
 }
 
+interface FilterState {
+  vehicleType?: string[];
+  fuelType?: string[];
+  priceRange?: { min: number; max: number };
+  transmission?: string[];
+}
+
 interface FilterPanelProps {
   filters: {
     vehicleType?: FilterOption[];
@@ -15,7 +22,7 @@ interface FilterPanelProps {
     priceRange?: { min: number; max: number };
     transmission?: FilterOption[];
   };
-  onFilterChange: (filters: any) => void;
+  onFilterChange: (filters: FilterState) => void;
   theme: string;
   language: string;
 }
@@ -27,12 +34,7 @@ export const FilterPanel = ({
   language,
 }: FilterPanelProps) => {
   const [expandedFilters, setExpandedFilters] = useState<string[]>([]);
-  const [activeFilters, setActiveFilters] = useState<{
-    vehicleType?: string[];
-    fuelType?: string[];
-    priceRange?: { min: number; max: number };
-    transmission?: string[];
-  }>({});
+  const [activeFilters, setActiveFilters] = useState<FilterState>({});
 
   const toggleExpand = (filterId: string) => {
     setExpandedFilters((prev) =>
@@ -47,24 +49,15 @@ export const FilterPanel = ({
     value: string,
     isChecked: boolean
   ) => {
+    if (filterType === 'priceRange') return;
+    const filterKey = filterType as Exclude<keyof FilterState, 'priceRange'>;
     const newFilters = { ...activeFilters };
-    const filterKey = filterType as keyof typeof newFilters;
-
-    if (filterType !== 'priceRange') {
-      if (isChecked) {
-        if (!newFilters[filterKey]) {
-          (newFilters as any)[filterKey] = [];
-        }
-        ((newFilters as any)[filterKey] as string[]).push(value);
-      } else {
-        if (newFilters[filterKey]) {
-          ((newFilters as any)[filterKey] as string[]) = (
-            (newFilters as any)[filterKey] as string[]
-          ).filter((v: string) => v !== value);
-        }
-      }
+    const current = newFilters[filterKey] ?? [];
+    if (isChecked) {
+      newFilters[filterKey] = [...current, value];
+    } else {
+      newFilters[filterKey] = current.filter((v) => v !== value);
     }
-
     setActiveFilters(newFilters);
     onFilterChange(newFilters);
   };
