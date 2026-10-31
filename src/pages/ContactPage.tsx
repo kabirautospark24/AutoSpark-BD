@@ -53,7 +53,7 @@ export const ContactPage = () => {
   return (
     <div>
       <ShowroomCards />
-      <div className={`min-h-screen ${theme === 'dark' ? 'bg-transparent' : 'bg-gray-50'} pt-20`}>
+      <div className={`min-h-screen relative ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="bg-gradient-to-r from-[#0D0D0D] to-[#1a0a0a] text-white py-10 sm:py-12 md:py-16">
           <div className="container mx-auto px-3 sm:px-4 md:px-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">{t('contact.title')}</h1>
@@ -65,7 +65,7 @@ export const ContactPage = () => {
 
         <div className="container mx-auto px-3 sm:px-4 md:px-6 py-8 sm:py-10 md:py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
-            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
+            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
               <MapPin className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
               <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 AutoSpark
@@ -73,7 +73,7 @@ export const ContactPage = () => {
               <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia Rajshahi, Rajshahi, Bangladesh, 6207</p>
               <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-700'}`}>Rajshahi, Rajshahi Division, Bangladesh</p>
             </Card>
-            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
+            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
               <MapPin className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
               <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 Auto Spark Service Center
@@ -81,7 +81,7 @@ export const ContactPage = () => {
               <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Meherchandi, West Side of School Mor, Rajshahi, Rajshahi, Bangladesh, 6202</p>
               <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-700'}`}>Rajshahi, Rajshahi Division, Bangladesh</p>
             </Card>
-            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
+            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
               <Phone className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
               <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 {language === 'en' ? 'Call Us' : 'কল করুন'}
@@ -91,7 +91,7 @@ export const ContactPage = () => {
                 <a href={`tel:+8801321233670`} className="text-[#C00000] hover:text-[#FF1A1A] text-sm sm:text-base font-semibold">Service Center: +880 1321-233670</a>
               </div>
             </Card>
-            <Card className={`p-4 sm:p-6 text-center sm:col-span-2 lg:col-span-1 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
+            <Card className={`p-4 sm:p-6 text-center sm:col-span-2 lg:col-span-1 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
               <Mail className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
               <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 {language === 'en' ? 'Email Us' : 'ইমেইল করুন'}
@@ -106,7 +106,7 @@ export const ContactPage = () => {
 
         <div className="container mx-auto px-4 sm:px-6 pb-12">
           <div className="max-w-2xl mx-auto">
-            <Card className={`p-4 sm:p-6 md:p-8 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
+            <Card className={`p-4 sm:p-6 md:p-8 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
             <h2 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               {language === 'en' ? 'Send us a Message' : 'আমাদের একটি বার্তা পাঠান'}
             </h2>

@@ -649,14 +649,14 @@ const TestimonialCard = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
       viewport={{ once: true, margin: '-50px' }}
-      className={`group relative rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-xl ${
+      className={`group relative rounded-3xl overflow-hidden transition-all duration-300 hover:translate-y-1 hover:shadow-2xl hover:border-blue-500/20 bg-white ${
         theme === 'dark'
-          ? 'bg-gray-800/60 border-gray-700/50 hover:border-blue-500/30 backdrop-blur-sm'
-          : 'bg-white border-gray-200 hover:border-blue-300 shadow-sm'
+          ? 'bg-gray-800/60 border-gray-700/50'
+          : 'bg-white'
       }`}
     >
       {/* Vehicle Image Header */}
@@ -938,7 +938,7 @@ export const TestimonialsPage = () => {
           HERO SECTION
           ══════════════════════════════════════════ */}
       <section className="relative overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16">
-        {/* Background gradient */}
+{/* Background gradient */}
         <div className={`absolute inset-0 ${
           theme === 'dark'
             ? 'bg-gradient-to-br from-gray-900 via-blue-950/30 to-gray-900'
@@ -992,8 +992,68 @@ export const TestimonialsPage = () => {
             }`}>
               {language === 'en'
                 ? "Real stories from real customers who found their dream cars at Auto Spark BD. Read what they have to say about North Bengal's most trusted car dealership."
-                : 'অটো স্পার্ক বিডিতে তাদের স্বপ্নের গাড়ি খুঁজে পাওয়া প্রকৃত গ্রাহকদের বাস্তব গল্প। উত্তরবঙ্গের সবচেয়ে বিশ্বস্ত গাড়ি ডিলারশিপ সম্পর্কে তারা কী বলেন পড়ুন।'}
+                : 'অটো স্পার্ক বিডিতে তাদের স্বপ্নের গাড়ি খুঁজে poderosa প্রকৃত গ্রাহকদের বাস্তব গল্প। উত্তরবঙ্গের সবচেয়ে বিশ্বস্ত গাড়ি ডিলারশিপ সম্পর্কে তারা কী বলেন পড়ুন।'}
             </p>
+
+            {/* Featured Testimonial Hero - showcases one premium testimonial prominently */}
+            {featuredTestimonials.length > 0 && (
+              <section className="relative pt-12 pb-12 md:pt-16 md:pb-20 overflow-hidden">
+                <div className={`absolute inset-0 ${
+                  theme === 'dark'
+                    ? 'bg-gradient-to-t from-gray-900 via-transparent to-transparent'
+                    : 'bg-gradient-to-t from-white via-transparent to-transparent'
+                }`} />
+                <div className="absolute top-0 left-0 right-0 h-96 sm:h-[600px] md:h-[700px] bg-[url('/testimonials-hero-bg.jpg')] bg-center bg-no-contain opacity-40 opacity-md:0 lg:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className={`absolute inset-0 ${
+                    theme === 'dark'
+                      ? 'bg-gradient-to-t from-gray-900/70 via-transparent to-transparent'
+                      : 'bg-gradient-to-t from-white/70 via-transparent to-transparent'
+                  }`} />
+                </div>
+                <div className="relative z-10 flex flex-col items-center text-center py-20 sm:py-32 md:py-36">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="max-w-2xl w-full"
+                  >
+                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-500/30 mb-6">
+                      <Star className="text-yellow-400 fill-yellow-400" size={14} />
+                      <span className="text-sm font-medium {theme === 'dark' ? 'text-yellow-400' : 'text-yellow-700'}">
+                        {language === 'en' ? 'FEATURED' : 'ফিচার্ড'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-2xl md:text-3xl font-bold {theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4">
+                      <Award className="text-yellow-400" size={20} />
+                      {language === 'en' ? 'Featured Customer Story' : 'ফিচার্ড গ্রাহক গল্প'}
+                    </div>
+                    <blockquote className={`text-lg md:text-xl leading-relaxed mb-6 ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                      "{language === 'bn' && featuredTestimonials[0].review_bn ? featuredTestimonials[0].review_bn : featuredTestimonials[0].review_en}"
+                    </blockquote>
+                    <div className="flex flex-col sm:flex-row items-center gap-3 text-sm {theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}">
+                      <img
+                        src={featuredTestimonials[0].customer_image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(featuredTestimonials[0].customer_name)}&background=0D8ABC&color=fff&size=80`}
+                        alt={featuredTestimonials[0].customer_name}
+                        className="w-14 h-14 rounded-full object-cover border-2 border-blue-500/30"
+                      />
+                      <div>
+                        <h4 className={`font-semibold {theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                          {language === 'bn' && featuredTestimonials[0].customer_name_bn ? featuredTestimonials[0].customer_name_bn : featuredTestimonials[0].customer_name}
+                        </h4>
+                        <p>{featuredTestimonials[0].vehicle_purchased || 'Toyota Vehicle'}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                  <div className="flex flex-col sm:flex-row gap-2 pt-4 border-t {theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}">
+                    <StarRating rating={featuredTestimonials[0].rating} size={16} className="text-yellow-500" />
+                    <span className="text-green-500">{featuredTestimonials[0].verified_purchase ? 'Verified Purchase' : ''}</span>
+                  </div>
+                </div>
+              </section>
+            )}
 
             {/* Delivered Highlighter */}
             <motion.div
