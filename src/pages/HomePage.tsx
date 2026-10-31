@@ -427,6 +427,9 @@ export const HomePage = () => {
           </LazySection>
         </div>
 
+        {/* ══ BRAND SHOWCASE (3D) ═══════════════════════════════════ */}
+        <BrandShowcase3D />
+
         {/* ══ FILTER / SORT ════════════════════════════════════════ */}
         <section className={`section-padding relative overflow-hidden ${
           theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-white to-gray-50'
@@ -789,9 +792,6 @@ export const HomePage = () => {
             </div>
           </div>
         </section>
-
-        {/* ══ BRAND SHOWCASE (3D) ═══════════════════════════════════ */}
-        <BrandShowcase3D />
 
         {/* ══ CTA ═══════════════════════════════════════════════════ */}
         <section className="section-padding relative overflow-hidden bg-gradient-to-r from-red-600 via-red-700 to-red-800">
