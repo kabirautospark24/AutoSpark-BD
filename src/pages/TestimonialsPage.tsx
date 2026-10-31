@@ -1048,8 +1048,8 @@ export const TestimonialsPage = () => {
                     </div>
                   </motion.div>
                   <div className="flex flex-col sm:flex-row gap-2 pt-4 border-t {theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}">
-                    <StarRating rating={featuredTestimonials[0].rating} size={16} className="text-yellow-500" />
-                    <span className="text-green-500">{featuredTestimonials[0].verified_purchase ? 'Verified Purchase' : ''}</span>
+                    <StarRating rating={featuredTestimonials[0].rating} size={16} />
+                    <span className="text-yellow-500">{featuredTestimonials[0].verified_purchase ? 'Verified Purchase' : ''}</span>
                   </div>
                 </div>
               </section>
