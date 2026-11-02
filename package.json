@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://www.autosparkbd.com",
   "engines": {
-    "node": "20"
+    "node": "26.x"
   },
   "scripts": {
     "dev": "vite",
