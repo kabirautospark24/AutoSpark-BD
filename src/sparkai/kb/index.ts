@@ -1,10 +1,10 @@
-import type { ChatMessage } from '../types';
-import { buildSalesKbText } from './sales';
-import { buildServicesKbText } from './services';
+import type { ChatMessage } from '../types.js';
+import { buildSalesKbText } from './sales.js';
+import { buildServicesKbText } from './services.js';
 
-export { CAR_MODELS, entryPriceLakh, hasListedPrice, buildSalesKbText } from './sales';
-export type { KbCarModel, KbOffer } from './sales';
-export { CAR_SERVICES_KB, buildServicesKbText } from './services';
+export { CAR_MODELS, entryPriceLakh, hasListedPrice, buildSalesKbText } from './sales.js';
+export type { KbCarModel, KbOffer } from './sales.js';
+export { CAR_SERVICES_KB, buildServicesKbText } from './services.js';
 
 export type KbTopic = 'sales' | 'services' | 'both' | 'none';
 

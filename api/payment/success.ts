@@ -19,11 +19,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
     // Server-to-server verification, tran_id binding and amount cross-check —
     // never trust the callback alone.
     const result = await verifyBoundPayment({ valId: val_id, tranId: tran_id, callbackAmount: amount });
+    const paymentReason = result.ok ? undefined : result.reason;
     if (!result.ok) {
-      console.error('[payment/success]', result.reason, 'for', String(tran_id).slice(0, 40));
+      console.error('[payment/success]', paymentReason, 'for', String(tran_id).slice(0, 40));
       setCors(response, origin);
       const message =
-        result.reason === 'mismatch' ? 'Transaction mismatch' : result.reason === 'amount' ? 'Amount mismatch' : 'Payment verification failed';
+        paymentReason === 'mismatch' ? 'Transaction mismatch' : paymentReason === 'amount' ? 'Amount mismatch' : 'Payment verification failed';
       return response.status(402).json({ error: message, tran_id });
     }
     console.log('[payment/success] verified', { tran_id: String(tran_id).slice(0, 40) });

@@ -159,7 +159,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const result = validateChatRequest(req.headers.origin as string | undefined, req.body);
   setCors(res, result.origin);
-  if (!result.ok) return res.status(result.status).json({ error: result.error });
+  if (!result.ok) {
+    const { status, error } = result;
+    return res.status(status).json({ error });
+  }
   const { messages, prefs, kbBlocks } = result.payload;
 
   // Cancel the upstream Groq spend when the client disconnects (Stop button / tab close).

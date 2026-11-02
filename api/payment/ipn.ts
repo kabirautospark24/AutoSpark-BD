@@ -25,16 +25,18 @@ export default async function handler(request: VercelRequest, response: VercelRe
     });
     const tran = String(tran_id).slice(0, 40);
 
+    const paymentReason = result.ok ? undefined : result.reason;
+
     if (result.ok) {
       await updateOrderStatus(tran, 'paid', {
         val_id: String(val_id),
         gateway_status: String(result.check.raw?.status ?? status ?? 'VALID'),
       });
-    } else if (result.reason !== 'amount') {
+    } else if (paymentReason !== 'amount') {
       await updateOrderStatus(tran, 'failed', { val_id: String(val_id), gateway_status: String(status ?? 'FAILED') });
     }
 
-    console.log('[payment/ipn]', { tran, verified: result.ok, reason: result.ok ? undefined : result.reason });
+    console.log('[payment/ipn]', { tran, verified: result.ok, reason: paymentReason });
     setCors(response, origin);
     return response.status(200).json({ received: true, verified: result.ok, tran_id });
   } catch {
