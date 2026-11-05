@@ -145,9 +145,9 @@ npm test            # If tests are added
 
 ## Deployment
 
-- The project builds to a static bundle via Vite (`npm run build`) and can be deployed to any static host (Netlify, Vercel, GitHub Pages) with Supabase providing the backend. Ensure environment variables are set in the deployment platform.
-- **Vercel (recommended):** automatic CI/CD via GitHub Actions (`.github/workflows/deploy.yml`) — pushes to `main` deploy to production, pull requests get preview deploys. The serverless functions in `api/` provide the Groq-powered SparkAI assistant, lead capture, and SSLCommerz payments.
-- Full setup, environment variables, database migrations, and troubleshooting: **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+- **Vercel (production):** the Vite bundle and the serverless functions in `api/` deploy to the `autospark-bd` Vercel project. Automatic CI/CD runs via GitHub Actions (`.github/workflows/deploy.yml`) — pushes to `main` deploy to production, pull requests get preview deploys.
+- **Domains:** `https://www.autosparkbd.com` is canonical. The apex `https://autosparkbd.com` is attached to the same Vercel project and redirects to www. DNS records, registrar recovery, and monitoring are documented in **[docs/DNS-RUNBOOK.md](./docs/DNS-RUNBOOK.md)**.
+- Ensure all `VITE_*` and server-only variables are set in the Vercel project environment (see `.env.example`).
 - API routes are typechecked separately: `npm run typecheck:all`
 
 ---

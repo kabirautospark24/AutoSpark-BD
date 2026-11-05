@@ -78,7 +78,13 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative w-full h-full overflow-hidden bg-black">
       {/* Subtle Ken Burns drift: very slow zoom + pan for a living feel */}
-      <div className="absolute inset-[-2%] animate-hero-drift will-change-transform" style={{ animationPlayState: prefersReducedMotion ? 'paused' : 'running' }}>
+      <div
+        className="absolute inset-[-2%] animate-hero-drift bg-cover bg-center will-change-transform"
+        style={{
+          animationPlayState: prefersReducedMotion ? 'paused' : 'running',
+          backgroundImage: `url(${import.meta.env.BASE_URL}hero/hero-poster.webp)`,
+        }}
+      >
         <video
           ref={videoRef}
           autoPlay
@@ -87,7 +93,7 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
           playsInline
           preload="metadata"
           aria-hidden="true"
-          poster="/hero/hero-poster.webp"
+          poster={`${import.meta.env.BASE_URL}hero/hero-poster.webp`}
           disablePictureInPicture
           disableRemotePlayback
           controls={showControls}
@@ -97,8 +103,8 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: videoReady ? 1 : 0, transition: 'opacity 0.3s ease-in' }}
         >
-          <source src="/hero/Toyota_vehicles_promotional_vide…_1080p_20260915160332.webm" type="video/webm" />
-          <source src="/hero/Toyota_vehicles_promotional_vide…_1080p_20260915160332.mp4" type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}hero/toyota-promo-1080p.webm`} type="video/webm" />
+          <source src={`${import.meta.env.BASE_URL}hero/toyota-promo-1080p.mp4`} type="video/mp4" />
         </video>
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/60" aria-hidden="true" />
@@ -216,8 +222,13 @@ export const HomePage = () => {
 
   const fetchFeaturedVehicles = useCallback(async () => {
     try {
-      const { supabase } = await import('../lib/supabase');
-      if (!supabase) throw new Error('Supabase not configured');
+      const { supabase, isSupabaseConfigured } = await import('../lib/supabase');
+      // No backend configured: keep the curated carSlides fallback without
+      // throwing, so the browser console stays clean.
+      if (!isSupabaseConfigured() || !supabase) {
+        setFeaturedVehicles([]);
+        return;
+      }
       const { data, error } = await supabase
         .from('vehicles')
         .select('*, images:vehicle_images(*)')
@@ -225,24 +236,26 @@ export const HomePage = () => {
         .eq('is_available', true)
         .limit(6);
       if (error) {
-        console.warn('fetchFeaturedVehicles supabase error:', error);
+        if (import.meta.env.DEV) console.warn('fetchFeaturedVehicles supabase error:', error);
         setFeaturedVehicles([]);
         return;
       }
       if (data) setFeaturedVehicles(data);
     } catch (err) {
-      // Network or import errors: fail gracefully
-       
-      console.warn('fetchFeaturedVehicles failed:', err);
+      // Network or import errors: fail gracefully and use the local fallback.
+      if (import.meta.env.DEV) console.warn('fetchFeaturedVehicles failed:', err);
       setFeaturedVehicles([]);
     }
-   
   }, []);
 
   const fetchTestimonials = useCallback(async () => {
     try {
-      const { supabase } = await import('../lib/supabase');
-      if (!supabase) throw new Error('Supabase not configured');
+      const { supabase, isSupabaseConfigured } = await import('../lib/supabase');
+      // No backend configured: render without testimonials, no console error.
+      if (!isSupabaseConfigured() || !supabase) {
+        setTestimonials([]);
+        return;
+      }
       const { data, error } = await supabase
         .from('testimonials')
         .select('*')
@@ -250,17 +263,15 @@ export const HomePage = () => {
         .eq('is_featured', true)
         .limit(3);
       if (error) {
-        console.warn('fetchTestimonials supabase error:', error);
+        if (import.meta.env.DEV) console.warn('fetchTestimonials supabase error:', error);
         setTestimonials([]);
         return;
       }
       if (data) setTestimonials(data);
     } catch (err) {
-       
-      console.warn('fetchTestimonials failed:', err);
+      if (import.meta.env.DEV) console.warn('fetchTestimonials failed:', err);
       setTestimonials([]);
     }
-   
   }, []);
 
   const handleAddToComparison = (vehicle: Vehicle) => {

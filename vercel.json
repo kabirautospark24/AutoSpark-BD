@@ -10,6 +10,12 @@
     { "source": "/product/:id", "destination": "/spa-shell" }
   ],
   "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "autosparkbd.com" }],
+      "destination": "https://www.autosparkbd.com/$1",
+      "permanent": true
+    },
     { "source": "/shop", "destination": "/accessories", "permanent": true },
     { "source": "/sparkai", "destination": "/sparkpilot", "permanent": true },
     { "source": "/payment/success", "destination": "/payment-success", "permanent": true },

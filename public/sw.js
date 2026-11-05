@@ -2,7 +2,7 @@
 // Bump CACHE_VERSION when deploying breaking changes to cached assets.
 // Old caches are cleaned up on activate. v3: prerendered per-route HTML, new
 // favicon set and share images.
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = `autospark-${CACHE_VERSION}`;
 
 // Assets to precache on install (only lightweight critical assets)
@@ -14,11 +14,12 @@ const PRECACHE_URLS = [
   '/apple-touch-icon.png',
   '/og/og-default.png',
   '/logo/logoAS3.svg',
+  '/site.webmanifest',
 ];
 
 // Cache-first patterns (static assets that rarely change)
 const CACHE_FIRST_PATTERNS = [
-  /\.(?:js|css|woff2?|ttf|eot|svg|png|jpe?g|gif|webp|ico|glb|wasm)$/i,
+  /\.(?:js|css|woff2?|ttf|eot|svg|png|jpe?g|gif|webp|ico|glb|wasm|webmanifest)$/i,
   /fonts\.googleapis\.com/,
   /fonts\.gstatic\.com/,
   /images\.pexels\.com/,

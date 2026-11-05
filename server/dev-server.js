@@ -24,219 +24,187 @@ const PORT = 8787;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-// Mock database for storing payment records
+// Mock database for local payment records
 const paymentRecords = new Map();
 
-// Helper function to initialize SSLCommerz payment
+const FRONTEND_URL = (process.env.FRONTEND_URL || process.env.SITE_URL || 'http://localhost:5173').replace(/\/+$/, '');
+const LOCAL_API_URL = (process.env.LOCAL_API_URL || 'http://localhost:8787').replace(/\/+$/, '');
+const IS_LIVE = String(process.env.SSLCZ_IS_LIVE || 'false').toLowerCase() === 'true';
+
+function parseBody(req) {
+  if (!req.body) return {};
+  if (typeof req.body === 'string') return Object.fromEntries(new URLSearchParams(req.body));
+  return req.body;
+}
+
+function cartTotal(body) {
+  let items = body.cart;
+  if (!Array.isArray(items) && typeof body.cart_items === 'string') {
+    try {
+      items = JSON.parse(body.cart_items);
+    } catch {
+      items = [];
+    }
+  }
+  if (!Array.isArray(items) || items.length === 0) return null;
+  let sum = 0;
+  for (const item of items) {
+    const price = Number(item?.price);
+    const qty = Number(item?.quantity ?? item?.qty ?? 1);
+    if (!Number.isFinite(price) || price < 0 || !Number.isInteger(qty) || qty < 1) return null;
+    sum += price * qty;
+  }
+  return Math.round(sum);
+}
+
+function newTranId() {
+  return `autospark-dev-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
 async function initializeSSLCommerz(paymentData) {
-  const SSLCOMMERZ_API_URL = 'https://sandbox.sslcommerz.com/gwprocess/v4/api.php';
-  const STORE_ID = process.env.SSLCOMMERZ_STORE_ID;
-  const STORE_PASSWORD = process.env.SSLCOMMERZ_STORE_PASSWORD;
+  const STORE_ID = process.env.SSLCOMMERZ_STORE_ID || process.env.STORE_ID;
+  const STORE_PASSWORD = process.env.SSLCOMMERZ_STORE_PASSWORD || process.env.STORE_PASS;
   if (!STORE_ID || !STORE_PASSWORD) throw new Error('Missing SSLCommerz credentials');
-  
-  // Auto-detect the frontend port (default to 5173, but fallback to 5174 if 5173 is in use)
-  const FRONTEND_PORT = process.env.FRONTEND_PORT || '5174';
-  const FRONTEND_URL = `http://localhost:${FRONTEND_PORT}`;
+  const base = IS_LIVE ? 'https://securepay.sslcommerz.com' : 'https://sandbox.sslcommerz.com';
 
   const params = new URLSearchParams();
   params.append('store_id', STORE_ID);
   params.append('store_passwd', STORE_PASSWORD);
-  params.append('total_amount', paymentData.total_amount);
+  params.append('total_amount', String(paymentData.total_amount));
   params.append('currency', 'BDT');
-  params.append('tran_id', paymentData.session_id);
+  params.append('tran_id', paymentData.tran_id);
+  params.append('success_url', `${LOCAL_API_URL}/api/payment/success`);
+  params.append('fail_url', `${LOCAL_API_URL}/api/payment/fail`);
+  params.append('cancel_url', `${LOCAL_API_URL}/api/payment/cancel`);
+  params.append('ipn_url', `${LOCAL_API_URL}/api/payment/ipn`);
+  params.append('product_name', 'AutoSpark Order');
+  params.append('product_category', 'Automotive');
+  params.append('product_profile', 'general');
   params.append('cus_name', paymentData.customer_name);
-  params.append('cus_phone', paymentData.mobile);
-  params.append('cus_email', paymentData.email || 'noemail@example.com');
-  params.append('cus_addr1', paymentData.address);
+  params.append('cus_email', paymentData.email || 'customer@autosparkbd.com');
+  params.append('cus_add1', paymentData.address);
   params.append('cus_city', paymentData.thana);
   params.append('cus_state', paymentData.district);
-  params.append('cus_postcode', '1000');
+  params.append('cus_postcode', '1200');
   params.append('cus_country', 'Bangladesh');
-  params.append('shipping_method', 'NO');
-  params.append('product_name', 'Auto Parts');
-  params.append('product_category', 'Auto');
-  params.append('product_profile', 'general');
-  params.append('value_a', paymentData.payment_record_id);
+  params.append('cus_phone', paymentData.mobile);
+  params.append('shipping_method', 'Courier');
+  params.append('ship_name', paymentData.customer_name);
+  params.append('ship_add1', paymentData.address);
+  params.append('ship_city', paymentData.thana);
+  params.append('ship_state', paymentData.district);
+  params.append('ship_postcode', '1200');
+  params.append('ship_country', 'Bangladesh');
 
-  // Callback URLs - use dynamic frontend URL
-  params.append('success_url', `${FRONTEND_URL}/payment/success`);
-  params.append('fail_url', `${FRONTEND_URL}/payment/fail`);
-  params.append('cancel_url', `${FRONTEND_URL}/payment/cancel`);
-
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
   try {
-    console.log('🔗 Calling SSLCommerz API...');
-    const response = await fetch(SSLCOMMERZ_API_URL, {
+    const response = await fetch(`${base}/gwprocess/v4/api.php`, {
       method: 'POST',
       body: params,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      signal: controller.signal,
     });
-
     const text = await response.text();
-    console.log('📨 SSLCommerz Raw Response (first 500 chars):', text.substring(0, 500));
-    console.log('📨 Full Response:', text);
-
-    // Check if response contains error
-    if (text.includes('FAILED') || text.includes('INVALID')) {
-      console.error('❌ SSLCommerz returned error:', text);
-      return {
-        status: 'FAIL',
-        error: `SSLCommerz Error: ${text}`,
-      };
+    if (!response.ok) throw new Error(`Gateway HTTP ${response.status}`);
+    let data = {};
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch {
+      data = {};
     }
-
-    // Parse redirect URL from response - try multiple patterns
-    let redirectMatch = text.match(/GatewayPageURL=(.+?)(?:\n|&|$)/);
-    if (!redirectMatch) {
-      redirectMatch = text.match(/GatewayPageURL=([^\s&]+)/);
-    }
-    if (!redirectMatch) {
-      redirectMatch = text.split('GatewayPageURL=')[1];
-    }
-
-    if (redirectMatch) {
-      const gatewayUrl = redirectMatch[1] || redirectMatch;
-      console.log('✅ Gateway URL found:', gatewayUrl.trim());
-      return {
-        status: 'SUCCESS',
-        GatewayPageURL: gatewayUrl.toString().trim(),
-      };
-    }
-
-    console.error('❌ Could not parse SSLCommerz response. Expected GatewayPageURL in response.');
-    return {
-      status: 'FAIL',
-      error: 'Could not parse SSLCommerz response. No GatewayPageURL found.',
-      response: text,
-    };
-  } catch (error) {
-    console.error('❌ SSLCommerz API Error:', error.message);
-    return {
-      status: 'FAIL',
-      error: error.message,
-    };
+    const gatewayUrl = data.GatewayPageURL || data.redirectGatewayURL;
+    if (!gatewayUrl) throw new Error(data.failedreason || 'Gateway did not return a payment URL');
+    return { GatewayPageURL: gatewayUrl, redirectUrl: gatewayUrl, status: data.status || 'SUCCESS' };
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
-// Payment initialization endpoint
 app.post('/api/payment/init', async (req, res) => {
   try {
-    const {
-      cart,
-      total_amount,
-      customer_name,
-      mobile,
-      address,
-      thana,
-      district,
-      payment_record_id,
-    } = req.body;
-
-    // Validate required fields
-    if (!customer_name || !mobile || !address || !thana || !district || !total_amount) {
-      return res.status(400).json({
-        error: 'Missing required fields',
-      });
+    const body = parseBody(req);
+    const { customer_name, mobile, address, thana, district } = body;
+    if (!customer_name || !mobile || !address || !thana || !district) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    if (!/^01[3-9]\d{8}$/.test(String(mobile))) {
+      return res.status(400).json({ error: 'Invalid BD mobile (01XXXXXXXXX)' });
+    }
+    const amount = cartTotal(body);
+    if (!amount || amount < 10 || amount > 5000000) {
+      return res.status(400).json({ error: 'Invalid cart amount' });
     }
 
-    console.log('📝 Payment Init Request:', {
-      customer_name,
-      mobile,
-      total_amount,
-      payment_record_id,
-    });
-
-    // Store payment record locally
-    paymentRecords.set(payment_record_id, {
-      ...req.body,
+    const tran_id = newTranId();
+    paymentRecords.set(tran_id, {
+      ...body,
+      tran_id,
+      amount,
       status: 'pending',
       createdAt: new Date().toISOString(),
     });
 
-    // Initialize SSLCommerz payment
-    const sslczResponse = await initializeSSLCommerz({
-      session_id: payment_record_id,
-      customer_name,
-      mobile,
-      email: req.body.email || '',
-      address,
-      thana,
-      district,
-      total_amount,
-      payment_record_id,
-    });
-
-    console.log('✅ SSLCommerz Response:', sslczResponse);
-
-    res.json(sslczResponse);
+    const gateway = await initializeSSLCommerz({ ...body, tran_id, total_amount: amount });
+    return res.json({ ...gateway, tran_id, amount });
   } catch (error) {
-    console.error('❌ Payment init error:', error.message);
-    res.status(500).json({
-      status: 'FAIL',
-      error: error.message,
-    });
+    console.error('[dev-server] payment init error:', error.message);
+    return res.status(500).json({ error: 'Payment initialization failed' });
   }
 });
 
-// Payment success endpoint
-app.post('/api/payment/success', async (req, res) => {
-  try {
-    const { value_a: paymentRecordId, tran_id: transactionId, bank_tran_id } = req.body;
-
-    console.log('✅ Payment Success:', { paymentRecordId, transactionId });
-
-    if (paymentRecords.has(paymentRecordId)) {
-      const record = paymentRecords.get(paymentRecordId);
-      record.status = 'success';
-      record.transaction_id = transactionId;
-      record.updatedAt = new Date().toISOString();
-    }
-
-    res.json({ status: 'success' });
-  } catch (error) {
-    console.error('❌ Payment success error:', error.message);
-    res.status(500).json({ error: error.message });
+function finishPayment(req, status) {
+  const body = parseBody(req);
+  const tranId = String(body.tran_id || req.query.tran_id || '');
+  const record = paymentRecords.get(tranId);
+  if (record) {
+    record.status = status;
+    record.updatedAt = new Date().toISOString();
   }
+  return { tranId, record };
+}
+
+function wantsJson(req) {
+  return String(req.headers.accept || '').includes('application/json') || req.query.format === 'json';
+}
+
+app.all('/api/payment/success', (req, res) => {
+  const { tranId } = finishPayment(req, 'paid');
+  if (wantsJson(req)) return res.json({ success: true, status: 'paid', tran_id: tranId });
+  const query = new URLSearchParams({ tran_id: tranId, verified: '1' });
+  return res.redirect(303, `${FRONTEND_URL}/payment-success?${query.toString()}`);
 });
 
-// Payment fail endpoint
-app.post('/api/payment/fail', async (req, res) => {
-  try {
-    const { value_a: paymentRecordId, tran_id: transactionId } = req.body;
-
-    console.log('❌ Payment Failed:', { paymentRecordId, transactionId });
-
-    if (paymentRecords.has(paymentRecordId)) {
-      const record = paymentRecords.get(paymentRecordId);
-      record.status = 'failed';
-      record.transaction_id = transactionId;
-      record.updatedAt = new Date().toISOString();
-    }
-
-    res.json({ status: 'failed' });
-  } catch (error) {
-    console.error('❌ Payment fail error:', error.message);
-    res.status(500).json({ error: error.message });
-  }
+app.all('/api/payment/fail', (req, res) => {
+  const { tranId } = finishPayment(req, 'failed');
+  if (wantsJson(req)) return res.json({ success: false, status: 'failed', tran_id: tranId });
+  const query = new URLSearchParams({ tran_id: tranId, reason: 'payment_failed' });
+  return res.redirect(303, `${FRONTEND_URL}/payment-fail?${query.toString()}`);
 });
 
-// Payment cancel endpoint
-app.post('/api/payment/cancel', async (req, res) => {
-  try {
-    const { value_a: paymentRecordId } = req.body;
+app.all('/api/payment/cancel', (req, res) => {
+  const { tranId } = finishPayment(req, 'cancelled');
+  if (wantsJson(req)) return res.json({ success: false, status: 'cancelled', tran_id: tranId });
+  const query = tranId ? `?tran_id=${encodeURIComponent(tranId)}` : '';
+  return res.redirect(303, `${FRONTEND_URL}/payment-cancel${query}`);
+});
 
-    console.log('⏸️ Payment Cancelled:', { paymentRecordId });
+app.get('/api/payment/status/:tranId', (req, res) => {
+  const record = paymentRecords.get(String(req.params.tranId || ''));
+  if (!record) return res.status(404).json({ error: 'Transaction not found' });
+  return res.json({ tran_id: record.tran_id, status: record.status, amount: record.amount });
+});
 
-    if (paymentRecords.has(paymentRecordId)) {
-      const record = paymentRecords.get(paymentRecordId);
-      record.status = 'cancelled';
-      record.updatedAt = new Date().toISOString();
-    }
-
-    res.json({ status: 'cancelled' });
-  } catch (error) {
-    console.error('❌ Payment cancel error:', error.message);
-    res.status(500).json({ error: error.message });
+app.post('/api/payment/ipn', (req, res) => {
+  const body = parseBody(req);
+  const record = paymentRecords.get(String(body.tran_id || ''));
+  if (record) {
+    record.status = String(body.status || '').toUpperCase() === 'FAILED' ? 'failed' : 'paid';
+    record.updatedAt = new Date().toISOString();
   }
+  return res.json({ received: true });
 });
 
 // Health check endpoint

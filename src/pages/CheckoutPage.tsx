@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { bdDistricts, bdThanas } from '../data/bd-locations';
 import { useCart } from '../contexts/CartContext';
-import { handlePayment } from '../services/handlePayment';
+import { appwritePaymentApi } from '../services/appwritePaymentApi';
 
 const phoneRegex = new RegExp(/^01[3-9]\d{8}$/);
 
@@ -76,15 +76,18 @@ const CheckoutPage = () => {
 				quantity: item.quantity,
 			}));
 
-			await handlePayment({
-				name: data.customer_name,
-				phone: data.mobile,
+			const { redirectUrl } = await appwritePaymentApi.initiatePayment({
+				customer_name: data.customer_name,
+				mobile: data.mobile,
 				address: data.address,
 				thana: data.thana,
 				district: data.district,
-				total: cartTotal,
-				items: normalizedCart,
+				total_amount: cartTotal,
+				cart_items: JSON.stringify(normalizedCart),
+				cart: normalizedCart,
 			});
+
+			window.location.href = redirectUrl;
 		} catch (caughtError) {
 			setIsSubmitting(false);
 			let errorMessage = caughtError instanceof Error ? caughtError.message : 'Payment initialization failed';

@@ -5,8 +5,13 @@ const resolveApiBaseUrl = (): string => {
   const legacy = (import.meta.env.VITE_PAYMENT_API_URL || '').trim();
   if (legacy) return legacy.replace(/\/$/, '');
 
+  // Local dev: hit Vite's same-origin /api proxy (server/dev-server.js).
+  if (import.meta.env.DEV && typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+
   // Pure Vercel deployment (custom domain) — no Appwrite function proxy.
-  return 'https://autosparkbd.com';
+  return 'https://www.autosparkbd.com';
 };
 
 const API_BASE_URL = resolveApiBaseUrl();
@@ -227,43 +232,19 @@ export const appwritePaymentApi = {
       return data;
     }
 
-    const statusEndpoints = [
-      `${API_BASE_URL}/api/payment/status/${encodeURIComponent(tranId)}`,
-      `${API_BASE_URL}/api/payment?tran_id=${encodeURIComponent(tranId)}`,
-    ];
+    const endpoint = `${API_BASE_URL}/api/payment/status/${encodeURIComponent(tranId)}`;
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
 
-    let response: Response | null = null;
-    let data: PaymentStatusResponse | null = null;
-
-    for (const endpoint of statusEndpoints) {
-      const currentResponse = await fetch(endpoint, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      let currentData: PaymentStatusResponse;
-      try {
-        currentData = await currentResponse.json();
-      } catch {
-        currentData = {
-          error: `Invalid status response from payment server (${endpoint})`,
-        };
-      }
-
-      // 404 likely means wrong route shape; try fallback.
-      if (currentResponse.status === 404) {
-        continue;
-      }
-
-      response = currentResponse;
-      data = currentData;
-      break;
-    }
-
-    if (!response || !data) {
-      throw new Error('Payment status API route not found. Check Appwrite Function public domain mapping.');
+    let data: PaymentStatusResponse;
+    try {
+      data = await response.json();
+    } catch {
+      data = { error: `Invalid status response from payment server (${response.status})` };
     }
 
     if (!response.ok) {

@@ -1,7 +1,77 @@
 /** Shared payment helpers: CORS (re-exported from ../_cors), validation, sanitized logging. */
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getOrder } from '../_db.js';
 
 export { ALLOWED_ORIGINS, corsOrigin, setCors, handleCorsPreflight } from '../_cors.js';
+
+/** Vercel may deliver form-encoded bodies as an object, string, or Buffer. */
+export function readBody(request: VercelRequest): Record<string, unknown> {
+  const body = request.body as unknown;
+  if (!body) return {};
+  if (Buffer.isBuffer(body)) {
+    return Object.fromEntries(new URLSearchParams(body.toString('utf8')));
+  }
+  if (typeof body === 'string') {
+    const trimmed = body.trim();
+    if (trimmed.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (parsed && typeof parsed === 'object') return parsed as Record<string, unknown>;
+      } catch {
+        /* fall through to URL-encoded parsing */
+      }
+    }
+    return Object.fromEntries(new URLSearchParams(body));
+  }
+  if (typeof body === 'object') return body as Record<string, unknown>;
+  return {};
+}
+
+/** Query string values merged with the parsed body (body wins). */
+export function requestParams(request: VercelRequest): Record<string, unknown> {
+  const query: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(request.query ?? {})) {
+    query[key] = Array.isArray(value) ? value[0] : value;
+  }
+  return { ...query, ...readBody(request) };
+}
+
+export function stringParam(params: Record<string, unknown>, key: string): string {
+  const value = params[key];
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+/** True when the caller explicitly asked for JSON (API/monitoring) instead of a browser redirect. */
+export function wantsJson(request: VercelRequest): boolean {
+  const format = request.query?.format;
+  const requestedFormat = Array.isArray(format) ? format[0] : format;
+  if (requestedFormat === 'json') return true;
+  return String(request.headers.accept ?? '').toLowerCase().includes('application/json');
+}
+
+/** 303 redirect that converts the gateway's POST into a GET on the SPA result page. */
+export function redirectTo(response: VercelResponse, location: string): void {
+  response.statusCode = 303;
+  response.setHeader('Location', location);
+  response.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  response.end();
+}
+
+/** Public site origin used for gateway callbacks and post-payment redirects. */
+export function getSiteUrl(request: VercelRequest): string {
+  const configured = (process.env.SITE_URL || '').trim().replace(/\/+$/, '');
+  if (configured) return configured;
+  const proto = String(request.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  const host = String(request.headers['x-forwarded-host'] || request.headers.host || 'www.autosparkbd.com')
+    .split(',')[0]
+    .trim();
+  return `${proto}://${host}`;
+}
+
+export function gatewayBaseUrl(): string {
+  const isLive = (process.env.SSLCZ_IS_LIVE || 'true').toLowerCase() !== 'false';
+  return isLive ? 'https://securepay.sslcommerz.com' : 'https://sandbox.sslcommerz.com';
+}
 
 const BD_PHONE = /^01[3-9]\d{8}$/;
 

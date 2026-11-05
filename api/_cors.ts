@@ -14,7 +14,7 @@ const VERCEL_APP_ORIGIN_RE = /^https:\/\/autospark-bd(-[a-z0-9-]+)?\.vercel\.app
 /** Reflect only allowlisted origins; everything else gets the canonical origin. */
 export function corsOrigin(reqOrigin: string | undefined): string {
   if (reqOrigin && (ALLOWED_ORIGINS.has(reqOrigin) || VERCEL_APP_ORIGIN_RE.test(reqOrigin))) return reqOrigin;
-  return 'https://autosparkbd.com';
+  return 'https://www.autosparkbd.com';
 }
 
 export function setCors(res: VercelResponse, origin: string) {

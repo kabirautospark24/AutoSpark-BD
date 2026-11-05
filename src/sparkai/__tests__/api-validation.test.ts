@@ -16,7 +16,7 @@ describe('validateChatRequest (server proxy hardening)', () => {
     if (ok.ok) expect(ok.origin).toBe('https://www.autosparkbd.com');
     const evil = validateChatRequest('https://evil.example.com', { messages: [{ role: 'user', content: 'hi' }] });
     expect(evil.ok).toBe(true);
-    if (evil.ok) expect(evil.origin).toBe('https://autosparkbd.com');
+    if (evil.ok) expect(evil.origin).toBe('https://www.autosparkbd.com');
   });
 
   it('ignores invalid kbTopic and any client-supplied kb text (no injection)', () => {

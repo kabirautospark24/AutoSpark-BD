@@ -33,7 +33,7 @@ describe('validateInitPayload', () => {
 describe('corsOrigin', () => {
   it('allows known origins, falls back otherwise', () => {
     expect(corsOrigin('https://autosparkbd.com')).toBe('https://autosparkbd.com');
-    expect(corsOrigin('https://evil.com')).toBe('https://autosparkbd.com');
+    expect(corsOrigin('https://evil.com')).toBe('https://www.autosparkbd.com');
   });
 });
 

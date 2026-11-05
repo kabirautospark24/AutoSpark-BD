@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
     // Get environment variables
     const SSLCOMMERZ_STORE_ID = Deno.env.get('SSLCOMMERZ_STORE_ID');
     const SSLCOMMERZ_STORE_PASSWORD = Deno.env.get('SSLCOMMERZ_STORE_PASSWORD');
-    const SITE_URL = Deno.env.get('SITE_URL') || 'https://autosparkbd.com';
+    const SITE_URL = Deno.env.get('SITE_URL') || 'https://www.autosparkbd.com';
 
     console.log('Received payment request:', {
       total_amount,

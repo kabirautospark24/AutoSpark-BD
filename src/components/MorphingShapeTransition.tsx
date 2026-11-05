@@ -138,6 +138,9 @@ export const MorphingShapeTransition = ({
 
         {/* Animated border outline */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none">
+          {/* Animate the transform, never the SVG geometry attributes: framer-motion
+              writes undefined into r/d while interpolating them, which floods the
+              console with "Expected length" / "Expected moveto" errors. */}
           <motion.circle
             cx="50%"
             cy="50%"
@@ -146,12 +149,15 @@ export const MorphingShapeTransition = ({
             stroke="currentColor"
             strokeWidth="2"
             className="text-blue-500/30"
+            style={{ transformOrigin: 'center' }}
             animate={{
-              r: ['45%', '52%', '45%'],
+              scale: [1, 1.05, 1],
+              opacity: [0.5, 1, 0.5],
             }}
             transition={{
               duration: 3,
               repeat: Infinity,
+              ease: 'easeInOut',
             }}
           />
         </svg>
@@ -199,14 +205,12 @@ export const MorphingShapeTransition = ({
               stroke="currentColor"
               strokeWidth="2"
               className={`text-blue-400/50 dark:text-blue-500/50`}
+              style={{ transformOrigin: 'center' }}
               animate={{
-                d: [
-                  'M100,20 C140,10 180,30 190,80 C200,130 165,180 100,185 C50,190 20,155 15,100 C10,50 60,15 100,20 Z',
-                  'M100,15 C145,5 185,25 195,85 C205,140 170,190 100,190 C45,190 15,150 10,95 C5,40 55,10 100,15 Z',
-                  'M100,20 C140,10 180,30 190,80 C200,130 165,180 100,185 C50,190 20,155 15,100 C10,50 60,15 100,20 Z',
-                ],
+                scale: [1, 1.03, 0.99, 1],
+                opacity: [0.5, 1, 0.6, 0.5],
               }}
-              transition={{ duration: 8, repeat: Infinity }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
           </svg>
         )}

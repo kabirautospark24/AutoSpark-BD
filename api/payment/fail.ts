@@ -1,40 +1,49 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { corsOrigin, handleCorsPreflight } from './_helpers.js';
+import {
+  corsOrigin,
+  setCors,
+  handleCorsPreflight,
+  requestParams,
+  stringParam,
+  wantsJson,
+  redirectTo,
+  getSiteUrl,
+} from './_helpers.js';
 import { updateOrderStatus } from '../_db.js';
 
-export default async function handler(
-  request: VercelRequest,
-  response: VercelResponse
-) {
+export default async function handler(request: VercelRequest, response: VercelResponse) {
   const origin = corsOrigin(request.headers.origin as string | undefined);
   if (handleCorsPreflight(request, response, origin, 'GET, POST, OPTIONS')) return;
 
+  const siteUrl = getSiteUrl(request);
+  const params = requestParams(request);
+  const tranId = stringParam(params, 'tran_id');
+  const reason =
+    stringParam(params, 'failedreason') || stringParam(params, 'error') || stringParam(params, 'reason') || 'payment_failed';
+
+  console.log('Payment Failed:', tranId.slice(0, 40));
+
   try {
-    const { tran_id } = request.method === 'GET' ? request.query : request.body;
-
-    console.log('Payment Failed:', String(tran_id ?? '').slice(0, 40));
-
-    if (typeof tran_id === 'string' && tran_id) {
-      await updateOrderStatus(tran_id, 'failed');
+    if (tranId) {
+      await updateOrderStatus(tranId, 'failed');
     }
-
-    // Return JSON response
-    return response
-      .status(200)
-      .setHeader('Access-Control-Allow-Origin', origin)
-      .json({
-        success: false,
-        message: 'Payment failed',
-        tran_id: typeof tran_id === 'string' ? tran_id.slice(0, 80) : tran_id,
-        timestamp: new Date().toISOString(),
-      });
-  } catch {
-    console.error('Payment fail handler error');
-    return response
-      .status(500)
-      .setHeader('Access-Control-Allow-Origin', origin)
-      .json({
-        error: 'Server error',
-      });
+  } catch (e) {
+    console.error('Payment fail status update error', e);
   }
+
+  if (wantsJson(request)) {
+    setCors(response, origin);
+    return response.status(200).json({
+      success: false,
+      message: 'Payment failed',
+      tran_id: tranId || null,
+      reason,
+      timestamp: new Date().toISOString(),
+    });
+  }
+
+  const query = new URLSearchParams();
+  if (tranId) query.set('tran_id', tranId);
+  query.set('reason', reason.slice(0, 120));
+  redirectTo(response, `${siteUrl}/payment-fail?${query.toString()}`);
 }

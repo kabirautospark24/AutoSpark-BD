@@ -1,41 +1,47 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { corsOrigin, handleCorsPreflight } from './_helpers.js';
+import {
+  corsOrigin,
+  setCors,
+  handleCorsPreflight,
+  requestParams,
+  stringParam,
+  wantsJson,
+  redirectTo,
+  getSiteUrl,
+} from './_helpers.js';
 import { updateOrderStatus } from '../_db.js';
 
-export default async function handler(
-  request: VercelRequest,
-  response: VercelResponse
-) {
+export default async function handler(request: VercelRequest, response: VercelResponse) {
   const origin = corsOrigin(request.headers.origin as string | undefined);
   if (handleCorsPreflight(request, response, origin, 'GET, POST, OPTIONS')) return;
 
+  const siteUrl = getSiteUrl(request);
+  const params = requestParams(request);
+  const tranId = stringParam(params, 'tran_id');
+  const gatewayStatus = stringParam(params, 'status');
+
+  console.log('Payment Cancelled:', tranId.slice(0, 40));
+
   try {
-    const { tran_id, status } = request.method === 'GET' ? request.query : request.body;
-
-    console.log('Payment Cancelled:', String(tran_id ?? '').slice(0, 40));
-
-    if (typeof tran_id === 'string' && tran_id) {
-      await updateOrderStatus(tran_id, 'cancelled');
+    if (tranId) {
+      await updateOrderStatus(tranId, 'cancelled');
     }
-
-    // Return JSON response
-    return response
-      .status(200)
-      .setHeader('Access-Control-Allow-Origin', origin)
-      .json({
-        success: false,
-        message: 'Payment cancelled by user',
-        tran_id: typeof tran_id === 'string' ? tran_id.slice(0, 80) : tran_id,
-        status,
-        timestamp: new Date().toISOString(),
-      });
-  } catch {
-    console.error('Payment cancel handler error');
-    return response
-      .status(500)
-      .setHeader('Access-Control-Allow-Origin', origin)
-      .json({
-        error: 'Server error',
-      });
+  } catch (e) {
+    console.error('Payment cancel status update error', e);
   }
+
+  if (wantsJson(request)) {
+    setCors(response, origin);
+    return response.status(200).json({
+      success: false,
+      message: 'Payment cancelled by user',
+      tran_id: tranId || null,
+      status: gatewayStatus || 'cancelled',
+      timestamp: new Date().toISOString(),
+    });
+  }
+
+  const query = new URLSearchParams();
+  if (tranId) query.set('tran_id', tranId);
+  redirectTo(response, `${siteUrl}/payment-cancel${query.size ? `?${query.toString()}` : ''}`);
 }

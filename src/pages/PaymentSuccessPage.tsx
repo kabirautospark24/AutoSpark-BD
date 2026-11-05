@@ -23,10 +23,20 @@ export const PaymentSuccessPage = () => {
     const maxAttempts = 20;
 
     const tranId = searchParams.get('tran_id');
+    const serverVerified = searchParams.get('verified') === '1';
     setTransactionId(tranId);
 
     if (!tranId) {
       setError('Missing transaction ID. Please contact support with your payment details.');
+      return;
+    }
+
+    // The success handler already verified the payment server-to-server and
+    // redirected here. Trust that flag for the UI even if the DB is unreachable.
+    if (serverVerified) {
+      setPaymentStatus('PAID');
+      setIsValidated(true);
+      clearCart();
       return;
     }
 
@@ -122,7 +132,7 @@ export const PaymentSuccessPage = () => {
           </div>
           {!isValidated && (
             <p className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              Waiting for secure server confirmation from SSLCommerz via Appwrite Function...
+              Waiting for secure server confirmation from SSLCommerz...
             </p>
           )}
         </div>

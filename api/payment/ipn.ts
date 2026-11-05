@@ -1,5 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { corsOrigin, setCors, handleCorsPreflight, verifyBoundPayment } from './_helpers.js';
+import {
+  corsOrigin,
+  setCors,
+  handleCorsPreflight,
+  verifyBoundPayment,
+  readBody,
+} from './_helpers.js';
 import { updateOrderStatus } from '../_db.js';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
@@ -10,7 +16,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     return response.status(405).json({ error: 'Method not allowed' });
   }
   try {
-    const { tran_id, val_id, status, amount } = request.body ?? {};
+    const { tran_id, val_id, status, amount } = readBody(request);
     if (!tran_id || !val_id) {
       setCors(response, origin);
       return response.status(400).json({ error: 'Missing tran_id/val_id' });

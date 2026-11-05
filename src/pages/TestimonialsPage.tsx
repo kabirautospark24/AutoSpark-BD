@@ -1003,7 +1003,7 @@ export const TestimonialsPage = () => {
                     ? 'bg-gradient-to-t from-gray-900 via-transparent to-transparent'
                     : 'bg-gradient-to-t from-white via-transparent to-transparent'
                 }`} />
-                <div className="absolute top-0 left-0 right-0 h-96 sm:h-[600px] md:h-[700px] bg-[url('/testimonials-hero-bg.jpg')] bg-center bg-no-contain opacity-40 opacity-md:0 lg:opacity-100 transition-opacity" />
+                <div className="absolute top-0 left-0 right-0 h-96 sm:h-[600px] md:h-[700px] bg-[url('/hero/hero-poster.webp')] bg-center bg-contain opacity-40 md:opacity-0 lg:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 pointer-events-none">
                   <div className={`absolute inset-0 ${
                     theme === 'dark'

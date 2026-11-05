@@ -31,7 +31,7 @@ import {
   Droplet,
   type LucideIcon
 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { appwritePaymentApi } from '../services/appwritePaymentApi';
 import { useOptionalCart as useGlobalCart } from '../contexts/CartContext';
 import { calculateDiscount } from '../utils/calculateDiscount';
@@ -2012,12 +2012,18 @@ function AccessoriesPage() {
   useEffect(() => {
 
     const fetchProducts = async () => {
+      // No backend configured: go straight to the local catalogue, quietly.
+      if (!isSupabaseConfigured() || !supabase) {
+        setProducts(dedupeProducts(demoProductsWithP2));
+        setIsLoadingProducts(false);
+        return;
+      }
+      const client = supabase;
       try {
         // A-04 fix: unified table (try accessories then products), whitelist + limit/order + pagination safety
         let data: AccessoryProduct[] | null = null;
         const tryFetch = async (table: string) => {
-          if (!supabase) throw new Error('Supabase not configured');
-          const res = await supabase
+          const res = await client
             .from(table)
             .select('id,name_en,name_bn,description_en,description_bn,category,price,stock_quantity,sku,is_available,images,brand,rating,reviews,discount,compatibility,isNew,isBestseller')
             .eq('is_available', true)
@@ -2062,15 +2068,13 @@ function AccessoriesPage() {
           // Convert back to array and apply extra name-based dedupe safety
           const uniqueProducts = dedupeProducts(Array.from(uniqueMap.values()));
           setProducts(uniqueProducts);
-          console.log('✅ Loaded from database:', uniqueProducts.length, 'unique products');
         } else {
           // Database is empty, use demo products as fallback
           const fallbackProducts = dedupeProducts(demoProductsWithP2);
           setProducts(fallbackProducts);
-          console.log('⚠️ Database empty, using demo products:', fallbackProducts.length, 'products');
         }
       } catch (error) {
-        console.warn('Products could not be loaded, showing the local catalogue:', error);
+        if (import.meta.env.DEV) console.warn('Products could not be loaded, showing the local catalogue:', error);
         // Fallback to demo products on error
         setProducts(dedupeProducts(demoProductsWithP2));
       } finally {

@@ -1,5 +1,9 @@
 # DNS Runbook — autosparkbd.com
 
+> **OBSOLETE (GitHub Pages).** Production now runs on Vercel. Use
+> [`../DNS-RUNBOOK.md`](../DNS-RUNBOOK.md) instead. The GitHub Pages IPs below
+> are no longer valid for this project.
+
 Last updated: 2026-03-26 UTC
 
 This runbook describes the authoritative DNS configuration, expected records, verification commands, monitoring, and emergency rollback steps for autosparkbd.com. Keep this file in the repository and also in your secure operations wiki. Store registrar and DNS provider credentials in your organization's secrets manager (1Password/LastPass/Vault) and require 2FA.

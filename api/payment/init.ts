@@ -1,5 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { corsOrigin, setCors, handleCorsPreflight, validateInitPayload, newTranId } from './_helpers.js';
+import {
+  corsOrigin,
+  setCors,
+  handleCorsPreflight,
+  validateInitPayload,
+  newTranId,
+  readBody,
+  getSiteUrl,
+  gatewayBaseUrl,
+} from './_helpers.js';
 import { upsertOrder } from '../_db.js';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
@@ -13,9 +22,10 @@ export default async function handler(request: VercelRequest, response: VercelRe
   let step = 'start';
   try {
     step = 'parse-body';
-    const { cart, customer_name, mobile, email, address, thana, district } = request.body ?? {};
+    const body = readBody(request);
+    const { cart, customer_name, mobile, email, address, thana, district } = body;
     step = 'validate';
-    const check = validateInitPayload(request.body ?? {});
+    const check = validateInitPayload(body);
     if (!check.ok) {
       setCors(response, origin);
       return response.status(400).json({ error: check.error });
@@ -24,7 +34,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     const STORE_ID = process.env.SSLCOMMERZ_STORE_ID || process.env.STORE_ID;
     const STORE_PASSWORD = process.env.SSLCOMMERZ_STORE_PASSWORD || process.env.STORE_PASS;
-    const SITE_URL = process.env.SITE_URL || 'https://autosparkbd.com';
+    const SITE_URL = getSiteUrl(request);
     if (!STORE_ID || !STORE_PASSWORD) {
       console.error('[payment/init] missing gateway credentials');
       setCors(response, origin);
@@ -58,10 +68,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
     params.append('total_amount', String(amount));
     params.append('currency', 'BDT');
     params.append('tran_id', tran_id);
-    // Unified SPA routes (BrowserRouter)
-    params.append('success_url', `${SITE_URL}/payment-success?tran_id=${tran_id}`);
-    params.append('fail_url', `${SITE_URL}/payment-fail?tran_id=${tran_id}`);
-    params.append('cancel_url', `${SITE_URL}/payment-cancel?tran_id=${tran_id}`);
+    // Gateway callbacks must hit serverless handlers: SSLCommerz POSTs here and
+    // a static SPA route cannot read the POST body. The handlers verify the
+    // payment, update the order, then 303-redirect the browser to the SPA.
+    params.append('success_url', `${SITE_URL}/api/payment/success`);
+    params.append('fail_url', `${SITE_URL}/api/payment/fail`);
+    params.append('cancel_url', `${SITE_URL}/api/payment/cancel`);
     params.append('ipn_url', `${SITE_URL}/api/payment/ipn`);
     params.append('product_name', product_name);
     params.append('product_category', 'Automotive');
@@ -84,16 +96,23 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     console.log('[payment/init] init', { tran_id, amount });
     step = 'ssl-fetch';
-    let sslResponse;
+    const gatewayUrl = `${gatewayBaseUrl()}/gwprocess/v4/api.php`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    let sslResponse: Response;
     try {
-      sslResponse = await fetch('https://securepay.sslcommerz.com/gwprocess/v4/api.php', {
+      sslResponse = await fetch(gatewayUrl, {
         method: 'POST',
         body: params,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        signal: controller.signal,
       });
-    } catch {
+    } catch (e) {
+      console.error('[payment/init] gateway connection failed', e);
       setCors(response, origin);
       return response.status(503).json({ error: 'Failed to connect to payment gateway' });
+    } finally {
+      clearTimeout(timeout);
     }
 
     if (!sslResponse.ok) {
@@ -101,14 +120,19 @@ export default async function handler(request: VercelRequest, response: VercelRe
       setCors(response, origin);
       return response.status(400).json({ error: 'Payment gateway error' });
     }
-    const contentType = sslResponse.headers.get('content-type') ?? '';
     const rawText = await sslResponse.text();
-    console.error('[payment/init] gateway status', sslResponse.status, 'ct', contentType, 'body', rawText.slice(0, 500));
     let sslczData: { status?: string; GatewayPageURL?: string; failedreason?: string } = {};
-    try { sslczData = rawText ? JSON.parse(rawText) : {}; } catch { sslczData = {}; }
+    try {
+      sslczData = rawText ? JSON.parse(rawText) : {};
+    } catch {
+      sslczData = {};
+    }
     if (sslczData.status !== 'SUCCESS' || !sslczData.GatewayPageURL) {
+      console.error('[payment/init] gateway rejected', rawText.slice(0, 500));
       setCors(response, origin);
-      return response.status(400).json({ error: `Payment failed: ${sslczData.failedreason || 'Unknown error'}`, raw: rawText.slice(0, 300) });
+      return response.status(400).json({
+        error: `Payment failed: ${sslczData.failedreason || 'Unknown gateway error'}`,
+      });
     }
 
     setCors(response, origin);
@@ -116,6 +140,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (e) {
     console.error('[payment/init] server error at', step, e);
     setCors(response, origin);
-    return response.status(500).json({ error: 'Server error', step, detail: String(e) });
+    return response.status(500).json({ error: 'Server error' });
   }
 }
