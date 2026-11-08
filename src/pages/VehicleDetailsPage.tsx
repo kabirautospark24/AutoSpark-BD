@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Phone, MessageCircle, Calculator, Fuel, Settings, Calendar, Gauge, Sparkles } from 'lucide-react';
 import { openSparkPilot } from '../sparkai/components/openSparkPilot';
@@ -207,7 +207,7 @@ export const VehicleDetailsPage = () => {
         />
       )}
       <div className="container mx-auto px-4 py-8 pb-32 lg:pb-8">
-        <Link to="/inventory" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-6">
+        <Link to="/inventory" className="inline-flex items-center text-primary hover:text-blue-700 mb-6">
           <ChevronLeft className="h-5 w-5 mr-1" />
           {language === 'en' ? 'Back to Inventory' : 'ইনভেন্টরিতে ফিরে যান'}
         </Link>
@@ -343,7 +343,7 @@ export const VehicleDetailsPage = () => {
                 {/* Ask SparkPilot: right-side assistant entry point for this vehicle */}
                 <button
                   onClick={() => openSparkPilot(`I'm interested in the ${vehicle.brand_name} ${vehicle.model} (${vehicle.year}, ৳${Number(vehicle.price).toLocaleString()}). Is it a good fit for me?`)}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-white font-semibold transition bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-white font-semibold transition bg-gradient-to-r from-cyan-500 to-[#8A0000] hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
                   aria-label={`Ask SparkPilot about the ${vehicle.brand_name} ${vehicle.model}`}
                 >
                   <Sparkles className="h-5 w-5" aria-hidden />
@@ -351,7 +351,7 @@ export const VehicleDetailsPage = () => {
                 </button>
                 <button
                   onClick={() => setShowEMICalculator(!showEMICalculator)}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-colors"
+                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 border-2 border-blue-600 text-primary hover:bg-primary hover:text-white rounded-lg transition-colors"
                 >
                   <Calculator className="h-5 w-5" />
                   <span>{t('vehicle.calculate_emi')}</span>
@@ -402,7 +402,7 @@ export const VehicleDetailsPage = () => {
                     <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {language === 'en' ? 'Monthly EMI' : 'মাসিক ইএমআই'}
                     </div>
-                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                    <div className="text-3xl font-bold text-primary dark:text-blue-400">
                       {formatPrice(calculateMonthlyEMI(), language)}
                     </div>
                   </div>
@@ -427,7 +427,7 @@ export const VehicleDetailsPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {vehicle.features.map((feature) => (
                     <div key={feature.id} className="flex items-center space-x-2">
-                      <div className="h-2 w-2 bg-blue-600 rounded-full"></div>
+                      <div className="h-2 w-2 bg-primary rounded-full"></div>
                       <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>
                         {language === 'en' ? feature.feature_en : feature.feature_bn}
                       </span>

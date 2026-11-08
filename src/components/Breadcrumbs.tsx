@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
@@ -28,13 +28,13 @@ export const Breadcrumbs: React.FC<Props> = ({ items, className = '' }) => {
             <li key={item.path} className="flex items-center gap-1">
               {index > 0 && <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-60" aria-hidden="true" />}
               {isLast ? (
-                <span className="font-medium text-[#C00000] dark:text-[#FF1A1A]" aria-current="page">
+                <span className="font-medium text-[#C00000] dark:text-[#E23A3A]" aria-current="page">
                   {item.name}
                 </span>
               ) : (
                 <Link
                   to={item.path}
-                  className="rounded transition-colors hover:text-[#C00000] hover:underline dark:hover:text-[#FF1A1A]"
+                  className="rounded transition-colors hover:text-[#C00000] hover:underline dark:hover:text-[#E23A3A]"
                 >
                   {item.name}
                 </Link>

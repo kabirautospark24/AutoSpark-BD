@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+﻿import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, AlertCircle, Info } from 'lucide-react';
 
 export type ValidationState = 'idle' | 'valid' | 'invalid' | 'validating';

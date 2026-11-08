@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
+﻿import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronDown, 
@@ -578,8 +578,8 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               <motion.button
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                   activeHotspot === hotspot.id
-                    ? 'bg-blue-600 text-white scale-125'
-                    : 'bg-white/90 text-blue-600 hover:bg-blue-600 hover:text-white'
+                    ? 'bg-primary text-white scale-125'
+                    : 'bg-white/90 text-primary hover:bg-primary hover:text-white'
                 } shadow-lg border-2 border-blue-400`}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
@@ -750,7 +750,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               onClick={() => setViewMode('exterior')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                 viewMode === 'exterior'
-                  ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow'
+                  ? 'bg-white dark:bg-gray-600 text-primary dark:text-blue-400 shadow'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
@@ -761,7 +761,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               onClick={() => setViewMode('interior')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                 viewMode === 'interior'
-                  ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow'
+                  ? 'bg-white dark:bg-gray-600 text-primary dark:text-blue-400 shadow'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
@@ -777,7 +777,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               onClick={() => setShowColorCustomizer(!showColorCustomizer)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 showColorCustomizer
-                  ? 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white'
+                  ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300'
               }`}
               title="Open Color Customizer"
@@ -814,7 +814,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               onClick={() => setShowHotspots(!showHotspots)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 showHotspots
-                  ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
+                  ? 'bg-blue-100 dark:bg-blue-900/50 text-primary dark:text-blue-400'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
               }`}
             >
@@ -831,7 +831,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
             onClick={() => setIsCompareMode(!isCompareMode)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
               isCompareMode
-                ? 'bg-red-100 dark:bg-red-900/50 text-[#A16207] dark:text-amber-600'
+                ? 'bg-red-100 dark:bg-red-900/50 text-[#C00000] dark:text-amber-600'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
@@ -954,7 +954,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               </div>
               <button
                 onClick={() => { setIsCompareMode(false); setCompareVehicleId(null); }}
-                className="p-1.5 text-[#A16207] dark:text-amber-600 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
+                className="p-1.5 text-[#C00000] dark:text-amber-600 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

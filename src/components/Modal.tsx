@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+﻿import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { ReactNode } from 'react';
 
@@ -45,7 +45,7 @@ export const Modal = ({
   const getButtonColor = (variant: string) => {
     switch (variant) {
       case 'primary':
-        return 'bg-blue-500 hover:bg-blue-600 text-white';
+        return 'bg-blue-500 hover:bg-primary text-white';
       case 'danger':
         return 'bg-red-500 hover:bg-red-600 text-white';
       default:

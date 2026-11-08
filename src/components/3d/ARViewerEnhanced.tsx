@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+﻿import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Camera, 
@@ -369,7 +369,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
                     }}
                     className={`w-full flex items-center gap-3 p-3 transition-colors ${
                       selectedVehicle.id === vehicle.id
-                        ? theme === 'dark' ? 'bg-blue-600/20' : 'bg-blue-50'
+                        ? theme === 'dark' ? 'bg-primary/20' : 'bg-blue-50'
                         : theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
                     }`}
                   >
@@ -404,7 +404,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={activateAR}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-[#A16207] text-white rounded-xl font-medium shadow-lg"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white rounded-xl font-medium shadow-lg"
             >
               <Smartphone className="w-4 h-4" />
               <span className="hidden sm:inline">
@@ -560,7 +560,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
             onClick={() => setIsAutoRotate(!isAutoRotate)}
             className={`p-3 rounded-xl shadow-lg backdrop-blur-md ${
               isAutoRotate
-                ? 'bg-blue-600 text-white'
+                ? 'bg-primary text-white'
                 : theme === 'dark' 
                   ? 'bg-gray-800/80 hover:bg-gray-700/80 text-white' 
                   : 'bg-white/80 hover:bg-gray-50/80 text-gray-900'
@@ -603,7 +603,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
                       }}
                       className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg transition-colors ${
                         environment.id === preset.id
-                          ? theme === 'dark' ? 'bg-blue-600/20 text-blue-400' : 'bg-blue-50 text-blue-600'
+                          ? theme === 'dark' ? 'bg-primary/20 text-blue-400' : 'bg-blue-50 text-primary'
                           : theme === 'dark' ? 'hover:bg-gray-700 text-gray-300' : 'hover:bg-gray-50 text-gray-700'
                       }`}
                     >
@@ -708,7 +708,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
                 theme === 'dark' ? 'bg-gray-800/50' : 'bg-white/80'
               }`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Move className={`w-4 h-4 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
+                  <Move className={`w-4 h-4 ${theme === 'dark' ? 'text-blue-400' : 'text-primary'}`} />
                   <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     {language === 'en' ? 'Controls' : 'কন্ট্রোল'}
                   </span>
@@ -724,7 +724,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
                 theme === 'dark' ? 'bg-gray-800/50' : 'bg-white/80'
               }`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Box className={`w-4 h-4 ${theme === 'dark' ? 'text-amber-600' : 'text-[#A16207]'}`} />
+                  <Box className={`w-4 h-4 ${theme === 'dark' ? 'text-amber-600' : 'text-[#C00000]'}`} />
                   <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     {language === 'en' ? 'AR Mode' : 'এআর মোড'}
                   </span>
@@ -806,7 +806,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={takeScreenshot}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-medium shadow-md"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#C00000] to-blue-700 text-white rounded-lg font-medium shadow-md"
           >
             <Download className="w-4 h-4" />
             <span className="hidden sm:inline">

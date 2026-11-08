@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { prefetchResource } from '../utils/prefetch';
@@ -258,7 +258,7 @@ export const CarShowcaseCarousel = ({ className = '' }: CarShowcaseCarouselProps
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.2 }}
                         >
-                          <span className="px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-lg shadow-blue-500/30">
+                          <span className="px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-[#C00000] to-[#8A0000] rounded-full shadow-lg shadow-blue-500/30">
                             FEATURED
                           </span>
                         </motion.div>
@@ -301,7 +301,7 @@ export const CarShowcaseCarousel = ({ className = '' }: CarShowcaseCarouselProps
                         <motion.button
                           onMouseEnter={() => prefetchResource(`/vehicle/${car.id}`, `/api/vehicle/${car.id}`)}
                           onFocus={() => prefetchResource(`/vehicle/${car.id}`, `/api/vehicle/${car.id}`)}
-                          className="w-full mt-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+                          className="w-full mt-4 py-3 bg-gradient-to-r from-[#C00000] to-[#8A0000] hover:from-[#C00000] hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.3 }}

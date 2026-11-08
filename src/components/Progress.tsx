@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 
 interface ProgressBarProps {
   progress: number;
@@ -11,11 +11,11 @@ interface ProgressBarProps {
 }
 
 const colorClasses = {
-  blue: 'bg-gradient-to-r from-blue-400 to-blue-600',
+  blue: 'bg-gradient-to-r from-blue-400 to-[#8A0000]',
   green: 'bg-gradient-to-r from-green-400 to-green-600',
   red: 'bg-gradient-to-r from-red-400 to-red-600',
   yellow: 'bg-gradient-to-r from-yellow-400 to-yellow-600',
-  gold: 'bg-gradient-to-r from-amber-600 to-[#A16207]',
+  gold: 'bg-gradient-to-r from-amber-600 to-[#C00000]',
 };
 
 export const ProgressBar = ({

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 
 export interface TabItem {
@@ -88,7 +88,7 @@ export const Tabs = ({
             {activeTab === tab.id && variant === 'underline' && (
               <motion.div
                 layoutId="activeTabUnderline"
-                className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600"
+                className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C00000] to-[#8A0000]"
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               />
             )}

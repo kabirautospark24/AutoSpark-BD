@@ -1,4 +1,4 @@
-import { useMemo, lazy, Suspense } from 'react';
+﻿import { useMemo, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ALL_VEHICLES } from '../data/allVehicles';
@@ -171,7 +171,7 @@ export const VehicleExperiencePage = () => {
                     : '360° এ আমাদের শোরুম এবং পরিষেবা সুবিধাগুলির একটি গাইডেড ট্যুর করুন'}
                 </p>
               </motion.div>
-              <div className="mt-4 h-1 w-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+              <div className="mt-4 h-1 w-16 bg-gradient-to-r from-[#C00000] to-cyan-500 rounded-full" />
             </div>
           
             <motion.div
@@ -190,7 +190,7 @@ export const VehicleExperiencePage = () => {
             className={`rounded-2xl p-12 text-center mt-20 ${
               theme === 'dark'
                 ? 'bg-gradient-to-r from-blue-900 to-cyan-900'
-                : 'bg-gradient-to-r from-blue-600 to-cyan-600'
+                : 'bg-gradient-to-r from-[#C00000] to-cyan-600'
             }`}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}

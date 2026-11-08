@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, useMemo } from 'react';
+﻿import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Particle {
@@ -429,10 +429,10 @@ export const ParticleEngineSymphony: React.FC<ParticleEngineSymphonyProps> = ({
       {/* Ambient glow spots */}
       <div className="absolute inset-0 pointer-events-none">
         <div className={`absolute w-[600px] h-[600px] rounded-full blur-3xl ${
-          isDark ? 'bg-blue-600/10' : 'bg-blue-400/10'
+          isDark ? 'bg-primary/10' : 'bg-blue-400/10'
         }`} style={{ top: '10%', left: '10%' }} />
         <div className={`absolute w-[500px] h-[500px] rounded-full blur-3xl ${
-          isDark ? 'bg-[#A16207]/10' : 'bg-amber-600/10'
+          isDark ? 'bg-[#C00000]/10' : 'bg-amber-600/10'
         }`} style={{ bottom: '10%', right: '10%' }} />
         <div className={`absolute w-[400px] h-[400px] rounded-full blur-3xl ${
           isDark ? 'bg-cyan-500/8' : 'bg-cyan-400/8'
@@ -465,7 +465,7 @@ export const ParticleEngineSymphony: React.FC<ParticleEngineSymphonyProps> = ({
             key={i}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               i === currentShapeRef.current 
-                ? (isDark ? 'bg-blue-400 scale-125' : 'bg-blue-600 scale-125')
+                ? (isDark ? 'bg-blue-400 scale-125' : 'bg-primary scale-125')
                 : (isDark ? 'bg-gray-600' : 'bg-gray-400')
             }`}
           />

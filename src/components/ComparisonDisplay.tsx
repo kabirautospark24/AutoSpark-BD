@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { ChevronDown, Download, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -81,8 +81,8 @@ export const ComparisonDisplay = ({
               onClick={onExport}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold ${
                 theme === 'dark'
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                  : 'bg-blue-500 hover:bg-blue-600 text-white'
+                  ? 'bg-primary hover:bg-blue-700 text-white'
+                  : 'bg-blue-500 hover:bg-primary text-white'
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, memo } from 'react';
+﻿import { useEffect, useRef, useState, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Volume2, VolumeX, Music2, Headphones } from 'lucide-react';
 
@@ -443,7 +443,7 @@ export const VideoHero: React.FC<VideoHeroProps> = memo(({
               />
 
               {/* Button Container */}
-              <div className="relative px-8 py-5 md:px-12 md:py-6 rounded-full bg-gradient-to-r from-[#8B0000] via-[#C00000] to-[#FF1A1A] shadow-2xl">
+              <div className="relative px-8 py-5 md:px-12 md:py-6 rounded-full bg-gradient-to-r from-[#8B0000] via-[#C00000] to-[#E23A3A] shadow-2xl">
                 {/* Inner glow */}
                 <div className="absolute inset-[2px] rounded-full bg-black/20 backdrop-blur-sm" />
                 
@@ -562,7 +562,7 @@ export const VideoHero: React.FC<VideoHeroProps> = memo(({
                 animate={{
                   background: isMuted 
                     ? 'linear-gradient(135deg, #374151 0%, #1f2937 100%)'
-                    : 'linear-gradient(135deg, #8B0000 0%, #C00000 50%, #FF1A1A 100%)',
+                    : 'linear-gradient(135deg, #8B0000 0%, #C00000 50%, #E23A3A 100%)',
                 }}
                 transition={{ duration: 0.3 }}
               >
@@ -715,13 +715,13 @@ export const VideoHero: React.FC<VideoHeroProps> = memo(({
             exit={{ opacity: 0, x: 20 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#C00000]/20 to-[#FF1A1A]/20 backdrop-blur-sm border border-white/10">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#C00000]/20 to-[#E23A3A]/20 backdrop-blur-sm border border-white/10">
               {/* Animated Equalizer Bars */}
               <div className="flex items-end gap-0.5 h-4">
                 {[0, 1, 2, 3, 4].map((i) => (
                   <motion.div
                     key={i}
-                    className="w-1 bg-gradient-to-t from-[#C00000] to-[#FF1A1A] rounded-full"
+                    className="w-1 bg-gradient-to-t from-[#C00000] to-[#E23A3A] rounded-full"
                     animate={{
                       height: ['30%', '100%', '50%', '80%', '30%'],
                     }}

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CarViewerShowcase Component
  * 
  * A ready-to-use showcase section that combines the CarViewer
@@ -112,7 +112,7 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className={`w-6 h-6 ${isDark ? 'text-yellow-400' : 'text-yellow-500'}`} />
-            <span className={`text-sm font-semibold uppercase tracking-wider ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+            <span className={`text-sm font-semibold uppercase tracking-wider ${isDark ? 'text-blue-400' : 'text-primary'}`}>
               {language === 'en' ? '3D Experience' : '3D অভিজ্ঞতা'}
             </span>
           </div>
@@ -166,7 +166,7 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
                               w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all
                               ${selectedVehicleId === vehicle.id
                                 ? isDark
-                                  ? 'bg-blue-600 text-white'
+                                  ? 'bg-primary text-white'
                                   : 'bg-blue-500 text-white'
                                 : isDark
                                   ? 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
@@ -239,7 +239,7 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
                   <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     {selectedVehicle.year} • {selectedVehicle.category}
                   </p>
-                  <p className={`text-2xl font-bold mt-2 ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+                  <p className={`text-2xl font-bold mt-2 ${isDark ? 'text-blue-400' : 'text-primary'}`}>
                     {selectedVehicle.price}
                   </p>
                 </div>
@@ -307,8 +307,8 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
                     w-full mt-6 py-3 px-4 rounded-xl font-semibold
                     flex items-center justify-center gap-2
                     ${isDark
-                      ? 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:from-blue-500 hover:to-amber-700'
-                      : 'bg-gradient-to-r from-blue-500 to-amber-700 text-white hover:from-blue-600 hover:to-[#A16207]'
+                      ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:from-[#C00000] hover:to-[#8A0000]'
+                      : 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:from-[#C00000] hover:to-[#C00000]'
                     }
                     shadow-lg transition-all
                   `}

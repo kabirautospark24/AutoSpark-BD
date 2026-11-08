@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Star, TrendingUp, Zap, AlertTriangle, Heart } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import styles from './ResponsiveContainer.module.css';
@@ -51,7 +51,7 @@ export const VehicleCardWithBadges = ({
         animation: { rotate: [0, 360] },
       },
       'new-arrival': {
-        bg: 'bg-gradient-to-r from-blue-500 to-cyan-600',
+        bg: 'bg-gradient-to-r from-[#C00000] to-cyan-600',
         icon: <Zap className="w-4 h-4" />,
         label: language === 'en' ? 'New Arrival' : 'নতুন আগমন',
         animation: { y: [0, -5, 0] },
@@ -144,7 +144,7 @@ export const VehicleCardWithBadges = ({
         <div className="p-5">
           <motion.p
             className={`text-xs font-semibold uppercase tracking-wider mb-1 ${
-              theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
+              theme === 'dark' ? 'text-blue-400' : 'text-primary'
             }`}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -184,8 +184,8 @@ export const VehicleCardWithBadges = ({
                 onClick={() => onCompare(id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${styles['button']} ${
                   theme === 'dark'
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
+                    ? 'bg-primary hover:bg-blue-700 text-white'
+                    : 'bg-blue-500 hover:bg-primary text-white'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

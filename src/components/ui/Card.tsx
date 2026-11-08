@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface CardProps {
   children: ReactNode;
@@ -7,12 +6,15 @@ interface CardProps {
   hover?: boolean;
 }
 
+// Surfaces come from semantic tokens, so pages no longer need to fight the
+// component with their own bg-* / border-* overrides.
 export const Card = ({ children, className = '', hover = false }: CardProps) => {
-  const { theme } = useTheme();
   return (
     <div
-      className={`${theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white'} rounded-lg shadow-md ${
-        hover ? 'hover:shadow-xl transition-shadow duration-300' : ''
+      className={`bg-card text-card-foreground rounded-2xl border border-border shadow-md ${
+        hover
+          ? 'transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg'
+          : ''
       } ${className}`}
     >
       {children}

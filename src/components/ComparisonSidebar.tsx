@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+﻿import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
 import { prefetchResource } from '../utils/prefetch';
 import { useState } from 'react';
@@ -44,8 +44,8 @@ export const ComparisonSidebar = ({
       <motion.button
         className={`fixed right-0 top-1/2 transform -translate-y-1/2 z-40 px-3 py-6 rounded-l-lg shadow-lg ${
           theme === 'dark'
-            ? 'bg-blue-600 hover:bg-blue-700'
-            : 'bg-blue-500 hover:bg-blue-600'
+            ? 'bg-primary hover:bg-blue-700'
+            : 'bg-blue-500 hover:bg-primary'
         } text-white font-semibold transition-all`}
         onClick={onToggle}
         whileHover={{ scale: 1.05 }}
@@ -125,7 +125,7 @@ export const ComparisonSidebar = ({
                     className={`p-4 rounded-lg border cursor-pointer transition-all ${
                       expandedIndex === index
                         ? theme === 'dark'
-                          ? 'bg-blue-600/20 border-blue-500'
+                          ? 'bg-primary/20 border-blue-500'
                           : 'bg-blue-50 border-blue-300'
                         : theme === 'dark'
                         ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
@@ -143,7 +143,7 @@ export const ComparisonSidebar = ({
                           {vehicle.name}
                         </h4>
                         <p className={`text-sm font-semibold ${
-                          theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
+                          theme === 'dark' ? 'text-blue-400' : 'text-primary'
                         }`}>
                           {vehicle.price}
                         </p>
@@ -223,7 +223,7 @@ export const ComparisonSidebar = ({
                             className={`flex items-center gap-1 mt-2 pt-2 border-t ${
                               theme === 'dark'
                                 ? 'border-gray-600 text-blue-400 hover:text-blue-300'
-                                : 'border-gray-300 text-blue-600 hover:text-blue-700'
+                                : 'border-gray-300 text-primary hover:text-blue-700'
                             }`}
                             whileHover={{ x: 5 }}
                           >
@@ -250,8 +250,8 @@ export const ComparisonSidebar = ({
                     onClick={onExport}
                     className={`w-full py-3 rounded-lg font-semibold transition-colors ${
                       theme === 'dark'
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                        : 'bg-blue-500 hover:bg-blue-600 text-white'
+                        ? 'bg-primary hover:bg-blue-700 text-white'
+                        : 'bg-blue-500 hover:bg-primary text-white'
                     }`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

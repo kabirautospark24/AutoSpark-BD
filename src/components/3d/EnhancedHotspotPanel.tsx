@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -126,7 +126,7 @@ export const EnhancedHotspotPanel: React.FC<EnhancedHotspotPanelProps> = ({
                 activeTab === 'video'
                   ? isDarkTheme
                     ? 'text-blue-400 border-blue-400'
-                    : 'text-blue-600 border-blue-600'
+                    : 'text-primary border-blue-600'
                   : isDarkTheme
                   ? 'text-slate-400 border-transparent hover:text-slate-200'
                   : 'text-slate-600 border-transparent hover:text-slate-900'
@@ -142,7 +142,7 @@ export const EnhancedHotspotPanel: React.FC<EnhancedHotspotPanelProps> = ({
               activeTab === 'specs'
                 ? isDarkTheme
                   ? 'text-blue-400 border-blue-400'
-                  : 'text-blue-600 border-blue-600'
+                  : 'text-primary border-blue-600'
                 : isDarkTheme
                 ? 'text-slate-400 border-transparent hover:text-slate-200'
                 : 'text-slate-600 border-transparent hover:text-slate-900'
@@ -157,7 +157,7 @@ export const EnhancedHotspotPanel: React.FC<EnhancedHotspotPanelProps> = ({
               activeTab === 'features'
                 ? isDarkTheme
                   ? 'text-blue-400 border-blue-400'
-                  : 'text-blue-600 border-blue-600'
+                  : 'text-primary border-blue-600'
                 : isDarkTheme
                 ? 'text-slate-400 border-transparent hover:text-slate-200'
                 : 'text-slate-600 border-transparent hover:text-slate-900'
@@ -261,8 +261,8 @@ export const EnhancedHotspotPanel: React.FC<EnhancedHotspotPanelProps> = ({
         <div className={`p-4 border-t flex gap-2 ${isDarkTheme ? 'border-slate-700/50' : 'border-gray-200'}`}>
           <button className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium transition-colors ${
             isDarkTheme
-              ? 'bg-blue-600 hover:bg-blue-700 text-white'
-              : 'bg-blue-600 hover:bg-blue-700 text-white'
+              ? 'bg-primary hover:bg-blue-700 text-white'
+              : 'bg-primary hover:bg-blue-700 text-white'
           }`}>
             <ArrowRight size={16} />
             Learn More

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronDown, 
@@ -286,7 +286,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
                 />
               </div>
               <div className="text-xs font-semibold text-gray-700">{vehicle.brand}</div>
-              <div className="text-sm font-bold text-blue-600 mt-1">{vehicle.name}</div>
+              <div className="text-sm font-bold text-primary mt-1">{vehicle.name}</div>
               <div className="text-xs text-gray-500 mt-2 font-medium">{formatPrice(vehicle.price)}</div>
             </motion.button>
           ))}
@@ -302,7 +302,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
               onClick={() => setViewMode('all')}
               className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
                 viewMode === 'all'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
               }`}
             >
@@ -313,7 +313,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
               onClick={() => setViewMode('3d')}
               className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
                 viewMode === '3d'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
               }`}
             >
@@ -324,7 +324,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
               onClick={() => setViewMode('charts')}
               className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 ${
                 viewMode === 'charts'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
               }`}
             >
@@ -366,7 +366,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
                       <h4 className="font-bold text-2xl text-gray-900 mt-2">
                         {vehicle.brand} {vehicle.name}
                       </h4>
-                      <p className="text-blue-600 font-bold text-lg mt-2">{formatPrice(vehicle.price)}</p>
+                      <p className="text-primary font-bold text-lg mt-2">{formatPrice(vehicle.price)}</p>
                       <p className="text-gray-500 text-sm mt-2">2022-2023 Model | Premium Edition</p>
                     </div>
                   </motion.div>
@@ -402,7 +402,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
                 {/* Horsepower Comparison */}
                 <div className="bg-white rounded-xl p-6 shadow-md">
                   <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Zap size={20} className="text-blue-600" />
+                    <Zap size={20} className="text-primary" />
                     Horsepower (HP)
                   </h4>
                   <div className="space-y-3">
@@ -413,14 +413,14 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
                         <div key={vehicle.id}>
                           <div className="flex justify-between text-sm font-medium text-gray-700 mb-1">
                             <span>{vehicle.name}</span>
-                            <span className="text-blue-600">{vehicle.specs.horsepower} HP</span>
+                            <span className="text-primary">{vehicle.specs.horsepower} HP</span>
                           </div>
                           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${percent}%` }}
                               transition={{ duration: 0.6, delay: 0.2 }}
-                              className="h-full bg-gradient-to-r from-blue-500 to-blue-600"
+                              className="h-full bg-gradient-to-r from-[#C00000] to-[#8A0000]"
                             />
                           </div>
                         </div>
@@ -480,7 +480,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
                     className="w-full p-4 bg-gray-50 hover:bg-gray-100 flex items-center justify-between transition"
                   >
                     <div className="flex items-center gap-3">
-                      <Icon className="h-5 w-5 text-blue-600" />
+                      <Icon className="h-5 w-5 text-primary" />
                       <span className="font-semibold text-gray-900">{spec.label}</span>
                     </div>
                     <motion.div
@@ -525,7 +525,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
 
           {/* CTA Buttons */}
           <div className="mt-8 flex gap-4">
-            <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+            <button className="flex-1 bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition">
               Compare More Details
             </button>
             <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition">

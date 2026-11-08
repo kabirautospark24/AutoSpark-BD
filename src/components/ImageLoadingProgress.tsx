@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 interface ImageLoadingProgressProps {
@@ -57,8 +57,8 @@ export const ImageLoadingProgress = ({
       <motion.div
         className={`absolute top-0 left-0 h-1 ${
           theme === 'dark'
-            ? 'bg-gradient-to-r from-blue-500 to-amber-700'
-            : 'bg-gradient-to-r from-blue-600 to-[#A16207]'
+            ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000]'
+            : 'bg-gradient-to-r from-[#C00000] to-[#8A0000]'
         }`}
         initial={{ width: '0%' }}
         animate={{ width: `${clampedProgress}%` }}
@@ -133,7 +133,7 @@ export const ImageLoadingProgress = ({
               <motion.div className="text-center">
                 <motion.p
                   className={`text-2xl font-bold mb-2 ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
+                    theme === 'dark' ? 'text-blue-400' : 'text-primary'
                   }`}
                   key={clampedProgress}
                   initial={{ opacity: 0, scale: 0.8 }}

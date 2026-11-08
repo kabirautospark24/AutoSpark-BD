@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, lazy, Suspense, useCallback } from 'react';
+﻿import { useEffect, useState, useRef, lazy, Suspense, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import { ArrowRight, Car, Wrench, Shield, Award, ChevronDown, Zap, Fuel, Clock, Phone, MapPin as MapPinIcon } from 'lucide-react';
@@ -11,7 +11,7 @@ import type { Vehicle, Testimonial } from '../types';
 import { formatPrice } from '../utils/format';
 import type { VehicleColor } from '../components/InteractiveColorCustomizer';
 import { FilterAnimations } from '../components/FilterAnimations';
-import { ScrollReveal, StaggerContainer, staggerItemVariants, GlowPulse } from '../components/motion';
+import { ScrollReveal, StaggerContainer, staggerItemVariants } from '../components/motion';
 
 // CarFocusCarousel, flip-card showcase and duplicate grids removed (Phase A):
 // single unified <FeaturedVehicles /> is the only featured showcase.
@@ -139,7 +139,7 @@ const LightweightHero = ({
   <div className="relative h-dvh flex items-center justify-center overflow-hidden hero-lite-bg">
     <div className="absolute inset-0 hero-lite-overlay" aria-hidden="true" />
     <img
-      src="https://images.pexels.com/photos/36318402/pexels-photo-36318402.png?auto=compress&cs=tinysrgb&w=800&fm=webp"
+                src={`${import.meta.env.BASE_URL}hero/hero-poster.webp`}
       alt="Premium car showcase"
       className="absolute inset-0 w-full h-full object-cover opacity-30"
       loading="eager"
@@ -354,15 +354,12 @@ export const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    // initial pick
+    // Pick once per visit — no background rotation, no involuntary re-render.
     setInitialColors(pickUniqueColors());
-    // rotate every 12 seconds (increased from 8s to reduce churn)
-    const id = setInterval(() => setInitialColors(pickUniqueColors()), 12000);
-    return () => clearInterval(id);
   }, [pickUniqueColors]);
 
   return (
-    <div className={`min-h-dvh ${theme === 'dark' ? 'bg-[#0a0a0a]' : 'bg-gray-50'}`}>
+    <div className="min-h-dvh bg-background">
       <PageHead path="/" />
 
         {/* ══ HERO ══════════════════════════════════════════════════ */}
@@ -379,7 +376,7 @@ export const HomePage = () => {
                     {language === 'en' ? 'Premium Cars in Rajshahi' : 'রাজশাহীতে প্রিমিয়াম গাড়ি'}
                   </h1>
                   <div className="flex flex-row flex-wrap gap-2 sm:gap-3 justify-center">
-                    <Link to="/inventory" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-xl text-xs sm:text-sm md:text-base shadow-glow-red transition-all">
+                    <Link to="/inventory" className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-glow-red transition-colors hover:bg-primary/90 sm:text-sm md:text-base">
                       {t('hero.browse')}<ArrowRight className="ml-1.5 h-3.5 w-3.5 md:h-5 md:w-5" aria-hidden />
                     </Link>
                     <Link to="/services" className="inline-flex items-center px-5 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 font-semibold rounded-xl text-xs sm:text-sm md:text-base transition-all">
@@ -395,14 +392,6 @@ export const HomePage = () => {
               <LightweightHero language={language} t={t} />
             )}
           </motion.div>
-
-          {/* Ambient glow orbs */}
-          {device.supportsRichAnimations && (
-            <>
-              <GlowPulse className="top-1/4 left-1/4" color="rgba(192, 0, 0, 0.15)" size={300} speed={4} />
-              <GlowPulse className="bottom-1/4 right-1/4" color="rgba(192, 0, 0, 0.1)" size={250} speed={5} />
-            </>
-          )}
 
           {/* Noise overlay */}
           <div className="absolute inset-0 noise-overlay pointer-events-none z-[5]" />
@@ -444,8 +433,8 @@ export const HomePage = () => {
           theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-white to-gray-50'
         }`}>
           <div className="container-fluid">
-            <ScrollReveal className="text-center mb-6">
-              <h2 className={`text-2xl sm:text-3xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <ScrollReveal className="mb-6">
+              <h2 className={`text-2xl sm:text-3xl font-bold mb-3 text-foreground`}>
                 {language === 'en' ? 'Find Your Perfect Vehicle' : 'আপনার নিখুঁত গাড়ি খুঁজুন'}
               </h2>
             </ScrollReveal>
@@ -491,10 +480,10 @@ export const HomePage = () => {
 
         {/* ══ COLOR CUSTOMIZER ══════════════════════════════════════ */}
         <LazySection minHeight="400px" rootMargin="200px">
-          <section className={`section-padding ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-white to-gray-50'}`}>
+          <section className={`section-padding bg-background`}>
             <div className="container-fluid">
-              <ScrollReveal className="text-center mb-8">
-                <h2 className={`heading-responsive font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              <ScrollReveal className="mb-8">
+                <h2 className={`heading-responsive font-bold mb-4 text-foreground`}>
                   {language === 'en' ? 'Personalize Your Vehicle' : 'আপনার গাড়ি ব্যক্তিগতকৃত করুন'}
                 </h2>
               </ScrollReveal>
@@ -526,8 +515,8 @@ export const HomePage = () => {
               </div>
 
               {selectedVehicleColor && (
-                <div className={`mt-8 p-4 rounded-xl border ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-blue-50 border-blue-200'}`}>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                <div className={`mt-8 p-4 rounded-xl border bg-muted border-border`}>
+                  <p className={`text-sm text-muted-foreground`}>
                     {language === 'en'
                       ? `Selected: ${selectedVehicleColor.name}. Your preference has been saved.`
                       : `নির্বাচিত: ${selectedVehicleColor.name}। আপনার পছন্দ সংরক্ষিত হয়েছে।`}
@@ -541,20 +530,20 @@ export const HomePage = () => {
         {/* ══ MORPHING (only on capable devices) ═══════════════════ */}
         {device.supportsRichAnimations && (
           <LazySection minHeight="400px" rootMargin="200px">
-            <section className={`section-padding ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-gray-50 to-white'}`}>
+            <section className={`section-padding bg-muted/30`}>
               <div className="container-fluid">
-                <ScrollReveal className="text-center mb-8">
-                  <h2 className={`heading-responsive font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <ScrollReveal className="mb-8">
+                  <h2 className={`heading-responsive font-bold mb-4 text-foreground`}>
                     {language === 'en' ? 'Morphing Showcase' : 'আকৃতি-পরিবর্তনকারী শোকেস'}
                   </h2>
                 </ScrollReveal>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <MorphingShapeTransition
                     images={[
-                      { src: 'https://images.pexels.com/photos/36318402/pexels-photo-36318402.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota Prado' },
-                      { src: 'https://images.pexels.com/photos/35515996/pexels-photo-35515996.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota Harrier' },
-                      { src: 'https://images.pexels.com/photos/35509198/pexels-photo-35509198.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota Crown' },
-                      { src: 'https://images.pexels.com/photos/36319317/pexels-photo-36319317.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota Yaris' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/prado/white.webp`, name: 'Toyota Prado' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/harrier/pearl.webp`, name: 'Toyota Harrier' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/crown/pearl.webp`, name: 'Toyota Crown' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/prado/black.webp`, name: 'Toyota Prado Black' },
                     ]}
                     shapes="blob"
                     theme={theme}
@@ -562,10 +551,10 @@ export const HomePage = () => {
                   />
                   <MorphingShapeTransition
                     images={[
-                      { src: 'https://images.pexels.com/photos/35516334/pexels-photo-35516334.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota Premio' },
-                      { src: 'https://images.pexels.com/photos/36324034/pexels-photo-36324034.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota C-HR' },
-                      { src: 'https://images.pexels.com/photos/35516440/pexels-photo-35516440.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Toyota Noah' },
-                      { src: 'https://images.pexels.com/photos/36318402/pexels-photo-36318402.png?auto=compress&cs=tinysrgb&w=400&fm=webp', name: 'Premium SUV' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/harrier/black.webp`, name: 'Toyota Harrier Black' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/crown/black.webp`, name: 'Toyota Crown Black' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/prado/silver.webp`, name: 'Toyota Prado Silver' },
+                      { src: `${import.meta.env.BASE_URL}customize-cars/harrier/white.webp`, name: 'Toyota Harrier White' },
                     ]}
                     shapes="diamond"
                     theme={theme}
@@ -581,15 +570,15 @@ export const HomePage = () => {
 
         {/* ══ COMPARISON SLIDER (only on capable devices) ══════════ */}
         {device.supportsRichAnimations && (
-          <section className={`section-padding ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-gray-50 to-white'}`}>
+          <section className={`section-padding bg-muted/30`}>
             <div className="container-fluid">
-              <ScrollReveal className="text-center mb-8">
-                <h2 className={`heading-responsive font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              <ScrollReveal className="mb-8">
+                <h2 className={`heading-responsive font-bold mb-4 text-foreground`}>
                   {language === 'en' ? 'Standard vs Premium' : 'স্ট্যান্ডার্ড বনাম প্রিমিয়াম'}
                 </h2>
               </ScrollReveal>
               <AnimatedComparisonSlider
-                standardImage="https://images.pexels.com/photos/35515996/pexels-photo-35515996.png?auto=compress&cs=tinysrgb&w=400&fm=webp"
+                standardImage={`${import.meta.env.BASE_URL}customize-cars/harrier/pearl.webp`}
                 premiumImage={`${import.meta.env.BASE_URL}customize-cars/harrier/pearl.webp`}
                 standardModel={language === 'en' ? 'Harrier Standard' : 'হ্যারিয়ার স্ট্যান্ডার্ড'}
                 premiumModel={language === 'en' ? 'Harrier Premium' : 'হ্যারিয়ার প্রিমিয়াম'}
@@ -608,19 +597,19 @@ export const HomePage = () => {
         )}
 
         {/* ══ PERFORMANCE METRICS ═══════════════════════════════════ */}
-        <section className={`section-padding ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-black' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'}`}>
+        <section className={`section-padding bg-background`}>
           <div className="container-fluid">
-            <ScrollReveal className="text-center mb-8">
-              <h2 className={`heading-responsive font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <ScrollReveal className="mb-8">
+              <h2 className={`heading-responsive font-bold mb-4 text-foreground`}>
                 {language === 'en' ? 'Performance Overview' : 'পারফরম্যান্স ওভারভিউ'}
               </h2>
             </ScrollReveal>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { label: language === 'en' ? 'Horsepower' : 'হর্সপাওয়ার', values: { prado:282,harrier:246,crown:248,yaris:120,chr:144,premio:110,noah:144 }, icon: <Zap className="w-6 h-6" />, color: 'text-orange-500' },
-                { label: language === 'en' ? 'Fuel Efficiency' : 'জ্বালানি দক্ষতা', values: { prado:10,harrier:17,crown:16,yaris:20,chr:18,premio:21,noah:18 }, icon: <Fuel className="w-6 h-6" />, color: 'text-green-500', unit: 'km/l' },
-                { label: language === 'en' ? 'Safety Rating' : 'সেফটি রেটিং', values: { prado:5,harrier:5,crown:5,yaris:4,chr:4,premio:4,noah:4 }, icon: <Shield className="w-6 h-6" />, color: 'text-blue-500', unit: '/5' },
-                { label: language === 'en' ? 'Value Rating' : 'মূল্য রেটিং', values: { prado:95,harrier:92,crown:90,yaris:88,chr:85,premio:90,noah:87 }, icon: <Award className="w-6 h-6" />, color: 'text-amber-700' },
+                { label: language === 'en' ? 'Horsepower' : 'হর্সপাওয়ার', values: { prado:282,harrier:246,crown:248,yaris:120,chr:144,premio:110,noah:144 }, icon: <Zap className="w-6 h-6" />, color: 'text-primary' },
+                { label: language === 'en' ? 'Fuel Efficiency' : 'জ্বালানি দক্ষতা', values: { prado:10,harrier:17,crown:16,yaris:20,chr:18,premio:21,noah:18 }, icon: <Fuel className="w-6 h-6" />, color: 'text-primary', unit: 'km/l' },
+                { label: language === 'en' ? 'Safety Rating' : 'সেফটি রেটিং', values: { prado:5,harrier:5,crown:5,yaris:4,chr:4,premio:4,noah:4 }, icon: <Shield className="w-6 h-6" />, color: 'text-primary', unit: '/5' },
+                { label: language === 'en' ? 'Value Rating' : 'মূল্য রেটিং', values: { prado:95,harrier:92,crown:90,yaris:88,chr:85,premio:90,noah:87 }, icon: <Award className="w-6 h-6" />, color: 'text-primary' },
               ].map((metric, index) => (
                 <ScrollReveal key={index} delay={index * 0.1}>
                   <PerformanceGauge
@@ -639,8 +628,8 @@ export const HomePage = () => {
         {/* ══ WHY CHOOSE US ═════════════════════════════════════════ */}
         <section className={`section-padding ${theme === 'dark' ? 'bg-gray-900/90' : 'bg-white'}`}>
           <div className="container-fluid">
-            <ScrollReveal className="text-center mb-8">
-              <h2 className={`heading-responsive font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <ScrollReveal className="mb-8">
+              <h2 className={`heading-responsive font-bold mb-4 text-foreground`}>
                 {language === 'en' ? 'Why Choose Auto Spark BD?' : 'কেন অটো স্পার্ক বিডি?'}
               </h2>
             </ScrollReveal>
@@ -651,13 +640,10 @@ export const HomePage = () => {
                 { icon: Wrench, title: language === 'en' ? 'Expert Service' : 'বিশেষজ্ঞ সেবা', desc: language === 'en' ? 'State-of-the-art service center with experienced technicians' : 'অভিজ্ঞ প্রযুক্তিবিদদের সাথে অত্যাধুনিক সার্ভিস সেন্টার' },
               ].map((f, i) => (
                 <motion.div key={i} variants={staggerItemVariants}>
-                  <div className={`group relative p-8 text-center rounded-2xl glass gradient-border overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-lift ${
-                    theme === 'dark' ? '' : 'bg-white/80'
-                  }`}>
-                    <GlowPulse className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" color="rgba(192,0,0,0.1)" size={200} />
-                    <f.icon className={`h-16 w-16 mx-auto mb-4 relative z-10 transition-colors duration-300 ${theme === 'dark' ? 'text-red-400 group-hover:text-red-300' : 'text-red-600 group-hover:text-red-500'}`} />
-                    <h3 className={`text-xl font-bold mb-3 relative z-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{f.title}</h3>
-                    <p className={`relative z-10 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{f.desc}</p>
+                  <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-center transition-colors duration-300 hover:border-foreground/20">
+                    <f.icon className="mx-auto mb-4 h-14 w-14 text-primary" />
+                    <h3 className={`text-xl font-bold mb-3 relative z-10 text-foreground`}>{f.title}</h3>
+                    <p className={`relative z-10 text-muted-foreground`}>{f.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -669,17 +655,15 @@ export const HomePage = () => {
         {testimonials.length > 0 && (
           <section className={`section-padding ${theme === 'dark' ? 'bg-gray-900/80' : 'bg-gray-50'}`}>
             <div className="container-fluid">
-              <ScrollReveal className="text-center mb-6">
-                <h2 className={`heading-responsive font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              <ScrollReveal className="mb-6">
+                <h2 className={`heading-responsive font-bold mb-4 text-foreground`}>
                   {language === 'en' ? 'What Our Customers Say' : 'আমাদের গ্রাহকরা কি বলেন'}
                 </h2>
               </ScrollReveal>
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" stagger={0.12}>
                 {testimonials.map((testimonial) => (
                   <motion.div key={testimonial.id} variants={staggerItemVariants}>
-                    <div className={`group relative p-6 rounded-2xl glass gradient-border transition-all duration-300 hover:-translate-y-1 ${
-                      theme === 'dark' ? '' : 'bg-white/80'
-                    }`}>
+                    <div className="group relative rounded-2xl border border-border bg-card p-6 transition-colors duration-300 hover:border-foreground/20">
                       <div className="flex items-center mb-4">
                         {[...Array(testimonial.rating)].map((_: unknown, i: number) => (
                           <svg key={i} className="h-5 w-5 text-yellow-400 fill-current" viewBox="0 0 20 20" aria-hidden="true">
@@ -687,19 +671,19 @@ export const HomePage = () => {
                           </svg>
                         ))}
                       </div>
-                      <p className={`mb-4 leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <p className={`mb-4 leading-relaxed text-muted-foreground`}>
                         {language === 'en' ? testimonial.review_en : testimonial.review_bn || testimonial.review_en}
                       </p>
                       <div className="flex items-center">
-                        <div className={`h-12 w-12 rounded-full flex items-center justify-center font-semibold bg-gradient-to-br from-red-500 to-red-700 text-white`}>
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground">
                           {testimonial.customer_name.charAt(0)}
                         </div>
                         <div className="ml-3">
-                          <div className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                          <div className={`font-semibold text-foreground`}>
                             {language === 'en' ? testimonial.customer_name : testimonial.customer_name_bn || testimonial.customer_name}
                           </div>
                           {testimonial.vehicle_purchased && (
-                            <div className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>{testimonial.vehicle_purchased}</div>
+                            <div className={`text-sm text-muted-foreground`}>{testimonial.vehicle_purchased}</div>
                           )}
                         </div>
                       </div>
@@ -714,8 +698,8 @@ export const HomePage = () => {
         {/* ══ MAPS ══════════════════════════════════════════════════ */}
         <section className="section-padding bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
           <div className="container-fluid">
-            <ScrollReveal className="text-center mb-8">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
+            <ScrollReveal className="mb-8">
+              <h2 className="mb-6 font-display text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
                 {language === 'en' ? 'Visit Our Showroom' : 'আমাদের শোরুম পরিদর্শন করুন'}
               </h2>
             </ScrollReveal>
@@ -725,27 +709,27 @@ export const HomePage = () => {
               <div className="flex flex-col gap-5">
                 {[
                   {
-                    icon: <MapPinIcon className="w-8 h-8 text-[#C00000]" />,
+                    icon: <MapPinIcon className="h-8 w-8 text-primary" />,
                     title: language === 'en' ? 'Address' : 'ঠিকানা',
                     content: 'AutoSpark, Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia, Rajshahi 6207',
                   },
                   {
-                    icon: <Clock className="w-8 h-8 text-[#C00000]" />,
+                    icon: <Clock className="h-8 w-8 text-primary" />,
                     title: language === 'en' ? 'Business Hours' : 'ব্যবসায়িক সময়',
-                    content: `${language === 'en' ? 'Mon–Fri' : 'সোম–শুক্র'}: 9AM–6PM | ${language === 'en' ? 'Sat' : 'শনি'}: 10AM–5PM`,
+                    content: t('contact.hours_value'),
                   },
                   {
-                    icon: <Phone className="w-8 h-8 text-[#C00000]" />,
+                    icon: <Phone className="h-8 w-8 text-primary" />,
                     title: language === 'en' ? 'Contact' : 'যোগাযোগ',
                     content: '+880 1760-401605 | autosparkbd@gmail.com',
                   },
                 ].map(card => (
-                  <div key={card.title} className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                  <div key={card.title} className="rounded-2xl border border-border bg-card p-6">
                     <div className="flex items-start gap-3">
                       <span className="flex-shrink-0">{card.icon}</span>
                       <div>
-                        <h3 className="font-bold text-gray-900 dark:text-white mb-1">{card.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{card.content}</p>
+                        <h3 className="mb-1 font-semibold text-foreground">{card.title}</h3>
+                        <p className="text-sm text-muted-foreground">{card.content}</p>
                       </div>
                     </div>
                   </div>
@@ -754,7 +738,7 @@ export const HomePage = () => {
                   href="https://www.google.com/maps/place/Auto+Spark/@24.3744264,88.6135805,17z"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-bold py-4 rounded-xl text-center hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-center font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                 >
                   <MapPinIcon className="w-5 h-5" />
                   {language === 'en' ? 'Get Directions on Google Maps' : 'গুগল ম্যাপে দিকনির্দেশনা পান'}
@@ -784,7 +768,7 @@ export const HomePage = () => {
                   width="100%" height="280" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                   title="Showroom map"
                 />
-                <p className="text-center text-sm font-semibold py-2 bg-white dark:bg-gray-800">
+                <p className="bg-card py-2 text-center text-sm font-semibold text-foreground">
                   {language === 'en' ? 'Showroom: Station Road, Rajshahi' : 'শোরুম: স্টেশন রোড, রাজশাহী'}
                 </p>
               </div>
@@ -794,7 +778,7 @@ export const HomePage = () => {
                   width="100%" height="280" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                   title="Service center map"
                 />
-                <p className="text-center text-sm font-semibold py-2 bg-white dark:bg-gray-800">
+                <p className="bg-card py-2 text-center text-sm font-semibold text-foreground">
                   {language === 'en' ? 'Service Center: Meherchandi, Rajshahi' : 'সার্ভিস সেন্টার: মেহেরচণ্ডী, রাজশাহী'}
                 </p>
               </div>
@@ -803,24 +787,21 @@ export const HomePage = () => {
         </section>
 
         {/* ══ CTA ═══════════════════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden bg-gradient-to-r from-red-600 via-red-700 to-red-800">
-          <div className="absolute inset-0 noise-overlay opacity-5" />
-          <div className="absolute inset-0 diagonal-lines" />
-          <GlowPulse className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" color="rgba(255,255,255,0.1)" size={400} speed={4} />
-          <div className="container-fluid text-center relative z-10">
+        <section className="section-padding bg-primary">
+          <div className="container-fluid">
             <ScrollReveal>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
-                {language === 'en' ? 'Ready to Find Your Dream Car?' : 'আপনার স্বপ্নের গাড়ি খুঁজে পেতে প্রস্তুত?'}
+              <h2 className="max-w-2xl text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+                {language === 'en' ? 'Ready to find your next car?' : 'আপনার পরবর্তী গাড়ি খুঁজে পেতে প্রস্তুত?'}
               </h2>
-              <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
-                {language === 'en' ? 'Browse our inventory or visit our showroom in Rajshahi.' : 'আমাদের ইনভেন্টরি ব্রাউজ করুন বা রাজশাহীতে আমাদের শোরুম পরিদর্শন করুন।'}
+              <p className="mt-4 max-w-2xl text-base text-white/80 sm:text-lg">
+                {language === 'en' ? 'Browse current stock or visit the showroom in Rajshahi.' : 'বর্তমান স্টক দেখুন বা রাজশাহীতে শোরুম পরিদর্শন করুন।'}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/inventory" className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-red-600 hover:bg-gray-100 font-bold rounded-xl shadow-lg transition-all">
-                  {language === 'en' ? 'Browse Inventory' : 'ইনভেন্টরি ব্রাউজ করুন'}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link to="/inventory" className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-white px-7 py-3 font-semibold text-primary transition-colors hover:bg-white/90">
+                  {language === 'en' ? 'Browse inventory' : 'ইনভেন্টরি দেখুন'}
                 </Link>
-                <Link to="/contact" className="inline-flex items-center justify-center px-8 py-3.5 border-2 border-white text-white hover:bg-white/10 font-bold rounded-xl transition-all">
-                  {language === 'en' ? 'Contact Us' : 'যোগাযোগ করুন'}
+                <Link to="/contact" className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/40 px-7 py-3 font-semibold text-white transition-colors hover:bg-white/10">
+                  {language === 'en' ? 'Contact us' : 'যোগাযোগ করুন'}
                 </Link>
               </div>
             </ScrollReveal>

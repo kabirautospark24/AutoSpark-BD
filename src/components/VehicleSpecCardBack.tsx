@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Zap, Fuel, Cog, Calendar, Shield, Award, Gauge, Droplet } from 'lucide-react';
 
 interface VehicleSpecCardBackProps {
@@ -42,8 +42,8 @@ export const VehicleSpecCardBack = ({
   const fuelTypeColors: Record<string, string> = {
     'Petrol': 'bg-orange-500',
     'Diesel': 'bg-green-700',
-    'Hybrid': 'bg-blue-600',
-    'Electric': 'bg-[#A16207]',
+    'Hybrid': 'bg-primary',
+    'Electric': 'bg-[#C00000]',
   };
 
   const safetyStars = vehicle.safetyRating ? Array(Math.min(vehicle.safetyRating, 5)).fill(0) : [];
@@ -216,7 +216,7 @@ export const VehicleSpecCardBack = ({
                     Emissions
                   </span>
                 </div>
-                <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
+                <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-blue-400' : 'text-primary'}`}>
                   {vehicle.emissions}
                 </span>
               </motion.div>
@@ -236,7 +236,7 @@ export const VehicleSpecCardBack = ({
                   key={i}
                   className={`text-[9px] px-1.5 py-0.5 rounded font-semibold ${
                     theme === 'dark'
-                      ? 'bg-blue-600/20 text-blue-300'
+                      ? 'bg-primary/20 text-blue-300'
                       : 'bg-blue-100 text-blue-700'
                   }`}
                   initial={{ opacity: 0, scale: 0 }}

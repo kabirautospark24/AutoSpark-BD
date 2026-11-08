@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Volume2, VolumeX } from 'lucide-react';
 
@@ -113,7 +113,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
       className="w-full bg-white rounded-2xl overflow-hidden shadow-xl"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#A16207] to-red-800 p-6 md:p-8 text-white">
+      <div className="bg-gradient-to-r from-[#C00000] to-red-800 p-6 md:p-8 text-white">
         <h2 className="text-3xl font-bold mb-2">Virtual Showroom Tour</h2>
         <p className="text-red-100">Explore our facilities in 360°</p>
       </div>
@@ -168,7 +168,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
               <motion.button
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
-                className="relative w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-lg hover:bg-blue-600 transition"
+                className="relative w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-lg hover:bg-primary transition"
               />
 
               {/* Label */}
@@ -194,7 +194,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             onClick={toggleAudio}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute top-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition"
+            className="absolute top-6 right-6 bg-primary hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition"
           >
             {audioEnabled ? (
               <Volume2 className="h-6 w-6" />
@@ -208,7 +208,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             onClick={prevRoom}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute left-6 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition z-10"
+            className="absolute left-6 top-1/2 -translate-y-1/2 bg-primary hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition z-10"
           >
             <ChevronLeft className="h-6 w-6" />
           </motion.button>
@@ -217,7 +217,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             onClick={nextRoom}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute right-6 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition z-10"
+            className="absolute right-6 top-1/2 -translate-y-1/2 bg-primary hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition z-10"
           >
             <ChevronRight className="h-6 w-6" />
           </motion.button>
@@ -235,7 +235,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
               <p className="text-gray-700">{currentRoom.points[selectedPoint].info}</p>
               <button
                 onClick={() => setSelectedPoint(null)}
-                className="mt-3 text-sm font-semibold text-blue-600 hover:text-blue-700"
+                className="mt-3 text-sm font-semibold text-primary hover:text-blue-700"
               >
                 Close ✕
               </button>
@@ -282,7 +282,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             <h4 className="font-bold text-gray-900">
               {currentRoomIndex + 1} / {showrooms.length}
             </h4>
-            <span className="text-sm font-semibold text-blue-600">
+            <span className="text-sm font-semibold text-primary">
               {currentRoom.points.length} Points of Interest
             </span>
           </div>

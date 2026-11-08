@@ -1,21 +1,20 @@
 ﻿import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Moon, Sun, Globe, Search, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, Moon, Sun, Globe, Volume2, VolumeX } from 'lucide-react';
 import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 
-// Dynamic AudioManager â€” never imported synchronously in the critical path
+// Loaded on demand so the audio engine stays out of the critical path.
 const playClick = () => import('../utils/AudioManager').then(mod => mod.AudioManager.playClick());
 const playButtonClick = () => import('../utils/AudioManager').then(mod => mod.AudioManager.playButtonClick());
 
-// Animation variants â€” defined at module scope to avoid re-creation on every render
 const navbarContainerVariants = {
-  hidden: { opacity: 0, y: -20 },
+  hidden: { opacity: 0, y: -12 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' as const },
+    transition: { duration: 0.4, ease: 'easeOut' as const },
   },
 };
 
@@ -36,16 +35,12 @@ const mobileMenuVariants = {
 };
 
 const navLinkVariants = {
-  hidden: { opacity: 0, y: -10 },
+  hidden: { opacity: 0, y: -6 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.05, duration: 0.3 },
+    transition: { delay: i * 0.03, duration: 0.24 },
   }),
-  hover: {
-    scale: 1.05,
-    transition: { duration: 0.2 },
-  },
 };
 
 export const GlassmorphismNavbar = () => {
@@ -100,11 +95,8 @@ export const GlassmorphismNavbar = () => {
     }
   }, []);
 
-  // Determine which logo to show based on current page
-  const isServicesOrAccessories = location.pathname === '/services' || location.pathname === '/accessories';
-  const currentLogo = isServicesOrAccessories 
-  ? `${import.meta.env.BASE_URL}logo/logoassc.svg`
-  : `${import.meta.env.BASE_URL}logo/logoAS3.svg`;
+  // One mark in the chrome, everywhere, so the brand reads consistently.
+  const currentLogo = `${import.meta.env.BASE_URL}logo/logoAS3.svg`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,7 +109,7 @@ export const GlassmorphismNavbar = () => {
   const navLinks = [
     { to: '/', label: t('nav.home') },
     { to: '/inventory', label: t('nav.inventory') },
-    { to: '/experience', label: language === 'en' ? 'Experience' : 'à¦…à¦­à¦¿à¦œà§à¦žà¦¤à¦¾' },
+    { to: '/experience', label: language === 'en' ? 'Experience' : 'অভিজ্ঞতা' },
     { to: '/services', label: t('nav.services') },
     { to: '/accessories', label: t('nav.accessories') },
     { to: '/about', label: t('nav.about') },
@@ -194,13 +186,9 @@ export const GlassmorphismNavbar = () => {
     }
   }, []);
 
-  const glassBackground = theme === 'dark'
-  ? 'bg-gray-900/40 backdrop-blur-xl border-b border-gray-700/30'
-  : 'bg-white/40 backdrop-blur-xl border-b border-gray-200/30';
-
-  const glassBackgroundScrolled = theme === 'dark'
-  ? 'bg-gray-900/80 backdrop-blur-2xl border-b border-gray-700/40 shadow-2xl shadow-black/20'
-  : 'bg-white/80 backdrop-blur-2xl border-b border-gray-200/40 shadow-2xl shadow-black/10';
+  const glassBackground = isScrolled
+    ? 'bg-background/85 backdrop-blur-2xl border-b border-border shadow-lg shadow-black/10'
+    : 'bg-background/40 backdrop-blur-xl border-b border-transparent';
 
   return (
     <LazyMotion features={domAnimation}>
@@ -211,72 +199,40 @@ export const GlassmorphismNavbar = () => {
       className="fixed left-0 right-0 z-50 top-[var(--geo-banner-h,0px)] pt-[env(safe-area-inset-top,0px)] transition-all duration-300"
     >
       {/* Glassmorphic background */}
-      <div className={`${isScrolled ? glassBackgroundScrolled : glassBackground} transition-all duration-300`}>
+      <div className={`${glassBackground} transition-colors duration-300`}>
         <nav aria-label="Main navigation" className="container px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             {/* Logo Section */}
-            <m.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link
+              to="/"
+              className="flex items-center gap-2.5 group"
+              onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Link
-                to="/"
-                className="flex items-center space-x-2 sm:space-x-3 group"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {/* Animated Logo Container */}
-                <m.div 
-                  className="relative"
-                  whileHover={{ rotate: [0, -5, 5, 0] }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {/* Glow effect behind logo */}
-                  <m.div
-                    className="absolute inset-0 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(192, 0, 0, 0.7) 0%, rgba(255, 26, 26, 0.3) 50%, transparent 70%)',
-                      transform: 'scale(2)'
-                    }}
-                  />
-                  {/* Logo Image - Crystal clear zoomed view */}
-                  <m.img
-                    src={currentLogo}
-                    alt="Auto Spark BD"
-                    className="h-10 w-10 sm:h-10 sm:w-10 lg:h-12 lg:w-12 relative z-10 drop-shadow-[0_0_8px_rgba(192,0,0,0.5)]"
-                    initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    transition={{ 
-                      duration: 0.8, 
-                      ease: [0.16, 1, 0.3, 1],
-                      delay: 0.2 
-                    }}
-                  />
-                </m.div>
-                <div>
-                  <span className={`text-base sm:text-lg lg:text-xl font-bold tracking-tight transition-colors ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {t('site.title')}
-                  </span>
-                  <div className={`text-xs sm:hidden ${theme === 'dark' ? 'text-[#FF1A1A]' : 'text-[#C00000]'}`}>
-                    Premium Cars
-                  </div>
+              <img
+                src={currentLogo}
+                alt="Auto Spark BD"
+                width={44}
+                height={44}
+                className="h-10 w-10 lg:h-11 lg:w-11"
+              />
+              <div className="leading-none">
+                <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg lg:text-xl">
+                  {t('site.title')}
+                </span>
+                <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.18em] text-primary sm:hidden">
+                  Premium Cars
                 </div>
-              </Link>
-            </m.div>
+              </div>
+            </Link>
 
-            {/* Desktop Navigation â€” full link set from xl; below that the drawer takes over */}
+            {/* Desktop navigation: full link set from xl; below that the drawer takes over */}
             <div className="hidden xl:flex items-center space-x-0.5">
               {navLinks.map((link, index) => {
                 const isExternal = link.to.startsWith('tel:');
-                const commonClasses = `px-2.5 2xl:px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative outline-none focus-visible:ring-2 focus-visible:ring-[#C00000] ${
+                const commonClasses = `px-2.5 2xl:px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 relative outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                   activeLink === link.to
-                    ? theme === 'dark'
-                      ? 'text-[#FF1A1A]'
-                      : 'text-[#C00000]'
-                    : theme === 'dark'
-                    ? 'text-gray-300 hover:text-white'
-                    : 'text-gray-700 hover:text-gray-900'
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`;
 
                 return (
@@ -286,7 +242,6 @@ export const GlassmorphismNavbar = () => {
                     variants={navLinkVariants}
                     initial="hidden"
                     animate="visible"
-                    whileHover="hover"
                     className="relative"
                   >
                     {isExternal ? (
@@ -311,11 +266,7 @@ export const GlassmorphismNavbar = () => {
                         {activeLink === link.to && (
                           <m.div
                             layoutId="activeIndicator"
-                            className={`absolute inset-0 rounded-lg -z-10 ${
-                              theme === 'dark'
-                                ? 'bg-[#C00000]/20 backdrop-blur-md border border-[#C00000]/30'
-                                : 'bg-[#C00000]/10 backdrop-blur-md border border-[#C00000]/30'
-                            }`}
+                            className="absolute inset-0 -z-10 rounded-lg border border-primary/25 bg-primary/10"
                             transition={{ duration: 0.3 }}
                           />
                         )}
@@ -328,47 +279,23 @@ export const GlassmorphismNavbar = () => {
 
             {/* Right Controls */}
             <div className="flex items-center space-x-1 sm:space-x-2">
-              {/* Search Button - Desktop */}
+              {/* Audio Toggle — hidden on the narrowest screens to keep the row calm */}
               <m.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => playClick()}
-                className={`hidden md:flex p-2.5 rounded-lg transition-all ${
-                  theme === 'dark'
-                    ? 'hover:bg-gray-700/50 text-gray-400 hover:text-[#FF1A1A]'
-                    : 'hover:bg-gray-100/50 text-gray-600 hover:text-[#C00000]'
-                }`}
-                aria-label="Search"
-              >
-                <Search className="h-4 w-4" />
-              </m.button>
-
-              {/* Audio Toggle â€” hidden on xs to keep the 360px control row comfortable */}
-              <m.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={handleToggleAudio}
-                className={`hidden sm:inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
-                  theme === 'dark'
-                    ? 'hover:bg-gray-700/50 text-gray-400 hover:text-white'
-                    : 'hover:bg-gray-100/50 text-gray-600 hover:text-gray-900'
-                }`}
+                className="hidden h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={audioEnabled ? 'Mute site audio' : 'Unmute site audio'}
+                aria-pressed={!audioEnabled}
               >
                 {audioEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
               </m.button>
 
               {/* Theme Toggle */}
               <m.button
-                whileHover={{ scale: 1.1, rotate: 20 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={handleToggleTheme}
-                className={`inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
-                  theme === 'dark'
-                    ? 'hover:bg-gray-700/50 text-yellow-400'
-                    : 'hover:bg-gray-100/50 text-gray-800'
-                }`}
-                aria-label="Toggle dark mode"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? (
                   <Sun className="h-4 w-4" />
@@ -379,33 +306,21 @@ export const GlassmorphismNavbar = () => {
 
               {/* Language Toggle */}
               <m.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={toggleLanguage}
-                className={`inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
-                  theme === 'dark'
-                    ? 'hover:bg-gray-700/50 text-[#FF1A1A]'
-                    : 'hover:bg-gray-100/50 text-[#C00000]'
-                }`}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label="Toggle language"
               >
                 <Globe className="h-4 w-4" />
               </m.button>
 
               {/* CTA Button - Desktop */}
-              <Link to="/contact">
-              <m.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Link
+                to="/contact"
                 onClick={() => { playButtonClick(); handleNavClick('/contact'); }}
-                className={`hidden sm:flex px-3 py-1.5 rounded-lg font-semibold text-xs transition-all ${
-                  theme === 'dark'
-                    ? 'bg-gradient-to-r from-[#C00000] to-[#FF1A1A] hover:from-[#8B0000] hover:to-[#C00000] text-white shadow-lg shadow-[#C00000]/30'
-                    : 'bg-gradient-to-r from-[#C00000] to-[#8B0000] hover:from-[#8B0000] hover:to-[#600000] text-white shadow-lg shadow-[#C00000]/30'
-                }`}
+                className="hidden min-h-[40px] items-center rounded-lg bg-primary px-4 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 {t('nav.contact')}
-              </m.button>
               </Link>
 
               {/* Mobile Menu Button */}
@@ -413,11 +328,7 @@ export const GlassmorphismNavbar = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleMobileMenuToggle}
-                className={`xl:hidden inline-flex p-2.5 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg transition-all ${
-                  theme === 'dark'
-                    ? 'hover:bg-gray-700/50 text-gray-400'
-                    : 'hover:bg-gray-100/50 text-gray-600'
-                }`}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted xl:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label="Toggle menu"
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
@@ -464,22 +375,14 @@ export const GlassmorphismNavbar = () => {
                 aria-label="Mobile navigation"
                 onKeyDown={handleMenuKeyDown}
               >
-                <div className={`space-y-2 p-4 rounded-xl ${
-                  theme === 'dark'
-                    ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30'
-                    : 'bg-white/50 backdrop-blur-md border border-white/30'
-                }`}>
+                <div className="space-y-1 rounded-xl border border-border bg-card p-3 shadow-lg">
                   {/* Mobile Navigation Links */}
                   {navLinks.map((link, index) => {
                     const isExternal = link.to.startsWith('tel:');
-                    const commonClasses = `block px-4 py-4 rounded-lg transition-all outline-none focus-visible:ring-2 focus-visible:ring-[#C00000] ${
+                    const commonClasses = `block px-4 py-3 rounded-lg text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                       activeLink === link.to
-                        ? theme === 'dark'
-                          ? 'bg-[#C00000]/30 border border-[#C00000]/50 text-[#FF1A1A]'
-                          : 'bg-[#C00000]/20 border border-[#C00000]/50 text-[#C00000]'
-                        : theme === 'dark'
-                        ? 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
-                        : 'text-gray-700 hover:bg-gray-100/30 hover:text-gray-900'
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-foreground hover:bg-muted'
                     }`;
 
                     return (
@@ -514,23 +417,15 @@ export const GlassmorphismNavbar = () => {
                   })}
 
                   {/* Mobile CTA Button */}
-                  <Link to="/contact">
-                  <m.button
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: navLinks.length * 0.05 }}
+                  <Link
+                    to="/contact"
                     onClick={() => {
                       playButtonClick();
                       handleNavClick('/contact');
                     }}
-                    className={`w-full px-4 py-3 rounded-lg font-semibold text-sm transition-all mt-4 ${
-                      theme === 'dark'
-                        ? 'bg-gradient-to-r from-[#C00000] to-[#FF1A1A] hover:from-[#8B0000] hover:to-[#C00000] text-white'
-                        : 'bg-gradient-to-r from-[#C00000] to-[#8B0000] hover:from-[#8B0000] hover:to-[#600000] text-white'
-                    }`}
+                    className="mt-3 flex min-h-[48px] w-full items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                   >
                     {t('nav.contact')}
-                  </m.button>
                   </Link>
                 </div>
               </m.div>
@@ -539,16 +434,8 @@ export const GlassmorphismNavbar = () => {
         </nav>
       </div>
 
-      {/* Bottom gradient accent line */}
-      <m.div
-        animate={{ opacity: isScrolled ? 0.5 : 0.3 }}
-        transition={{ duration: 0.3 }}
-        className={`h-px bg-gradient-to-r ${
-          theme === 'dark'
-            ? 'from-transparent via-[#C00000] to-transparent'
-            : 'from-transparent via-[#C00000] to-transparent'
-        }`}
-      />
+      {/* Hairline accent under the chrome */}
+      <div className="h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
     </m.header>
     </LazyMotion>
   );

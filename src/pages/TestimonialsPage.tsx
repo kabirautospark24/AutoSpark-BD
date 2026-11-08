@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+﻿import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Star,
@@ -499,7 +499,7 @@ const RatingBreakdown = ({ testimonials, theme, language }: { testimonials: Cust
               <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 {item.rating}
               </span>
-              <Star className="text-yellow-400 fill-yellow-400" size={14} />
+              <Star className="fill-primary text-primary" size={14} />
             </div>
             <div className={`flex-1 h-2.5 rounded-full overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
               <motion.div
@@ -601,7 +601,7 @@ const FeaturedTestimonialCard = ({
           <img
             src={t.customer_image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.customer_name)}&background=0D8ABC&color=fff&size=80`}
             alt={t.customer_name}
-            className="w-12 h-12 rounded-full object-cover border-2 border-blue-500/30"
+            className="w-12 h-12 rounded-full object-cover border-2 border-border"
             loading="lazy"
             decoding="async"
           />
@@ -730,7 +730,7 @@ const TestimonialCard = ({
           {shouldTruncate && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className={`text-xs font-medium mt-1 ${theme === 'dark' ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}
+              className={`text-xs font-medium mt-1 ${theme === 'dark' ? 'text-blue-400 hover:text-blue-300' : 'text-primary hover:text-blue-700'}`}
             >
               {expanded
                 ? language === 'en' ? 'Show less' : 'কম দেখুন'
@@ -897,21 +897,8 @@ export const TestimonialsPage = () => {
     }));
   }, [testimonials]);
 
-  // Gallery sources: prepend public car-delivery images so they appear first
-  const extraPexels = [
-    'https://images.pexels.com/photos/36435423/pexels-photo-36435423.png',
-    'https://images.pexels.com/photos/36435424/pexels-photo-36435424.png',
-    'https://images.pexels.com/photos/36435425/pexels-photo-36435425.png',
-    'https://images.pexels.com/photos/36435427/pexels-photo-36435427.png',
-    'https://images.pexels.com/photos/36435428/pexels-photo-36435428.png',
-    'https://images.pexels.com/photos/36435471/pexels-photo-36435471.png',
-    'https://images.pexels.com/photos/36435470/pexels-photo-36435470.png',
-    'https://images.pexels.com/photos/36435469/pexels-photo-36435469.png',
-    'https://images.pexels.com/photos/36435468/pexels-photo-36435468.png',
-    'https://images.pexels.com/photos/36435472/pexels-photo-36435472.png',
-  ];
-
-  const gallerySources = useMemo(() => [...CAR_DELIVERY_IMAGES, ...extraPexels], []);
+  // Only real, locally hosted delivery photography — no hotlinked stock.
+  const gallerySources = CAR_DELIVERY_IMAGES;
 
   const handleLike = (id: string) => {
     setLikedIds((prev) => {
@@ -946,10 +933,10 @@ export const TestimonialsPage = () => {
         }`} />
         {/* Decorative circles */}
         <div className={`absolute top-10 -right-20 w-72 h-72 rounded-full blur-3xl opacity-20 ${
-          theme === 'dark' ? 'bg-blue-600' : 'bg-blue-300'
+          theme === 'dark' ? 'bg-primary' : 'bg-blue-300'
         }`} />
         <div className={`absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-20 ${
-          theme === 'dark' ? 'bg-[#A16207]' : 'bg-amber-600'
+          theme === 'dark' ? 'bg-[#C00000]' : 'bg-amber-600'
         }`} />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -963,11 +950,11 @@ export const TestimonialsPage = () => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-500/30 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/10 mb-6"
             >
               <Star className="text-yellow-500 fill-yellow-500" size={16} />
               <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-yellow-400' : 'text-yellow-700'}`}>
-                {language === 'en' ? '2500+ Vehicles Sold' : '২৫০০+ গাড়ি বিক্রি হয়েছে'}
+                {language === 'en' ? 'Trusted Since 2014' : '২৫০০+ গাড়ি বিক্রি হয়েছে'}
               </span>
             </motion.div>
 
@@ -977,12 +964,12 @@ export const TestimonialsPage = () => {
               {language === 'en' ? (
                 <>
                   Our Customers{' '}
-                  <span className="bg-gradient-to-r from-[#C00000] to-[#A16207] bg-clip-text text-transparent">Love Us</span>
+                  <span className="text-primary">Love Us</span>
                 </>
               ) : (
                 <>
                   আমাদের গ্রাহকরা{' '}
-                  <span className="bg-gradient-to-r from-[#C00000] to-[#A16207] bg-clip-text text-transparent">আমাদের ভালোবাসেন</span>
+                  <span className="text-primary">আমাদের ভালোবাসেন</span>
                 </>
               )}
             </h1>
@@ -992,7 +979,7 @@ export const TestimonialsPage = () => {
             }`}>
               {language === 'en'
                 ? "Real stories from real customers who found their dream cars at Auto Spark BD. Read what they have to say about North Bengal's most trusted car dealership."
-                : 'অটো স্পার্ক বিডিতে তাদের স্বপ্নের গাড়ি খুঁজে poderosa প্রকৃত গ্রাহকদের বাস্তব গল্প। উত্তরবঙ্গের সবচেয়ে বিশ্বস্ত গাড়ি ডিলারশিপ সম্পর্কে তারা কী বলেন পড়ুন।'}
+                : 'অটো স্পার্ক বিডিতে তাদের স্বপ্নের গাড়ি খুঁজে পাওয়া প্রকৃত গ্রাহকদের বাস্তব গল্প। উত্তরবঙ্গের সবচেয়ে বিশ্বস্ত গাড়ি ডিলারশিপ সম্পর্কে তারা কী বলেন পড়ুন।'}
             </p>
 
             {/* Featured Testimonial Hero - showcases one premium testimonial prominently */}
@@ -1018,14 +1005,14 @@ export const TestimonialsPage = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="max-w-2xl w-full"
                   >
-                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-500/30 mb-6">
-                      <Star className="text-yellow-400 fill-yellow-400" size={14} />
-                      <span className="text-sm font-medium {theme === 'dark' ? 'text-yellow-400' : 'text-yellow-700'}">
+                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 mb-6">
+                      <Star className="fill-primary text-primary" size={14} />
+                      <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
                         {language === 'en' ? 'FEATURED' : 'ফিচার্ড'}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 text-2xl md:text-3xl font-bold {theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4">
-                      <Award className="text-yellow-400" size={20} />
+                    <div className="mb-4 flex items-center gap-2 text-2xl font-bold text-foreground md:text-3xl">
+                      <Award className="text-primary" size={20} />
                       {language === 'en' ? 'Featured Customer Story' : 'ফিচার্ড গ্রাহক গল্প'}
                     </div>
                     <blockquote className={`text-lg md:text-xl leading-relaxed mb-6 ${
@@ -1033,21 +1020,21 @@ export const TestimonialsPage = () => {
                     }`}>
                       "{language === 'bn' && featuredTestimonials[0].review_bn ? featuredTestimonials[0].review_bn : featuredTestimonials[0].review_en}"
                     </blockquote>
-                    <div className="flex flex-col sm:flex-row items-center gap-3 text-sm {theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}">
+                    <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground sm:flex-row">
                       <img
                         src={featuredTestimonials[0].customer_image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(featuredTestimonials[0].customer_name)}&background=0D8ABC&color=fff&size=80`}
                         alt={featuredTestimonials[0].customer_name}
-                        className="w-14 h-14 rounded-full object-cover border-2 border-blue-500/30"
+                        className="w-14 h-14 rounded-full object-cover border-2 border-border"
                       />
                       <div>
-                        <h4 className={`font-semibold {theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        <h4 className="font-semibold text-foreground">
                           {language === 'bn' && featuredTestimonials[0].customer_name_bn ? featuredTestimonials[0].customer_name_bn : featuredTestimonials[0].customer_name}
                         </h4>
                         <p>{featuredTestimonials[0].vehicle_purchased || 'Toyota Vehicle'}</p>
                       </div>
                     </div>
                   </motion.div>
-                  <div className="flex flex-col sm:flex-row gap-2 pt-4 border-t {theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}">
+                  <div className="flex flex-col gap-2 border-t border-border pt-4 sm:flex-row">
                     <StarRating rating={featuredTestimonials[0].rating} size={16} />
                     <span className="text-yellow-500">{featuredTestimonials[0].verified_purchase ? 'Verified Purchase' : ''}</span>
                   </div>
@@ -1058,7 +1045,7 @@ export const TestimonialsPage = () => {
             {/* Delivered Highlighter */}
             <motion.div
               role="status"
-              aria-label={language === 'en' ? "We've Delivered 700+ Cars from our Company Till Now!" : 'আমাদের কোম্পানি থেকে এ পর্যন্ত ৭০০+ গাড়ি সরবরাহ করেছি!'}
+              aria-label={language === 'en' ? "Delivered vehicles across Rajshahi" : 'আমাদের কোম্পানি থেকে এ পর্যন্ত ৭০০+ গাড়ি সরবরাহ করেছি!'}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.12 }}
@@ -1072,7 +1059,7 @@ export const TestimonialsPage = () => {
               <Typewriter
                 text={
                   language === 'en'
-                    ? "We've Delivered 700+ Cars from our Company Till Now!"
+                    ? "Delivered vehicles across Rajshahi"
                     : 'আমাদের কোম্পানি থেকে এ পর্যন্ত ৭০০+ গাড়ি সরবরাহ করেছি!'
                 }
                 speed={12}
@@ -1325,7 +1312,7 @@ export const TestimonialsPage = () => {
             </p>
             <button
               onClick={() => { setSearchQuery(''); setFilterRating(0); }}
-              className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors"
+              className="mt-4 px-4 py-2 bg-blue-500 hover:bg-primary text-white text-sm font-medium rounded-lg transition-colors"
             >
               {language === 'en' ? 'Clear Filters' : 'ফিল্টার মুছুন'}
             </button>

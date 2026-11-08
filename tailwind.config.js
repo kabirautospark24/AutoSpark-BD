@@ -20,14 +20,52 @@ export default {
     },
     extend: {
       colors: {
-        // Brand colors - desaturated, single accent
+        // ── Semantic tokens consumed by the shared UI primitives ──
+        // Values live in src/styles/tokens.css as RGB channels so Tailwind
+        // opacity modifiers (bg-primary/80) work correctly.
+        background: 'rgb(var(--background) / <alpha-value>)',
+        foreground: 'rgb(var(--foreground) / <alpha-value>)',
+        card: {
+          DEFAULT: 'rgb(var(--card) / <alpha-value>)',
+          foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
+        },
+        popover: {
+          DEFAULT: 'rgb(var(--popover) / <alpha-value>)',
+          foreground: 'rgb(var(--popover-foreground) / <alpha-value>)',
+        },
+        primary: {
+          DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
+          foreground: 'rgb(var(--primary-foreground) / <alpha-value>)',
+        },
+        secondary: {
+          DEFAULT: 'rgb(var(--secondary) / <alpha-value>)',
+          foreground: 'rgb(var(--secondary-foreground) / <alpha-value>)',
+        },
+        muted: {
+          DEFAULT: 'rgb(var(--muted) / <alpha-value>)',
+          foreground: 'rgb(var(--muted-foreground) / <alpha-value>)',
+        },
+        accent: {
+          DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
+          foreground: 'rgb(var(--accent-foreground) / <alpha-value>)',
+        },
+        destructive: {
+          DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
+          foreground: 'rgb(var(--destructive-foreground) / <alpha-value>)',
+        },
+        border: 'rgb(var(--border) / <alpha-value>)',
+        input: 'rgb(var(--input) / <alpha-value>)',
+        ring: 'rgb(var(--ring) / <alpha-value>)',
+
+        // Brand colors - one signal accent, no second hue
         brand: {
           red: {
-            DEFAULT: '#B80000',        // Desaturated from #C00000 (75% saturation)
-            light: '#D41A1A',          // Lighter variant
-            dark: '#8A0000',           // Darker variant
-            glow: 'rgba(184, 0, 0, 0.25)', // Subtle glow
-            muted: 'rgba(184, 0, 0, 0.12)', // Muted for borders
+            DEFAULT: '#C00000',
+            light: '#E23A3A',
+            dark: '#8A0000',
+            deep: '#600000',
+            glow: 'rgba(192, 0, 0, 0.22)',
+            muted: 'rgba(192, 0, 0, 0.12)',
           },
         },
         // Semantic surface tokens (single cool-gray family)
@@ -120,6 +158,11 @@ export default {
         // Double-bezel specific
         'bezel-outer': '0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.3)',
         'bezel-inner': 'inset 0 1px 1px rgba(255, 255, 255, 0.12), inset 0 -1px 1px rgba(0, 0, 0, 0.15)',
+
+        // Aliases used by existing page code
+        'glow-red': '0 0 24px rgba(192, 0, 0, 0.28), 0 0 48px rgba(192, 0, 0, 0.16)',
+        'lift': '0 16px 40px -12px rgba(0, 0, 0, 0.55)',
+        'hairline': '0 0 0 1px rgb(var(--border) / 1)',
       },
       backdropBlur: {
         'glass': '20px',

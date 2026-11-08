@@ -1,4 +1,4 @@
-
+﻿
 import { Award, Shield, Users, TrendingUp, Target, Eye, Star, Car, CheckCircle, Phone, Mail, Linkedin, Facebook, Instagram, Youtube, Music2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
@@ -153,8 +153,11 @@ export const AboutPage = () => {
     <>
       <PageHead path="/about" />
       <div>
-        <header className="max-w-6xl mx-auto px-4 py-8">
-          <h1 className="text-4xl sm:text-5xl font-bold">
+        <header className="container-fluid pb-8 pt-28">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            {language === 'en' ? 'About' : 'সম্পর্কে'}
+          </p>
+          <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
             {language === 'en' ? 'About AutoSpark' : 'অটো স্পার্ক সম্পর্কে'}
           </h1>
         </header>
@@ -163,27 +166,27 @@ export const AboutPage = () => {
         <h2 className="text-2xl font-bold mb-8 text-center">Showroom & Service Center Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Showroom Card */}
-          <Card className="p-6 flex flex-col items-center text-center shadow-lg bg-white dark:bg-gray-900">
+          <Card className="flex flex-col items-center p-6 text-center">
             <img src={showroom.logo} alt="Showroom Logo" className="h-16 w-16 mb-4" />
             <h3 className="text-xl font-bold text-[#C00000] mb-2">{showroom.name}</h3>
             <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">{showroom.address}</div>
             <div className="text-xs text-gray-500 mb-2">{showroom.city}</div>
             <div className="flex flex-wrap gap-2 justify-center mb-2">
-              <a href={`tel:${showroom.phone}`} className="text-xs underline text-blue-600">{showroom.phone}</a>
-              <a href={`mailto:${showroom.email}`} className="text-xs underline text-blue-600">{showroom.email}</a>
-              <a href={`https://${showroom.website}`} className="text-xs underline text-blue-600">{showroom.website}</a>
+              <a href={`tel:${showroom.phone}`} className="text-xs underline text-primary">{showroom.phone}</a>
+              <a href={`mailto:${showroom.email}`} className="text-xs underline text-primary">{showroom.email}</a>
+              <a href={`https://${showroom.website}`} className="text-xs underline text-primary">{showroom.website}</a>
             </div>
             <div className="flex gap-4 mb-2">
-              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF1A1A]">
+              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF1A1A]">
+              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#FF1A1A]">
+              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#E23A3A]">
                 <Youtube className="w-6 h-6" />
               </a>
-              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#FF1A1A]">
+              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#E23A3A]">
                 <Music2 className="w-6 h-6" />
               </a>
             </div>
@@ -195,22 +198,22 @@ export const AboutPage = () => {
             </div>
           </Card>
           {/* Service Center Card */}
-          <Card className="p-6 flex flex-col items-center text-center shadow-lg bg-white dark:bg-gray-900">
+          <Card className="flex flex-col items-center p-6 text-center">
             <img src={serviceCenter.logo} alt="Service Center Logo" className="h-16 w-16 mb-4" />
             <h3 className="text-xl font-bold text-[#C00000] mb-2">{serviceCenter.name}</h3>
             <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">{serviceCenter.address}</div>
             <div className="text-xs text-gray-500 mb-2">{serviceCenter.city}</div>
             <div className="flex gap-4 mb-2">
-              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF1A1A]">
+              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF1A1A]">
+              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#FF1A1A]">
+              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#E23A3A]">
                 <Youtube className="w-6 h-6" />
               </a>
-              <a href="http://www.tiktok.com/@easycareeasylife" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#FF1A1A]">
+              <a href="http://www.tiktok.com/@easycareeasylife" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#E23A3A]">
                 <Music2 className="w-6 h-6" />
               </a>
             </div>
@@ -229,7 +232,7 @@ export const AboutPage = () => {
         <div className="relative h-[clamp(420px,75vw,560px)] overflow-hidden">
           {/* Parallax Animated Gradient Background */}
           <motion.div
-            className="absolute inset-0 z-0 bg-gradient-to-br from-[#C00000]/25 via-[#FF1A1A]/15 to-[#A16207]/10 animate-gradientMove"
+            className="absolute inset-0 z-0 bg-gradient-to-br from-[#C00000]/25 via-[#E23A3A]/15 to-[#C00000]/10 animate-gradientMove"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -288,7 +291,7 @@ export const AboutPage = () => {
             >
               {/* Animated Underline for Headline */}
               <motion.div
-                className="w-32 h-1 bg-gradient-to-r from-[#C00000] via-[#FF1A1A] to-[#C00000] rounded-full mb-4"
+                className="w-32 h-1 bg-gradient-to-r from-[#C00000] via-[#E23A3A] to-[#C00000] rounded-full mb-4"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -299,7 +302,7 @@ export const AboutPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="inline-block px-4 py-2 bg-[#C00000]/20 text-[#FF1A1A] rounded-full text-sm font-medium mb-4 border border-[#C00000]/30"
+              className="inline-block px-4 py-2 bg-[#C00000]/20 text-[#E23A3A] rounded-full text-sm font-medium mb-4 border border-[#C00000]/30"
             >
               {language === 'en' ? 'Established 2014' : 'প্রতিষ্ঠিত ২০১৪'}
             </motion.span>

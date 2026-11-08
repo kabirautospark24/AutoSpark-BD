@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+﻿import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -47,7 +47,7 @@ export const MorphingShapeTransition = ({
   const secondaryText = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
   const accentColor = theme === 'dark'
     ? 'text-blue-400 border-blue-400'
-    : 'text-blue-600 border-blue-600';
+    : 'text-primary border-blue-600';
 
   const shapeVariants: Variants = {
     enter: {

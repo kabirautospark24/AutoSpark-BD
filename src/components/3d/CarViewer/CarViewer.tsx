@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CarViewer Component
  * 
  * Production-ready React Three Fiber 3D car viewer with:
@@ -667,7 +667,7 @@ export const CarViewer: React.FC<CarViewerProps> = ({
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   {vehicleData.year} • {vehicleData.specs.engine}
                 </p>
-                <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mt-1">
+                <p className="text-sm font-semibold text-primary dark:text-blue-400 mt-1">
                   {vehicleData.price}
                 </p>
               </div>

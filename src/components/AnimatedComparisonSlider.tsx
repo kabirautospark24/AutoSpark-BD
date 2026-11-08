@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { useState, useRef, useEffect, type Ref } from 'react';
 import { ChevronLeft, Check } from 'lucide-react';
 
@@ -349,7 +349,7 @@ export const AnimatedComparisonSlider = ({
                         </span>
                         <span className={`${
                           isDifferent || spec.isNew
-                            ? 'font-bold text-blue-600 dark:text-blue-400'
+                            ? 'font-bold text-primary dark:text-blue-400'
                             : ''
                         }`}>
                           {spec.premium}

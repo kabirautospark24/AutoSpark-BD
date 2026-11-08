@@ -1,215 +1,192 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Phone, Mail, MapPin, Youtube, Music2 } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, MapPin, Youtube, Music2, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
+
+const showroom = {
+  address: 'Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia, Rajshahi 6207',
+  phone: '+880 1760-401605',
+  email: 'autosparkbd@gmail.com',
+  website: 'autosparkbd.com',
+};
+
+const serviceCenter = {
+  address: 'Meherchandi, West Side of School Mor, Rajshahi 6202',
+  phone: '+880 1321-233670',
+};
+
+const socials = [
+  { href: 'https://www.facebook.com/autosparkbd', label: 'Facebook', Icon: Facebook },
+  { href: 'https://www.instagram.com/autosparkbd', label: 'Instagram', Icon: Instagram },
+  { href: 'https://www.youtube.com/@autosparkbd1131', label: 'YouTube', Icon: Youtube },
+  { href: 'https://www.tiktok.com/@auto_spark0', label: 'TikTok', Icon: Music2 },
+];
 
 export const Footer = () => {
-  // Accessibility state
-  const [highContrast, setHighContrast] = React.useState(false);
-  const [fontSize, setFontSize] = React.useState(1);
-  const handleContrastToggle = () => setHighContrast((v) => !v);
-  const handleFontSize = (delta: number) => setFontSize((s) => Math.max(1, s + delta));
   const { t } = useLanguage();
-  const { theme } = useTheme();
   const currentYear = new Date().getFullYear();
 
-  const quickLinks = [
-    { to: '/', label: t('nav.home') },
+  const exploreLinks = [
     { to: '/inventory', label: t('nav.inventory') },
-    { to: '/services', label: t('nav.services') },
-    { to: '/accessories', label: t('nav.accessories') },
+    { to: '/experience', label: 'Experience' },
     { to: '/about', label: t('nav.about') },
     { to: '/testimonials', label: t('nav.testimonials') },
+  ];
+
+  const serviceLinks = [
+    { to: '/services', label: t('nav.services') },
+    { to: '/accessories', label: t('nav.accessories') },
+    { to: '/sell', label: t('nav.sell') },
     { to: '/contact', label: t('nav.contact') },
   ];
 
-  const showroom = {
-    address: 'Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara , Boalia Rajshahi , Rajshahi, Bangladesh, 6207',
-    city: 'Rajshahi, Rajshahi Division, Bangladesh',
-    website: 'autosparkbd.com',
-    youtube: 'https://www.youtube.com/@autosparkbd1131',
-    tiktok: 'https://www.tiktok.com/@auto_spark0',
-    phone: '+880 1760-401605',
-    email: 'autosparkbd@gmail.com',
-    name: 'AutoSpark',
-  };
-  const serviceCenter = {
-    address: 'Meherchandi, West Side of School Mor, Rajshahi, Rajshahi, Bangladesh, 6202',
-    city: 'Rajshahi, Rajshahi Division, Bangladesh',
-    website: 'autosparkbd.com',
-    youtube: 'https://www.youtube.com/@autosparkbd1131',
-    tiktok: 'http://www.tiktok.com/@easycareeasylife',
-    phone: '+880 1321-233670',
-    email: 'autosparkbd@gmail.com',
-    name: 'Auto Spark Service Center',
-  };
   return (
-    <footer
-      className={`relative z-20 ${theme === 'dark' ? 'bg-black/80 backdrop-blur-lg border-t border-gray-800/60' : 'bg-[#181818] border-t border-gray-800'} text-gray-300 transition-all duration-300 ${highContrast ? 'bg-yellow-900 text-yellow-200' : ''}`}
-      style={{ fontSize: `${fontSize}em` }}
-    >
-      <div className={`absolute top-0 left-0 right-0 h-[2px] ${theme === 'dark' ? 'bg-gradient-to-r from-transparent via-[#C00000]/60 to-transparent' : 'bg-gradient-to-r from-transparent via-[#C00000]/40 to-transparent'}`} />
-      <div className="container mx-auto px-4 py-12">
-        {/* Animated gradient/parallax background */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="w-full h-full bg-gradient-to-br from-[#C00000]/15 via-[#DA1609]/10 to-[#A16207]/10 animate-gradientMove" />
-        </div>
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-10 z-10">
-          {/* Brand & Info */}
-          <div className="flex flex-col gap-4 md:col-span-1">
-            <div className="flex items-center gap-3 mb-2">
-              <img src={`${import.meta.env.BASE_URL}logo/logoAS3.svg`} alt="Auto Spark BD" className="h-20 w-20 drop-shadow-lg" width={80} height={80} />
-              <span className="text-xl font-bold text-white tracking-tight">{t('site.title')}</span>
-            </div>
-            <p className="text-sm text-gray-400 mb-2">{t('footer.description')}</p>
-            <div className="space-y-1">
-              <span className="font-semibold text-xs text-[#C00000]">Showroom:</span>
-              <div className="text-[13px] leading-relaxed text-gray-300">{showroom.address}</div>
-              <div className="text-[13px] text-gray-400">{showroom.city}</div>
-              <div className="text-[13px]">Phone: <a href={`tel:${showroom.phone}`} aria-label={`Call showroom ${showroom.phone}`} className="inline-flex items-center px-3 py-2 rounded-lg underline hover:text-[#FF1A1A] touch-target-large">{showroom.phone}</a></div>
-              <div className="text-[13px]">Email: <a href={`mailto:${showroom.email}`} className="underline hover:text-[#FF1A1A]">{showroom.email}</a></div>
-              <div className="text-[13px]">Website: <a href={`https://${showroom.website}`} className="underline hover:text-[#FF1A1A]">{showroom.website}</a></div>
-            </div>
-            <div className="space-y-1 mt-2">
-              <span className="font-semibold text-xs text-[#C00000]">Service Center:</span>
-              <div className="text-[13px] leading-relaxed text-gray-300">{serviceCenter.address}</div>
-              <div className="text-[13px] text-gray-400">{serviceCenter.city}</div>
-              <div className="text-[13px]">Phone: <a href={`tel:${serviceCenter.phone}`} aria-label={`Call service center ${serviceCenter.phone}`} className="inline-flex items-center px-3 py-2 rounded-lg underline hover:text-[#FF1A1A] touch-target-large">{serviceCenter.phone}</a></div>
-              <div className="text-[13px]">Email: <a href={`mailto:${serviceCenter.email}`} className="underline hover:text-[#FF1A1A]">{serviceCenter.email}</a></div>
-              <div className="text-[13px]">Website: <a href={`https://${serviceCenter.website}`} className="underline hover:text-[#FF1A1A]">{serviceCenter.website}</a></div>
+    <footer className="relative z-20 border-t border-border bg-background text-muted-foreground">
+      <div className="container-fluid py-14 sm:py-16">
+        <div className="grid gap-12 lg:grid-cols-12">
+          {/* Brand */}
+          <div className="lg:col-span-5">
+            <Link to="/" className="inline-flex items-center gap-3">
+              <img
+                src={`${import.meta.env.BASE_URL}logo/logoAS3.svg`}
+                alt="Auto Spark BD"
+                className="h-12 w-12"
+                width={48}
+                height={48}
+              />
+              <span className="font-display text-xl font-bold tracking-tight text-foreground">
+                {t('site.title')}
+              </span>
+            </Link>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed">
+              {t('footer.description')}
+            </p>
+
+            <div className="mt-6 space-y-4 text-sm">
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <span>{showroom.address}</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <span>{serviceCenter.address}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <a
+                  href={`tel:${showroom.phone.replace(/\s/g, '')}`}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {showroom.phone}
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <a
+                  href={`mailto:${showroom.email}`}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {showroom.email}
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="md:col-span-1">
-            <h3 className="text-white font-semibold text-base mb-4 tracking-wide">{t('footer.quick_links')}</h3>
-            <ul className="space-y-1">
-              {quickLinks.map((link) => (
+          {/* Explore */}
+          <nav className="lg:col-span-2" aria-label="Explore">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+              Explore
+            </h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              {exploreLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className={`text-sm min-h-[40px] inline-flex items-center ${theme === 'dark' ? 'hover:text-[#FF1A1A]' : 'hover:text-[#C00000]'} transition-colors font-medium`}
+                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-foreground"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Contact & Hours */}
-          <div className="md:col-span-1">
-            <h3 className="text-white font-semibold text-base mb-4 tracking-wide">{t('contact.hours')}</h3>
-            <p className="text-sm mb-4 text-gray-400">{t('contact.hours_value')}</p>
+          {/* Services */}
+          <nav className="lg:col-span-2" aria-label="Services">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+              Services
+            </h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              {serviceLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Visit */}
+          <div className="lg:col-span-3">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+              {t('contact.hours')}
+            </h2>
+            <p className="mt-5 text-sm">{t('contact.hours_value')}</p>
+            <p className="mt-2 text-xs">Service centre: {serviceCenter.phone}</p>
+
             <Link
               to="/contact"
-              className="inline-block px-6 py-3 bg-[#C00000] hover:bg-[#FF1A1A] text-white text-sm font-semibold rounded-lg transition-colors shadow-lg hover:shadow-[0_0_20px_rgba(192,0,0,0.4)] flex items-center justify-center"
+              className="mt-6 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              {t('contact.title')}
+              {t('nav.contact')}
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
             </Link>
-          </div>
 
-          {/* Social & Media */}
-          <div className="md:col-span-1 flex flex-col gap-4">
-            <h3 className="text-white font-semibold text-base mb-4 tracking-wide">Connect</h3>
-            <div className="flex gap-2 mb-4 flex-wrap">
-              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
-                <Facebook className="w-6 h-6" />
-              </a>
-              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
-                <Instagram className="w-6 h-6" />
-              </a>
-              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
-                <Youtube className="w-6 h-6" />
-              </a>
-              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
-                <Music2 className="w-6 h-6" />
-              </a>
-              <a href={`tel:${showroom.phone}`} aria-label={`Call showroom ${showroom.phone}`} className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center px-2 rounded-lg hover:text-[#FF1A1A] touch-target-large focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000]">
-                <Phone className="w-6 h-6" />
-              </a>
-              <a href={`mailto:${showroom.email}`} aria-label="Email us" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
-                <Mail className="w-6 h-6" />
-              </a>
-              <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" aria-label="Visit website" className="inline-flex min-w-[44px] min-h-[44px] items-center justify-center hover:text-[#FF1A1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] rounded-lg">
-                <MapPin className="w-6 h-6" />
-              </a>
-            </div>
-            {/* Awards/Trust Badges */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold border border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-700">🏆 Award</span>
-              <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold border border-blue-300 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700">✔️ Verified</span>
-              <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold border border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700">🛡️ Security</span>
-              <span className="inline-flex items-center px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold border border-amber-600 dark:bg-red-900/30 dark:text-amber-600 dark:border-red-700">📄 Certificate</span>
-            </div>
-            {/* Mini Gallery/Instagram Feed */}
-            <div className="mb-4">
-              <h4 className="text-xs font-semibold text-white dark:text-gray-300 mb-2">Latest Gallery</h4>
-              <div className="flex gap-2">
-                <img src="https://images.pexels.com/photos/1409999/pexels-photo-1409999.jpeg?auto=compress&h=60&w=60" alt="Premium car exterior showcase" className="rounded-lg h-10 w-10 object-cover" loading="lazy" width={40} height={40} />
-                <img src="https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&h=60&w=60" alt="Car service center workshop" className="rounded-lg h-10 w-10 object-cover" loading="lazy" width={40} height={40} />
-                <img src="https://images.pexels.com/photos/1707828/pexels-photo-1707828.jpeg?auto=compress&h=60&w=60" alt="Vehicle detail interior" className="rounded-lg h-10 w-10 object-cover" loading="lazy" width={40} height={40} />
-                <img src="https://images.pexels.com/photos/210019/pexels-photo-210019.jpeg?auto=compress&h=60&w=60" alt="Car showroom display" className="rounded-lg h-10 w-10 object-cover" loading="lazy" width={40} height={40} />
+            <div className="mt-8">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+                {t('footer.follow')}
+              </h2>
+              <div className="mt-4 flex flex-wrap gap-1">
+                {socials.map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </a>
+                ))}
               </div>
-            </div>
-            {/* Accessibility Features */}
-            <div className="flex gap-2 items-center mb-4">
-              <button
-                className="px-2 py-1 rounded bg-gray-700 text-xs text-white hover:bg-gray-900 min-h-[44px] min-w-[44px]"
-                onClick={handleContrastToggle}
-                aria-label="Toggle high contrast"
-                aria-pressed={highContrast}
-              >
-                High Contrast
-              </button>
-              <button
-                className="px-2 py-1 rounded bg-gray-700 text-xs text-white hover:bg-gray-900"
-                onClick={() => handleFontSize(0.1)}
-                aria-label="Increase font size"
-              >
-                A+
-              </button>
-              <button
-                className="px-2 py-1 rounded bg-gray-700 text-xs text-white hover:bg-gray-900"
-                onClick={() => handleFontSize(-0.1)}
-                aria-label="Decrease font size"
-              >
-                A-
-              </button>
-            </div>
-            {/* Feedback Button */}
-            <div>
-              <a
-                href="mailto:feedback@autosparkbd.com"
-                className="inline-block px-4 py-2 bg-[#C00000] hover:bg-[#FF1A1A] text-white text-xs font-semibold rounded-lg transition-colors shadow-md"
-                aria-label="Send feedback"
-              >
-                Feedback / Suggestions
-              </a>
             </div>
           </div>
         </div>
-        <div className={`mt-12 pt-6 border-t border-gray-700`}>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mb-3 text-sm">
-            <Link to="/privacy" className="min-h-[40px] inline-flex items-center text-gray-300 hover:text-[#FF1A1A] transition-colors">Privacy Policy</Link>
-            <span aria-hidden className="text-gray-600">·</span>
-            <Link to="/terms" className="min-h-[40px] inline-flex items-center text-gray-300 hover:text-[#FF1A1A] transition-colors">Terms of Service</Link>
-          </div>
-          <p className="text-xs sm:text-sm text-gray-400">
+
+        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p>
             &copy; {currentYear} {t('site.title')}. {t('footer.rights')}
           </p>
-          <p className="mt-2 text-xs sm:text-sm text-gray-500">
-            This site is built by{' '}
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link to="/privacy" className="transition-colors hover:text-foreground">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="transition-colors hover:text-foreground">
+              Terms of Service
+            </Link>
             <a
-              href="https://farhankabir.tech/"
+              href={`https://${showroom.website}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-gray-300 hover:text-[#FF1A1A] underline underline-offset-4 transition-colors"
+              className="transition-colors hover:text-foreground"
             >
-              Farhan Kabir
+              {showroom.website}
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+﻿import { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
@@ -361,7 +361,7 @@ const PriceRangeSlider: React.FC<{
         
         {/* Active track */}
         <div 
-          className="absolute h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+          className="absolute h-full bg-gradient-to-r from-[#C00000] to-[#8A0000] rounded-full"
           style={{
             left: `${leftPercent}%`,
             right: `${100 - rightPercent}%`,
@@ -1265,7 +1265,7 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                     confirmAndInitiateBooking();
                   }}
                   disabled={isSubmittingBooking}
-                  className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
                 >
                   {isSubmittingBooking ? 'Redirecting...' : 'Confirm & Pay Booking Money'}
                 </button>
@@ -1413,7 +1413,7 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                 </h2>
                 <button
                   onClick={resetFilters}
-                  className={`text-sm font-medium flex items-center gap-1 ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}
+                  className={`text-sm font-medium flex items-center gap-1 ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-primary hover:text-blue-700'}`}
                 >
                   <RotateCcw className="w-4 h-4" />
                   {language === 'en' ? 'Reset' : 'রিসেট'}

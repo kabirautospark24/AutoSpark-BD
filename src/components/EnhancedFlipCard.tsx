@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+﻿import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import { AudioManager } from '../utils/AudioManager';
 
@@ -220,7 +220,7 @@ export const EnhancedFlipCard = ({
       {/* Decorative corner accent - reduced motion aware */}
       {!shouldReduceMotion && (
         <motion.div
-          className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-transparent rounded-bl-3xl"
+          className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#C00000]/20 to-transparent rounded-bl-3xl"
           animate={isHovered ? { scale: 1.15, opacity: 0.7 } : { scale: 1, opacity: 0.4 }}
           transition={{ duration: 0.3 }}
           style={{ willChange: 'transform, opacity' }}

@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+﻿import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
 
@@ -69,7 +69,7 @@ export const FilterAnimations = ({
   const textColor = theme === 'dark' ? 'text-white' : 'text-gray-900';
   const secondaryText = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
   const pillBg = theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100';
-  const pillBgActive = theme === 'dark' ? 'bg-blue-600/80' : 'bg-blue-500/80';
+  const pillBgActive = theme === 'dark' ? 'bg-primary/80' : 'bg-blue-500/80';
 
   return (
     <motion.div
@@ -209,7 +209,7 @@ export const FilterAnimations = ({
                 <motion.button
                   onClick={handleClearAll}
                   className={`text-sm font-semibold ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
+                    theme === 'dark' ? 'text-blue-400' : 'text-primary'
                   } hover:opacity-80 transition-opacity flex items-center gap-1`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

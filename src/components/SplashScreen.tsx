@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+﻿import { useEffect, useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Get the logo path - works for both localhost and GitHub Pages
@@ -180,7 +180,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.h1
-                className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#FF1A1A] via-white to-[#C00000] bg-clip-text text-transparent"
+                className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#E23A3A] via-white to-[#C00000] bg-clip-text text-transparent"
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                 }}
@@ -215,7 +215,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
                 />
                 {/* Progress fill */}
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-[#8B0000] via-[#C00000] to-[#FF1A1A]"
+                  className="h-full rounded-full bg-gradient-to-r from-[#8B0000] via-[#C00000] to-[#E23A3A]"
                   style={{ width: `${progress}%` }}
                   transition={{ duration: 0.1 }}
                 />

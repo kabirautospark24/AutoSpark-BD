@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface Particle {
@@ -180,8 +180,8 @@ export const GradientOrbs = ({ theme }: GradientOrbsProps) => {
   const colors =
     theme === 'dark'
       ? [
-        { color: 'from-blue-600 to-[#A16207]', x: '-20%', y: '-30%' },
-        { color: 'from-[#A16207] to-pink-600', x: '50%', y: '-60%' },
+        { color: 'from-[#C00000] to-[#8A0000]', x: '-20%', y: '-30%' },
+        { color: 'from-[#C00000] to-pink-600', x: '50%', y: '-60%' },
         { color: 'from-pink-600 to-orange-600', x: '80%', y: '10%' },
       ]
       : [

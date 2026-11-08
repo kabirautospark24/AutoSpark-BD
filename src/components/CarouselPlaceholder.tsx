@@ -1,4 +1,4 @@
-import { motion, type Variants } from 'framer-motion';
+﻿import { motion, type Variants } from 'framer-motion';
 
 interface CarouselPlaceholderProps {
   theme: string;
@@ -95,7 +95,7 @@ export const CarouselPlaceholder = ({
       <motion.div
         className={`absolute inset-0 ${
           theme === 'dark'
-            ? 'bg-gradient-to-br from-blue-500/5 to-amber-700/5'
+            ? 'bg-gradient-to-br from-[#C00000]/5 to-amber-700/5'
             : 'bg-gradient-to-br from-blue-300/5 to-amber-600/5'
         }`}
         animate={{

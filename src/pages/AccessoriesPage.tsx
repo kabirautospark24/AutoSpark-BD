@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+﻿import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -738,7 +738,7 @@ const handleProductImageError = (event: React.SyntheticEvent<HTMLImageElement, E
 // Categories with icons
 const categoryData: { id: string; name: string; icon: LucideIcon; color: string }[] = [
   { id: 'all', name: 'All Products', icon: Grid, color: 'from-gray-500 to-gray-700' },
-  { id: 'Interior', name: 'Interior', icon: Package, color: 'from-blue-500 to-blue-700' },
+  { id: 'Interior', name: 'Interior', icon: Package, color: 'from-[#C00000] to-blue-700' },
   { id: 'Exterior', name: 'Exterior', icon: Shield, color: 'from-green-500 to-green-700' },
   { id: 'Electronics', name: 'Electronics', icon: Zap, color: 'from-amber-700 to-red-700' },
   { id: 'Lighting', name: 'Lighting', icon: Sparkles, color: 'from-yellow-500 to-orange-500' },
@@ -874,7 +874,7 @@ const PriceRangeSlider: React.FC<{
       <div className="relative h-2">
         <div className={`absolute w-full h-2 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
         <div
-          className="absolute h-2 bg-gradient-to-r from-blue-500 to-amber-700 rounded-full"
+          className="absolute h-2 bg-gradient-to-r from-[#C00000] to-[#8A0000] rounded-full"
           style={{ left: `${minPercent}%`, width: `${maxPercent - minPercent}%` }}
         />
         <input
@@ -1092,7 +1092,7 @@ const ProductCard: React.FC<{
               <span
                 key={i}
                 className={`text-xs px-1.5 py-0.5 rounded ${
-                  isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-600'
+                  isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-primary'
                 }`}
               >
                 {comp}
@@ -1147,7 +1147,7 @@ const ProductCard: React.FC<{
             className={`flex-1 py-2 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors ${
               product.stock_quantity === 0
                 ? 'bg-gray-400 cursor-not-allowed text-gray-200'
-                : 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:shadow-lg'
+                : 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:shadow-lg'
             }`}
           >
             <ShoppingCart size={16} />
@@ -1233,7 +1233,7 @@ const QuickViewModal: React.FC<{
                 {/* Category & Brand */}
                 <div className="flex items-center gap-2">
                   <span className={`text-sm px-3 py-1 rounded-full ${
-                    isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-600'
+                    isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-primary'
                   }`}>
                     {product.category}
                   </span>
@@ -1375,7 +1375,7 @@ const QuickViewModal: React.FC<{
                     className={`flex-1 py-3 px-6 rounded-xl font-semibold flex items-center justify-center gap-2 ${
                       product.stock_quantity === 0
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white'
+                        : 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white'
                     }`}
                   >
                     <ShoppingCart size={20} />
@@ -1510,7 +1510,7 @@ const ComparePanel: React.FC<{
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-3 bg-gradient-to-r from-[#A16207] to-blue-600 text-white font-semibold rounded-xl"
+                  className="w-full py-3 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-xl"
                 >
                   Compare Now
                 </motion.button>
@@ -1553,7 +1553,7 @@ const FloatingCartBar: React.FC<{
           <div className="flex items-center gap-4">
             <div className="relative">
               <ShoppingCart className={`${isDark ? 'text-white' : 'text-gray-900'}`} size={28} />
-              <span className="absolute -top-2 -right-2 w-6 h-6 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 w-6 h-6 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center">
                 {totalItems}
               </span>
             </div>
@@ -1578,7 +1578,7 @@ const FloatingCartBar: React.FC<{
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenCart}
-              className="px-8 py-3 min-h-[44px] text-sm sm:text-base bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold rounded-xl flex items-center gap-2"
+              className="px-8 py-3 min-h-[44px] text-sm sm:text-base bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-xl flex items-center gap-2"
             >
               View Cart
               <ArrowRight size={18} />
@@ -1728,7 +1728,7 @@ const SideCartDrawer: React.FC<{
                   whileTap={{ scale: 0.98 }}
                   onClick={onCheckout}
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-bold rounded-xl hover:shadow-lg transition-shadow disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-bold rounded-xl hover:shadow-lg transition-shadow disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -1885,7 +1885,7 @@ const CheckoutModal: React.FC<{
               <button
                 onClick={onSubmit}
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-5 py-2 rounded-lg bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold disabled:opacity-70 inline-flex items-center justify-center gap-2"
               >
                 {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : null}
                 {isSubmitting ? 'Redirecting...' : 'Confirm & Pay'}
@@ -2105,14 +2105,16 @@ function AccessoriesPage() {
   const updateCartQuantity = useCallback((productId: string, quantity: number) => {
     if (quantity <= 0) {
       setCart(prev => prev.filter(item => item.product.id !== productId));
-    } else {
-      setCart(prev =>
-        prev.map(item =>
-          item.product.id === productId ? { ...item, quantity } : item
-        )
-      );
+      globalCart?.removeFromCart(productId);
+      return;
     }
-  }, []);
+    setCart(prev =>
+      prev.map(item =>
+        item.product.id === productId ? { ...item, quantity } : item
+      )
+    );
+    globalCart?.updateQuantity(productId, quantity);
+  }, [globalCart]);
 
   const removeFromCart = useCallback((productId: string) => {
     setCart(prev => prev.filter(item => item.product.id !== productId));
@@ -2291,7 +2293,7 @@ function AccessoriesPage() {
     { id: 'oil-bottle-1', type: 'oil', brand: 'Mobil 1', grade: '0W-20', color: 'from-red-500 to-red-700', x: 8, y: 18, size: 80, delay: 0 },
     { id: 'oil-bottle-2', type: 'oil', brand: 'Castrol', grade: '10W-40', color: 'from-green-500 to-green-700', x: 85, y: 22, size: 75, delay: 0.5 },
     { id: 'oil-bottle-3', type: 'oil', brand: 'Shell', grade: '5W-30', color: 'from-yellow-500 to-yellow-600', x: 75, y: 65, size: 70, delay: 1 },
-    { id: 'battery', type: 'battery', brand: 'Hybrid', voltage: '12V', color: 'from-blue-500 to-blue-700', x: 90, y: 45, size: 85, delay: 0.3 },
+    { id: 'battery', type: 'battery', brand: 'Hybrid', voltage: '12V', color: 'from-[#C00000] to-blue-700', x: 90, y: 45, size: 85, delay: 0.3 },
     { id: 'brake-disc', type: 'brake', brand: 'Brembo', color: 'from-gray-400 to-gray-600', x: 5, y: 55, size: 100, delay: 0.7 },
     { id: 'filter', type: 'filter', brand: 'K&N', color: 'from-orange-500 to-red-600', x: 18, y: 75, size: 65, delay: 1.2 },
     { id: 'spark-plug', type: 'spark', brand: 'NGK', color: 'from-gray-300 to-gray-500', x: 70, y: 12, size: 55, delay: 0.8 },
@@ -2422,7 +2424,7 @@ function AccessoriesPage() {
                   {/* Battery label */}
                   <div className={`absolute inset-2 ${isDark ? 'bg-gray-900/80' : 'bg-white/90'} rounded flex flex-col items-center justify-center`}>
                     <span className={`text-[9px] font-black ${isDark ? 'text-green-400' : 'text-green-600'}`}>HYBRID</span>
-                    <span className={`text-[7px] font-bold ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>Li-Ion {comp.voltage}</span>
+                    <span className={`text-[7px] font-bold ${isDark ? 'text-blue-400' : 'text-primary'}`}>Li-Ion {comp.voltage}</span>
                     {/* Power indicator */}
                     <div className="flex gap-0.5 mt-1">
                       {[...Array(4)].map((_, i) => (
@@ -2618,7 +2620,7 @@ function AccessoriesPage() {
                 {/* Label */}
                 <div className={`absolute top-[20%] left-1/2 -translate-x-1/2 w-[85%] h-[40%] ${isDark ? 'bg-white/90' : 'bg-white'} rounded-sm flex flex-col items-center justify-center`}>
                   <span className="text-[6px] font-black text-cyan-700">PRESTONE</span>
-                  <span className="text-[5px] font-bold text-blue-600">COOLANT</span>
+                  <span className="text-[5px] font-bold text-primary">COOLANT</span>
                   <span className="text-[4px] text-gray-600">-37°C</span>
                 </div>
                 {/* Liquid level indicator */}
@@ -2748,7 +2750,7 @@ function AccessoriesPage() {
                     className={`px-4 py-2 rounded-full text-sm transition-colors ${
                       isDark
                         ? 'bg-gray-800 text-gray-300 hover:bg-amber-700/20 hover:text-amber-600'
-                        : 'bg-white/80 text-gray-600 hover:bg-red-100 hover:text-[#A16207]'
+                        : 'bg-white/80 text-gray-600 hover:bg-red-100 hover:text-[#C00000]'
                     }`}
                   >
                     {tag}
@@ -2779,7 +2781,7 @@ function AccessoriesPage() {
               transition={{ delay: 0.5 + i * 0.1 }}
               className={`p-4 rounded-2xl ${isDark ? 'bg-white/5 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm shadow-lg'}`}
             >
-              <stat.icon className={`mx-auto mb-2 ${isDark ? 'text-amber-600' : 'text-[#A16207]'}`} size={28} />
+              <stat.icon className={`mx-auto mb-2 ${isDark ? 'text-amber-600' : 'text-[#C00000]'}`} size={28} />
               <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{stat.value}</div>
               <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
             </motion.div>
@@ -2869,7 +2871,7 @@ function AccessoriesPage() {
                   </h3>
                   <button
                     onClick={clearAllFilters}
-                    className={`text-sm ${isDark ? 'text-amber-600' : 'text-[#A16207]'}`}
+                    className={`text-sm ${isDark ? 'text-amber-600' : 'text-[#C00000]'}`}
                   >
                     Clear All
                   </button>
@@ -2914,7 +2916,7 @@ function AccessoriesPage() {
                                 : [...prev, brand]
                             );
                           }}
-                          className="w-4 h-4 rounded text-[#A16207]"
+                          className="w-4 h-4 rounded text-[#C00000]"
                         />
                         <span className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           {brand}
@@ -2958,7 +2960,7 @@ function AccessoriesPage() {
                     <div
                       onClick={() => setInStockOnly(!inStockOnly)}
                       className={`relative w-12 h-6 rounded-full transition-colors ${
-                        inStockOnly ? 'bg-[#A16207]' : isDark ? 'bg-gray-600' : 'bg-gray-300'
+                        inStockOnly ? 'bg-[#C00000]' : isDark ? 'bg-gray-600' : 'bg-gray-300'
                       }`}
                     >
                       <motion.div
@@ -3013,14 +3015,14 @@ function AccessoriesPage() {
                   <div className={`flex rounded-lg overflow-hidden ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
                     <button
                       onClick={() => setViewMode('grid')}
-                      className={`p-2 ${viewMode === 'grid' ? 'bg-[#A16207] text-white' : ''}`}
+                      className={`p-2 ${viewMode === 'grid' ? 'bg-[#C00000] text-white' : ''}`}
                       aria-label="Grid view"
                     >
                       <Grid size={18} />
                     </button>
                     <button
                       onClick={() => setViewMode('list')}
-                      className={`p-2 ${viewMode === 'list' ? 'bg-[#A16207] text-white' : ''}`}
+                      className={`p-2 ${viewMode === 'list' ? 'bg-[#C00000] text-white' : ''}`}
                       aria-label="List view"
                     >
                       <List size={18} />
@@ -3038,7 +3040,7 @@ function AccessoriesPage() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm ${
-                        isDark ? 'bg-amber-700/20 text-amber-600' : 'bg-red-100 text-[#A16207]'
+                        isDark ? 'bg-amber-700/20 text-amber-600' : 'bg-red-100 text-[#C00000]'
                       }`}
                     >
                       {filter.label}
@@ -3080,7 +3082,7 @@ function AccessoriesPage() {
                   </p>
                   <button
                     onClick={clearAllFilters}
-                    className="mt-4 px-6 py-2 bg-[#A16207] text-white rounded-lg"
+                    className="mt-4 px-6 py-2 bg-[#C00000] text-white rounded-lg"
                   >
                     Clear Filters
                   </button>
@@ -3142,7 +3144,7 @@ function AccessoriesPage() {
                   <h3 className={`font-medium text-sm line-clamp-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {product.name_en}
                   </h3>
-                  <p className={`text-sm font-bold mt-1 ${isDark ? 'text-amber-600' : 'text-[#A16207]'}`}>
+                  <p className={`text-sm font-bold mt-1 ${isDark ? 'text-amber-600' : 'text-[#C00000]'}`}>
                     {formatPrice(product.price)}
                   </p>
                 </motion.div>

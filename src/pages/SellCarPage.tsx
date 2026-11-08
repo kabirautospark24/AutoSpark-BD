@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { Upload, DollarSign, CreditCard, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
@@ -120,12 +120,12 @@ export const SellCarPage = () => {
               },
               {
                 icon: CreditCard,
-                title: language === 'en' ? 'Instant Payment' : 'তাৎক্ষণিক পেমেন্ট',
+                title: language === 'en' ? 'Fair Valuation' : 'Nyaay Mulyaayan',
                 description: language === 'en' ? 'Get paid immediately' : 'অবিলম্বে অর্থ প্রদান পান',
               },
             ].map((feature, index) => (
               <Card key={index} className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800' : ''}`}>
-                <feature.icon className={`h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 ${theme === 'dark' ? 'text-[#FF1A1A]' : 'text-[#C00000]'}`} />
+                <feature.icon className={`h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 ${theme === 'dark' ? 'text-[#E23A3A]' : 'text-[#C00000]'}`} />
                 <h3 className={`text-base sm:text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{feature.title}</h3>
                 <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{feature.description}</p>
               </Card>

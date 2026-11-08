@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LoadingPlaceholder Component
  * 
  * Beautiful loading states for the 3D viewer including:
@@ -110,7 +110,7 @@ export const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
         >
           <div className="h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
+              className="h-full bg-gradient-to-r from-[#C00000] to-blue-400 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.3 }}

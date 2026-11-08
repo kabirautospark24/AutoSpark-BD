@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import {
@@ -518,6 +518,7 @@ const ServicesPage: React.FC = () => {
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null);
   const [faqSearch, setFaqSearch] = useState('');
   const [bookingStep, setBookingStep] = useState(1);
+  const [bookingNotice, setBookingNotice] = useState<string | null>(null);
   const [customerInfo, setCustomerInfo] = useState({ name: '', phone: '', email: '', carModel: '', notes: '' });
   const [serviceStatusId, setServiceStatusId] = useState('');
   const [serviceStatus, setServiceStatus] = useState<{ step: number; status: string } | null>(null);
@@ -658,7 +659,7 @@ const ServicesPage: React.FC = () => {
         {/* Ambient Light Effects */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
-            className={`absolute w-96 h-96 rounded-full blur-3xl ${isDark ? 'bg-blue-600/20' : 'bg-blue-400/15'}`}
+            className={`absolute w-96 h-96 rounded-full blur-3xl ${isDark ? 'bg-primary/20' : 'bg-blue-400/15'}`}
             style={{ top: '10%', left: '20%' }}
             animate={{ 
               scale: [1, 1.3, 1],
@@ -667,7 +668,7 @@ const ServicesPage: React.FC = () => {
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className={`absolute w-80 h-80 rounded-full blur-3xl ${isDark ? 'bg-[#A16207]/15' : 'bg-amber-600/10'}`}
+            className={`absolute w-80 h-80 rounded-full blur-3xl ${isDark ? 'bg-[#C00000]/15' : 'bg-amber-600/10'}`}
             style={{ bottom: '20%', right: '15%' }}
             animate={{ 
               scale: [1, 1.2, 1],
@@ -796,7 +797,7 @@ const ServicesPage: React.FC = () => {
               
               {/* Car Body Top */}
               <div className={`mx-auto rounded-t-2xl ${
-                isDark ? 'bg-gradient-to-b from-blue-600 to-blue-700' : 'bg-gradient-to-b from-blue-500 to-blue-600'
+                isDark ? 'bg-gradient-to-b from-[#C00000] to-blue-700' : 'bg-gradient-to-b from-[#C00000] to-[#8A0000]'
               }`} style={{ width: '160px', height: '35px', marginTop: '-2px' }}>
                 {/* Windows */}
                 <div className={`mx-auto mt-1 rounded-t-lg ${
@@ -809,7 +810,7 @@ const ServicesPage: React.FC = () => {
           {/* Label */}
           <motion.div
             className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${
-              isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-600'
+              isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-primary'
             }`}
             animate={{ opacity: [0.7, 1, 0.7] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -1099,7 +1100,7 @@ const ServicesPage: React.FC = () => {
               <motion.div
                 className={`w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-sm ${
                   isDark 
-                    ? 'bg-gradient-to-br from-blue-500/30 to-amber-700/20 border border-blue-400/30' 
+                    ? 'bg-gradient-to-br from-[#C00000]/30 to-amber-700/20 border border-blue-400/30' 
                     : 'bg-gradient-to-br from-blue-100 to-red-100 border border-blue-200'
                 }`}
                 style={{ 
@@ -1113,10 +1114,10 @@ const ServicesPage: React.FC = () => {
                 }}
                 transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut" }}
               >
-                {element.id === 'lift' && <Car className={isDark ? 'text-blue-400' : 'text-blue-600'} size={24} />}
+                {element.id === 'lift' && <Car className={isDark ? 'text-blue-400' : 'text-primary'} size={24} />}
                 {element.id === 'diagnostic' && <Settings className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} animate-spin`} style={{ animationDuration: '8s' }} size={24} />}
                 {element.id === 'tools' && <Wrench className={isDark ? 'text-yellow-400' : 'text-yellow-600'} size={24} />}
-                {element.id === 'engine' && <Cog className={`${isDark ? 'text-amber-600' : 'text-[#A16207]'} animate-spin`} style={{ animationDuration: '4s' }} size={24} />}
+                {element.id === 'engine' && <Cog className={`${isDark ? 'text-amber-600' : 'text-[#C00000]'} animate-spin`} style={{ animationDuration: '4s' }} size={24} />}
                 {element.id === 'tires' && <CircleDot className={isDark ? 'text-green-400' : 'text-green-600'} size={24} />}
               </motion.div>
               <motion.span
@@ -1203,22 +1204,20 @@ const ServicesPage: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-              isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-600'
+              isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-primary'
             }`}>
-              <Sparkles size={16} />
-              Premium Auto Services
-            </span>
+              <Sparkles size={16} /> Services </span>
 
             <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Professional Care
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C00000] to-[#A16207]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C00000] to-[#C00000]">
                 For Your Car
               </span>
             </h1>
 
             <p className={`text-xl md:text-2xl mb-10 max-w-3xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              From routine maintenance to specialized enhancements, we deliver exceptional service with cutting-edge technology.
+              Maintenance, repairs and accessories for vehicles in Rajshahi.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-16">
@@ -1226,7 +1225,7 @@ const ServicesPage: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowBookingModal(true)}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
+                className="px-8 py-4 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
               >
                 <Calendar size={20} />
                 Book Now
@@ -1266,7 +1265,7 @@ const ServicesPage: React.FC = () => {
                 transition={{ delay: 0.5 + i * 0.1 }}
                 className={`p-6 rounded-2xl ${isDark ? 'bg-white/5 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm shadow-lg'}`}
               >
-                <stat.icon className={`mx-auto mb-3 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} size={32} />
+                <stat.icon className={`mx-auto mb-3 ${isDark ? 'text-blue-400' : 'text-primary'}`} size={32} />
                 <div className={`text-3xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {stat.suffix === '' ? stat.value : <AnimatedCounter end={stat.value} suffix={stat.suffix} />}
                 </div>
@@ -1299,7 +1298,7 @@ const ServicesPage: React.FC = () => {
               />
               <button
                 onClick={checkServiceStatus}
-                className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                className="px-6 py-3 bg-primary text-white rounded-xl hover:bg-blue-700 transition-colors"
               >
                 Track
               </button>
@@ -1371,7 +1370,7 @@ const ServicesPage: React.FC = () => {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`px-6 py-3 rounded-full font-medium transition-all ${
                   selectedCategory === cat.id
-                    ? 'bg-blue-600 text-white shadow-lg'
+                    ? 'bg-primary text-white shadow-lg'
                     : isDark
                       ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                       : 'bg-white text-gray-600 hover:bg-gray-100 shadow'
@@ -1426,7 +1425,7 @@ const ServicesPage: React.FC = () => {
 
                     {/* Glow Effect on Hover */}
                     <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      isDark ? 'bg-gradient-to-br from-blue-500/20 to-amber-700/20' : 'bg-gradient-to-br from-blue-100/50 to-red-100/50'
+                      isDark ? 'bg-gradient-to-br from-[#C00000]/20 to-amber-700/20' : 'bg-gradient-to-br from-blue-100/50 to-red-100/50'
                     }`} />
 
                     <div className="relative p-6">
@@ -1434,7 +1433,7 @@ const ServicesPage: React.FC = () => {
                       <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 ${
                         isDark ? 'bg-blue-500/20' : 'bg-blue-50'
                       } group-hover:scale-110 transition-transform`}>
-                        <IconComponent className={isDark ? 'text-blue-400' : 'text-blue-600'} size={32} />
+                        <IconComponent className={isDark ? 'text-blue-400' : 'text-primary'} size={32} />
                       </div>
 
                       {/* Content */}
@@ -1529,7 +1528,7 @@ const ServicesPage: React.FC = () => {
               >
                 {/* Recommended Badge */}
                 {pkg.recommended && (
-                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-[#A16207] text-white text-center py-2 text-sm font-bold">
+                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white text-center py-2 text-sm font-bold">
                     Most Popular
                   </div>
                 )}
@@ -1565,7 +1564,7 @@ const ServicesPage: React.FC = () => {
                   <button
                     className={`w-full py-4 rounded-xl font-semibold transition-all ${
                       pkg.recommended
-                        ? 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:shadow-lg'
+                        ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:shadow-lg'
                         : isDark
                           ? 'bg-gray-700 text-white hover:bg-gray-600'
                           : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -1619,7 +1618,7 @@ const ServicesPage: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowBookingModal(true)}
-                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-blue-600 to-[#A16207] text-white font-semibold rounded-xl"
+                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-xl"
                 >
                   Book Now
                 </motion.button>
@@ -1692,7 +1691,7 @@ const ServicesPage: React.FC = () => {
                       <span
                         key={i}
                         className={`text-xs px-2 py-1 rounded-full ${
-                          isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-600'
+                          isDark ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-primary'
                         }`}
                       >
                         {cert}
@@ -1906,14 +1905,14 @@ const ServicesPage: React.FC = () => {
                     <div key={step} className="flex items-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                         bookingStep >= step 
-                          ? 'bg-blue-600 text-white' 
+                          ? 'bg-primary text-white' 
                           : isDark ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-500'
                       }`}>
                         {bookingStep > step ? <Check size={20} /> : step}
                       </div>
                       {step < 3 && (
                         <div className={`w-20 md:w-32 h-1 mx-2 ${
-                          bookingStep > step ? 'bg-blue-600' : isDark ? 'bg-gray-700' : 'bg-gray-200'
+                          bookingStep > step ? 'bg-primary' : isDark ? 'bg-gray-700' : 'bg-gray-200'
                         }`} />
                       )}
                     </div>
@@ -1943,7 +1942,7 @@ const ServicesPage: React.FC = () => {
                           onClick={() => setSelectedDate(date)}
                           className={`flex-shrink-0 w-20 p-3 rounded-xl text-center transition-all ${
                             selectedDate.toDateString() === date.toDateString()
-                              ? 'bg-blue-600 text-white'
+                              ? 'bg-primary text-white'
                               : isDark 
                                 ? 'bg-gray-700 text-white hover:bg-gray-600' 
                                 : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -1973,7 +1972,7 @@ const ServicesPage: React.FC = () => {
                           disabled={!slot.available}
                           className={`py-3 rounded-xl text-center transition-all ${
                             selectedTime === slot.time
-                              ? 'bg-blue-600 text-white'
+                              ? 'bg-primary text-white'
                               : !slot.available
                                 ? isDark 
                                   ? 'bg-gray-800 text-gray-600 cursor-not-allowed' 
@@ -2144,16 +2143,39 @@ const ServicesPage: React.FC = () => {
                     if (bookingStep < 3) {
                       setBookingStep(bookingStep + 1);
                     } else {
-                      alert('Booking confirmed! We will contact you soon.');
+                      const bookingId = `AS-${Date.now().toString(36).toUpperCase()}`;
+                      try {
+                        const raw = localStorage.getItem('autospark-service-bookings');
+                        const list = raw ? (JSON.parse(raw) as unknown[]) : [];
+                        list.push({
+                          id: bookingId,
+                          step: 3,
+                          status: 'pending',
+                          date: selectedDate.toISOString(),
+                          time: selectedTime,
+                          package: selectedPackage,
+                          services: selectedServices,
+                          customer: customerInfo,
+                          createdAt: new Date().toISOString(),
+                        });
+                        localStorage.setItem('autospark-service-bookings', JSON.stringify(list));
+                      } catch {
+                        // Storage may be unavailable; the booking notice still shows.
+                      }
+                      setBookingNotice(`Booking ${bookingId} received. We will call you to confirm.`);
                       setShowBookingModal(false);
                       setBookingStep(1);
                     }
                   }}
-                  disabled={bookingStep === 1 && !selectedTime}
+                  disabled={
+                    (bookingStep === 1 && !selectedTime) ||
+                    (bookingStep === 2 && (!customerInfo.name.trim() || !customerInfo.phone.trim()))
+                  }
                   className={`flex-1 py-4 rounded-xl font-semibold transition-all ${
-                    bookingStep === 1 && !selectedTime
+                    (bookingStep === 1 && !selectedTime) ||
+                    (bookingStep === 2 && (!customerInfo.name.trim() || !customerInfo.phone.trim()))
                       ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-blue-600 to-[#A16207] text-white hover:shadow-lg'
+                      : 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:shadow-lg'
                   }`}
                 >
                   {bookingStep === 3 ? 'Confirm Booking' : 'Next'}
@@ -2163,6 +2185,22 @@ const ServicesPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {bookingNotice && (
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 z-[60] flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center justify-between gap-4 rounded-xl border border-border bg-card px-4 py-3 text-sm text-card-foreground shadow-xl"
+        >
+          <span>{bookingNotice}</span>
+          <button
+            type="button"
+            onClick={() => setBookingNotice(null)}
+            className="shrink-0 rounded-md px-2 py-1 text-xs font-semibold text-primary hover:bg-muted"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {/* Padding for bottom bar */}
       {(selectedServices.length > 0 || selectedPackage) && <div className="h-32 sm:h-36" />}

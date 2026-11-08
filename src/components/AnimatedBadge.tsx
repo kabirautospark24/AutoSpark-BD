@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Sparkles, TrendingUp, Clock } from 'lucide-react';
 
 export type BadgeType = 'best-value' | 'popular' | 'new-arrival' | 'limited-stock' | 'featured';

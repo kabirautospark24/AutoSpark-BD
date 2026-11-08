@@ -1,15 +1,12 @@
-import { MapPin, Phone, Mail } from 'lucide-react';
+﻿import { MapPin, Phone, Mail } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { Button } from '../components/ui/Button';
-import { ShowroomCards } from '../components/ShowroomCards';
 import { Card } from '../components/ui/Card';
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 export const ContactPage = () => {
   const { t, language } = useLanguage();
-  const { theme } = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -51,73 +48,76 @@ export const ContactPage = () => {
   };
 
   return (
-    <div>
-      <ShowroomCards />
-      <div className={`min-h-screen relative ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-        <div className="bg-gradient-to-r from-[#0D0D0D] to-[#1a0a0a] text-white py-10 sm:py-12 md:py-16">
-          <div className="container mx-auto px-3 sm:px-4 md:px-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">{t('contact.title')}</h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-300">
-              {language === 'en' ? 'Visit our showroom or get in touch with us' : 'আমাদের শোরুম পরিদর্শন করুন বা আমাদের সাথে যোগাযোগ করুন'}
-            </p>
-          </div>
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border bg-card pb-10 pt-28 sm:pb-12 md:pb-14">
+        <div className="container-fluid">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            {language === 'en' ? 'Contact' : 'যোগাযোগ'}
+          </p>
+          <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+            {t('contact.title')}
+          </h1>
+          <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
+            {language === 'en' ? 'Visit our showroom or get in touch with us' : 'আমাদের শোরুম পরিদর্শন করুন বা আমাদের সাথে যোগাযোগ করুন'}
+          </p>
         </div>
+      </header>
 
-        <div className="container mx-auto px-3 sm:px-4 md:px-6 py-8 sm:py-10 md:py-12">
+      <div className="container-fluid py-10 md:py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
-            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
-              <MapPin className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
-              <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <Card className="p-6 text-center">
+              <MapPin className="mx-auto mb-4 h-10 w-10 text-primary sm:h-11 sm:w-11" />
+              <h3 className="mb-2 text-lg font-semibold text-foreground">
                 AutoSpark
               </h3>
-              <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia Rajshahi, Rajshahi, Bangladesh, 6207</p>
-              <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-700'}`}>Rajshahi, Rajshahi Division, Bangladesh</p>
+              <p className={`text-sm sm:text-base text-muted-foreground`}>Station Road, Near Shuvo Petroleum, Sheroil, Ghoramara, Boalia Rajshahi, Rajshahi, Bangladesh, 6207</p>
+              <p className={`text-xs text-muted-foreground/70`}>Rajshahi, Rajshahi Division, Bangladesh</p>
             </Card>
-            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
-              <MapPin className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
-              <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <Card className="p-6 text-center">
+              <MapPin className="mx-auto mb-4 h-10 w-10 text-primary sm:h-11 sm:w-11" />
+              <h3 className="mb-2 text-lg font-semibold text-foreground">
                 Auto Spark Service Center
               </h3>
-              <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Meherchandi, West Side of School Mor, Rajshahi, Rajshahi, Bangladesh, 6202</p>
-              <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-700'}`}>Rajshahi, Rajshahi Division, Bangladesh</p>
+              <p className={`text-sm sm:text-base text-muted-foreground`}>Meherchandi, West Side of School Mor, Rajshahi, Rajshahi, Bangladesh, 6202</p>
+              <p className={`text-xs text-muted-foreground/70`}>Rajshahi, Rajshahi Division, Bangladesh</p>
             </Card>
-            <Card className={`p-4 sm:p-6 text-center ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
-              <Phone className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
-              <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <Card className="p-6 text-center">
+              <Phone className="mx-auto mb-4 h-10 w-10 text-primary sm:h-11 sm:w-11" />
+              <h3 className="mb-2 text-lg font-semibold text-foreground">
                 {language === 'en' ? 'Call Us' : 'কল করুন'}
               </h3>
               <div className="flex flex-col gap-1">
-                <a href={`tel:+8801760401605`} className="text-[#C00000] hover:text-[#FF1A1A] text-sm sm:text-base font-semibold">Showroom: +880 1760-401605</a>
-                <a href={`tel:+8801321233670`} className="text-[#C00000] hover:text-[#FF1A1A] text-sm sm:text-base font-semibold">Service Center: +880 1321-233670</a>
+                <a href={`tel:+8801760401605`} className="text-primary hover:text-primary/80 text-sm sm:text-base font-semibold">Showroom: +880 1760-401605</a>
+                <a href={`tel:+8801321233670`} className="text-primary hover:text-primary/80 text-sm sm:text-base font-semibold">Service Center: +880 1321-233670</a>
               </div>
             </Card>
-            <Card className={`p-4 sm:p-6 text-center sm:col-span-2 lg:col-span-1 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
-              <Mail className="h-10 w-10 sm:h-12 sm:w-12 text-[#C00000] mx-auto mb-3 sm:mb-4" />
-              <h3 className={`text-lg sm:text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <Card className="p-6 text-center sm:col-span-2 lg:col-span-1">
+              <Mail className="mx-auto mb-4 h-10 w-10 text-primary sm:h-11 sm:w-11" />
+              <h3 className="mb-2 text-lg font-semibold text-foreground">
                 {language === 'en' ? 'Email Us' : 'ইমেইল করুন'}
               </h3>
               <div className="flex flex-col gap-1">
-                <a href="mailto:autosparkbd@gmail.com" className="text-[#C00000] hover:text-[#FF1A1A] text-sm sm:text-base font-semibold break-all">Showroom: autosparkbd@gmail.com</a>
-                <a href="mailto:autosparkbd@gmail.com" className="text-[#C00000] hover:text-[#FF1A1A] text-sm sm:text-base font-semibold break-all">Service Center: autosparkbd@gmail.com</a>
+                <a href="mailto:autosparkbd@gmail.com" className="text-primary hover:text-primary/80 text-sm sm:text-base font-semibold break-all">Showroom: autosparkbd@gmail.com</a>
+                <a href="mailto:autosparkbd@gmail.com" className="text-primary hover:text-primary/80 text-sm sm:text-base font-semibold break-all">Service Center: autosparkbd@gmail.com</a>
               </div>
             </Card>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 pb-12">
+        <div className="container-fluid pb-12">
           <div className="max-w-2xl mx-auto">
-            <Card className={`p-4 sm:p-6 md:p-8 ${theme === 'dark' ? 'bg-black/30 backdrop-blur-sm border-gray-800 border-gray-700/30' : ''}`}>
-            <h2 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <Card className="p-6 md:p-8">
+            <h2 className="mb-5 text-xl font-semibold text-foreground sm:text-2xl">
               {language === 'en' ? 'Send us a Message' : 'আমাদের একটি বার্তা পাঠান'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               {status.type !== 'idle' && (
-                <div role="alert" className={`p-3 rounded-lg ${status.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                <div role="alert" className={`p-3 rounded-lg ${status.type === 'success' ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' : 'bg-destructive/10 text-destructive'}`}>
                   {status.message}
                 </div>
               )}
               <div>
-                <label htmlFor="contact-name" className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label htmlFor="contact-name" className="mb-2 block text-sm font-medium text-foreground">
                   {t('form.name')} *
                 </label>
                 <input
@@ -128,11 +128,11 @@ export const ContactPage = () => {
                   type="text"
                   required
                   aria-required="true"
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-[#C00000] focus:border-transparent ${theme === 'dark' ? 'bg-black/50 border-gray-700 text-white' : 'border-gray-300'}`}
+                  className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
               <div>
-                <label htmlFor="contact-email" className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label htmlFor="contact-email" className="mb-2 block text-sm font-medium text-foreground">
                   {t('form.email')} *
                 </label>
                 <input
@@ -143,11 +143,11 @@ export const ContactPage = () => {
                   type="email"
                   required
                   aria-required="true"
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-[#C00000] focus:border-transparent ${theme === 'dark' ? 'bg-black/50 border-gray-700 text-white' : 'border-gray-300'}`}
+                  className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
               <div>
-                <label htmlFor="contact-phone" className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label htmlFor="contact-phone" className="mb-2 block text-sm font-medium text-foreground">
                   {t('form.phone')} *
                 </label>
                 <input
@@ -159,11 +159,11 @@ export const ContactPage = () => {
                   required
                   aria-required="true"
                   placeholder="01XXXXXXXXX"
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-[#C00000] focus:border-transparent ${theme === 'dark' ? 'bg-black/50 border-gray-700 text-white' : 'border-gray-300'}`}
+                  className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
               <div>
-                <label htmlFor="contact-message" className={`block text-sm font-medium mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                <label htmlFor="contact-message" className="mb-2 block text-sm font-medium text-foreground">
                   {t('form.message')} *
                 </label>
                 <textarea
@@ -174,7 +174,7 @@ export const ContactPage = () => {
                   rows={4}
                   required
                   aria-required="true"
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-2 border rounded-lg focus:ring-2 focus:ring-[#C00000] focus:border-transparent ${theme === 'dark' ? 'bg-black/50 border-gray-700 text-white' : 'border-gray-300'}`}
+                  className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
               <Button type="submit" size="lg" className="w-full" disabled={submitting}>
@@ -184,7 +184,6 @@ export const ContactPage = () => {
           </Card>
           </div>
         </div>
-      </div>
     </div>
   );
 };

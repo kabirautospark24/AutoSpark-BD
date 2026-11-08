@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Play, Volume2, VolumeX } from 'lucide-react';
 
@@ -81,7 +81,7 @@ export const VideoPreview = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <Play className="w-7 h-7 text-blue-600 ml-1" fill="currentColor" />
+            <Play className="w-7 h-7 text-primary ml-1" fill="currentColor" />
           </motion.div>
         </motion.button>
       )}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
@@ -22,6 +22,7 @@ const CartPage: React.FC = () => {
   const { cartItems, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
   
   const isDark = theme === 'dark';
+  const [couponInput, setCouponInput] = useState<string>('');
   const [appliedCoupon, setAppliedCoupon] = useState<string>('');
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [couponError, setCouponError] = useState<string>('');
@@ -107,7 +108,7 @@ const CartPage: React.FC = () => {
     };
 
     if (!code) { setCouponError('Enter a coupon code.'); return; }
-    if (appliedCoupon === code) { setCouponError('Coupon already applied.'); return; }
+    if (appliedCoupon === code && couponDiscount > 0) { setCouponError('Coupon already applied.'); return; }
     if (coupons[code]) {
       const discountValue = typeof coupons[code] === 'number' && coupons[code] < 1
         ? cartTotal * coupons[code]
@@ -120,7 +121,7 @@ const CartPage: React.FC = () => {
     }
   };
 
-  const handleRemoveCoupon = () => { setAppliedCoupon(''); setCouponDiscount(0); setCouponError(''); };
+  const handleRemoveCoupon = () => { setAppliedCoupon(''); setCouponInput(''); setCouponDiscount(0); setCouponError(''); };
 
   // Calculate totals
   const subtotal = cartTotal;
@@ -166,7 +167,7 @@ const CartPage: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/accessories')}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-full hover:shadow-lg transition-shadow"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-full hover:shadow-lg transition-shadow"
             >
               {t('continueShop')} <ArrowRight size={18} />
             </motion.button>
@@ -365,8 +366,8 @@ const CartPage: React.FC = () => {
                     <input
                       type="text"
                       placeholder="e.g., WELCOME10"
-                      value={appliedCoupon}
-                      onChange={(e) => setAppliedCoupon(e.target.value.toUpperCase())}
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                       className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-base font-medium border ${
                         isDark
                           ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-500'
@@ -376,9 +377,9 @@ const CartPage: React.FC = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleApplyCoupon(appliedCoupon)}
+                      onClick={() => handleApplyCoupon(couponInput)}
                       aria-label={t('applyCoupon')}
-                      className="px-4 py-2 min-h-[44px] min-w-[44px] bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
+                      className="px-4 py-2 min-h-[44px] min-w-[44px] bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors"
                     >
                       <Tag size={16} />
                     </motion.button>
@@ -419,7 +420,7 @@ const CartPage: React.FC = () => {
                     <span className={`font-bold text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {t('grandTotal')}
                     </span>
-                    <span className="font-bold text-lg bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
+                    <span className="font-bold text-lg bg-gradient-to-r from-[#C00000] to-[#8A0000] bg-clip-text text-transparent">
                       ৳{grandTotal.toLocaleString()}
                     </span>
                   </div>
@@ -430,7 +431,7 @@ const CartPage: React.FC = () => {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => navigate('/checkout')}
-                  className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-lg transition-shadow flex items-center justify-center gap-2 mb-3"
+                  className="w-full py-3 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-bold rounded-lg hover:shadow-lg transition-shadow flex items-center justify-center gap-2 mb-3"
                 >
                   <ShoppingCart size={18} />
                   {t('checkout')}

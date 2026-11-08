@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ColorPicker Component
  * 
  * A beautiful, accessible color picker for selecting vehicle paint colors.
@@ -118,7 +118,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({
             exit={{ opacity: 0, y: -5 }}
             className={`
               mt-1 text-xs font-medium text-center
-              ${isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'}
+              ${isSelected ? 'text-primary dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'}
               ${showLabel ? '' : 'absolute top-full mt-2 whitespace-nowrap px-2 py-1 bg-gray-900 text-white rounded shadow-lg z-10'}
             `}
           >

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+﻿import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, Download, Share2 } from 'lucide-react';
 
@@ -241,7 +241,7 @@ export const ARViewer: React.FC<ARViewerProps> = ({
               </p>
               <button
                 onClick={startCamera}
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-blue-700 transition"
               >
                 Start AR View
               </button>
@@ -302,7 +302,7 @@ export const ARViewer: React.FC<ARViewerProps> = ({
           <div className="flex gap-3 pt-4">
             <button
               onClick={takeScreenshot}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition flex items-center justify-center gap-2"
+              className="flex-1 bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition flex items-center justify-center gap-2"
             >
               <Download className="h-5 w-5" />
               Save Screenshot
@@ -326,7 +326,7 @@ export const ARViewer: React.FC<ARViewerProps> = ({
         <div className="bg-gray-900 p-6">
           <button
             onClick={startCamera}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
+            className="w-full bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition"
           >
             Start AR View
           </button>

@@ -1,4 +1,4 @@
-/* Fonts are now loaded via index.html with font-display: swap for better performance */
+﻿/* Fonts are now loaded via index.html with font-display: swap for better performance */
 /* Fallback font import for Hind Siliguri (Bengali) - loaded async */
 
 @tailwind base;
@@ -9,7 +9,7 @@
    DESIGN SYSTEM TOKENS (Three-Layer Architecture)
    ============================================= */
 
-/* ── Layer 1: Primitive Tokens ── */
+/* Layer 1: Primitive Tokens */
 :root {
   /* Brand Colors */
   --color-brand-red-500: #C00000;
@@ -43,7 +43,7 @@
   --color-info-500: #3B82F6;
   --color-info-100: #DBEAFE;
 
-  /* ── Layer 2: Semantic Tokens ── */
+  /* Layer 2: Semantic Tokens */
   /* Light Mode */
   --color-primary: var(--color-brand-red-500);
   --color-primary-hover: var(--color-brand-red-600);
@@ -76,7 +76,7 @@
   --shadow-glow: 0 0 20px rgba(192, 0, 0, 0.3);
   --shadow-glow-lg: 0 0 30px rgba(192, 0, 0, 0.4);
 
-  /* ── Layer 3: Component Tokens ── */
+  /* Layer 3: Component Tokens */
   --btn-primary-bg: var(--color-primary);
   --btn-primary-hover: var(--color-primary-hover);
   --btn-primary-text: var(--color-primary-text);
@@ -153,7 +153,7 @@
   --container-px: clamp(1rem, 4vw, 2rem);
 }
 
-/* ── Dark Mode Overrides ── */
+/* Dark Mode Overrides */
 .dark {
   /* Semantic Dark Mode Tokens */
   --color-background: var(--color-black);
@@ -213,7 +213,7 @@
 /* Legacy brand variables (for backward compatibility) */
 :root {
   --brand-red: #C00000;
-  --brand-red-light: #FF1A1A;
+  --brand-red-light: #E23A3A;
   --brand-red-dark: #8B0000;
   --brand-red-glow: #FF3333;
   --brand-black: #0D0D0D;
@@ -310,7 +310,7 @@
     outline-offset: 3px;
   }
 
-  /* Images â€” prevent layout shift */
+  /* Images  prevent layout shift */
   img, video {
     max-width: 100%;
     height: auto;
@@ -324,7 +324,7 @@
 
 @layer utilities {
 
-  /* â”€â”€â”€ Container â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Container */
   .container-fluid {
     width: 100%;
     max-width: 1440px;
@@ -340,18 +340,18 @@
   .bottom-safe { bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem); }
   .top-safe { top: calc(env(safe-area-inset-top, 0px) + 0.5rem); }
 
-  /* â”€â”€â”€ Section vertical padding â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Section vertical padding */
   .section-padding {
     padding-block: var(--section-py);
   }
 
-  /* â”€â”€â”€ Responsive heading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Responsive heading */
   .heading-responsive {
     font-size: clamp(1.5rem, 4vw, 3rem);
     line-height: 1.2;
   }
 
-  /* â”€â”€â”€ Auto-fit card grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Auto-fit card grid */
   .grid-auto-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
@@ -378,7 +378,7 @@
     }
   }
 
-  /* â”€â”€â”€ Car card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Car card */
   .car-card-img {
     height: 7rem;
   }
@@ -386,7 +386,7 @@
   @media (min-width: 480px) { .car-card-img { height: 8rem; } }
   @media (min-width: 768px) { .car-card-img { height: 10rem; } }
 
-  /* CSS-only image hover â€” avoids framer-motion on low-end */
+  /* CSS-only image hover  avoids framer-motion on low-end */
   .car-img-hover {
     transition: transform 0.35s ease;
   }
@@ -394,7 +394,7 @@
     .car-card:hover .car-img-hover { transform: scale(1.07); }
   }
 
-  /* â”€â”€â”€ Touch target minimum â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Touch target minimum */
   .touch-target {
     min-height: 44px;
     min-width: 44px;
@@ -411,7 +411,7 @@
     border-radius: 0.5rem;
   }
 
-  /* â”€â”€â”€ Lightweight hero (low-end fallback) â”€â”€â”€â”€â”€â”€â”€ */
+  /* Lightweight hero (low-end fallback) */
   .hero-lite-bg {
     background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0d0d0d 100%);
   }
@@ -429,7 +429,7 @@
     text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(192,0,0,0.3);
   }
 
-  /* ── Subtle Ken Burns drift for hero video ───────────────────── */
+  /* Subtle Ken Burns drift for hero video */
   @keyframes hero-drift {
     0%   { transform: scale(1.02) translate(0, 0); }
     25%  { transform: scale(1.04) translate(-0.3%, -0.2%); }
@@ -446,7 +446,7 @@
     background: linear-gradient(to bottom, #000000, #0a0a0a, #000000);
   }
 
-  /* â”€â”€â”€ CSS spinner (no JS needed) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* CSS spinner (no JS needed) */
   .spinner-red {
     width: 3rem;
     height: 3rem;
@@ -458,7 +458,7 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* â”€â”€â”€ Fade in (CSS â€” zero JS overhead) â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Fade in (CSS  zero JS overhead) */
   .animate-fade-in {
     animation: fadeIn 0.7s ease-out both;
   }
@@ -468,7 +468,7 @@
     to   { opacity: 1; transform: none; }
   }
 
-  /* â”€â”€â”€ Ripple â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Ripple */
   .animate-ripple {
     animation: ripple 600ms ease-out;
   }
@@ -478,13 +478,13 @@
     to   { transform: scale(4); opacity: 0; }
   }
 
-  /* â”€â”€â”€ Content visibility â€” key CLS win â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Content visibility  key CLS win */
   .cv-auto {
     content-visibility: auto;
     contain-intrinsic-size: auto 400px;
   }
 
-  /* â”€â”€â”€ GPU-accelerated elements â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* GPU-accelerated elements */
   .gpu-accelerated {
     transform: translateZ(0);
     will-change: transform, opacity;
@@ -495,14 +495,14 @@
   .aspect-square { aspect-ratio: 1; }
   .aspect-car    { aspect-ratio: 16 / 9; }
 
-  /* â”€â”€â”€ Dynamic viewport height â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Dynamic viewport height */
   .h-dvh { height: 100vh; height: 100dvh; }
 
-  /* â”€â”€â”€ Hide scrollbar for carousels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Hide scrollbar for carousels */
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
 
-  /* â”€â”€â”€ Line clamp â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Line clamp */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -519,19 +519,19 @@
     overflow: hidden;
   }
 
-  /* â”€â”€â”€ Prose â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Prose */
   .prose { max-width: 65ch; }
   .prose p { margin-bottom: 1rem; }
 
-  /* â”€â”€â”€ Contain paint â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Contain paint */
   .contain-paint { contain: paint; }
 
-  /* â”€â”€â”€ Overlay hover â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Overlay hover */
   .overlay-hover {
     pointer-events: none;
   }
 
-  /* ── Glassmorphism System ─────────────────────── */
+  /* Glassmorphism System */
   .glass {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px) saturate(120%);
@@ -565,7 +565,7 @@
     border-color: rgba(255, 255, 255, 0.1);
   }
 
-  /* ── Glow Effects ──────────────────────────────── */
+  /* Glow Effects */
   .glow-red {
     box-shadow: 0 0 20px rgba(192, 0, 0, 0.5), 0 0 40px rgba(192, 0, 0, 0.3);
   }
@@ -579,7 +579,7 @@
     box-shadow: 0 0 15px rgba(192, 0, 0, 0.2), inset 0 0 15px rgba(192, 0, 0, 0.05);
   }
 
-  /* ── Noise Texture Overlay ─────────────────────── */
+  /* Noise Texture Overlay */
   .noise-overlay::after {
     content: '';
     position: absolute;
@@ -590,7 +590,7 @@
     z-index: 1;
   }
 
-  /* ── Shimmer Loading ───────────────────────────── */
+  /* Shimmer Loading */
   .shimmer-bg {
     background: linear-gradient(
       90deg,
@@ -607,15 +607,15 @@
     100% { background-position: -200% 0; }
   }
 
-  /* ── Perspective & 3D ──────────────────────────── */
+  /* Perspective & 3D */
   .preserve-3d {
     transform-style: preserve-3d;
     perspective: 1000px;
   }
 
-  /* ── Gradient Text ─────────────────────────────── */
+  /* Gradient Text */
   .text-gradient-brand {
-    background: linear-gradient(135deg, #FF1A1A 0%, #C00000 50%, #FF1A1A 100%);
+    background: linear-gradient(135deg, #E23A3A 0%, #C00000 50%, #E23A3A 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -623,7 +623,7 @@
   }
 
   .text-gradient-brand-animated {
-    background: linear-gradient(135deg, #FF1A1A 0%, #C00000 50%, #FF1A1A 100%);
+    background: linear-gradient(135deg, #E23A3A 0%, #C00000 50%, #E23A3A 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -636,7 +636,7 @@
     50% { background-position: 100% 50%; }
   }
 
-  /* ── Vignette ──────────────────────────────────── */
+  /* Vignette */
   .vignette::before {
     content: '';
     position: absolute;
@@ -646,7 +646,7 @@
     z-index: 2;
   }
 
-  /* ── Diagonal Lines Pattern ────────────────────── */
+  /* Diagonal Lines Pattern */
   .diagonal-lines::after {
     content: '';
     position: absolute;
@@ -662,7 +662,7 @@
     pointer-events: none;
   }
 
-  /* ── Gradient Border ───────────────────────────── */
+  /* Gradient Border */
   .gradient-border {
     position: relative;
   }
@@ -681,7 +681,7 @@
     pointer-events: none;
   }
 
-  /* ── Featured Vehicles showcase (high-perf, transform/opacity only) ── */
+  /* Featured Vehicles showcase (high-perf, transform/opacity only) */
   .fv-section { padding-block: clamp(3rem, 6vw, 5.5rem); }
   .fv-eyebrow {
     display: inline-flex; align-items: center; gap: 0.6rem;
@@ -829,18 +829,18 @@
    MEDIA QUERIES  (mobile-first)
    ============================================= */
 
-/* 320px â€” very small phones */
+/* 320px  very small phones */
 @media (max-width: 359px) {
   :root { --container-px: 0.75rem; }
   .heading-responsive { font-size: 1.4rem; }
 }
 
-/* 480px â€” large phones */
+/* 480px  large phones */
 @media (min-width: 480px) {
   :root { --container-px: 1.25rem; }
 }
 
-/* 768px â€” tablets */
+/* 768px  tablets */
 @media (min-width: 768px) {
   :root {
     --container-px: 1.5rem;
@@ -848,18 +848,18 @@
   }
 }
 
-/* 1024px â€” laptops */
+/* 1024px  laptops */
 @media (min-width: 1024px) {
   :root { --container-px: 2rem; }
 }
 
-/* 1440px â€” large desktops */
+/* 1440px  large desktops */
 @media (min-width: 1440px) {
   :root { --container-px: 3rem; }
 }
 
 /* =============================================
-   REDUCED MOTION  â€” accessibility + performance
+   REDUCED MOTION   accessibility + performance
    ============================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -909,7 +909,7 @@ iframe {
   .map-responsive { min-height: 350px; }
 }
 
-/* â”€â”€â”€ Section divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Section divider */
 .section-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border-color), transparent);

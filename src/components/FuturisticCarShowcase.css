@@ -1,4 +1,4 @@
-/* ================================================
+﻿/* ================================================
    DIMENSIONAL REVEAL SHOWCASE - HYPER-FUTURISTIC
    ================================================ */
 
@@ -317,7 +317,7 @@
 
 .dimensional-cta:hover {
   background: rgba(139, 92, 246, 0.15);
-  border-color: #A16207;
+  border-color: #C00000;
   box-shadow: 
     0 0 20px rgba(139, 92, 246, 0.5),
     inset 0 0 20px rgba(139, 92, 246, 0.1);
@@ -338,7 +338,7 @@
   position: absolute;
   inset: 0;
   border: 2px solid;
-  border-image: linear-gradient(90deg, #A16207, #CA8A04, #A16207) 0;
+  border-image: linear-gradient(90deg, #C00000, #CA8A04, #C00000) 0;
   border-radius: 6px;
   opacity: 0;
   will-change: opacity;

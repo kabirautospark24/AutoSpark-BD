@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+﻿import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 
@@ -100,7 +100,7 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
           )}
 
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-transparent to-blue-500/0 opacity-0"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#C00000]/0 via-transparent to-blue-500/0 opacity-0"></div>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
           <h3 className="text-lg font-bold text-gray-900">{vehicleName}</h3>
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition"
+            className="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-blue-700 transition"
           >
             {autoRotate ? '🔄 Auto' : '👆 Manual'}
           </button>

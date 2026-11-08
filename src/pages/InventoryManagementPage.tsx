@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -457,7 +457,7 @@ const InventoryManagementPage: React.FC = () => {
                                 className={`p-2 rounded transition-colors ${
                                   isDark
                                     ? 'hover:bg-gray-700 text-gray-400 hover:text-blue-400'
-                                    : 'hover:bg-gray-100 text-gray-600 hover:text-blue-600'
+                                    : 'hover:bg-gray-100 text-gray-600 hover:text-primary'
                                 }`}
                               >
                                 <Edit2 size={16} />

@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+﻿import { memo, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeroTextProps {
@@ -132,7 +132,7 @@ export const HeroText = memo<HeroTextProps>(({ title, subtitle, className = '' }
           <motion.div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, #3b82f6 20%, #A16207 50%, #ec4899 80%, transparent 100%)',
+              background: 'linear-gradient(90deg, transparent 0%, #3b82f6 20%, #C00000 50%, #ec4899 80%, transparent 100%)',
             }}
             animate={{
               opacity: [0.5, 1, 0.5],

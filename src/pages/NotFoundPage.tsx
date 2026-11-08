@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { Home, Car, Wrench, Phone } from 'lucide-react';
 import { PageHead } from '../components/PageHead';
 import { useTheme } from '../contexts/ThemeContext';
@@ -28,7 +28,7 @@ export const NotFoundPage = () => {
             <li key={s.to}>
               <Link
                 to={s.to}
-                className="flex h-full flex-col items-start gap-2 rounded-xl border border-gray-200 bg-white p-4 text-left transition hover:border-[#C00000] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] dark:border-gray-800 dark:bg-gray-900 dark:hover:border-[#FF1A1A]"
+                className="flex h-full flex-col items-start gap-2 rounded-xl border border-gray-200 bg-white p-4 text-left transition hover:border-[#C00000] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C00000] dark:border-gray-800 dark:bg-gray-900 dark:hover:border-[#E23A3A]"
               >
                 <s.icon className="h-5 w-5 text-[#C00000]" aria-hidden="true" />
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">{s.label}</span>

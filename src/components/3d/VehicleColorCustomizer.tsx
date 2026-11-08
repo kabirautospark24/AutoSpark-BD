@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Save,
@@ -348,8 +348,8 @@ export const VehicleColorCustomizer: React.FC<VehicleColorCustomizerProps> = ({
                   className={`rounded-lg p-3 font-medium transition-all ${
                     selectedColors.finish === finish
                       ? isDarkTheme
-                        ? 'bg-blue-600 text-white ring-2 ring-blue-400'
-                        : 'bg-blue-600 text-white ring-2 ring-blue-400'
+                        ? 'bg-primary text-white ring-2 ring-blue-400'
+                        : 'bg-primary text-white ring-2 ring-blue-400'
                       : isDarkTheme
                       ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
                       : 'bg-gray-200 text-slate-700 hover:bg-gray-300'
@@ -384,8 +384,8 @@ export const VehicleColorCustomizer: React.FC<VehicleColorCustomizerProps> = ({
                 onClick={handleShare}
                 className={`flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium transition-all ${
                   isDarkTheme
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                    ? 'bg-primary hover:bg-blue-700 text-white'
+                    : 'bg-primary hover:bg-blue-700 text-white'
                 }`}
               >
                 <Share2 size={18} />
