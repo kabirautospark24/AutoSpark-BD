@@ -47,7 +47,7 @@ export const Footer = () => {
           <div className="lg:col-span-5">
             <Link to="/" className="inline-flex items-center gap-3">
               <img
-                src={`${import.meta.env.BASE_URL}logo/logoAS3.svg`}
+                src={`${import.meta.env.BASE_URL}logo/logo-new.svg`}
                 alt="Auto Spark BD"
                 className="h-12 w-12"
                 width={48}

@@ -96,7 +96,7 @@ export const GlassmorphismNavbar = () => {
   }, []);
 
   // One mark in the chrome, everywhere, so the brand reads consistently.
-  const currentLogo = `${import.meta.env.BASE_URL}logo/logoAS3.svg`;
+  const currentLogo = `${import.meta.env.BASE_URL}logo/logo-new.svg`;
 
   useEffect(() => {
     const handleScroll = () => {

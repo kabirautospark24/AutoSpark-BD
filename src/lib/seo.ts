@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Central SEO configuration and route manifest.
  *
  * Single source of truth for:
@@ -54,7 +54,7 @@ export const SITE = {
     { days: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], opens: '09:00', closes: '18:00' },
   ],
   hoursDisplay: 'Sa-Th 09:00-18:00',
-  logo: `${SITE_URL}/logo/logoAS3.svg`,
+  logo: `${SITE_URL}/logo/logo-new.svg`,
   defaultShareImage: `${SITE_URL}/og/og-default.png`,
 } as const;
 
