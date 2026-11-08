@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Phone, Mail, MapPin, Youtube, Music2, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -74,7 +74,7 @@ export const Footer = () => {
                 <Phone className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                 <a
                   href={`tel:${showroom.phone.replace(/\s/g, '')}`}
-                  className="transition-colors hover:text-foreground"
+                  className="transition-colors hover:text-primary"
                 >
                   {showroom.phone}
                 </a>
@@ -83,7 +83,7 @@ export const Footer = () => {
                 <Mail className="h-4 w-4 shrink-0 text-primary" aria-hidden />
                 <a
                   href={`mailto:${showroom.email}`}
-                  className="transition-colors hover:text-foreground"
+                  className="transition-colors hover:text-primary"
                 >
                   {showroom.email}
                 </a>
@@ -101,7 +101,7 @@ export const Footer = () => {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-foreground"
+                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -120,7 +120,7 @@ export const Footer = () => {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-foreground"
+                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -157,7 +157,7 @@ export const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     <Icon className="h-5 w-5" aria-hidden />
                   </a>
@@ -169,20 +169,28 @@ export const Footer = () => {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {currentYear} {t('site.title')}. {t('footer.rights')} · Built by Farhan Kabir
+            &copy; {currentYear} {t('site.title')}. {t('footer.rights')} · Built by{' '}
+            <a
+              href="https://farhankabir.tech/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-primary transition-colors hover:text-primary/80"
+            >
+              Farhan Kabir
+            </a>
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link to="/privacy" className="transition-colors hover:text-foreground">
+            <Link to="/privacy" className="transition-colors hover:text-primary">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="transition-colors hover:text-foreground">
+            <Link to="/terms" className="transition-colors hover:text-primary">
               Terms of Service
             </Link>
             <a
               href={`https://${showroom.website}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-foreground"
+              className="transition-colors hover:text-primary"
             >
               {showroom.website}
             </a>
