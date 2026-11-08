@@ -79,10 +79,9 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
     <div className="relative w-full h-full overflow-hidden bg-black">
       {/* Subtle Ken Burns drift: very slow zoom + pan for a living feel */}
       <div
-        className="absolute inset-[-2%] animate-hero-drift bg-cover bg-center will-change-transform"
+        className="absolute inset-[-2%] animate-hero-drift will-change-transform"
         style={{
           animationPlayState: prefersReducedMotion ? 'paused' : 'running',
-          backgroundImage: `url(${import.meta.env.BASE_URL}hero/hero-poster.webp)`,
         }}
       >
         <video
@@ -91,9 +90,8 @@ const VideoHero = ({ children }: { children: React.ReactNode }) => {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-hidden="true"
-          poster={`${import.meta.env.BASE_URL}hero/hero-poster.webp`}
           disablePictureInPicture
           disableRemotePlayback
           controls={showControls}
