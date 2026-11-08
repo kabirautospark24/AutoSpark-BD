@@ -406,15 +406,8 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
 
   return (
     <section aria-label={bn ? 'বৈশিষ্ট্যযুক্ত গাড়ি' : 'Featured vehicles'} className={`fv-section relative overflow-hidden ${dark ? 'bg-[#070707]' : 'bg-[#fafafa]'}`}>
-      {/* ambient background: transform-only drift, disabled when reduced motion */}
-      {supportsRichAnimations && (
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="fv-orb fv-orb-a" />
-          <div className="fv-orb fv-orb-b" />
-          <div className={`absolute inset-0 ${dark ? 'fv-grid-dark' : 'fv-grid-light'}`} />
-          <div className={`absolute inset-x-0 top-0 h-px ${dark ? 'bg-gradient-to-r from-transparent via-red-600/40 to-transparent' : 'bg-gradient-to-r from-transparent via-red-600/25 to-transparent'}`} />
-        </div>
-      )}
+      {/* bespoke backdrop: off-center spotlight + diagonal hatching + corner dot field */}
+      <div className={`pointer-events-none absolute inset-0 ${dark ? 'fv-backdrop' : 'fv-backdrop fv-backdrop-light'}`} aria-hidden="true" />
 
       <div className="container-fluid relative z-10">
         {/* header */}
