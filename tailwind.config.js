@@ -68,6 +68,10 @@ export default {
             muted: 'rgba(192, 0, 0, 0.12)',
           },
         },
+        amber: {
+          DEFAULT: '#D97706',
+          light: '#F59E0B',
+        },
         // Semantic surface tokens (single cool-gray family)
         surface: {
           bg: {

@@ -7,7 +7,7 @@ interface SkeletonProps {
   width?: string | number;
   height?: string | number;
   count?: number;
-  theme: string;
+  theme?: string;
   className?: string;
 }
 
@@ -18,14 +18,10 @@ export const Skeleton = ({
   width = '100%',
   height = '20px',
   count = 1,
-  theme,
   className = '',
 }: SkeletonProps) => {
-  const bgColor = theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200';
-  const shaderColor =
-    theme === 'dark'
-      ? 'linear-gradient(90deg, #1f2937, #374151, #1f2937)'
-      : 'linear-gradient(90deg, #e5e7eb, #f3f4f6, #e5e7eb)';
+  const bgColor = 'bg-muted';
+  const shaderColor = 'linear-gradient(90deg, rgb(var(--muted)), rgb(var(--border)), rgb(var(--muted)))';
 
   const getShape = () => {
     switch (type) {
@@ -88,13 +84,11 @@ export const Skeleton = ({
 interface SkeletonLoaderProps {
   count?: number;
   type?: SkeletonType;
-  theme: string;
 }
 
 export const SkeletonLoader = ({
   count = 3,
   type = 'card',
-  theme,
 }: SkeletonLoaderProps) => {
   return (
     <motion.div
@@ -111,7 +105,7 @@ export const SkeletonLoader = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: i * 0.1 }}
         >
-          <Skeleton type={type} theme={theme} />
+          <Skeleton type={type} />
         </motion.div>
       ))}
     </motion.div>
