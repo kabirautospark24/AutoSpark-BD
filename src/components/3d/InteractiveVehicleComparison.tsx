@@ -275,7 +275,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
               className={`p-4 rounded-2xl border-2 transition duration-300 cursor-pointer shadow-md hover:shadow-xl ${
                 selectedVehicles.includes(vehicle.id)
                   ? 'border-blue-600 bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg'
-                  : 'border-gray-200 bg-white hover:border-blue-400'
+                  : 'border-gray-200 bg-white hover:border-primary'
               }`}
             >
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-3 mb-2 overflow-hidden">
@@ -525,7 +525,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
 
           {/* CTA Buttons */}
           <div className="mt-8 flex gap-4">
-            <button className="flex-1 bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+            <button className="flex-1 bg-primary hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition">
               Compare More Details
             </button>
             <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 px-6 py-3 rounded-lg font-semibold transition">

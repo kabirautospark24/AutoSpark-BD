@@ -44,7 +44,7 @@ export const ComparisonSidebar = ({
       <motion.button
         className={`fixed right-0 top-1/2 transform -translate-y-1/2 z-40 px-3 py-6 rounded-l-lg shadow-lg ${
           theme === 'dark'
-            ? 'bg-primary hover:bg-blue-700'
+            ? 'bg-primary hover:bg-red-700'
             : 'bg-blue-500 hover:bg-primary'
         } text-white font-semibold transition-all`}
         onClick={onToggle}
@@ -222,8 +222,8 @@ export const ComparisonSidebar = ({
                             onFocus={() => prefetchResource(`/vehicle/${vehicle.id}`, `/api/vehicle/${vehicle.id}`)}
                             className={`flex items-center gap-1 mt-2 pt-2 border-t ${
                               theme === 'dark'
-                                ? 'border-gray-600 text-blue-400 hover:text-blue-300'
-                                : 'border-gray-300 text-primary hover:text-blue-700'
+                                ? 'border-gray-600 text-blue-400 hover:text-primary'
+                                : 'border-gray-300 text-primary hover:text-primary'
                             }`}
                             whileHover={{ x: 5 }}
                           >
@@ -250,7 +250,7 @@ export const ComparisonSidebar = ({
                     onClick={onExport}
                     className={`w-full py-3 rounded-lg font-semibold transition-colors ${
                       theme === 'dark'
-                        ? 'bg-primary hover:bg-blue-700 text-white'
+                        ? 'bg-primary hover:bg-red-700 text-white'
                         : 'bg-blue-500 hover:bg-primary text-white'
                     }`}
                     whileHover={{ scale: 1.02 }}

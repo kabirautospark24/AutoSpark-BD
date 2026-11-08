@@ -169,7 +169,7 @@ export const Footer = () => {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {currentYear} {t('site.title')}. {t('footer.rights')}
+            &copy; {currentYear} {t('site.title')}. {t('footer.rights')} · Built by Farhan Kabir
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link to="/privacy" className="transition-colors hover:text-foreground">

@@ -261,8 +261,8 @@ export const EnhancedHotspotPanel: React.FC<EnhancedHotspotPanelProps> = ({
         <div className={`p-4 border-t flex gap-2 ${isDarkTheme ? 'border-slate-700/50' : 'border-gray-200'}`}>
           <button className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium transition-colors ${
             isDarkTheme
-              ? 'bg-primary hover:bg-blue-700 text-white'
-              : 'bg-primary hover:bg-blue-700 text-white'
+              ? 'bg-primary hover:bg-red-700 text-white'
+              : 'bg-primary hover:bg-red-700 text-white'
           }`}>
             <ArrowRight size={16} />
             Learn More

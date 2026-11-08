@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Car, Wrench, ArrowRight } from 'lucide-react';
 import { useDark } from './ui';
 import { SparkMark } from './Logo';
@@ -21,8 +21,8 @@ const SERVICES_MSG = 'I have a question about car services.';
 export function WelcomeCard({ compact = false, onAsk, reduceMotion = false }: WelcomeCardProps) {
   const dark = useDark();
   const chip = dark
-    ? 'border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-cyan-400/40'
-    : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-cyan-400/60 hover:shadow-md';
+    ? 'border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-primary/40'
+    : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-primary/60 hover:shadow-md';
 
   const domains = (
     <div className={`grid ${compact ? 'grid-cols-1 gap-1.5' : 'grid-cols-1 sm:grid-cols-2 gap-2'} mt-4`} role="group" aria-label="Knowledge domains">

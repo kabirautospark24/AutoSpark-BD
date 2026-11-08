@@ -341,7 +341,7 @@ export const CarShowcaseCarousel = ({ className = '' }: CarShowcaseCarouselProps
             whileHover={{ scale: 1.1, x: -5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 group-hover:text-blue-400 transition-colors" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 group-hover:text-primary transition-colors" />
           </motion.button>
 
           <motion.button
@@ -350,7 +350,7 @@ export const CarShowcaseCarousel = ({ className = '' }: CarShowcaseCarouselProps
             whileHover={{ scale: 1.1, x: 5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 group-hover:text-blue-400 transition-colors" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 group-hover:text-primary transition-colors" />
           </motion.button>
         </div>
       </div>

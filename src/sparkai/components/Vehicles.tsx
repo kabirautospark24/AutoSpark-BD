@@ -1,4 +1,4 @@
-import { Car, Fuel, Cog, Check } from 'lucide-react';
+﻿import { Car, Fuel, Cog, Check } from 'lucide-react';
 import type { DemoVehicle } from '../types';
 import { vehiclePriceLabel } from '../data/demo';
 import { useDark, Card, SButton } from './ui';
@@ -25,7 +25,7 @@ export function VehicleCard({ v, onAsk, onCompare, onExpert }: { v: DemoVehicle;
           {v.features.slice(0, 3).map((f) => <li key={f} className="flex gap-1.5 items-start"><Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />{f}</li>)}
         </ul>
         <div className="grid grid-cols-3 gap-1.5 mt-3">
-          <button onClick={() => onAsk(v)} className="text-xs font-semibold rounded-full bg-cyan-500 text-white py-2.5 min-h-[44px] hover:bg-cyan-400">Ask</button>
+          <button onClick={() => onAsk(v)} className="text-xs font-semibold rounded-full bg-cyan-500 text-white py-2.5 min-h-[44px] hover:bg-primary">Ask</button>
           <button onClick={() => onCompare(v)} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Compare</button>
           <button onClick={() => onExpert(v)} aria-label={`Request expert for ${v.model}`} className={`text-xs font-semibold rounded-full border py-2.5 min-h-[44px] ${dark ? 'border-white/15 hover:bg-white/5' : 'border-slate-300 hover:bg-slate-100'}`}>Expert</button>
         </div>

@@ -21,14 +21,14 @@ interface EnhancedButtonProps {
 const variantConfig = {
   primary: {
     light: 'bg-blue-500 hover:bg-primary text-white shadow-lg shadow-blue-500/30',
-    dark: 'dark:bg-primary dark:hover:bg-blue-700 dark:text-white dark:shadow-lg dark:shadow-blue-500/20',
+    dark: 'dark:bg-primary dark:hover:bg-red-700 dark:text-white dark:shadow-lg dark:shadow-blue-500/20',
   },
   secondary: {
     light: 'bg-gray-200 hover:bg-gray-300 text-gray-900 shadow-md',
     dark: 'dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white',
   },
   outline: {
-    light: 'border-2 border-blue-500 hover:bg-blue-50 text-primary',
+    light: 'border-2 border-blue-500 hover:bg-primary/10 text-primary',
     dark: 'dark:border-blue-400 dark:hover:bg-primary/10 dark:text-blue-400',
   },
   ghost: {

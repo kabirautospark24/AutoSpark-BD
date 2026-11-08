@@ -81,7 +81,7 @@ export const ComparisonDisplay = ({
               onClick={onExport}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold ${
                 theme === 'dark'
-                  ? 'bg-primary hover:bg-blue-700 text-white'
+                  ? 'bg-primary hover:bg-red-700 text-white'
                   : 'bg-blue-500 hover:bg-primary text-white'
               }`}
               whileHover={{ scale: 1.05 }}

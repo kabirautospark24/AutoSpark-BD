@@ -184,7 +184,7 @@ export const VehicleCardWithBadges = ({
                 onClick={() => onCompare(id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${styles['button']} ${
                   theme === 'dark'
-                    ? 'bg-primary hover:bg-blue-700 text-white'
+                    ? 'bg-primary hover:bg-red-700 text-white'
                     : 'bg-blue-500 hover:bg-primary text-white'
                 }`}
                 whileHover={{ scale: 1.05 }}

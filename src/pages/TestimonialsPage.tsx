@@ -653,7 +653,7 @@ const TestimonialCard = ({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
       viewport={{ once: true, margin: '-50px' }}
-      className={`group relative rounded-3xl overflow-hidden transition-all duration-300 hover:translate-y-1 hover:shadow-2xl hover:border-blue-500/20 bg-white ${
+      className={`group relative rounded-3xl overflow-hidden transition-all duration-300 hover:translate-y-1 hover:shadow-2xl hover:border-primary/20 bg-white ${
         theme === 'dark'
           ? 'bg-gray-800/60 border-gray-700/50'
           : 'bg-white'
@@ -730,7 +730,7 @@ const TestimonialCard = ({
           {shouldTruncate && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className={`text-xs font-medium mt-1 ${theme === 'dark' ? 'text-blue-400 hover:text-blue-300' : 'text-primary hover:text-blue-700'}`}
+              className={`text-xs font-medium mt-1 ${theme === 'dark' ? 'text-blue-400 hover:text-primary' : 'text-primary hover:text-primary'}`}
             >
               {expanded
                 ? language === 'en' ? 'Show less' : 'কম দেখুন'
@@ -767,14 +767,14 @@ const TestimonialCard = ({
             <button
               onClick={() => onLike(t.id)}
               className={`flex items-center gap-1 text-xs transition-colors ${
-                theme === 'dark' ? 'text-gray-500 hover:text-blue-400' : 'text-gray-400 hover:text-blue-500'
+                theme === 'dark' ? 'text-gray-500 hover:text-primary' : 'text-gray-400 hover:text-primary'
               }`}
             >
               <ThumbsUp size={12} /> {t.helpful_count || 0}
             </button>
             <button
               className={`text-xs transition-colors ${
-                theme === 'dark' ? 'text-gray-500 hover:text-blue-400' : 'text-gray-400 hover:text-blue-500'
+                theme === 'dark' ? 'text-gray-500 hover:text-primary' : 'text-gray-400 hover:text-primary'
               }`}
             >
               <Share2 size={12} />

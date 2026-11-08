@@ -207,7 +207,7 @@ export const VehicleDetailsPage = () => {
         />
       )}
       <div className="container mx-auto px-4 py-8 pb-32 lg:pb-8">
-        <Link to="/inventory" className="inline-flex items-center text-primary hover:text-blue-700 mb-6">
+        <Link to="/inventory" className="inline-flex items-center text-primary hover:text-primary mb-6">
           <ChevronLeft className="h-5 w-5 mr-1" />
           {language === 'en' ? 'Back to Inventory' : 'ইনভেন্টরিতে ফিরে যান'}
         </Link>

@@ -93,7 +93,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
             {onRetry && (
               <motion.button
                 onClick={onRetry}
-                className="flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                className="flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

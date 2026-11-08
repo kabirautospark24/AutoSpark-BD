@@ -108,7 +108,7 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
           <h3 className="text-lg font-bold text-gray-900">{vehicleName}</h3>
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-blue-700 transition"
+            className="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-red-700 transition"
           >
             {autoRotate ? '🔄 Auto' : '👆 Manual'}
           </button>

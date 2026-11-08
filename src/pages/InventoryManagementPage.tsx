@@ -456,7 +456,7 @@ const InventoryManagementPage: React.FC = () => {
                                 onClick={() => handleEdit(product)}
                                 className={`p-2 rounded transition-colors ${
                                   isDark
-                                    ? 'hover:bg-gray-700 text-gray-400 hover:text-blue-400'
+                                    ? 'hover:bg-gray-700 text-gray-400 hover:text-primary'
                                     : 'hover:bg-gray-100 text-gray-600 hover:text-primary'
                                 }`}
                               >

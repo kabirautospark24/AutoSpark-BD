@@ -384,8 +384,8 @@ export const VehicleColorCustomizer: React.FC<VehicleColorCustomizerProps> = ({
                 onClick={handleShare}
                 className={`flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium transition-all ${
                   isDarkTheme
-                    ? 'bg-primary hover:bg-blue-700 text-white'
-                    : 'bg-primary hover:bg-blue-700 text-white'
+                    ? 'bg-primary hover:bg-red-700 text-white'
+                    : 'bg-primary hover:bg-red-700 text-white'
                 }`}
               >
                 <Share2 size={18} />

@@ -642,8 +642,8 @@ const ActiveFilterPills: React.FC<{
           className={`
             flex items-center gap-1 px-3 py-1 rounded-full text-sm
             ${theme === 'dark' 
-              ? 'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30' 
-              : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+              ? 'bg-blue-500/20 text-blue-400 hover:bg-primary/30' 
+              : 'bg-primary/10 text-primary hover:bg-primary/20'
             }
             transition-colors
           `}
@@ -1413,7 +1413,7 @@ const EMICalculator: React.FC<{ principal: number }> = ({ principal }) => {
                 </h2>
                 <button
                   onClick={resetFilters}
-                  className={`text-sm font-medium flex items-center gap-1 ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-primary hover:text-blue-700'}`}
+                  className={`text-sm font-medium flex items-center gap-1 ${isDark ? 'text-blue-400 hover:text-primary' : 'text-primary hover:text-primary'}`}
                 >
                   <RotateCcw className="w-4 h-4" />
                   {language === 'en' ? 'Reset' : 'রিসেট'}

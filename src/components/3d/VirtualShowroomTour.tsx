@@ -194,7 +194,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             onClick={toggleAudio}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute top-6 right-6 bg-primary hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition"
+            className="absolute top-6 right-6 bg-primary hover:bg-red-700 text-white p-3 rounded-full shadow-lg transition"
           >
             {audioEnabled ? (
               <Volume2 className="h-6 w-6" />
@@ -208,7 +208,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             onClick={prevRoom}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute left-6 top-1/2 -translate-y-1/2 bg-primary hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition z-10"
+            className="absolute left-6 top-1/2 -translate-y-1/2 bg-primary hover:bg-red-700 text-white p-3 rounded-full shadow-lg transition z-10"
           >
             <ChevronLeft className="h-6 w-6" />
           </motion.button>
@@ -217,7 +217,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
             onClick={nextRoom}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="absolute right-6 top-1/2 -translate-y-1/2 bg-primary hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition z-10"
+            className="absolute right-6 top-1/2 -translate-y-1/2 bg-primary hover:bg-red-700 text-white p-3 rounded-full shadow-lg transition z-10"
           >
             <ChevronRight className="h-6 w-6" />
           </motion.button>
@@ -235,7 +235,7 @@ export const VirtualShowroomTour: React.FC<VirtualShowroomTourProps> = ({
               <p className="text-gray-700">{currentRoom.points[selectedPoint].info}</p>
               <button
                 onClick={() => setSelectedPoint(null)}
-                className="mt-3 text-sm font-semibold text-primary hover:text-blue-700"
+                className="mt-3 text-sm font-semibold text-primary hover:text-primary"
               >
                 Close ✕
               </button>

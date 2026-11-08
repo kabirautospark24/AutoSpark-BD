@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -279,7 +279,7 @@ const CheckoutPage = () => {
 								type="submit"
 								disabled={isSubmitting || cartItems.length === 0}
 								aria-busy={isSubmitting || undefined}
-								className="flex-1 min-h-[44px] rounded-lg bg-[#0061EB] px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-500 disabled:opacity-50 sm:flex-none"
+								className="flex-1 min-h-[44px] rounded-lg bg-primary px-8 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-primary disabled:opacity-50 sm:flex-none"
 							>
 								{isSubmitting ? 'Redirecting to payment…' : 'Pay Now'}
 							</button>

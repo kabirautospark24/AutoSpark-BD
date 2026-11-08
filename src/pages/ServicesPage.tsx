@@ -1298,7 +1298,7 @@ const ServicesPage: React.FC = () => {
               />
               <button
                 onClick={checkServiceStatus}
-                className="px-6 py-3 bg-primary text-white rounded-xl hover:bg-blue-700 transition-colors"
+                className="px-6 py-3 bg-primary text-white rounded-xl hover:bg-red-700 transition-colors"
               >
                 Track
               </button>

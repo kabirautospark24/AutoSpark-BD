@@ -981,7 +981,7 @@ const ProductCard: React.FC<{
           whileTap={{ scale: 0.9 }}
           onClick={() => onQuickView(product)}
           className={`p-2 rounded-full shadow-lg ${
-            isDark ? 'bg-gray-700 text-white hover:bg-blue-500' : 'bg-white text-gray-700 hover:bg-blue-500 hover:text-white'
+            isDark ? 'bg-gray-700 text-white hover:bg-primary' : 'bg-white text-gray-700 hover:bg-primary hover:text-white'
           }`}
         >
           <Eye size={18} />
