@@ -25,9 +25,9 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   className = '',
   delay = 0,
-  duration = 0.5,
+  duration = 0.3,
   direction = 'up',
-  distance = 40,
+  distance = 16,
   once = true,
   amount = 0.15,
   style,
@@ -38,16 +38,15 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const hidden = directionOffset[direction](distance);
 
   const variants: Variants = {
-    hidden: { opacity: 0, ...hidden, filter: 'blur(4px)' },
+    hidden: { opacity: 0, ...hidden },
     visible: {
       opacity: 1,
       x: 0,
       y: 0,
-      filter: 'blur(0px)',
       transition: {
-        duration,
+        duration: Math.min(duration, 0.35),
         delay,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.22, 1, 0.36, 1],
       },
     },
   };

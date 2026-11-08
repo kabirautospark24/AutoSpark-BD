@@ -23,14 +23,13 @@ const containerVariants = (stagger: number, delay: number): Variants => ({
 });
 
 export const staggerItemVariants: Variants = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(4px)' },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      duration: 0.28,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
 };
@@ -38,7 +37,7 @@ export const staggerItemVariants: Variants = {
 export const StaggerContainer: React.FC<StaggerContainerProps> = ({
   children,
   className = '',
-  stagger = 0.08,
+  stagger = 0.05,
   delay = 0,
   once = true,
   amount = 0.1,
