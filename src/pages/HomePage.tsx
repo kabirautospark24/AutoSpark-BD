@@ -633,17 +633,19 @@ export const HomePage = () => {
                 {language === 'en' ? 'Why Choose Auto Spark BD?' : 'কেন অটো স্পার্ক বিডি?'}
               </h2>
             </ScrollReveal>
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" stagger={0.12}>
+            <StaggerContainer className="grid grid-cols-1 gap-6 md:grid-cols-3" stagger={0.12}>
               {[
                 { icon: Car, title: language === 'en' ? 'Premium Selection' : 'প্রিমিয়াম নির্বাচন', desc: language === 'en' ? 'Carefully curated luxury and premium vehicles' : 'সাবধানে নির্বাচিত বিলাসবহুল গাড়ির সংগ্রহ' },
                 { icon: Shield, title: language === 'en' ? 'Quality Assurance' : 'মান নিশ্চিতকরণ', desc: language === 'en' ? 'Thorough inspection and certification for every vehicle' : 'প্রতিটি গাড়ির জন্য পুঙ্খানুপুঙ্খ পরিদর্শন' },
                 { icon: Wrench, title: language === 'en' ? 'Expert Service' : 'বিশেষজ্ঞ সেবা', desc: language === 'en' ? 'State-of-the-art service center with experienced technicians' : 'অভিজ্ঞ প্রযুক্তিবিদদের সাথে অত্যাধুনিক সার্ভিস সেন্টার' },
               ].map((f, i) => (
-                <motion.div key={i} variants={staggerItemVariants}>
-                  <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-center transition-colors duration-300 hover:border-foreground/20">
-                    <f.icon className="mx-auto mb-4 h-14 w-14 text-primary" />
-                    <h3 className={`text-xl font-bold mb-3 relative z-10 text-foreground`}>{f.title}</h3>
-                    <p className={`relative z-10 text-muted-foreground`}>{f.desc}</p>
+                <motion.div key={i} variants={staggerItemVariants} className="h-full">
+                  <div className="flex h-full flex-col items-center rounded-2xl border border-border bg-card p-8 text-center transition-colors duration-300 hover:border-primary/40">
+                    <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
+                      <f.icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="mb-3 text-lg font-semibold text-foreground">{f.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
                   </div>
                 </motion.div>
               ))}
