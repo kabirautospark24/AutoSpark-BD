@@ -1993,10 +1993,9 @@ const ServicesPage: React.FC = () => {
                 {bookingStep === 2 && (
                   <div className="space-y-4">
                     <div>
-                      <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Full Name
-                      </label>
+                        <label htmlFor="booking-name" className="mb-2 block text-sm font-medium text-foreground">Full Name</label>
                       <input
+                           id="booking-name"
                         type="text"
                         value={customerInfo.name}
                         onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
@@ -2009,10 +2008,9 @@ const ServicesPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Phone Number
-                      </label>
+                        <label htmlFor="booking-phone" className="mb-2 block text-sm font-medium text-foreground">Phone Number</label>
                       <input
+                           id="booking-phone"
                         type="tel"
                         value={customerInfo.phone}
                         onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
@@ -2025,10 +2023,9 @@ const ServicesPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Email
-                      </label>
+                        <label htmlFor="booking-email" className="mb-2 block text-sm font-medium text-foreground">Email</label>
                       <input
+                           id="booking-email"
                         type="email"
                         value={customerInfo.email}
                         onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
@@ -2041,10 +2038,9 @@ const ServicesPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Car Model
-                      </label>
+                        <label htmlFor="booking-model" className="mb-2 block text-sm font-medium text-foreground">Car Model</label>
                       <input
+                           id="booking-model"
                         type="text"
                         value={customerInfo.carModel}
                         onChange={(e) => setCustomerInfo({ ...customerInfo, carModel: e.target.value })}
@@ -2057,10 +2053,9 @@ const ServicesPage: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Additional Notes
-                      </label>
+                        <label htmlFor="booking-notes" className="mb-2 block text-sm font-medium text-foreground">Additional Notes</label>
                       <textarea
+                           id="booking-notes"
                         value={customerInfo.notes}
                         onChange={(e) => setCustomerInfo({ ...customerInfo, notes: e.target.value })}
                         rows={3}

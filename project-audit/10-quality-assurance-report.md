@@ -1,4 +1,4 @@
-# 10 — Quality Assurance Report
+﻿# 10 — Quality Assurance Report
 
 Date: 2026-11-08
 Scope: foundation + shared chrome + critical defects (roadmap Phases 1–3). Phases 4–6 are documented but not fully executed.
@@ -49,7 +49,7 @@ Not run: browser screenshots, Lighthouse, pa11y (dev server not started in this 
 | VC-28 | RESOLVED | Separate `couponInput` state; input bound correctly; re-apply guard fixed |
 | VC-29 | RESOLVED | `updateCartQuantity` now calls global `updateQuantity` / `removeFromCart` |
 | VC-30 | RESOLVED | `alert()` replaced with persisted booking + `role="status"` banner; step 2 requires name and phone |
-| VC-31 | PARTIAL | Contact labels associated; other forms pending |
+| VC-31 | PARTIAL | Contact + Services booking form labels associated; Inventory/VehicleDetails/Accessories pending |
 | VC-32 | PARTIAL | Shared dialog primitive migration pending |
 | VC-33 | PARTIAL | Product image alt audit pending |
 | VC-34 | PARTIAL | Navbar nesting fixed; other pages pending |
