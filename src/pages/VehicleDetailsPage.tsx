@@ -1,16 +1,19 @@
 ﻿import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Phone, MessageCircle, Calculator, Fuel, Settings, Calendar, Gauge, Sparkles } from 'lucide-react';
-import { openSparkPilot } from '../sparkai/components/openSparkPilot';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { Button } from '../components/ui/Button';
-import PageHead from '../components/PageHead';
 import { Card } from '../components/ui/Card';
+import PageHead from '../components/PageHead';
 import { ALL_VEHICLES } from '../data/allVehicles';
 import { carSlides } from '../data/carSlides';
 import type { Vehicle } from '../types';
-import { formatPrice, calculateEMI } from '../utils/format';
+import { formatPrice } from '../utils/format';
+
+export interface SpecItem {
+  label: string;
+  value: string | number;
+}
 
 export const VehicleDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,12 +22,6 @@ export const VehicleDetailsPage = () => {
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showEMICalculator, setShowEMICalculator] = useState(false);
-  const [emiParams, setEmiParams] = useState({
-    downPayment: 0,
-    interestRate: 10,
-    years: 5,
-  });
 
   useEffect(() => {
     if (id) {
@@ -132,13 +129,7 @@ export const VehicleDetailsPage = () => {
     if (vehicle?.images && vehicle.images.length > 0) {
       setCurrentImageIndex((prev) => (prev - 1 + vehicle.images!.length) % vehicle.images!.length);
     }
-  };
-
-  const calculateMonthlyEMI = () => {
-    if (!vehicle) return 0;
-    const loanAmount = vehicle.price - emiParams.downPayment;
-    return calculateEMI(loanAmount, emiParams.interestRate, emiParams.years);
-  };
+  }
 
   const isDark = theme === 'dark';
 
@@ -160,7 +151,7 @@ export const VehicleDetailsPage = () => {
           <h2 className={isDark ? 'text-white text-xl' : 'text-gray-900 text-xl'}>Vehicle not found</h2>
           <p className={`mt-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>We couldn't find that vehicle. It may have been removed or the link is incorrect.</p>
           <div className="mt-4 flex gap-3 justify-center">
-            <Link to="/inventory" className="px-5 py-2 bg-[var(--brand-red,#C00000)] text-white rounded-lg">Browse inventory</Link>
+            <Link to="/inventory" className="px-5 py-2 bg-[var(--brand-red,#D6001C)] text-white rounded-lg">Browse inventory</Link>
             <Link to="/" className="px-5 py-2 border rounded-lg">Go home</Link>
           </div>
         </div>
@@ -212,280 +203,226 @@ export const VehicleDetailsPage = () => {
           {language === 'en' ? 'Back to Inventory' : 'ইনভেন্টরিতে ফিরে যান'}
         </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div>
-            <div className="relative rounded-lg overflow-hidden shadow-xl mb-4">
+        <div className="grid max-w-7xl mx-auto">
+          {/* Vehicle Hero & Gallery */}
+          <div className="rounded-2xl overflow-hidden shadow-xl mb-8 ${isDark ? 'bg-gray-800' : 'bg-white'}">
+            <div className="relative">
               <div aria-live="polite" className="sr-only">Image {currentImageIndex + 1} of {Math.max(images.length, 1)}</div>
+              
               <img
                 src={currentImage}
                 alt={`${vehicle.brand_name} ${vehicle.model}`}
-                className="w-full h-72 sm:h-96 object-cover"
+                className="w-full h-[520] sm:h-[600] object-cover transition-opacity duration-300 focus:opacity-90"
+                decoding="async"
                 width={600}
                 height={384}
-                decoding="async"
               />
+              
+              {/* Navigation arrows */}
               {images.length > 1 && (
-                <>
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors touch-target-large"
+                    className="prev-arrow bg-black/50 text-white p-3 rounded-full transition-colors"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft className="h-6 w-6" />
+                    <ChevronLeft className="h-5 w-5" />
                   </button>
                   <button
                     type="button"
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors touch-target-large"
+                    className="next-arrow bg-black/50 text-white p-3 rounded-full transition-colors"
                     aria-label="Next image"
                   >
-                    <ChevronRight className="h-6 w-6" />
+                    <ChevronRight className="h-5 w-5" />
                   </button>
-                </>
+                </div>
               )}
-            </div>
-
-            {images.length > 1 && (
-              <div className="grid grid-cols-4 gap-2">
-                {images.map((img, index) => (
-                  <button
-                    key={img.id}
-                    onClick={() => setCurrentImageIndex(index)}
-                    type="button"
-                    aria-label={`View ${vehicle.brand_name} ${vehicle.model} image ${index + 1} of ${images.length}`}
-                    className={`rounded-lg overflow-hidden ${
-                      currentImageIndex === index ? 'ring-2 ring-blue-600' : ''
-                    }`}
-                  >
-                    <img
-                      src={encodeURI(img.image_url)}
-                      alt={`${vehicle.brand_name} ${vehicle.model} thumbnail ${index + 1}`}
-                      className="w-full h-20 object-cover"
-                      loading="lazy"
-                      width={150}
-                      height={80}
-                      decoding="async"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className={`rounded-lg shadow-md p-6 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
-              <div className={`text-sm mb-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                {t('vehicle.stock')}: {vehicle.stock_number}
-              </div>
-              <h1 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                {vehicle.brand_name} {vehicle.model}
-              </h1>
-              <div className="text-4xl font-bold text-[var(--brand-red,#C00000)] mb-6">
-                {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : (language === 'en' ? 'Price on request' : 'মূল্য অনুরোধে')}
-              </div>
-
-              <div className={`grid grid-cols-2 gap-4 mb-6 pb-6 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                <div className="flex items-center space-x-3">
-                  <Calendar className={`h-5 w-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
-                  <div>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t('vehicle.year')}</div>
-                    <div className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{vehicle.year}</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Gauge className={`h-5 w-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
-                  <div>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t('vehicle.mileage')}</div>
-                    <div className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{vehicle.mileage.toLocaleString()} km</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Fuel className={`h-5 w-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
-                  <div>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t('vehicle.fuel')}</div>
-                    <div className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{vehicle.fuel_type}</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Settings className={`h-5 w-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
-                  <div>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t('vehicle.transmission')}</div>
-                    <div className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{vehicle.transmission}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <Link to={`/reserve/${vehicle.id}`} onClick={() => { try { (async () => (await import('../lib/analytics')).trackEvent('reserve_clicked', { vehicleId: vehicle.id }))(); } catch { /* analytics is non-critical */ } }}>
-                  <Button className="w-full" size="lg">
-                    {t('vehicle.reserve')}
-                  </Button>
-                </Link>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <a
-                      href={`tel:+8801760401605`}
-                      className="flex items-center justify-center space-x-2 px-4 py-3 min-h-[44px] bg-gray-900 hover:bg-gray-800 text-white rounded-lg transition-colors"
+              
+              {/* Thumbnail strip */}
+              {images.length > 1 && (
+                <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2">
+                  {images.map((img, idx) => (
+                    <button
+                      key={img.id}
+                      type="button"
+                      aria-label={`Image ${idx + 1}`}
+                      className={`flex-1 rounded-lg overflow-hidden ${
+                        currentImageIndex === idx ? 'opacity-100 shadow-lg' : 'opacity-60 transition-opacity'
+                      }`}
                     >
-                    <Phone className="h-5 w-5" />
-                    <span>{t('vehicle.contact')}</span>
-                  </a>
-                  <a
-                      href={`https://wa.me/8801760401605?text=${encodeURIComponent(`I'm interested in ${vehicle.brand_name} ${vehicle.model}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center space-x-2 px-4 py-3 min-h-[44px] bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                    <span>{t('vehicle.whatsapp')}</span>
-                  </a>
-                </div>
-                {/* Ask SparkPilot: right-side assistant entry point for this vehicle */}
-                <button
-                  onClick={() => openSparkPilot(`I'm interested in the ${vehicle.brand_name} ${vehicle.model} (${vehicle.year}, ৳${Number(vehicle.price).toLocaleString()}). Is it a good fit for me?`)}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-white font-semibold transition bg-gradient-to-r from-cyan-500 to-[#8A0000] hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
-                  aria-label={`Ask SparkPilot about the ${vehicle.brand_name} ${vehicle.model}`}
-                >
-                  <Sparkles className="h-5 w-5" aria-hidden />
-                  <span>{language === 'en' ? 'Ask SparkPilot about this car' : 'এই গাড়ি সম্পর্কে SparkPilot-কে জিজ্ঞাসা করুন'}</span>
-                </button>
-                <button
-                  onClick={() => setShowEMICalculator(!showEMICalculator)}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-3 border-2 border-blue-600 text-primary hover:bg-primary hover:text-white rounded-lg transition-colors"
-                >
-                  <Calculator className="h-5 w-5" />
-                  <span>{t('vehicle.calculate_emi')}</span>
-                </button>
-              </div>
-            </div>
-
-            {showEMICalculator && (
-              <Card className="mt-4 p-6">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                  {language === 'en' ? 'EMI Calculator' : 'ইএমআই ক্যালকুলেটর'}
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      {language === 'en' ? 'Down Payment' : 'ডাউন পেমেন্ট'}
-                    </label>
-                    <input
-                      type="number"
-                      value={emiParams.downPayment}
-                      onChange={(e) => setEmiParams({ ...emiParams, downPayment: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-4 py-2 min-h-[44px] border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      {language === 'en' ? 'Interest Rate (%)' : 'সুদের হার (%)'}
-                    </label>
-                    <input
-                      type="number"
-                      value={emiParams.interestRate}
-                      onChange={(e) => setEmiParams({ ...emiParams, interestRate: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-4 py-2 min-h-[44px] border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      {language === 'en' ? 'Loan Period (years)' : 'লোনের মেয়াদ (বছর)'}
-                    </label>
-                    <input
-                      type="number"
-                      value={emiParams.years}
-                      onChange={(e) => setEmiParams({ ...emiParams, years: parseFloat(e.target.value) || 0 })}
-                      className="w-full px-4 py-2 min-h-[44px] border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                    />
-                  </div>
-                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                      {language === 'en' ? 'Monthly EMI' : 'মাসিক ইএমআই'}
-                    </div>
-                    <div className="text-3xl font-bold text-primary dark:text-blue-400">
-                      {formatPrice(calculateMonthlyEMI(), language)}
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <Card className={`p-6 mb-6 ${isDark ? 'bg-gray-800' : ''}`}>
-              <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>{language === 'en' ? 'Description' : 'বিবরণ'}</h2>
-              <p className={`leading-relaxed whitespace-pre-line ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {language === 'en' ? vehicle.description_en : vehicle.description_bn || vehicle.description_en}
-              </p>
-            </Card>
-
-            {vehicle.features && vehicle.features.length > 0 && (
-              <Card className={`p-6 ${isDark ? 'bg-gray-800' : ''}`}>
-                <h2 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>{t('vehicle.features')}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {vehicle.features.map((feature) => (
-                    <div key={feature.id} className="flex items-center space-x-2">
-                      <div className="h-2 w-2 bg-primary rounded-full"></div>
-                      <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>
-                        {language === 'en' ? feature.feature_en : feature.feature_bn}
-                      </span>
-                    </div>
+                      <img
+                        src={encodeURI(img.image_url)}
+                        alt={`${vehicle.brand_name} ${vehicle.model} thumb ${idx + 1}`}
+                        className="w-full h-24 object-cover"
+                        loading="lazy"
+                      />
+                    </button>
                   ))}
                 </div>
-              </Card>
-            )}
+              )}
+            </div>
           </div>
 
-          <div>
-            <Card className={`p-6 ${isDark ? 'bg-gray-800' : ''}`}>
-              <h2 className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>{t('vehicle.specifications')}</h2>
-              <dl className="space-y-3">
-                {[
-                  { label: t('vehicle.year'), value: vehicle.year },
-                  { label: t('filter.brand'), value: vehicle.brand_name },
-                  { label: t('filter.model'), value: vehicle.model },
-                  { label: t('vehicle.condition'), value: vehicle.condition },
-                  { label: t('vehicle.fuel'), value: vehicle.fuel_type },
-                  { label: t('vehicle.transmission'), value: vehicle.transmission },
-                  { label: language === 'en' ? 'Engine' : 'ইঞ্জিন', value: vehicle.engine_capacity },
-                  { label: language === 'en' ? 'Body Type' : 'বডি টাইপ', value: vehicle.body_type },
-                  { label: language === 'en' ? 'Exterior Color' : 'বাহ্যিক রঙ', value: vehicle.color_exterior },
-                  { label: language === 'en' ? 'Interior Color' : 'অভ্যন্তরীণ রঙ', value: vehicle.color_interior },
-                ].map((spec) => spec.value && (
-                  <div key={spec.label} className={`flex justify-between py-2 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
-                    <dt className={isDark ? 'text-gray-400' : 'text-gray-600'}>{spec.label}</dt>
-                    <dd className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{spec.value}</dd>
+          {/* Premium Vehicle Metadata */}
+          <div className="rounded-2xl bg-gray-800/50 p-6 mb-8 ${isDark ? 'border border-gray-700' : 'border border-gray-200'}">
+            <div className="flex items-start gap-4">
+              {/* Brand Badge */}
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <span className={isDark ? 'text-red-400' : 'text-red-600'}>
+                  {vehicle.brand_name?.charAt(0) || ''}
+                </span>
+              </div>
+              
+              {/* Vehicle Info */}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                  {vehicle.brand_name} {vehicle.model}
+                </p>
+                <h1 className="text-2xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}">
+                  {vehicle.year}
+                </h1>
+                <p className="text-base text-gray-600 dark:text-gray-300">
+                  {language === 'en' ? 'Premium Japanese Vehicle' : 'প্রিমiumi japonি বাহন'}
+                </p>
+              </div>
+            </div>
+            
+            {/* Key Stats Row */}
+            <div className="grid grid-cols-3 gap-4 mt-6">
+              <div>
+                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider">Mileage</p>
+                <p className="text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}">
+                  {vehicle.mileage.toLocaleString()} km
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider">Fuel</p>
+                <p className="text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}">
+                  {vehicle.fuel_type}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider">Transmission</p>
+                <p className="text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}">
+                  {vehicle.transmission}
+                </p>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="text-5xl font-bold text-[var(--brand-red,#D6001C)] mb-6">
+              {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : (language === 'en' ? 'Price on request' : 'মূল্য_on_requestে')}
+            </div>
+
+            {/* Action CTA Group */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              <Link
+                to={`/reserve/${vehicle.id}`}
+                className="col-span-2 sm:col-span-1 rounded-lg bg-primary px-6 py-3 font-semibold text-white transition-colors hover:bg-primary/90"
+              >
+                {t('vehicle.reserve')}
+              </Link>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <a
+                  href={`tel:+8801760401605`}
+                  className="flex-1 rounded-lg bg-gray-900 hover:bg-gray-800 text-white py-2.5 px-4 transition-colors text-sm"
+                >
+                  <ChevronLeft className="h-4 w-4 mr-2" />
+                  {language === 'en' ? 'Call' : 'ফোন করুন'}
+                </a>
+                <a
+                  href={`https://wa.me/8801760401605?text=${encodeURIComponent(`I'm interested in ${vehicle.brand_name} ${vehicle.model}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 rounded-lg bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 transition-colors text-sm flex items-center justify-center"
+                >
+                  <ChevronRight className="h-4 w-4 mr-2" />
+                  {language === 'en' ? 'WhatsApp' : 'WhatsApp'}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Description Section */}
+          <Card className="p-6 mb-6 ${isDark ? 'bg-gray-800' : ''}">
+            <h2 className="text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}">
+              {language === 'en' ? 'Description' : 'বিবরণ'}
+            </h2>
+            <p className="leading-relaxed whitespace-pre-line ${isDark ? 'text-gray-300' : 'text-gray-700'}">
+              {language === 'en' ? vehicle.description_en : vehicle.description_bn || vehicle.description_en}
+            </p>
+          </Card>
+
+          {/* Features Section */}
+          {vehicle.features && vehicle.features.length > 0 && (
+            <Card className="p-6 ${isDark ? 'bg-gray-800' : ''}">
+              <h2 className="text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}">
+                {t('vehicle.features')}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {vehicle.features.map((feature: any) => (
+                  <div key={feature.id} className="flex items-center space-x-2">
+                    <div className="h-2 w-2 bg-primary rounded-full"></div>
+                    <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>
+                      {language === 'en' ? feature.feature_en : feature.feature_bn}
+                    </span>
                   </div>
                 ))}
-              </dl>
+              </div>
             </Card>
-          </div>
-        </div>
-      </div>
+          )}
 
-      {/* Sticky mobile buy bar */}
-      <div
-        className={`fixed bottom-0 inset-x-0 z-40 lg:hidden border-t backdrop-blur-md ${
-          isDark ? 'bg-gray-900/90 border-gray-800' : 'bg-white/95 border-gray-200'
-        } pb-[max(env(safe-area-inset-bottom,0px),0.75rem)]`}
-      >
-        <div className="container mx-auto px-4 py-3 flex items-center gap-3">
-          <div className="min-w-0">
-            <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-              {language === 'en' ? 'Price' : 'মূল্য'}
-            </p>
-            <p className="text-lg font-bold text-[var(--brand-red,#C00000)] truncate">
-              {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : '-'}
-            </p>
+          {/* Specifications Section */}
+          <Card className="p-6 ${isDark ? 'bg-gray-800' : ''}">
+            <h2 className="text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}">
+              {t('vehicle.specifications')}
+            </h2>
+            <dl className="space-y-3">
+              {[
+                { label: t('vehicle.year'), value: vehicle.year },
+                { label: t('filter.brand'), value: vehicle.brand_name },
+                { label: t('filter.model'), value: vehicle.model },
+                { label: t('vehicle.condition'), value: vehicle.condition },
+                { label: t('vehicle.fuel'), value: vehicle.fuel_type },
+                { label: t('vehicle.transmission'), value: vehicle.transmission },
+                { label: language === 'en' ? 'Engine' : 'ইঞ্জিন', value: vehicle.engine_capacity },
+                { label: language === 'en' ? 'Body Type' : 'বডি টাইপ', value: vehicle.body_type },
+                { label: language === 'en' ? 'Exterior Color' : 'বাহ্যিক রঙ', value: vehicle.color_exterior },
+                { label: language === 'en' ? 'Interior Color' : 'অভ্যন্তরীণ রঙ', value: vehicle.color_interior },
+              ].map((spec) => spec.value && (
+                <div key={spec.label} className="flex justify-between py-2 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}">
+                  <dt className={isDark ? 'text-gray-400' : 'text-gray-600'}>{spec.label}</dt>
+                  <dd className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    {typeof spec.value === 'number' ? spec.value.toLocaleString() : String(spec.value)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Card>
+        </div>
+
+        {/* Sticky mobile buy bar */}
+        <div
+          className={`fixed bottom-0 inset-x-0 z-40 lg:hidden border-t backdrop-blur-md ${isDark ? 'bg-gray-900/90 border-gray-800' : 'bg-white/95 border-gray-200'} pb-[max(env(safe-area-inset-bottom,0px),0.75rem)]`}
+        >
+          <div className="container mx-auto px-4 py-3 flex items-center gap-3">
+            <div className="min-w-0">
+              <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                {language === 'en' ? 'Price' : 'মূল্য'}
+              </p>
+              <p className="text-lg font-bold text-[var(--brand-red,#D6001C)] truncate">
+                {vehicle.price && vehicle.price > 0 ? formatPrice(vehicle.price, language) : '-'}
+              </p>
+            </div>
+            <Link
+              to={`/reserve/${vehicle.id}`}
+              className="flex-1 min-h-[44px] px-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-red,#D6001C)] text-white font-bold hover:opacity-90 transition-opacity"
+            >
+              {t('vehicle.reserve')}
+            </Link>
           </div>
-          <Link
-            to={`/reserve/${vehicle.id}`}
-            className="flex-1 min-h-[44px] px-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-red,#C00000)] text-white font-bold hover:opacity-90 transition-opacity"
-          >
-            {t('vehicle.reserve')}
-          </Link>
         </div>
       </div>
     </div>
