@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Moon, Globe } from 'lucide-react';
+import { Sun, Moon, Globe, ChevronDown } from 'lucide-react';
 import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
@@ -74,6 +74,18 @@ export const Header = () => {
     { to: '/services', label: t('nav.services') },
     { to: '/about', label: t('nav.about') },
     { to: '/testimonials', label: t('nav.testimonials') },
+    { to: '/accessories', label: t('nav.accessories') },
+    { to: '/contact', label: t('nav.contact') },
+  ];
+
+  const dropdownLinks = [
+    { to: '/', label: t('nav.home') },
+    { to: '/inventory', label: t('nav.inventory') },
+    { to: '/experience', label: language === 'en' ? 'Experience' : 'অভিজ্ঞতা' },
+    { to: '/services', label: t('nav.services') },
+    { to: '/about', label: t('nav.about') },
+    { to: '/testimonials', label: t('nav.testimonials') },
+    { to: '/accessories', label: t('nav.accessories') },
     { to: '/contact', label: t('nav.contact') },
   ];
 
@@ -142,6 +154,7 @@ export const Header = () => {
     { to: '/japan-import', label: 'Japan Import' },
     { to: '/services', label: t('nav.services') },
     { to: '/about', label: t('nav.about') },
+    { to: '/dropdown', label: 'More', isDropdown: true, dropdownLinks: dropdownLinks },
   ];
 
   const glassBackground = isMobileMenuOpen
@@ -184,18 +197,53 @@ export const Header = () => {
 
               {/* Desktop navigation */}
               <div className="hidden xl:flex items-center space-x-0">
-                {navLinksDesktop.map((link) => (
-                  <Link
-                    to={link.to}
-                    onClick={() => handleNavClick(link.to)}
-                    className="px-2 2xl:px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 relative outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                      activeLink === link.to ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                    }"
-                    aria-current={activeLink === link.to ? 'page' : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {navLinksDesktop.map((link) => {
+                  if (link.isDropdown) {
+                    return (
+                      <div key={link.to} className="relative group">
+                        <button
+                          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                          className="px-2 2xl:px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                          aria-haspopup="true"
+                          aria-expanded={isMobileMenuOpen}
+                        >
+                          {link.label}
+                          <ChevronDown className="h-3.5 w-3.5 ml-1 transition-transform group-data-[open]:rotate-180" />
+                        </button>
+                        <div
+                          id="dropdown-nav"
+                          className="absolute right-0 mt-2 w-48 rounded-lg bg-background/80 backdrop-blur-xl border border-border shadow-lg p-4 min-w-48 z-50"
+                          style={{
+                            display: isMobileMenuOpen ? 'block' : 'none',
+                          }}
+                        >
+                          {link.dropdownLinks.map((dl) => (
+                            <Link
+                              key={dl.to}
+                              to={dl.to}
+                              onClick={() => { handleNavClick(dl.to); setIsMobileMenuOpen(false); }}
+                              className="block px-2 py-1.5 rounded-sm text-sm text-muted-foreground hover:text-primary transition-colors"
+                            >
+                              {dl.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  return (
+                    <Link
+                      to={link.to}
+                      onClick={() => handleNavClick(link.to)}
+                      className="px-2 2xl:px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 relative outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                        activeLink === link.to ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                      }"
+                      aria-current={activeLink === link.to ? 'page' : undefined}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
               </div>
 
               {/* Right Controls */}
