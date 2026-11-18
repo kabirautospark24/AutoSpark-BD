@@ -1,26 +1,31 @@
-﻿import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
 
 interface VehicleViewer360Props {
   vehicleName?: string;
   brandImage?: string;
+  colors?: { name: string; hex: string }[];
+  wheelOptions?: { name: string; image: string }[];
 }
 
 export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({ 
   vehicleName = 'Toyota Crown 2022',
-  brandImage = 'https://images.pexels.com/photos/36317642/pexels-photo-36317642.png'
+  brandImage = 'https://images.pexels.com/photos/36317642/pexels-photo-36317642.png',
+  colors = [],
+  wheelOptions = [],
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [autoRotate, setAutoRotate] = useState(true);
   const [rotationY, setRotationY] = useState(0);
   const [rotationX, setRotationX] = useState(0);
   const [imageError, setImageError] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedWheel, setSelectedWheel] = useState<string | null>(null);
   const mouseX = useRef(0);
   const mouseY = useRef(0);
 
   useEffect(() => {
-
     const onMouseMove = (event: MouseEvent) => {
       if (!autoRotate && containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
@@ -46,6 +51,7 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
 
       if (autoRotate) {
         setRotationY((prev) => (prev + 0.5) % 360);
+        setRotationX((prev) => (prev + 0.1) % 360);
       } else {
         setRotationY((prev) => prev + mouseX.current * 2);
         setRotationX((prev) => prev + mouseY.current * 1);
@@ -61,8 +67,17 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
     };
   }, [autoRotate]);
 
+  const handleColorSelect = (colorName: string) => {
+    setSelectedColor(colorName);
+  };
+
+  const handleWheelSelect = (wheelName: string) => {
+    setSelectedWheel(wheelName);
+  };
+
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -70,8 +85,7 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
     >
       <div className="relative">
         <div
-          ref={containerRef}
-          className="w-full h-96 md:h-96 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex items-center justify-center overflow-hidden"
+          className="w-full h-[420] md:h-[480] bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 flex items-center justify-center overflow-hidden"
           style={{ perspective: '1000px' }}
         >
           {imageError && (
@@ -88,10 +102,10 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
                 rotateX: rotationX,
               }}
               transition={{ type: 'tween', duration: 0 }}
-              className="relative w-full h-full flex items-center justify-center"
+              className="relative w-full h-[420] md:h-[480] flex items-center justify-center"
             >
               <img
-                src={brandImage}
+                src={selectedWheel ? '/placeholder-wheel.png' : brandImage}
                 alt={vehicleName}
                 className="w-full h-full object-contain p-4"
                 onError={() => setImageError(true)}
@@ -99,22 +113,70 @@ export const VehicleViewer360: React.FC<VehicleViewer360Props> = ({
             </motion.div>
           )}
 
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#C00000]/0 via-transparent to-blue-500/0 opacity-0"></div>
+          {/* Color selection sidebar */}
+          {colors.length > 0 && (
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2">
+              <div>
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Color</span>
+              </div>
+              <div className="flex gap-2">
+                {colors.map((color) => (
+                  <button
+                    key={color.name}
+                    onClick={() => handleColorSelect(color.name)}
+                    className="w-8 h-8 rounded-full border-2 transition-colors"
+                    style={{ backgroundColor: color.hex }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Wheel selection sidebar */}
+          {wheelOptions.length > 0 && (
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
+              <div>
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Wheels</span>
+              </div>
+              <div className="flex gap-2">
+                {wheelOptions.map((wheel) => (
+                  <button
+                    key={wheel.name}
+                    onClick={() => handleWheelSelect(wheel.name)}
+                    className="w-8 h-8 rounded-lg border-2 transition-colors"
+                    style={{ backgroundImage: `url('${wheel.image}')` }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Control button */}
+          <div className="absolute top-4 right-4">
+            <button
+              onClick={() => setAutoRotate(!autoRotate)}
+              className="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-red-700 transition"
+            >
+              {autoRotate ? 'Manual' : 'Auto'}
+            </button>
+          </div>
+
+          {/* Status bar */}
+          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+            <div>{autoRotate ? 'Auto-rotating' : 'Drag to rotate'}</div>
+            {selectedColor && <span>Color: {selectedColor}</span>}
+            {selectedWheel && <span>Wheels: {selectedWheel}</span>}
           </div>
         </div>
 
-        <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-          <h3 className="text-lg font-bold text-gray-900">{vehicleName}</h3>
+        {/* Orbit info */}
+        <div className="absolute top-4 left-4">
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-red-700 transition"
+            className="px-3 py-1 bg-gray-200 text-gray-800 text-sm rounded-full"
           >
-            {autoRotate ? '🔄 Auto' : '👆 Manual'}
+            {autoRotate ? 'Stop orbit' : 'Start orbit'}
           </button>
-        </div>
-        <div className="absolute bottom-4 left-4 text-xs text-gray-600 bg-white/80 px-3 py-2 rounded-lg">
-          {autoRotate ? 'Auto-rotating...' : 'Drag to rotate'}
         </div>
       </div>
     </motion.div>
