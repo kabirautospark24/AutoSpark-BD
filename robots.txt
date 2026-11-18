@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /inventory-management/
+
+Sitemap: https://www.autosparkbd.com/sitemap.xml

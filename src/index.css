@@ -975,3 +975,7 @@ iframe {
   transform-origin: center;
   animation: asMorphPoly 6s ease-in-out infinite;
 }
+
+.footer-min-h {
+  min-height: 420px;
+}

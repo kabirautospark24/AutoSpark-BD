@@ -40,7 +40,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative z-20 border-t border-border bg-background text-muted-foreground">
+    <footer className="relative z-20 border-t border-border bg-background text-muted-foreground footer-min-h">
       <div className="container-fluid py-14 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-12">
           {/* Brand */}
