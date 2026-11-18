@@ -359,7 +359,7 @@ export const HomePage = () => {
   }, [pickUniqueColors]);
 
   return (
-    <div className="min-h-dvh bg-background">
+    <div className="min-h-dvh bg-background" data-no-motion>
       <PageHead path="/" />
 
         {/* ══ HERO ══════════════════════════════════════════════════ */}
@@ -372,17 +372,22 @@ export const HomePage = () => {
             {device.supports3D ? (
               <VideoHero>
                 <div className="flex flex-col items-center gap-6 text-center px-4">
-                  <h1 className="text-[clamp(1.75rem,1.2rem+2.5vw,3.25rem)] font-bold leading-tight text-white text-balance max-w-3xl hero-text-shadow">
+                  <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-none tracking-tight text-white text-balance max-w-full">
                     {language === 'en' ? 'Premium Cars in Rajshahi' : 'রাজশাহীতে প্রিমিয়াম গাড়ি'}
                   </h1>
-                  <div className="flex flex-row flex-wrap gap-2 sm:gap-3 justify-center">
-                    <Link to="/inventory" className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-glow-red transition-colors hover:bg-primary/90 sm:text-sm md:text-base">
-                      {t('hero.browse')}<ArrowRight className="ml-1.5 h-3.5 w-3.5 md:h-5 md:w-5" aria-hidden />
+                  <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    {language === 'en'
+                      ? 'Discover curated Japanese vehicles, explore pre-order options, and experience professional automotive care in Rajshahi.'
+                      : 'জпонি竹 veículos নির্বাচন করুন, পির-অর্ডার বিকল্প অন্বেষণ করুন, এবং রাজশাহীতে পেশাদার গाड़ी কল্যাণের অভিজ্ঞতা পান।'}
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto">
+                    <Link to="/inventory" className="group inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-glow-red transition-colors hover:bg-primary/90">
+                      {t('hero.browse')}<ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-150 group-hover:translate-x-1" aria-hidden />
                     </Link>
-                    <Link to="/services" className="inline-flex items-center px-5 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 font-semibold rounded-xl text-xs sm:text-sm md:text-base transition-all">
+                    <Link to="/services" className="group inline-flex items-center gap-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 font-semibold rounded-xl transition-all">
                       {t('hero.book_service')}
                     </Link>
-                    <Link to="/sell" className="inline-flex items-center px-5 py-2.5 bg-white/5 border border-white/10 text-white hover:bg-white/10 font-semibold rounded-xl text-xs sm:text-sm md:text-base transition-all">
+                    <Link to="/sell" className="group inline-flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 font-semibold transition-all">
                       {t('hero.sell')}
                     </Link>
                   </div>
@@ -638,11 +643,11 @@ export const HomePage = () => {
                 { icon: Car, title: language === 'en' ? 'Premium Selection' : 'প্রিমিয়াম নির্বাচন', desc: language === 'en' ? 'Carefully curated luxury and premium vehicles' : 'সাবধানে নির্বাচিত বিলাসবহুল গাড়ির সংগ্রহ' },
                 { icon: Shield, title: language === 'en' ? 'Quality Assurance' : 'মান নিশ্চিতকরণ', desc: language === 'en' ? 'Thorough inspection and certification for every vehicle' : 'প্রতিটি গাড়ির জন্য পুঙ্খানুপুঙ্খ পরিদর্শন' },
                 { icon: Wrench, title: language === 'en' ? 'Expert Service' : 'বিশেষজ্ঞ সেবা', desc: language === 'en' ? 'State-of-the-art service center with experienced technicians' : 'অভিজ্ঞ প্রযুক্তিবিদদের সাথে অত্যাধুনিক সার্ভিস সেন্টার' },
-              ].map((f, i) => (
-                <motion.div key={i} variants={staggerItemVariants} className="h-full">
-                  <div className="flex h-full flex-col items-center rounded-2xl border border-border bg-card p-8 text-center transition-colors duration-300 hover:border-primary/40">
-                    <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
-                      <f.icon className="h-8 w-8 text-primary" />
+].map((f, i) => (
+                <motion.div key={i} variants={staggerItemVariants} className="h-full flex-shrink-0">
+                  <div className="group rounded-2xl border border-border bg-card p-8 text-center transition-all duration-300 hover:border-primary/30 hover:bg-primary/5">
+                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/15 transition-colors">
+                      <f.icon className="h-7 w-7 text-primary" />
                     </div>
                     <h3 className="mb-3 text-lg font-semibold text-foreground">{f.title}</h3>
                     <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
