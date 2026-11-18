@@ -1,4 +1,4 @@
-﻿import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Get the logo path - works for both localhost and GitHub Pages
@@ -85,7 +85,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-1 h-1 bg-[#C00000]/50 rounded-full"
+                className="absolute w-1 h-1 bg-[#D6001C]/50 rounded-full"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -111,7 +111,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute top-1/2 left-1/2 w-[1px] h-[200%] bg-gradient-to-b from-transparent via-[#C00000]/10 to-transparent"
+                className="absolute top-1/2 left-1/2 w-[1px] h-[200%] bg-gradient-to-b from-transparent via-[#D6001C]/10 to-transparent"
                 style={{
                   transformOrigin: 'center center',
                   rotate: `${i * 30}deg`
@@ -142,7 +142,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
               <motion.div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: 'radial-gradient(circle, rgba(192, 0, 0, 0.4) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle, rgba(214, 0, 28, 0.4) 0%, transparent 70%)',
                   filter: 'blur(30px)',
                   transform: 'scale(2)'
                 }}
@@ -180,7 +180,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.h1
-                className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#E23A3A] via-white to-[#C00000] bg-clip-text text-transparent"
+                className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#F03A4A] via-white to-[#D6001C] bg-clip-text text-transparent"
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                 }}
@@ -209,13 +209,13 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
               <div className="relative h-1 bg-gray-800 rounded-full overflow-hidden">
                 {/* Background glow */}
                 <motion.div
-                  className="absolute inset-0 bg-[#C00000]/20"
+                  className="absolute inset-0 bg-[#D6001C]/20"
                   animate={{ opacity: [0.3, 0.6, 0.3] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
                 {/* Progress fill */}
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-[#8B0000] via-[#C00000] to-[#E23A3A]"
+                  className="h-full rounded-full bg-gradient-to-r from-[#9F0013] via-[#D6001C] to-[#F03A4A]"
                   style={{ width: `${progress}%` }}
                   transition={{ duration: 0.1 }}
                 />
@@ -240,7 +240,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
                   {[0, 1, 2].map((i) => (
                     <motion.span
                       key={i}
-                      className="w-1 h-1 bg-[#C00000] rounded-full"
+                      className="w-1 h-1 bg-[#D6001C] rounded-full"
                       animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
                       transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }}
                     />
@@ -257,8 +257,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="absolute top-4 left-4 w-12 h-[1px] bg-gradient-to-r from-[#C00000]/50 to-transparent" />
-            <div className="absolute top-4 left-4 h-12 w-[1px] bg-gradient-to-b from-[#C00000]/50 to-transparent" />
+            <div className="absolute top-4 left-4 w-12 h-[1px] bg-gradient-to-r from-[#D6001C]/50 to-transparent" />
+            <div className="absolute top-4 left-4 h-12 w-[1px] bg-gradient-to-b from-[#D6001C]/50 to-transparent" />
           </motion.div>
           <motion.div
             className="absolute top-0 right-0 w-32 h-32"
@@ -266,8 +266,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="absolute top-4 right-4 w-12 h-[1px] bg-gradient-to-l from-[#C00000]/50 to-transparent" />
-            <div className="absolute top-4 right-4 h-12 w-[1px] bg-gradient-to-b from-[#C00000]/50 to-transparent" />
+            <div className="absolute top-4 right-4 w-12 h-[1px] bg-gradient-to-l from-[#D6001C]/50 to-transparent" />
+            <div className="absolute top-4 right-4 h-12 w-[1px] bg-gradient-to-b from-[#D6001C]/50 to-transparent" />
           </motion.div>
           <motion.div
             className="absolute bottom-0 left-0 w-32 h-32"
@@ -275,8 +275,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="absolute bottom-4 left-4 w-12 h-[1px] bg-gradient-to-r from-[#C00000]/50 to-transparent" />
-            <div className="absolute bottom-4 left-4 h-12 w-[1px] bg-gradient-to-t from-[#C00000]/50 to-transparent" />
+            <div className="absolute bottom-4 left-4 w-12 h-[1px] bg-gradient-to-r from-[#D6001C]/50 to-transparent" />
+            <div className="absolute bottom-4 left-4 h-12 w-[1px] bg-gradient-to-t from-[#D6001C]/50 to-transparent" />
           </motion.div>
           <motion.div
             className="absolute bottom-0 right-0 w-32 h-32"
@@ -284,8 +284,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = memo(({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="absolute bottom-4 right-4 w-12 h-[1px] bg-gradient-to-l from-[#C00000]/50 to-transparent" />
-            <div className="absolute bottom-4 right-4 h-12 w-[1px] bg-gradient-to-t from-[#C00000]/50 to-transparent" />
+            <div className="absolute bottom-4 right-4 w-12 h-[1px] bg-gradient-to-l from-[#D6001C]/50 to-transparent" />
+            <div className="absolute bottom-4 right-4 h-12 w-[1px] bg-gradient-to-t from-[#D6001C]/50 to-transparent" />
           </motion.div>
         </motion.div>
       )}

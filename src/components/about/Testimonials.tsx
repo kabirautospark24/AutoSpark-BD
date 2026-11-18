@@ -22,12 +22,12 @@ const Testimonials: React.FC<{ items: Testimonial[]; language: string; theme: st
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
           <Card className={`p-6 h-full ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800' : 'bg-white'} relative`}>
-            <Quote className="absolute top-4 right-4 w-10 h-10 text-[#C00000]/10" />
+            <Quote className="absolute top-4 right-4 w-10 h-10 text-[#D6001C]/10" />
             <div className="flex items-center gap-4 mb-4">
               <img
                 src={testimonial.image}
                 alt={testimonial.name}
-                className="w-14 h-14 rounded-full object-cover border-2 border-[#C00000]/30"
+                className="w-14 h-14 rounded-full object-cover border-2 border-[#D6001C]/30"
                 loading="lazy"
                 width={56}
                 height={56}
@@ -37,7 +37,7 @@ const Testimonials: React.FC<{ items: Testimonial[]; language: string; theme: st
               />
               <div>
                 <h4 className={`font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{testimonial.name}</h4>
-                <p className="text-[#C00000] text-sm">{testimonial.role}</p>
+                <p className="text-[#D6001C] text-sm">{testimonial.role}</p>
               </div>
             </div>
             <div className="flex gap-1 mb-3">

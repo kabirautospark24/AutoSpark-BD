@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Layout } from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -70,10 +71,12 @@ function App() {
   return (
     <Router>
       <ErrorBoundary>
-        <ScrollToTop />
-        <Layout>
-          <AppRoutes />
-        </Layout>
+        <MotionConfig reducedMotion="user">
+          <ScrollToTop />
+          <Layout>
+            <AppRoutes />
+          </Layout>
+        </MotionConfig>
       </ErrorBoundary>
     </Router>
   );

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
@@ -416,7 +416,7 @@ export const ProductDetailPage = () => {
         aria-live="polite"
         aria-label="Loading product"
       >
-        <div className="w-8 h-8 border-2 border-[#C00000] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#D6001C] border-t-transparent rounded-full animate-spin" />
         <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Loading product…</p>
       </div>
     );
@@ -435,7 +435,7 @@ export const ProductDetailPage = () => {
           <div className="flex gap-3 justify-center">
             <button
               onClick={() => setRetryCount((c) => c + 1)}
-              className="px-5 py-2.5 bg-[#C00000] text-white rounded-lg font-semibold hover:bg-red-700 inline-flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#D6001C] text-white rounded-lg font-semibold hover:bg-red-700 inline-flex items-center gap-2"
             >
               <RotateCcw size={16} /> Retry
             </button>
@@ -462,7 +462,7 @@ export const ProductDetailPage = () => {
           </p>
           <button
             onClick={() => navigate('/accessories')}
-            className="px-5 py-2.5 bg-[#C00000] text-white rounded-lg font-semibold hover:bg-red-700"
+            className="px-5 py-2.5 bg-[#D6001C] text-white rounded-lg font-semibold hover:bg-red-700"
           >
             Back to Accessories
           </button>
@@ -545,7 +545,7 @@ export const ProductDetailPage = () => {
                     aria-pressed={selectedImage === idx}
                     className={`w-16 h-16 rounded overflow-hidden border-2 transition ${
                       selectedImage === idx
-                        ? 'border-[#C00000]'
+                        ? 'border-[#D6001C]'
                         : isDark
                           ? 'border-gray-700 hover:border-gray-600'
                           : 'border-gray-300 hover:border-gray-400'
@@ -602,11 +602,11 @@ export const ProductDetailPage = () => {
             {/* Price Section */}
             <div className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
               <div className="flex items-baseline gap-2 mb-2 flex-wrap">
-                <span className="text-3xl font-bold text-[#C00000]">{formatBDT(discountedPrice)}</span>
+                <span className="text-3xl font-bold text-[#D6001C]">{formatBDT(discountedPrice)}</span>
                 {product.discount ? (
                   <>
                     <span className="text-lg line-through text-gray-500">{formatBDT(product.price)}</span>
-                    <span className="ml-2 px-2 py-1 bg-[#C00000] text-white text-xs rounded font-bold">
+                    <span className="ml-2 px-2 py-1 bg-[#D6001C] text-white text-xs rounded font-bold">
                       -{product.discount}%
                     </span>
                   </>
@@ -725,7 +725,7 @@ export const ProductDetailPage = () => {
                 className={`w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition ${
                   product.stock_quantity === 0 || !product.is_available
                     ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                    : 'bg-[#C00000] text-white hover:bg-red-700'
+                    : 'bg-[#D6001C] text-white hover:bg-red-700'
                 }`}
               >
                 {addedToCart ? <Check size={20} aria-hidden /> : <ShoppingCart size={20} aria-hidden />}
@@ -735,7 +735,7 @@ export const ProductDetailPage = () => {
               {/* Ask SparkPilot: right-side assistant entry point for this product */}
               <button
                 onClick={() => openSparkPilot(`I have a question about "${productName}" (৳${discountedPrice.toLocaleString()}, ${product.category}). Is it compatible with my car, and is it worth the price?`)}
-                className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition text-white bg-gradient-to-r from-cyan-500 to-[#8A0000] hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                className="w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition text-white bg-gradient-to-r from-cyan-500 to-[#9F0013] hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
                 aria-label={`Ask SparkPilot about ${productName}`}
               >
                 <Sparkles size={20} aria-hidden />
@@ -750,7 +750,7 @@ export const ProductDetailPage = () => {
                 aria-pressed={isWishlisted}
                 className={`flex-1 py-2 rounded-lg border transition flex items-center justify-center gap-2 ${
                   isWishlisted
-                    ? 'bg-red-50 dark:bg-red-900/20 border-[#C00000] text-[#C00000]'
+                    ? 'bg-red-50 dark:bg-red-900/20 border-[#D6001C] text-[#D6001C]'
                     : isDark
                       ? 'border-gray-700 text-gray-400 hover:text-white'
                       : 'border-gray-300 text-gray-600 hover:text-black'
@@ -773,21 +773,21 @@ export const ProductDetailPage = () => {
             {/* Info Cards */}
             <div className="space-y-3">
               <div className={`p-3 rounded-lg flex items-center gap-3 ${isDark ? 'bg-gray-900' : 'bg-gray-100'}`}>
-                <Truck className="text-[#C00000] shrink-0" size={20} aria-hidden />
+                <Truck className="text-[#D6001C] shrink-0" size={20} aria-hidden />
                 <div className="text-sm">
                   <p className={`font-bold ${isDark ? 'text-white' : 'text-black'}`}>Free Shipping</p>
                   <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>On orders over ৳2,000</p>
                 </div>
               </div>
               <div className={`p-3 rounded-lg flex items-center gap-3 ${isDark ? 'bg-gray-900' : 'bg-gray-100'}`}>
-                <Shield className="text-[#C00000] shrink-0" size={20} aria-hidden />
+                <Shield className="text-[#D6001C] shrink-0" size={20} aria-hidden />
                 <div className="text-sm">
                   <p className={`font-bold ${isDark ? 'text-white' : 'text-black'}`}>Secure Payment</p>
                   <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>100% secure checkout</p>
                 </div>
               </div>
               <div className={`p-3 rounded-lg flex items-center gap-3 ${isDark ? 'bg-gray-900' : 'bg-gray-100'}`}>
-                <Package className="text-[#C00000] shrink-0" size={20} aria-hidden />
+                <Package className="text-[#D6001C] shrink-0" size={20} aria-hidden />
                 <div className="text-sm">
                   <p className={`font-bold ${isDark ? 'text-white' : 'text-black'}`}>30-Day Returns</p>
                   <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>Easy returns & refunds</p>
@@ -831,7 +831,7 @@ export const ProductDetailPage = () => {
                     <p className={`text-sm font-semibold truncate ${isDark ? 'text-white' : 'text-black'}`}>
                       {language === 'bn' && r.name_bn ? r.name_bn : r.name_en}
                     </p>
-                    <p className="text-sm font-bold text-[#C00000] mt-1">
+                    <p className="text-sm font-bold text-[#D6001C] mt-1">
                       {formatBDT(r.discount ? r.price * (1 - r.discount / 100) : r.price)}
                     </p>
                   </div>
@@ -863,7 +863,7 @@ export const ProductDetailPage = () => {
             className={`flex-1 min-h-[44px] px-4 rounded-lg font-bold flex items-center justify-center gap-2 transition ${
               product.stock_quantity === 0 || !product.is_available
                 ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                : 'bg-[#C00000] text-white hover:bg-red-700'
+                : 'bg-[#D6001C] text-white hover:bg-red-700'
             }`}
           >
             {addedToCart ? <Check size={18} aria-hidden /> : <ShoppingCart size={18} aria-hidden />}

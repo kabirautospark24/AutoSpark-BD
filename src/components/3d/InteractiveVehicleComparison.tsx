@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronDown, 
@@ -420,7 +420,7 @@ export const InteractiveVehicleComparison: React.FC<InteractiveVehicleComparison
                               initial={{ width: 0 }}
                               animate={{ width: `${percent}%` }}
                               transition={{ duration: 0.6, delay: 0.2 }}
-                              className="h-full bg-gradient-to-r from-[#C00000] to-[#8A0000]"
+                              className="h-full bg-gradient-to-r from-[#D6001C] to-[#9F0013]"
                             />
                           </div>
                         </div>

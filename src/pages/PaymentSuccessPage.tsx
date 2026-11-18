@@ -101,9 +101,9 @@ export const PaymentSuccessPage = () => {
         <div className="flex justify-center mb-6">
           <div className="relative">
             {isValidated ? (
-              <CheckCircle className="w-20 h-20 text-[var(--brand-red,#C00000)]" aria-hidden />
+              <CheckCircle className="w-20 h-20 text-[var(--brand-red,#D6001C)]" aria-hidden />
             ) : (
-              <Loader2 className="w-20 h-20 text-[var(--brand-red,#C00000)] animate-spin" aria-hidden />
+              <Loader2 className="w-20 h-20 text-[var(--brand-red,#D6001C)] animate-spin" aria-hidden />
             )}
           </div>
         </div>
@@ -158,14 +158,14 @@ export const PaymentSuccessPage = () => {
         <div className="space-y-3">
           <button
             onClick={() => navigate('/accessories')}
-            className={`w-full py-3 border-2 font-semibold rounded-lg flex items-center justify-center transition-colors ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600' : 'bg-white border-[var(--brand-red,#C00000)] text-[var(--brand-red,#C00000)] hover:bg-gray-50'}`}
+            className={`w-full py-3 border-2 font-semibold rounded-lg flex items-center justify-center transition-colors ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600' : 'bg-white border-[var(--brand-red,#D6001C)] text-[var(--brand-red,#D6001C)] hover:bg-gray-50'}`}
           >
             <ShoppingBag className="mr-2 w-5 h-5" aria-hidden />
             Continue Shopping
           </button>
           <button
             onClick={() => navigate('/')}
-            className="w-full py-3 text-white font-semibold rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity bg-[var(--brand-red,#C00000)]"
+            className="w-full py-3 text-white font-semibold rounded-lg flex items-center justify-center hover:opacity-90 transition-opacity bg-[var(--brand-red,#D6001C)]"
           >
             <Home className="mr-2 w-5 h-5" aria-hidden />
             Back to Home

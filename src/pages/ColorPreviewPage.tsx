@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // framer-motion not required here (kept minimal)
 
@@ -65,7 +65,7 @@ export const ColorPreviewPage: React.FC = () => {
               <div role="status" className="p-8 text-center">
                 <p className="font-semibold">No color selected</p>
                 <p className="mt-1 text-sm opacity-70">Pick a vehicle color from inventory first.</p>
-                <button onClick={() => navigate('/inventory')} className="mt-4 px-4 py-2 bg-[var(--brand-red,#C00000)] text-white rounded-lg">Browse Inventory</button>
+                <button onClick={() => navigate('/inventory')} className="mt-4 px-4 py-2 bg-[var(--brand-red,#D6001C)] text-white rounded-lg">Browse Inventory</button>
               </div>
             ) : !imageLoaded ? (
               <div className="w-full h-full p-6">

@@ -36,8 +36,8 @@ export function PrivacyPage() {
       <h2>Your choices</h2>
       <p>
         You can ask us to correct or delete your personal data at any time. Email{' '}
-        <a href="mailto:autosparkbd@gmail.com" className="text-[var(--brand-red,#C00000)] underline">autosparkbd@gmail.com</a>{' '}
-        or call <a href="tel:+8801760401605" className="text-[var(--brand-red,#C00000)] underline">+880 1760-401605</a>.
+        <a href="mailto:autosparkbd@gmail.com" className="text-[var(--brand-red,#D6001C)] underline">autosparkbd@gmail.com</a>{' '}
+        or call <a href="tel:+8801760401605" className="text-[var(--brand-red,#D6001C)] underline">+880 1760-401605</a>.
       </p>
       <h2>Changes</h2>
       <p>We'll post any changes on this page with an updated date. Questions? Use the contact details above.</p>
@@ -76,8 +76,8 @@ export function TermsPage() {
       <h2>Contact</h2>
       <p>
         AutoSpark BD, Station Road (Sheroil), Boalia, Rajshahi{' '}
-        <a href="mailto:autosparkbd@gmail.com" className="text-[var(--brand-red,#C00000)] underline">autosparkbd@gmail.com</a> ·{' '}
-        <a href="tel:+8801760401605" className="text-[var(--brand-red,#C00000)] underline">+880 1760-401605</a>.
+        <a href="mailto:autosparkbd@gmail.com" className="text-[var(--brand-red,#D6001C)] underline">autosparkbd@gmail.com</a> ·{' '}
+        <a href="tel:+8801760401605" className="text-[var(--brand-red,#D6001C)] underline">+880 1760-401605</a>.
       </p>
     </LegalShell>
   );

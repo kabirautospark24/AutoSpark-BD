@@ -1,5 +1,5 @@
 ﻿import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Phone, Mail, MapPin, Youtube, Music2, ArrowUpRight } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, MapPin, Youtube, Music2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const showroom = {
@@ -14,38 +14,35 @@ const serviceCenter = {
   phone: '+880 1321-233670',
 };
 
-const socials = [
-  { href: 'https://www.facebook.com/autosparkbd', label: 'Facebook', Icon: Facebook },
-  { href: 'https://www.instagram.com/autosparkbd', label: 'Instagram', Icon: Instagram },
-  { href: 'https://www.youtube.com/@autosparkbd1131', label: 'YouTube', Icon: Youtube },
-  { href: 'https://www.tiktok.com/@auto_spark0', label: 'TikTok', Icon: Music2 },
-];
-
 export const Footer = () => {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
-  const exploreLinks = [
-    { to: '/inventory', label: t('nav.inventory') },
-    { to: '/experience', label: 'Experience' },
+  const companyLinks = [
     { to: '/about', label: t('nav.about') },
-    { to: '/testimonials', label: t('nav.testimonials') },
+    { to: '/services', label: t('nav.services') },
+    { to: '/contact', label: t('nav.contact') },
+  ];
+
+  const vehicleLinks = [
+    { to: '/inventory', label: t('nav.inventory') },
+    { to: '/brands', label: 'Brands' },
+    { to: '/japan-import', label: 'Japan Import' },
   ];
 
   const serviceLinks = [
     { to: '/services', label: t('nav.services') },
     { to: '/accessories', label: t('nav.accessories') },
     { to: '/sell', label: t('nav.sell') },
-    { to: '/contact', label: t('nav.contact') },
   ];
 
   return (
-    <footer className="relative z-20 border-t border-border bg-background text-muted-foreground footer-min-h">
-      <div className="container-fluid py-14 sm:py-16">
+    <footer className="border-t border-border bg-background/80 footer-min-h">
+      <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-12">
-          {/* Brand */}
-          <div className="lg:col-span-5">
-            <Link to="/" className="inline-flex items-center gap-3">
+          {/* Company */}
+          <div className="lg:col-span-4">
+            <Link to="/" className="inline-flex items-center gap-3 mb-8">
               <img
                 src={`${import.meta.env.BASE_URL}logo/logoAS3.svg`}
                 alt="Auto Spark BD"
@@ -57,11 +54,10 @@ export const Footer = () => {
                 {t('site.title')}
               </span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-muted-foreground max-w-sm">
               {t('footer.description')}
             </p>
-
-            <div className="mt-6 space-y-4 text-sm">
+            <div className="mt-6 space-y-3 text-sm text-muted-foreground">
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
                 <span>{showroom.address}</span>
@@ -91,17 +87,17 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Explore */}
-          <nav className="lg:col-span-2" aria-label="Explore">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-              Explore
+          {/* Vehicles */}
+          <nav className="lg:col-span-2" aria-label="Vehicles">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground mb-4">
+              {t('nav.vehicles')}
             </h2>
-            <ul className="mt-5 space-y-3 text-sm">
-              {exploreLinks.map((link) => (
+            <ul className="space-y-2 text-sm">
+              {vehicleLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-primary"
+                    className="hover:text-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -111,16 +107,16 @@ export const Footer = () => {
           </nav>
 
           {/* Services */}
-          <nav className="lg:col-span-2" aria-label="Services">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-              Services
+          <nav className="lg:col-span-3" aria-label="Services">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground mb-4">
+              {t('nav.services')}
             </h2>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="space-y-2 text-sm">
               {serviceLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="inline-flex min-h-[32px] items-center transition-colors hover:text-primary"
+                    className="hover:text-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -129,47 +125,29 @@ export const Footer = () => {
             </ul>
           </nav>
 
-          {/* Visit */}
-          <div className="lg:col-span-3">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-              {t('contact.hours')}
+          {/* Support */}
+          <nav className="lg:col-span-3" aria-label="Support">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground mb-4">
+              {t('nav.support')}
             </h2>
-            <p className="mt-5 text-sm">{t('contact.hours_value')}</p>
-            <p className="mt-2 text-xs">Service centre: {serviceCenter.phone}</p>
-
-            <Link
-              to="/contact"
-              className="mt-6 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              {t('nav.contact')}
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </Link>
-
-            <div className="mt-8">
-              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-                {t('footer.follow')}
-              </h2>
-              <div className="mt-4 flex flex-wrap gap-1">
-                {socials.map(({ href, label, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            <ul className="space-y-2 text-sm">
+              {companyLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="hover:text-primary transition-colors"
                   >
-                    <Icon className="h-5 w-5" aria-hidden />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            &copy; {currentYear} {t('site.title')}. {t('footer.rights')} · Built by{' '}
+        <div className="mt-14 border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
+            &copy; {currentYear} {t('site_title')}. {t('footer_rights')} · Built by{' '}
             <a
               href="https://farhankabir.tech/"
               target="_blank"
@@ -195,6 +173,68 @@ export const Footer = () => {
               {showroom.website}
             </a>
           </div>
+        </div>
+
+        {/* WhatsApp persistent contact */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
+              <a
+                href="https://www.facebook.com/autosparkbd"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-background/50 text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <Facebook className="h-5 w-5" aria-hidden />
+              </a>
+              <a
+                href="https://www.instagram.com/autosparkbd"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-background/50 text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <Instagram className="h-5 w-5" aria-hidden />
+              </a>
+              <a
+                href="https://www.youtube.com/@autosparkbd1131"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-background/50 text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <Youtube className="h-5 w-5" aria-hidden />
+              </a>
+              <a
+                href="https://www.tiktok.com/@auto_spark0"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-background/50 text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                <Music2 className="h-5 w-5" aria-hidden />
+              </a>
+            </div>
+          </div>
+
+          {/* WhatsApp persistent contact */}
+          <div className="mt-8 fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 pointer-events-auto">
+          <a
+            href={`https://wa.me/+8801760401605?text=${encodeURIComponent(t('footer.whatsapp_message'))}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:opacity-90"
+            aria-label="WhatsApp contact"
+          >
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M20.2 2H5.7c-.3 0-.5.2-.5.5v17.8c0 .3.2.5.5.5h14.5c.3 0 .5-.2.5-.5v-2.1l-3.3-3.2c-.1-.1-.1-.2-.2-.2h-1.8c-.4 0-.5.3-.5.5v18.4c0 .4.3.5.5.5h2.1l3.2 3.1c.1.1.1.2.2.2h1.8c.5 0 .5-.3.5-.5v-18.4c0-.3-.2-.5-.5-.5h-4.7l-.2-.1c-.3 0-.5-.2-.5-.5v-2.4c0-.3.1-.5.4-.5l3.3-3.1 3.2 3.1c.3.3.3.5.5.5h4.7c.4 0 .5-.2.5-.5v-2.1l3.2-3.2c.1-.1.2-.2.2-.2h1.8c.4 0 .5.3.5.5v2.4c0 .3-.1.5-.4.5l-3.4 3.3L12 5.7l-1.8 1.9c-.1.1-.2.1-.2.2v3.6c0 .3.1.5.2.5h1.9c.4 0 .5-.3.5-.5l3.3-3.2-3.3-3.2c-.1-.1-.2-.2-.3-.2zM12 15.6l4.1 4.1-1.1 1.1-4.2-4.2L12 15.6zM4.8 5.7L12 12.9l7.2-7.2c.5-.5.5-1.3 0-1.8l-1.4-1.4c-.5-.5-1.3-.5-1.8 0L12 9.6l-7.2 7.1c-.5.5-.5 1.3 0 1.8l1.4 1.4c.5.5.5 1.3 0 1.8L4.8 13.7c-.5.5-.5 1.3 0 1.8l1.4 1.4c.5.5.5 1.3 0 1.8L4.8 5.7z" />
+            </svg>
+            {t('footer.whatsapp')}
+          </a>
         </div>
       </div>
     </footer>

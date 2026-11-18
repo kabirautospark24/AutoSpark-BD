@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
@@ -167,7 +167,7 @@ const CartPage: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/accessories')}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-full hover:shadow-lg transition-shadow"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white font-semibold rounded-full hover:shadow-lg transition-shadow"
             >
               {t('continueShop')} <ArrowRight size={18} />
             </motion.button>
@@ -420,7 +420,7 @@ const CartPage: React.FC = () => {
                     <span className={`font-bold text-lg ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {t('grandTotal')}
                     </span>
-                    <span className="font-bold text-lg bg-gradient-to-r from-[#C00000] to-[#8A0000] bg-clip-text text-transparent">
+                    <span className="font-bold text-lg bg-gradient-to-r from-[#D6001C] to-[#9F0013] bg-clip-text text-transparent">
                       ৳{grandTotal.toLocaleString()}
                     </span>
                   </div>
@@ -431,7 +431,7 @@ const CartPage: React.FC = () => {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => navigate('/checkout')}
-                  className="w-full py-3 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-bold rounded-lg hover:shadow-lg transition-shadow flex items-center justify-center gap-2 mb-3"
+                  className="w-full py-3 bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white font-bold rounded-lg hover:shadow-lg transition-shadow flex items-center justify-center gap-2 mb-3"
                 >
                   <ShoppingCart size={18} />
                   {t('checkout')}

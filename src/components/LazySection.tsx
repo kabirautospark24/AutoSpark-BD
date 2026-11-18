@@ -15,7 +15,7 @@ interface LazySectionProps {
 /** Minimal spinner shown while lazy-loaded chunks inside this section are loading */
 const SectionLoader = () => (
   <div className="w-full flex items-center justify-center py-20" style={{ minHeight: '200px' }}>
-    <div className="w-8 h-8 border-2 border-[#C00000] border-t-transparent rounded-full animate-spin" />
+    <div className="w-8 h-8 border-2 border-[#D6001C] border-t-transparent rounded-full animate-spin" />
   </div>
 );
 

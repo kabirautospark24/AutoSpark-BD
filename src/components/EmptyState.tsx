@@ -6,7 +6,7 @@ export function EmptyState({ title, hint, actionLabel, actionTo }: { title: stri
       <p className="text-lg font-semibold">{title}</p>
       {hint && <p className="mt-2 text-sm opacity-70 max-w-md">{hint}</p>}
       {actionLabel && actionTo && (
-        <Link to={actionTo} className="mt-4 px-5 py-2 bg-[var(--brand-red,#C00000)] text-white rounded-lg">{actionLabel}</Link>
+        <Link to={actionTo} className="mt-4 px-5 py-2 bg-[var(--brand-red,#D6001C)] text-white rounded-lg">{actionLabel}</Link>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface TypewriterTextProps {
@@ -76,7 +76,7 @@ export const TypewriterText: React.FC<TypewriterTextProps> = memo(({
       {/* Subtle glass container - semi-transparent to show video */}
       <div className="relative px-6 py-4 md:px-10 md:py-6 rounded-2xl bg-black/20 backdrop-blur-[2px] border border-white/10">
         {/* Glow effect behind text */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#C00000]/5 via-[#E23A3A]/5 to-[#8B0000]/5 blur-xl" />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#D6001C]/5 via-[#F03A4A]/5 to-[#9F0013]/5 blur-xl" />
         
         {/* Text container */}
         <div className="relative flex items-center min-h-[2.5rem] md:min-h-[3.5rem]">
@@ -95,14 +95,14 @@ export const TypewriterText: React.FC<TypewriterTextProps> = memo(({
           
           {/* Blinking cursor with glow - Brand Red */}
           <motion.span
-            className="ml-1 inline-block w-[3px] md:w-[4px] h-8 md:h-12 bg-gradient-to-b from-[#E23A3A] via-[#C00000] to-[#8B0000] rounded-full"
+            className="ml-1 inline-block w-[3px] md:w-[4px] h-8 md:h-12 bg-gradient-to-b from-[#F03A4A] via-[#D6001C] to-[#9F0013] rounded-full"
             animate={{
               opacity: [1, 0.3, 1],
               scaleY: [1, 0.95, 1],
               boxShadow: [
-                '0 0 20px rgba(192, 0, 0, 0.8), 0 0 40px rgba(192, 0, 0, 0.4)',
-                '0 0 10px rgba(192, 0, 0, 0.4), 0 0 20px rgba(192, 0, 0, 0.2)',
-                '0 0 20px rgba(192, 0, 0, 0.8), 0 0 40px rgba(192, 0, 0, 0.4)'
+                '0 0 20px rgba(214, 0, 28, 0.8), 0 0 40px rgba(214, 0, 28, 0.4)',
+                '0 0 10px rgba(214, 0, 28, 0.4), 0 0 20px rgba(214, 0, 28, 0.2)',
+                '0 0 20px rgba(214, 0, 28, 0.8), 0 0 40px rgba(214, 0, 28, 0.4)'
               ]
             }}
             transition={{
@@ -117,7 +117,7 @@ export const TypewriterText: React.FC<TypewriterTextProps> = memo(({
         <motion.div
           className="absolute inset-0 rounded-2xl pointer-events-none"
           style={{
-            background: 'linear-gradient(90deg, transparent, rgba(192, 0, 0, 0.1), transparent)',
+            background: 'linear-gradient(90deg, transparent, rgba(214, 0, 28, 0.1), transparent)',
             backgroundSize: '200% 100%'
           }}
           animate={{

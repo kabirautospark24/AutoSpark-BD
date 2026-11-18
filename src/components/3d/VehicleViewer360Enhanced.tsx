@@ -1,4 +1,4 @@
-﻿import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
+import { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronDown, 
@@ -42,7 +42,7 @@ const vehicleData = [
     colors: [
       { name: 'Pearl White', hex: '#F5F5F5', image: 'https://images.pexels.com/photos/35515996/pexels-photo-35515996.png?auto=compress&cs=tinysrgb&w=1200' },
       { name: 'Black Metallic', hex: '#1a1a1a', image: 'https://images.pexels.com/photos/35515996/pexels-photo-35515996.png?auto=compress&cs=tinysrgb&w=1200' },
-      { name: 'Red Mica', hex: '#8B0000', image: 'https://images.pexels.com/photos/35515996/pexels-photo-35515996.png?auto=compress&cs=tinysrgb&w=1200' },
+      { name: 'Red Mica', hex: '#9F0013', image: 'https://images.pexels.com/photos/35515996/pexels-photo-35515996.png?auto=compress&cs=tinysrgb&w=1200' },
     ],
     hotspots: [
       { id: 1, x: 15, y: 45, label: 'LED Headlights', description: 'Adaptive LED headlights with automatic high beam' },
@@ -777,7 +777,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               onClick={() => setShowColorCustomizer(!showColorCustomizer)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 showColorCustomizer
-                  ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white'
+                  ? 'bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white'
                   : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300'
               }`}
               title="Open Color Customizer"
@@ -831,7 +831,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
             onClick={() => setIsCompareMode(!isCompareMode)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
               isCompareMode
-                ? 'bg-red-100 dark:bg-red-900/50 text-[#C00000] dark:text-amber-600'
+                ? 'bg-red-100 dark:bg-red-900/50 text-[#D6001C] dark:text-amber-600'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
@@ -954,7 +954,7 @@ export const VehicleViewer360Enhanced: React.FC<VehicleViewer360Props> = ({
               </div>
               <button
                 onClick={() => { setIsCompareMode(false); setCompareVehicleId(null); }}
-                className="p-1.5 text-[#C00000] dark:text-amber-600 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
+                className="p-1.5 text-[#D6001C] dark:text-amber-600 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

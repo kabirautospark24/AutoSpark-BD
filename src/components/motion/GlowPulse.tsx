@@ -10,7 +10,7 @@ interface GlowPulseProps {
 
 export const GlowPulse: React.FC<GlowPulseProps> = ({
   className = '',
-  color = 'rgba(192, 0, 0, 0.4)',
+  color = 'rgba(214, 0, 28, 0.4)',
   size = 200,
   intensity = 0.4,
   speed = 3,

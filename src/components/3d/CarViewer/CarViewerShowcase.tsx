@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CarViewerShowcase Component
  * 
  * A ready-to-use showcase section that combines the CarViewer
@@ -307,8 +307,8 @@ export const CarViewerShowcase: React.FC<CarViewerShowcaseProps> = ({
                     w-full mt-6 py-3 px-4 rounded-xl font-semibold
                     flex items-center justify-center gap-2
                     ${isDark
-                      ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:from-[#C00000] hover:to-[#8A0000]'
-                      : 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:from-[#C00000] hover:to-[#C00000]'
+                      ? 'bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white hover:from-[#D6001C] hover:to-[#9F0013]'
+                      : 'bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white hover:from-[#D6001C] hover:to-[#D6001C]'
                     }
                     shadow-lg transition-all
                   `}

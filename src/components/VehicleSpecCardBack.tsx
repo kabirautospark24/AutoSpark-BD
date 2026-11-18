@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Zap, Fuel, Cog, Calendar, Shield, Award, Gauge, Droplet } from 'lucide-react';
 
 interface VehicleSpecCardBackProps {
@@ -43,7 +43,7 @@ export const VehicleSpecCardBack = ({
     'Petrol': 'bg-orange-500',
     'Diesel': 'bg-green-700',
     'Hybrid': 'bg-primary',
-    'Electric': 'bg-[#C00000]',
+    'Electric': 'bg-[#D6001C]',
   };
 
   const safetyStars = vehicle.safetyRating ? Array(Math.min(vehicle.safetyRating, 5)).fill(0) : [];

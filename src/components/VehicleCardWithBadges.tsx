@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Star, TrendingUp, Zap, AlertTriangle, Heart } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import styles from './ResponsiveContainer.module.css';
@@ -51,7 +51,7 @@ export const VehicleCardWithBadges = ({
         animation: { rotate: [0, 360] },
       },
       'new-arrival': {
-        bg: 'bg-gradient-to-r from-[#C00000] to-cyan-600',
+        bg: 'bg-gradient-to-r from-[#D6001C] to-cyan-600',
         icon: <Zap className="w-4 h-4" />,
         label: language === 'en' ? 'New Arrival' : 'নতুন আগমন',
         animation: { y: [0, -5, 0] },

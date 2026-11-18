@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Camera, 
@@ -404,7 +404,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={activateAR}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white rounded-xl font-medium shadow-lg"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white rounded-xl font-medium shadow-lg"
             >
               <Smartphone className="w-4 h-4" />
               <span className="hidden sm:inline">
@@ -724,7 +724,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
                 theme === 'dark' ? 'bg-gray-800/50' : 'bg-white/80'
               }`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Box className={`w-4 h-4 ${theme === 'dark' ? 'text-amber-600' : 'text-[#C00000]'}`} />
+                  <Box className={`w-4 h-4 ${theme === 'dark' ? 'text-amber-600' : 'text-[#D6001C]'}`} />
                   <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     {language === 'en' ? 'AR Mode' : 'এআর মোড'}
                   </span>
@@ -806,7 +806,7 @@ export const ARViewerEnhanced: React.FC<ARViewerEnhancedProps> = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={takeScreenshot}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#C00000] to-blue-700 text-white rounded-lg font-medium shadow-md"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#D6001C] to-blue-700 text-white rounded-lg font-medium shadow-md"
           >
             <Download className="w-4 h-4" />
             <span className="hidden sm:inline">

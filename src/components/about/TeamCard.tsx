@@ -37,7 +37,7 @@ const TeamCard: React.FC<{ person: Person; language: string; theme: string; show
                 <img
                   src={src}
                   alt={person.name}
-                  className="w-full h-full rounded-full object-cover border-3 border-[#C00000]/30 group-hover:border-[#C00000] transition-colors duration-300 bg-gray-800"
+                  className="w-full h-full rounded-full object-cover border-3 border-[#D6001C]/30 group-hover:border-[#D6001C] transition-colors duration-300 bg-gray-800"
                   loading="lazy"
                   width={208}
                   height={208}
@@ -51,7 +51,7 @@ const TeamCard: React.FC<{ person: Person; language: string; theme: string; show
             <img
               src={`https://ui-avatars.com/api/?name=${encodeURIComponent(person.name)}&background=0D8ABC&color=fff&size=208`}
               alt={person.name}
-              className="w-full h-full rounded-full object-cover border-3 border-[#C00000]/30"
+              className="w-full h-full rounded-full object-cover border-3 border-[#D6001C]/30"
               loading="lazy"
               width={208}
               height={208}
@@ -60,19 +60,19 @@ const TeamCard: React.FC<{ person: Person; language: string; theme: string; show
           )}
         </div>
         <div className="text-center md:text-left flex-1">
-          <span className="text-[#C00000] font-bold text-xs sm:text-sm">{person.title || ''}</span>
+          <span className="text-[#D6001C] font-bold text-xs sm:text-sm">{person.title || ''}</span>
           <h4 className={`text-lg sm:text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-1`}>{person.name}</h4>
-          <p className="text-[#C00000] font-semibold text-xs sm:text-sm mb-2">{person.role}</p>
+          <p className="text-[#D6001C] font-semibold text-xs sm:text-sm mb-2">{person.role}</p>
           <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>{person.bio}</p>
             <div className="flex justify-center md:justify-start gap-2 mt-3">
-              <a href={person.linkedin || `https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin className="w-4 h-4" /></a>
-            <a href={person.facebook || showroom.youtube} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="Facebook">
+              <a href={person.linkedin || `https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin className="w-4 h-4" /></a>
+            <a href={person.facebook || showroom.youtube} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="Facebook">
                <Facebook className="w-4 h-4" />
             </a>
-            <a href={`tel:${person.phone || showroom.phone}`} className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="Phone">
+            <a href={`tel:${person.phone || showroom.phone}`} className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="Phone">
                <Phone className="w-4 h-4" />
             </a>
-            <a href={person.website || `https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="Website">
+            <a href={person.website || `https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="Website">
                <Globe className="w-4 h-4" />
             </a>
             </div>

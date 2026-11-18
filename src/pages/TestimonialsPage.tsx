@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Star,
@@ -936,7 +936,7 @@ export const TestimonialsPage = () => {
           theme === 'dark' ? 'bg-primary' : 'bg-blue-300'
         }`} />
         <div className={`absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-20 ${
-          theme === 'dark' ? 'bg-[#C00000]' : 'bg-amber-600'
+          theme === 'dark' ? 'bg-[#D6001C]' : 'bg-amber-600'
         }`} />
 
         <div className="container mx-auto px-4 relative z-10">

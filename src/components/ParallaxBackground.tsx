@@ -1,4 +1,4 @@
-﻿import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
 interface ParallaxBackgroundProps {
@@ -115,7 +115,7 @@ export const ParallaxBackground = ({ theme }: ParallaxBackgroundProps) => {
         }}
       >
         <svg
-          className="w-72 h-72 text-[#C00000]"
+          className="w-72 h-72 text-[#D6001C]"
           viewBox="0 0 400 200"
           fill="currentColor"
         >

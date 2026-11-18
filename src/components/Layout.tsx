@@ -10,6 +10,8 @@ import { useTheme } from '../contexts/ThemeContext';
 import { PageHead } from './PageHead';
 import { Breadcrumbs } from './Breadcrumbs';
 import { CustomCursor } from './CustomCursor';
+import { AmbientBackdrop } from './motion/AmbientBackdrop';
+import { ScrollMotionController } from './motion/ScrollMotionController';
 import { matchRoute } from '../lib/seo';
 
 interface LayoutProps {
@@ -36,9 +38,11 @@ export const Layout = ({ children }: LayoutProps) => {
     !ROUTES_WITH_OWN_BREADCRUMBS.some((re) => re.test(pathname));
 
   return (
-    <div className={`min-h-dvh flex flex-col transition-colors duration-300 ${
+    <div className={`site-shell min-h-dvh flex flex-col transition-colors duration-300 ${
       theme === 'dark' ? 'bg-[#0a0a0a] text-white' : 'bg-gray-50 text-gray-900'
     }`}>
+      {!isAppRoute && <AmbientBackdrop />}
+      {!isAppRoute && <ScrollMotionController />}
       <CustomCursor />
       {/* Skip link for keyboard users */}
       <a href="#main-content" className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded-md">Skip to content</a>
@@ -56,7 +60,7 @@ export const Layout = ({ children }: LayoutProps) => {
             </div>
           </div>
         )}
-        {children}
+        {isAppRoute ? children : <div className="page-motion">{children}</div>}
       </main>
       {!isAppRoute && <Footer />}
 
@@ -74,7 +78,7 @@ export const Layout = ({ children }: LayoutProps) => {
               href: `tel:+8801760401605`,
               ariaLabel: 'Call showroom',
               icon: <Phone className="h-5 w-5 sm:h-6 sm:w-6" />,
-              bgClass: 'bg-[#C00000] hover:bg-[#b00000]',
+              bgClass: 'bg-[#D6001C] hover:bg-[#9F0013]',
             },
           ]}
           position="left"

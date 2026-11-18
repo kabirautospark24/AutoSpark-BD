@@ -1,4 +1,4 @@
-﻿
+
 import { Award, Shield, Users, TrendingUp, Target, Eye, Star, Car, CheckCircle, Phone, Mail, Linkedin, Facebook, Instagram, Youtube, Music2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
@@ -168,7 +168,7 @@ export const AboutPage = () => {
           {/* Showroom Card */}
           <Card className="flex flex-col items-center p-6 text-center">
             <img src={showroom.logo} alt="Showroom Logo" className="h-16 w-16 mb-4" />
-            <h3 className="text-xl font-bold text-[#C00000] mb-2">{showroom.name}</h3>
+            <h3 className="text-xl font-bold text-[#D6001C] mb-2">{showroom.name}</h3>
             <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">{showroom.address}</div>
             <div className="text-xs text-gray-500 mb-2">{showroom.city}</div>
             <div className="flex flex-wrap gap-2 justify-center mb-2">
@@ -177,16 +177,16 @@ export const AboutPage = () => {
               <a href={`https://${showroom.website}`} className="text-xs underline text-primary">{showroom.website}</a>
             </div>
             <div className="flex gap-4 mb-2">
-              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
+              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#F03A4A]">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
+              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#F03A4A]">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#E23A3A]">
+              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#F03A4A]">
                 <Youtube className="w-6 h-6" />
               </a>
-              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#E23A3A]">
+              <a href="https://www.tiktok.com/@auto_spark0" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#F03A4A]">
                 <Music2 className="w-6 h-6" />
               </a>
             </div>
@@ -200,20 +200,20 @@ export const AboutPage = () => {
           {/* Service Center Card */}
           <Card className="flex flex-col items-center p-6 text-center">
             <img src={serviceCenter.logo} alt="Service Center Logo" className="h-16 w-16 mb-4" />
-            <h3 className="text-xl font-bold text-[#C00000] mb-2">{serviceCenter.name}</h3>
+            <h3 className="text-xl font-bold text-[#D6001C] mb-2">{serviceCenter.name}</h3>
             <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">{serviceCenter.address}</div>
             <div className="text-xs text-gray-500 mb-2">{serviceCenter.city}</div>
             <div className="flex gap-4 mb-2">
-              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
+              <a href="https://www.facebook.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#F03A4A]">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#E23A3A]">
+              <a href="https://www.instagram.com/autosparkbd" target="_blank" rel="noopener noreferrer" className="hover:text-[#F03A4A]">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#E23A3A]">
+              <a href="https://www.youtube.com/@autosparkbd1131" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#F03A4A]">
                 <Youtube className="w-6 h-6" />
               </a>
-              <a href="http://www.tiktok.com/@easycareeasylife" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#E23A3A]">
+              <a href="http://www.tiktok.com/@easycareeasylife" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:text-[#F03A4A]">
                 <Music2 className="w-6 h-6" />
               </a>
             </div>
@@ -232,7 +232,7 @@ export const AboutPage = () => {
         <div className="relative h-[clamp(420px,75vw,560px)] overflow-hidden">
           {/* Parallax Animated Gradient Background */}
           <motion.div
-            className="absolute inset-0 z-0 bg-gradient-to-br from-[#C00000]/25 via-[#E23A3A]/15 to-[#C00000]/10 animate-gradientMove"
+            className="absolute inset-0 z-0 bg-gradient-to-br from-[#D6001C]/25 via-[#F03A4A]/15 to-[#D6001C]/10 animate-gradientMove"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -291,7 +291,7 @@ export const AboutPage = () => {
             >
               {/* Animated Underline for Headline */}
               <motion.div
-                className="w-32 h-1 bg-gradient-to-r from-[#C00000] via-[#E23A3A] to-[#C00000] rounded-full mb-4"
+                className="w-32 h-1 bg-gradient-to-r from-[#D6001C] via-[#F03A4A] to-[#D6001C] rounded-full mb-4"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
@@ -302,7 +302,7 @@ export const AboutPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="inline-block px-4 py-2 bg-[#C00000]/20 text-[#E23A3A] rounded-full text-sm font-medium mb-4 border border-[#C00000]/30"
+              className="inline-block px-4 py-2 bg-[#D6001C]/20 text-[#F03A4A] rounded-full text-sm font-medium mb-4 border border-[#D6001C]/30"
             >
               {language === 'en' ? 'Established 2014' : 'প্রতিষ্ঠিত ২০১৪'}
             </motion.span>
@@ -344,7 +344,7 @@ export const AboutPage = () => {
                 variants={fadeInUp}
                 className={`${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} rounded-2xl p-6 text-center shadow-xl border backdrop-blur-sm`}
               >
-                <div className="text-3xl md:text-4xl font-bold text-[#C00000] mb-2">{stat.value}</div>
+                <div className="text-3xl md:text-4xl font-bold text-[#D6001C] mb-2">{stat.value}</div>
                 <div className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
               </motion.div>
             ))}
@@ -362,7 +362,7 @@ export const AboutPage = () => {
           className="max-w-5xl mx-auto mb-12"
         >
           <div className="text-center mb-6">
-            <span className="text-[#C00000] font-semibold text-sm uppercase tracking-wider">
+            <span className="text-[#D6001C] font-semibold text-sm uppercase tracking-wider">
               {language === 'en' ? 'Our Journey' : 'আমাদের যাত্রা'}
             </span>
             <h2 className={`text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-2`}>
@@ -423,10 +423,10 @@ export const AboutPage = () => {
         >
           <motion.div variants={fadeInUp}>
             <Card className={`p-8 h-full ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800' : 'bg-white'} relative overflow-hidden`}>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#C00000]/10 rounded-full -mr-16 -mt-16"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#D6001C]/10 rounded-full -mr-16 -mt-16"></div>
               <div className="relative">
-                <div className="w-14 h-14 bg-[#C00000]/10 rounded-xl flex items-center justify-center mb-6">
-                  <Target className="w-7 h-7 text-[#C00000]" />
+                <div className="w-14 h-14 bg-[#D6001C]/10 rounded-xl flex items-center justify-center mb-6">
+                  <Target className="w-7 h-7 text-[#D6001C]" />
                 </div>
                 <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
                   {language === 'en' ? 'Our Mission' : 'আমাদের মিশন'}
@@ -441,10 +441,10 @@ export const AboutPage = () => {
           </motion.div>
           <motion.div variants={fadeInUp}>
             <Card className={`p-8 h-full ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800' : 'bg-white'} relative overflow-hidden`}>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#C00000]/10 rounded-full -mr-16 -mt-16"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#D6001C]/10 rounded-full -mr-16 -mt-16"></div>
               <div className="relative">
-                <div className="w-14 h-14 bg-[#C00000]/10 rounded-xl flex items-center justify-center mb-6">
-                  <Eye className="w-7 h-7 text-[#C00000]" />
+                <div className="w-14 h-14 bg-[#D6001C]/10 rounded-xl flex items-center justify-center mb-6">
+                  <Eye className="w-7 h-7 text-[#D6001C]" />
                 </div>
                 <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
                   {language === 'en' ? 'Our Vision' : 'আমাদের ভিশন'}
@@ -468,7 +468,7 @@ export const AboutPage = () => {
           className="mb-12"
         >
           <div className="text-center mb-6">
-            <span className="text-[#C00000] font-semibold text-sm uppercase tracking-wider">
+            <span className="text-[#D6001C] font-semibold text-sm uppercase tracking-wider">
               {language === 'en' ? 'Leadership' : 'নেতৃত্ব'}
             </span>
             <h2 className={`text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-2`}>
@@ -477,14 +477,14 @@ export const AboutPage = () => {
           </div>
           
           <Card className={`p-8 md:p-12 ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-950 border-gray-800' : 'bg-gradient-to-br from-white to-gray-50'} overflow-hidden relative`}>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C00000]/5 rounded-full -mr-32 -mt-32"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#C00000]/5 rounded-full -ml-24 -mb-24"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#D6001C]/5 rounded-full -mr-32 -mt-32"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#D6001C]/5 rounded-full -ml-24 -mb-24"></div>
             
             <div className="grid md:grid-cols-3 gap-8 items-center relative">
               {/* Left Founder Image */}
               <div className="md:col-span-1 block">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#C00000] to-[#8B0000] rounded-2xl transform rotate-3"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#D6001C] to-[#9F0013] rounded-2xl transform rotate-3"></div>
                   <img
                     src="https://images.pexels.com/photos/36365285/pexels-photo-36365285.png?auto=compress&cs=tinysrgb&w=400&fm=webp"
                     alt="Founder - Auto Spark BD"
@@ -494,7 +494,7 @@ export const AboutPage = () => {
                     height={500}
                     decoding="async"
                   />
-                  <div className="absolute -bottom-4 -right-4 bg-[#C00000] text-white px-4 py-2 rounded-lg shadow-lg">
+                  <div className="absolute -bottom-4 -right-4 bg-[#D6001C] text-white px-4 py-2 rounded-lg shadow-lg">
                     <span className="font-bold">{language === 'en' ? 'CEO & Founder' : 'সিইও এবং প্রতিষ্ঠাতা'}</span>
                   </div>
                   {/* Left image name caption */}
@@ -510,7 +510,7 @@ export const AboutPage = () => {
                   <h3 className={`text-3xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>
                     {language === 'en' ? 'A. B. M. Raihanul Amin' : 'এ. বি. এম. রায়হানুল আমিন'}
                   </h3>
-                  <p className="text-[#C00000] font-semibold text-lg">
+                  <p className="text-[#D6001C] font-semibold text-lg">
                     {language === 'en' ? 'Founder, Managing Director & CEO' : 'প্রতিষ্ঠাতা, ব্যবস্থাপনা পরিচালক ও সিইও'}
                   </p>
                 </div>
@@ -531,13 +531,13 @@ export const AboutPage = () => {
                 {/* Founder's Achievements */}
                 <div className="flex flex-wrap gap-4 pt-4 justify-center">
                   <div className={`flex items-center gap-2 px-4 py-2 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-lg`}>
-                    <CheckCircle className="w-5 h-5 text-[#C00000]" />
+                    <CheckCircle className="w-5 h-5 text-[#D6001C]" />
                     <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       {language === 'en' ? '20+ Years Experience' : '২০+ বছরের অভিজ্ঞতা'}
                     </span>
                   </div>
                   <div className={`flex items-center gap-2 px-4 py-2 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-lg`}>
-                    <CheckCircle className="w-5 h-5 text-[#C00000]" />
+                    <CheckCircle className="w-5 h-5 text-[#D6001C]" />
                     <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       {language === 'en' ? 'Industry Pioneer' : 'শিল্প অগ্রদূত'}
                     </span>
@@ -546,13 +546,13 @@ export const AboutPage = () => {
 
                 {/* Social Links */}
                 <div className="flex gap-4 pt-4 justify-center">
-                  <a href={showroom.youtube} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#C00000]/10 hover:bg-[#C00000] text-[#C00000] hover:text-white rounded-lg flex items-center justify-center transition-colors" aria-label="YouTube">
+                  <a href={showroom.youtube} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#D6001C]/10 hover:bg-[#D6001C] text-[#D6001C] hover:text-white rounded-lg flex items-center justify-center transition-colors" aria-label="YouTube">
                     <Facebook className="w-5 h-5" />
                   </a>
-                  <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#C00000]/10 hover:bg-[#C00000] text-[#C00000] hover:text-white rounded-lg flex items-center justify-center transition-colors" aria-label="Website">
+                  <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#D6001C]/10 hover:bg-[#D6001C] text-[#D6001C] hover:text-white rounded-lg flex items-center justify-center transition-colors" aria-label="Website">
                     <Linkedin className="w-5 h-5" />
                   </a>
-                  <a href="mailto:founder@autosparkbd.com" className="w-10 h-10 bg-[#C00000]/10 hover:bg-[#C00000] text-[#C00000] hover:text-white rounded-lg flex items-center justify-center transition-colors" aria-label="Email">
+                  <a href="mailto:founder@autosparkbd.com" className="w-10 h-10 bg-[#D6001C]/10 hover:bg-[#D6001C] text-[#D6001C] hover:text-white rounded-lg flex items-center justify-center transition-colors" aria-label="Email">
                     <Mail className="w-5 h-5" />
                   </a>
                 </div>
@@ -561,7 +561,7 @@ export const AboutPage = () => {
               {/* Right Founder Image */}
               <div className="md:col-span-1 block">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#C00000] to-[#8B0000] rounded-2xl transform -rotate-3"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#D6001C] to-[#9F0013] rounded-2xl transform -rotate-3"></div>
                   <img
                     src="/maam/tony.webp"
                     alt="Co-Founder - Auto Spark BD"
@@ -571,7 +571,7 @@ export const AboutPage = () => {
                     height={500}
                     decoding="async"
                   />
-                  <div className="absolute -bottom-4 -left-4 bg-[#C00000] text-white px-4 py-2 rounded-lg shadow-lg">
+                  <div className="absolute -bottom-4 -left-4 bg-[#D6001C] text-white px-4 py-2 rounded-lg shadow-lg">
                     <span className="font-bold">{language === 'en' ? 'Co-Founder' : 'সহ-প্রতিষ্ঠাতা'}</span>
                   </div>
                   {/* Right image name caption */}
@@ -593,7 +593,7 @@ export const AboutPage = () => {
           className="mb-12"
         >
           <div className="text-center mb-6">
-            <span className="text-[#C00000] font-semibold text-sm uppercase tracking-wider">
+            <span className="text-[#D6001C] font-semibold text-sm uppercase tracking-wider">
               {language === 'en' ? 'What We Stand For' : 'আমরা কিসের পক্ষে দাঁড়াই'}
             </span>
             <h2 className={`text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-2`}>
@@ -604,9 +604,9 @@ export const AboutPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <Card className={`p-6 text-center h-full ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800 hover:border-[#C00000]/50' : 'bg-white hover:border-[#C00000]/30'} transition-all duration-300 hover:shadow-lg hover:shadow-[#C00000]/10`}>
-                  <div className="w-16 h-16 bg-[#C00000]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <value.icon className="h-8 w-8 text-[#C00000]" />
+                <Card className={`p-6 text-center h-full ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800 hover:border-[#D6001C]/50' : 'bg-white hover:border-[#D6001C]/30'} transition-all duration-300 hover:shadow-lg hover:shadow-[#D6001C]/10`}>
+                  <div className="w-16 h-16 bg-[#D6001C]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <value.icon className="h-8 w-8 text-[#D6001C]" />
                   </div>
                   <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-3`}>{value.title}</h3>
                   <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm leading-relaxed`}>{value.description}</p>
@@ -625,7 +625,7 @@ export const AboutPage = () => {
           className="mb-16 sm:mb-12"
         >
           <div className="text-center mb-8 sm:mb-12">
-            <span className="text-[#C00000] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+            <span className="text-[#D6001C] font-semibold text-xs sm:text-sm uppercase tracking-wider">
               {language === 'en' ? 'Our Journey' : 'আমাদের যাত্রা'}
             </span>
             <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-2`}>
@@ -635,7 +635,7 @@ export const AboutPage = () => {
           
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-3 sm:left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#C00000] via-[#C00000]/50 to-transparent transform md:-translate-x-1/2"></div>
+            <div className="absolute left-3 sm:left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#D6001C] via-[#D6001C]/50 to-transparent transform md:-translate-x-1/2"></div>
             
             {milestones.map((milestone, index) => (
               <motion.div
@@ -648,14 +648,14 @@ export const AboutPage = () => {
               >
                 <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'} pl-8 sm:pl-12 md:pl-0`}>
                   <Card className={`p-4 sm:p-6 ${theme === 'dark' ? 'bg-gray-900/50 border-gray-800' : 'bg-white'}`}>
-                    <span className="text-[#C00000] font-bold text-base sm:text-lg">{milestone.year}</span>
+                    <span className="text-[#D6001C] font-bold text-base sm:text-lg">{milestone.year}</span>
                     <h4 className={`text-lg sm:text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-1 mb-2`}>{milestone.title}</h4>
                     <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>{milestone.description}</p>
                   </Card>
                 </div>
                 
                 {/* Timeline Dot */}
-                <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+                <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
                 
                 <div className="hidden md:block w-5/12"></div>
               </motion.div>
@@ -672,7 +672,7 @@ export const AboutPage = () => {
           className="mb-16 sm:mb-12"
         >
           <div className="text-center mb-8 sm:mb-12">
-            <span className="text-[#C00000] font-semibold text-xs sm:text-sm uppercase tracking-wider">
+            <span className="text-[#D6001C] font-semibold text-xs sm:text-sm uppercase tracking-wider">
               {language === 'en' ? 'The People Behind Our Success' : 'আমাদের সাফল্যের পেছনের মানুষ'}
             </span>
             <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-2`}>
@@ -682,7 +682,7 @@ export const AboutPage = () => {
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-3 sm:left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#C00000] via-[#C00000]/50 to-transparent transform md:-translate-x-1/2"></div>
+            <div className="absolute left-3 sm:left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#D6001C] via-[#D6001C]/50 to-transparent transform md:-translate-x-1/2"></div>
             
             {/* Expert 1 - Farhan Kabir (Left) */}
             <motion.div
@@ -711,7 +711,7 @@ export const AboutPage = () => {
               </div>
               
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
               
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -744,7 +744,7 @@ export const AboutPage = () => {
               </div>
               
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
               
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -764,14 +764,14 @@ export const AboutPage = () => {
                       <img
                         src="https://images.pexels.com/photos/36965692/pexels-photo-36965692.png"
                         alt="SM Sohan"
-                        className="w-full h-full rounded-full object-cover border-3 border-[#C00000]/30 group-hover:border-[#C00000] transition-colors duration-300"
+                        className="w-full h-full rounded-full object-cover border-3 border-[#D6001C]/30 group-hover:border-[#D6001C] transition-colors duration-300"
                         loading="lazy"
                         width={208}
                         height={208}
                         decoding="async"
                       />
                       <motion.div 
-                        className="absolute -top-1 -right-1 bg-[#C00000] text-white p-1.5 rounded-full text-xs shadow-lg"
+                        className="absolute -top-1 -right-1 bg-[#D6001C] text-white p-1.5 rounded-full text-xs shadow-lg"
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
                       >
@@ -779,11 +779,11 @@ export const AboutPage = () => {
                       </motion.div>
                     </div>
                     <div className="text-center md:text-right flex-1">
-                      <span className="text-[#C00000] font-bold text-xs sm:text-sm flex items-center gap-1"><Car className="w-3 h-3" /> Sales Expert</span>
+                      <span className="text-[#D6001C] font-bold text-xs sm:text-sm flex items-center gap-1"><Car className="w-3 h-3" /> Sales Expert</span>
                       <h4 className={`text-lg sm:text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-1`}>
                         {language === 'en' ? 'SM Sohan' : 'এস এম সোহান'}
                       </h4>
-                      <p className="text-[#C00000] font-semibold text-xs sm:text-sm mb-2">
+                      <p className="text-[#D6001C] font-semibold text-xs sm:text-sm mb-2">
                         {language === 'en' ? 'Senior Sales Executive' : 'সিনিয়র সেলস এক্সিকিউটিভ'}
                       </p>
                       <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>
@@ -792,13 +792,13 @@ export const AboutPage = () => {
                           : 'ব্যক্তিগত নির্দেশনার মাধ্যমে গ্রাহকদের তাদের নিখুঁত গাড়ি খুঁজে পেতে সাহায্য করছেন।'}
                       </p>
                       <div className="flex justify-center md:justify-end gap-2 mt-3">
-                        <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="Website">
+                        <a href={`https://${showroom.website}`} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="Website">
                           <Linkedin className="w-4 h-4" />
                         </a>
-                        <a href={showroom.youtube} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="YouTube">
+                        <a href={showroom.youtube} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="YouTube">
                           <Facebook className="w-4 h-4" />
                         </a>
-                        <a href={`tel:${showroom.phone}`} className="w-8 h-8 rounded-full bg-[#C00000]/10 flex items-center justify-center hover:bg-[#C00000] hover:text-white transition-colors" aria-label="Phone">
+                        <a href={`tel:${showroom.phone}`} className="w-8 h-8 rounded-full bg-[#D6001C]/10 flex items-center justify-center hover:bg-[#D6001C] hover:text-white transition-colors" aria-label="Phone">
                           <Phone className="w-4 h-4" />
                         </a>
                       </div>
@@ -808,7 +808,7 @@ export const AboutPage = () => {
               </div>
               
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
               
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -839,7 +839,7 @@ export const AboutPage = () => {
               </div>
               
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
               
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -869,7 +869,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -900,7 +900,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -931,7 +931,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -962,7 +962,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -993,7 +993,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1024,7 +1024,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1055,7 +1055,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1086,7 +1086,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1117,7 +1117,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1148,7 +1148,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1179,7 +1179,7 @@ export const AboutPage = () => {
               </div>
 
               {/* Timeline Dot */}
-              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#C00000] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
+              <div className="absolute left-1 sm:left-2 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#D6001C] rounded-full transform md:-translate-x-1/2 border-2 sm:border-4 border-white dark:border-gray-950 shadow-lg"></div>
 
               <div className="hidden md:block w-5/12"></div>
             </motion.div>
@@ -1196,7 +1196,7 @@ export const AboutPage = () => {
           className="mb-12"
         >
           <div className="text-center mb-6">
-            <span className="text-[#C00000] font-semibold text-sm uppercase tracking-wider">
+            <span className="text-[#D6001C] font-semibold text-sm uppercase tracking-wider">
               {language === 'en' ? 'Testimonials' : 'প্রশংসাপত্র'}
             </span>
             <h2 className={`text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mt-2`}>
@@ -1218,7 +1218,7 @@ export const AboutPage = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <Card className="p-8 md:p-12 bg-gradient-to-r from-[#C00000] to-[#8B0000] text-white text-center relative overflow-hidden">
+          <Card className="p-8 md:p-12 bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-10"></div>
             <div className="relative">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -1232,7 +1232,7 @@ export const AboutPage = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/inventory"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#C00000] font-semibold rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#D6001C] font-semibold rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
                 >
                   <Car className="w-5 h-5 mr-2" />
                   {language === 'en' ? 'Browse Inventory' : 'ইনভেন্টরি দেখুন'}

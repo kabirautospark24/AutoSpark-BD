@@ -1,4 +1,4 @@
-﻿import React, { useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Particle {
@@ -432,7 +432,7 @@ export const ParticleEngineSymphony: React.FC<ParticleEngineSymphonyProps> = ({
           isDark ? 'bg-primary/10' : 'bg-blue-400/10'
         }`} style={{ top: '10%', left: '10%' }} />
         <div className={`absolute w-[500px] h-[500px] rounded-full blur-3xl ${
-          isDark ? 'bg-[#C00000]/10' : 'bg-amber-600/10'
+          isDark ? 'bg-[#D6001C]/10' : 'bg-amber-600/10'
         }`} style={{ bottom: '10%', right: '10%' }} />
         <div className={`absolute w-[400px] h-[400px] rounded-full blur-3xl ${
           isDark ? 'bg-cyan-500/8' : 'bg-cyan-400/8'

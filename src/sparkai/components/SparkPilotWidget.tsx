@@ -170,7 +170,7 @@ abortRef.current?.abort();
           initial={reduceMotion ? false : { scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           onClick={() => { setOpen(true); setUnread(false); }}
-          aria-label="Open SparkPilot assistant"
+          aria-label="Ask SparkPilot"
           className="fixed z-toast right-4 sm:right-6 rounded-full p-[3px] shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
           style={{ bottom: 'calc(env(safe-area-inset-bottom,0px) + 16px)', background: 'linear-gradient(135deg,#22D3EE,#2563EB,#A16207)' }}
         >
@@ -312,7 +312,7 @@ abortRef.current?.abort();
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void send(input); } }}
-                    placeholder="Ask about this product…"
+                    placeholder="Ask SparkPilot"
                     rows={1}
                     disabled={busy}
                     autoComplete="off"

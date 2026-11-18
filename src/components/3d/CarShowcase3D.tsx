@@ -51,7 +51,7 @@ const CarShowcase3DCanvas = lazy(() => import('./CarShowcase3DCanvas'));
 
 // ── Color options (no Three.js dependency) ──
 const CAR_COLORS = [
-  { name: 'Racing Red', color: '#C00000' },
+  { name: 'Racing Red', color: '#D6001C' },
   { name: 'Midnight Black', color: '#111111' },
   { name: 'Arctic White', color: '#F0F0F0' },
   { name: 'Ocean Blue', color: '#0a3d7c' },

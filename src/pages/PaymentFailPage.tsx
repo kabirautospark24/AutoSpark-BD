@@ -55,13 +55,13 @@ const PaymentFailPage = () => {
         <div className="space-y-3">
           <button
             onClick={() => navigate('/checkout')}
-            className="w-full py-3 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity bg-[var(--brand-red,#C00000)]"
+            className="w-full py-3 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity bg-[var(--brand-red,#D6001C)]"
           >
             Try Payment Again
           </button>
           <button
             onClick={() => navigate('/cart')}
-            className={`w-full py-3 border-2 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-[var(--brand-red,#C00000)] text-[var(--brand-red,#C00000)]'}`}
+            className={`w-full py-3 border-2 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-[var(--brand-red,#D6001C)] text-[var(--brand-red,#D6001C)]'}`}
           >
             Back to Cart
           </button>

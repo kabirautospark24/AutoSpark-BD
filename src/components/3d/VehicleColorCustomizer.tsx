@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Save,
@@ -31,7 +31,7 @@ export interface SelectedColors {
 const defaultExteriorColors: ColorOption[] = [
   { name: 'Pearl White', hex: '#F5F5F5', category: 'exterior' },
   { name: 'Black Metallic', hex: '#1a1a1a', category: 'exterior' },
-  { name: 'Red Mica', hex: '#8B0000', category: 'exterior' },
+  { name: 'Red Mica', hex: '#9F0013', category: 'exterior' },
   { name: 'Navy Blue', hex: '#191970', category: 'exterior' },
   { name: 'Silver', hex: '#C0C0C0', category: 'exterior' },
   { name: 'Bronze', hex: '#8B4513', category: 'exterior' },

@@ -40,14 +40,14 @@ const ThankYouPage = () => {
         <div className="grid gap-3 sm:grid-cols-2">
           <Link
             to="/accessories"
-            className={`inline-flex items-center justify-center px-4 py-3 rounded-lg border-2 font-semibold transition ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600' : 'bg-white border-[var(--brand-red,#C00000)] text-[var(--brand-red,#C00000)] hover:bg-gray-50'}`}
+            className={`inline-flex items-center justify-center px-4 py-3 rounded-lg border-2 font-semibold transition ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600' : 'bg-white border-[var(--brand-red,#D6001C)] text-[var(--brand-red,#D6001C)] hover:bg-gray-50'}`}
           >
             <ShoppingBag className="w-4 h-4 mr-2" aria-hidden />
             Continue Shopping
           </Link>
           <Link
             to="/"
-            className="inline-flex items-center justify-center px-4 py-3 rounded-lg text-white font-semibold hover:opacity-90 transition bg-[var(--brand-red,#C00000)]"
+            className="inline-flex items-center justify-center px-4 py-3 rounded-lg text-white font-semibold hover:opacity-90 transition bg-[var(--brand-red,#D6001C)]"
           >
             <Home className="w-4 h-4 mr-2" aria-hidden />
             Back to Home

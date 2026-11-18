@@ -60,12 +60,12 @@ export default {
         // Brand colors - one signal accent, no second hue
         brand: {
           red: {
-            DEFAULT: '#C00000',
-            light: '#E23A3A',
-            dark: '#8A0000',
-            deep: '#600000',
-            glow: 'rgba(192, 0, 0, 0.22)',
-            muted: 'rgba(192, 0, 0, 0.12)',
+            DEFAULT: '#D6001C',
+            light: '#F03A4A',
+            dark: '#9F0013',
+            deep: '#5C000B',
+            glow: 'rgba(214, 0, 28, 0.24)',
+            muted: 'rgba(214, 0, 28, 0.12)',
           },
         },
         amber: {
@@ -83,7 +83,7 @@ export default {
           border: {
             DEFAULT: '#1E1E1E',
             subtle: '#161616',
-            accent: 'rgba(184, 0, 0, 0.15)',
+            accent: 'rgba(214, 0, 28, 0.15)',
           },
           text: {
             primary: '#FFFFFF',
@@ -113,7 +113,7 @@ export default {
           border: {
             DEFAULT: '#E5E5E5',
             subtle: '#EFEFEF',
-            accent: 'rgba(184, 0, 0, 0.15)',
+            accent: 'rgba(214, 0, 28, 0.15)',
           },
           text: {
             primary: '#050505',
@@ -134,19 +134,19 @@ export default {
       },
       backgroundImage: {
         // Refined gradients - no AI purple
-        'gradient-brand': 'linear-gradient(135deg, #B80000 0%, #D41A1A 100%)',
-        'gradient-brand-subtle': 'linear-gradient(135deg, rgba(184,0,0,0.08) 0%, rgba(212,26,26,0.04) 100%)',
+        'gradient-brand': 'linear-gradient(135deg, #9F0013 0%, #D6001C 58%, #F03A4A 100%)',
+        'gradient-brand-subtle': 'linear-gradient(135deg, rgba(214,0,28,0.08) 0%, rgba(201,55,67,0.04) 100%)',
         'gradient-surface': 'linear-gradient(180deg, #0A0A0A 0%, #050505 100%)',
         'gradient-glass': 'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
-        'gradient-glow-brand': 'radial-gradient(ellipse at center, rgba(184,0,0,0.08) 0%, transparent 60%)',
+        'gradient-glow-brand': 'radial-gradient(ellipse at center, rgba(214,0,28,0.09) 0%, transparent 60%)',
         'gradient-hero': 'linear-gradient(135deg, #050505 0%, #0A0A0A 50%, #050505 100%)',
       },
       boxShadow: {
         // Colored shadows - tinted to brand red on dark
-        'brand-sm': '0 2px 8px rgba(184, 0, 0, 0.15), 0 0 0 1px rgba(184, 0, 0, 0.08)',
-        'brand-md': '0 8px 24px rgba(184, 0, 0, 0.18), 0 0 0 1px rgba(184, 0, 0, 0.1)',
-        'brand-lg': '0 16px 48px rgba(184, 0, 0, 0.22), 0 0 0 1px rgba(184, 0, 0, 0.12)',
-        'brand-glow': '0 0 30px rgba(184, 0, 0, 0.18), 0 0 60px rgba(184, 0, 0, 0.1)',
+        'brand-sm': '0 2px 8px rgba(214, 0, 28, 0.15), 0 0 0 1px rgba(214, 0, 28, 0.08)',
+        'brand-md': '0 8px 24px rgba(214, 0, 28, 0.18), 0 0 0 1px rgba(214, 0, 28, 0.1)',
+        'brand-lg': '0 16px 48px rgba(214, 0, 28, 0.22), 0 0 0 1px rgba(214, 0, 28, 0.12)',
+        'brand-glow': '0 0 30px rgba(214, 0, 28, 0.18), 0 0 60px rgba(214, 0, 28, 0.1)',
         
         // Glass shadows
         'glass': '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06)',
@@ -164,7 +164,7 @@ export default {
         'bezel-inner': 'inset 0 1px 1px rgba(255, 255, 255, 0.12), inset 0 -1px 1px rgba(0, 0, 0, 0.15)',
 
         // Aliases used by existing page code
-        'glow-red': '0 0 24px rgba(192, 0, 0, 0.28), 0 0 48px rgba(192, 0, 0, 0.16)',
+        'glow-red': '0 0 24px rgba(214, 0, 28, 0.28), 0 0 48px rgba(214, 0, 28, 0.16)',
         'lift': '0 16px 40px -12px rgba(0, 0, 0, 0.55)',
         'hairline': '0 0 0 1px rgb(var(--border) / 1)',
       },

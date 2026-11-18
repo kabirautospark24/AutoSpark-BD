@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import {
@@ -668,7 +668,7 @@ const ServicesPage: React.FC = () => {
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className={`absolute w-80 h-80 rounded-full blur-3xl ${isDark ? 'bg-[#C00000]/15' : 'bg-amber-600/10'}`}
+            className={`absolute w-80 h-80 rounded-full blur-3xl ${isDark ? 'bg-[#D6001C]/15' : 'bg-amber-600/10'}`}
             style={{ bottom: '20%', right: '15%' }}
             animate={{ 
               scale: [1, 1.2, 1],
@@ -797,7 +797,7 @@ const ServicesPage: React.FC = () => {
               
               {/* Car Body Top */}
               <div className={`mx-auto rounded-t-2xl ${
-                isDark ? 'bg-gradient-to-b from-[#C00000] to-blue-700' : 'bg-gradient-to-b from-[#C00000] to-[#8A0000]'
+                isDark ? 'bg-gradient-to-b from-[#D6001C] to-blue-700' : 'bg-gradient-to-b from-[#D6001C] to-[#9F0013]'
               }`} style={{ width: '160px', height: '35px', marginTop: '-2px' }}>
                 {/* Windows */}
                 <div className={`mx-auto mt-1 rounded-t-lg ${
@@ -1100,7 +1100,7 @@ const ServicesPage: React.FC = () => {
               <motion.div
                 className={`w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-sm ${
                   isDark 
-                    ? 'bg-gradient-to-br from-[#C00000]/30 to-amber-700/20 border border-blue-400/30' 
+                    ? 'bg-gradient-to-br from-[#D6001C]/30 to-amber-700/20 border border-blue-400/30' 
                     : 'bg-gradient-to-br from-blue-100 to-red-100 border border-blue-200'
                 }`}
                 style={{ 
@@ -1117,7 +1117,7 @@ const ServicesPage: React.FC = () => {
                 {element.id === 'lift' && <Car className={isDark ? 'text-blue-400' : 'text-primary'} size={24} />}
                 {element.id === 'diagnostic' && <Settings className={`${isDark ? 'text-cyan-400' : 'text-cyan-600'} animate-spin`} style={{ animationDuration: '8s' }} size={24} />}
                 {element.id === 'tools' && <Wrench className={isDark ? 'text-yellow-400' : 'text-yellow-600'} size={24} />}
-                {element.id === 'engine' && <Cog className={`${isDark ? 'text-amber-600' : 'text-[#C00000]'} animate-spin`} style={{ animationDuration: '4s' }} size={24} />}
+                {element.id === 'engine' && <Cog className={`${isDark ? 'text-amber-600' : 'text-[#D6001C]'} animate-spin`} style={{ animationDuration: '4s' }} size={24} />}
                 {element.id === 'tires' && <CircleDot className={isDark ? 'text-green-400' : 'text-green-600'} size={24} />}
               </motion.div>
               <motion.span
@@ -1211,7 +1211,7 @@ const ServicesPage: React.FC = () => {
             <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Professional Care
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C00000] to-[#C00000]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D6001C] to-[#D6001C]">
                 For Your Car
               </span>
             </h1>
@@ -1225,7 +1225,7 @@ const ServicesPage: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowBookingModal(true)}
-                className="px-8 py-4 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
+                className="px-8 py-4 bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
               >
                 <Calendar size={20} />
                 Book Now
@@ -1425,7 +1425,7 @@ const ServicesPage: React.FC = () => {
 
                     {/* Glow Effect on Hover */}
                     <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      isDark ? 'bg-gradient-to-br from-[#C00000]/20 to-amber-700/20' : 'bg-gradient-to-br from-blue-100/50 to-red-100/50'
+                      isDark ? 'bg-gradient-to-br from-[#D6001C]/20 to-amber-700/20' : 'bg-gradient-to-br from-blue-100/50 to-red-100/50'
                     }`} />
 
                     <div className="relative p-6">
@@ -1528,7 +1528,7 @@ const ServicesPage: React.FC = () => {
               >
                 {/* Recommended Badge */}
                 {pkg.recommended && (
-                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white text-center py-2 text-sm font-bold">
+                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white text-center py-2 text-sm font-bold">
                     Most Popular
                   </div>
                 )}
@@ -1564,7 +1564,7 @@ const ServicesPage: React.FC = () => {
                   <button
                     className={`w-full py-4 rounded-xl font-semibold transition-all ${
                       pkg.recommended
-                        ? 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:shadow-lg'
+                        ? 'bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white hover:shadow-lg'
                         : isDark
                           ? 'bg-gray-700 text-white hover:bg-gray-600'
                           : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -1618,7 +1618,7 @@ const ServicesPage: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowBookingModal(true)}
-                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white font-semibold rounded-xl"
+                  className="px-6 sm:px-8 py-3 min-h-[44px] bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white font-semibold rounded-xl"
                 >
                   Book Now
                 </motion.button>
@@ -2170,7 +2170,7 @@ const ServicesPage: React.FC = () => {
                     (bookingStep === 1 && !selectedTime) ||
                     (bookingStep === 2 && (!customerInfo.name.trim() || !customerInfo.phone.trim()))
                       ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-[#C00000] to-[#8A0000] text-white hover:shadow-lg'
+                      : 'bg-gradient-to-r from-[#D6001C] to-[#9F0013] text-white hover:shadow-lg'
                   }`}
                 >
                   {bookingStep === 3 ? 'Confirm Booking' : 'Next'}

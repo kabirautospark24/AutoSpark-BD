@@ -9,7 +9,16 @@ import { CartProvider } from './contexts/CartContext';
 import App from './App.tsx';
 import './index.css';
 import './styles/tokens.css'; // Phase 1: design-system tokens (Liquid Glass + gold)
+import './styles/motion.css'; // OpenMontage-inspired ambient motion + viewport reveals
 import './lib/env'; // A-05: validate env early
+
+// Apply reveal initial states before first paint so sections do not flash.
+// The controller adds `.is-revealed` only to content already in/near view and
+// to sections as they scroll into view. If the controller never mounts, the
+// reduced-motion fallback and the CSS safety rules keep content visible.
+if (typeof window !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('motion-ready');
+}
 
 // BrowserRouter is used (see App.tsx) with SPA fallback (vercel.json).
 // No hash normalization needed; gateway callbacks land on real paths.
@@ -143,7 +152,7 @@ function showUpdateAvailable(registration: ServiceWorkerRegistration) {
       banner.style.fontFamily = 'Inter, system-ui, -apple-system, sans-serif';
       banner.innerHTML = `
         <span style="margin-right:12px;">A new version is available.</span>
-        <button id="sw-update-refresh" style="background:#C00000;border:none;color:#fff;padding:8px 10px;border-radius:6px;cursor:pointer;font-weight:600">Refresh</button>
+        <button id="sw-update-refresh" style="background:#D6001C;border:none;color:#fff;padding:8px 10px;border-radius:6px;cursor:pointer;font-weight:600">Refresh</button>
         <button id="sw-update-dismiss" style="background:transparent;border:none;color:#aaa;margin-left:8px;cursor:pointer">Dismiss</button>
       `;
       document.body.appendChild(banner);
