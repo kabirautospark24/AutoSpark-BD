@@ -34,7 +34,7 @@ const SORTS: { key: SortKey; en: string; bn: string }[] = [
   { key: 'newest', en: 'Newest First', bn: 'নতুন আগে' },
 ];
 
-function matchesFilter(v: Vehicle, f: FilterKey): boolean {
+const matchesFilter = (v: Vehicle, f: FilterKey): boolean => {
   if (f === 'all') return true;
   const fuel = (v.fuel_type || '').toLowerCase();
   const body = (v.body_type || '').toLowerCase();
@@ -43,7 +43,7 @@ function matchesFilter(v: Vehicle, f: FilterKey): boolean {
   if (f === 'sedan') return body.includes('sedan') || body.includes('saloon');
   if (f === 'mpv') return body.includes('mpv') || body.includes('van') || body.includes('wagon') || body.includes('noah');
   return true;
-}
+};
 
 /** Map a curated slide to the Vehicle shape so the grid works with no DB rows. */
 function slideToVehicle(s: (typeof carSlides)[number]): Vehicle {
@@ -108,7 +108,7 @@ function Spec({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-/** Quick-view dialog: replaces the old hover flip-card with an accessible modal. */
+/** Quick-view dialog: accessible modal with 3D card lift effect. */
 function QuickViewModal({
   vehicle,
   onClose,
@@ -153,11 +153,11 @@ function QuickViewModal({
       aria-label={title}
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-lg" aria-hidden="true" />
       <div
-        className={`relative w-full max-w-2xl overflow-hidden rounded-2xl shadow-2xl ${
-          dark ? 'bg-[#121212] text-white border border-white/10' : 'bg-white text-gray-900 border border-black/10'
-        }`}
+        className="relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-3xl transform transition-all duration-500 ${
+          dark ? 'bg-[#111] border border-white/10' : 'bg-white border border-gray-200 shadow-lg'
+        }"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative aspect-[16/8] overflow-hidden bg-black/10">
@@ -167,14 +167,14 @@ function QuickViewModal({
             ref={closeRef}
             onClick={onClose}
             aria-label={bn ? 'বন্ধ করুন' : 'Close quick view'}
-            className="absolute right-3 top-3 rounded-full bg-black/60 p-2 text-white transition hover:bg-black/80"
+            className="absolute right-3 top-3 rounded-full bg-black/70 p-2 text-white transition hover:bg-black/80"
           >
             <X className="h-5 w-5" />
           </button>
-          <p className="fv-price absolute bottom-3 left-4 text-2xl">{formatPrice(vehicle.price, lang)}</p>
+          <p className="fv-price absolute bottom-3 left-4 text-2xl font-bold">{formatPrice(vehicle.price, lang)}</p>
         </div>
         <div className="p-5 sm:p-6">
-          <p className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${dark ? 'text-red-400/90' : 'text-red-700'}`}>
+          <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${dark ? 'text-red-400/90' : 'text-red-700'}`}>
             {vehicle.brand_name} · {vehicle.stock_number} · {vehicle.year}
           </p>
           <h3 className="mt-1 text-2xl font-bold tracking-tight">{title}</h3>
@@ -196,7 +196,7 @@ function QuickViewModal({
           <div className="mt-5 flex flex-col gap-2 sm:flex-row">
             <Link
               to={`/vehicle/${vehicle.id}`}
-              className="fv-btn flex-1 justify-center bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800"
+              className="fv-btn flex-1 justify-center bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 rounded-full"
             >
               {bn ? 'সম্পূর্ণ বিবরণ' : 'View full details'}
               <ArrowRight className="h-4 w-4" />
@@ -207,7 +207,7 @@ function QuickViewModal({
                   onAddToCompare(vehicle);
                   onClose();
                 }}
-                className={`fv-btn flex-1 justify-center ${dark ? 'fv-btn-dark' : 'fv-btn-light'}`}
+                className={`fv-btn flex-1 justify-center ${dark ? 'fv-btn-dark' : 'fv-btn-light'} rounded-full`}
               >
                 <GitCompareArrows className="h-4 w-4" />
                 {bn ? 'তুলনায় যুক্ত করুন' : 'Add to comparison'}
@@ -220,7 +220,13 @@ function QuickViewModal({
   );
 }
 
-export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 'en', supportsRichAnimations = true, onAddToCompare }: Props) {
+export default function FeaturedVehicles({
+  vehicles,
+  theme = 'dark',
+  language = 'en',
+  supportsRichAnimations = true,
+  onAddToCompare,
+}: Props) {
   const [filter, setFilter] = useState<FilterKey>('all');
   const [sort, setSort] = useState<SortKey>('featured');
   const [quickView, setQuickView] = useState<Vehicle | null>(null);
@@ -247,10 +253,10 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
   const [hero, ...rest] = filtered;
 
   const cardShell = (spotlight: boolean) =>
-    `fv-card group relative overflow-hidden rounded-[1.4rem] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1.5 ${
+    `fv-card group relative overflow-hidden rounded-3xl transition-[border_color,box_shadow,transform] duration-750 ease-out hover:-translate-y-2 ${
       dark
-        ? 'bg-white/[0.035] border border-white/10 hover:border-red-500/40 hover:shadow-[0_24px_60px_-16px_rgba(184,0,0,0.35)]'
-        : 'bg-white border border-black/[0.07] shadow-[0_10px_36px_-18px_rgba(0,0,0,0.35)] hover:border-red-600/30 hover:shadow-[0_28px_60px_-20px_rgba(184,0,0,0.3)]'
+        ? 'bg-white/[0.02] border border-white/8 hover:border-red-500/30 hover:shadow-[0_32px_96px_-20px_rgba(214,0,28,0.4)]'
+        : 'bg-white border border-black/[0.05] shadow-[0_14px_40px_-16px_rgba(0,0,0,0.4)] hover:border-red-600/25 hover:shadow-[0_36px_80px_-20px_rgba(214,0,28,0.35)]'
     } ${spotlight ? 'fv-spotlight' : ''}`;
 
   const openQuickView = (e: React.MouseEvent, v: Vehicle) => {
@@ -287,7 +293,7 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
               decoding="async"
               width={large ? 880 : 640}
               height={large ? 440 : 360}
-              className="fv-img h-full w-full object-cover"
+              className="fv-img h-full w-full object-cover transition-transform duration-750 hover:scale-105"
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).src =
                   'https://images.pexels.com/photos/3964962/pexels-photo-3964962.jpeg?auto=compress&cs=tinysrgb&w=800&fm=webp';
@@ -308,9 +314,9 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
               <span className="fv-badge fv-badge-glass">{v.year}</span>
             </div>
 
-            {/* floating price + quick view */}
+            {/* floating price + quick view CTA */}
             <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between gap-3">
-              <p className={`fv-price ${large ? 'text-2xl md:text-3xl' : 'text-xl'}`}>{formatPrice(v.price, lang)}</p>
+              <p className={`fv-price ${large ? 'text-2xl md:text-3xl' : 'text-xl'} font-bold`}>{formatPrice(v.price, lang)}</p>
               <span className="flex items-center gap-2">
                 <span
                   role="button"
@@ -405,12 +411,34 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
   };
 
   return (
-    <section aria-label={bn ? 'বৈশিষ্ট্যযুক্ত গাড়ি' : 'Featured vehicles'} className={`fv-section relative overflow-hidden ${dark ? 'bg-[#070707]' : 'bg-[#fafafa]'}`}>
-      {/* bespoke backdrop: off-center spotlight + diagonal hatching + corner dot field */}
-      <div className={`pointer-events-none absolute inset-0 ${dark ? 'fv-backdrop' : 'fv-backdrop fv-backdrop-light'}`} aria-hidden="true" />
+    <section
+      aria-label={bn ? 'বৈশিষ্ট্যযুক্ত গাড়ি' : 'Featured vehicles'}
+      className={`fv-section relative overflow-hidden ${dark ? 'bg-gradient-to-b from-[#0a0a0a] via-[#0d0d0d] to-[#111111]' : 'bg-gradient-to-b from-[#fafafa] via-[#ffffff] to-[#f5f5f5]'}`}
+    >
+      {/* 3D futuristic backdrop: rotating wireframe + subtle gradient */}
+      <div
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        style={{ background: 'var(--fv-backdrop)' }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10">
+        {/* animated wireframe tetrahedron */}
+        <div
+          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 opacity-20"
+          style={{
+            backgroundImage:
+              'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg%27%3E%3Cpath stroke=\'rgba(214,0,28,0.6)' + ' fill=\'none\' stroke-width=\'1.5\' d=\'M 25 25 L 75 25 L 75 75 L 25 75 Z M 25 75 L 75 25\'/%3E%3C/svg%3E")',
+            animation: 'rotateWireframe 20s linear infinite',
+          }}
+        />
+        <style>{`
+          @keyframes rotateWireframe {
+            from { transform: rotateX(0deg) rotateY(0deg) translateZ(0px); }
+            to { transform: rotateX(360deg) rotateY(360deg) translateZ(0px); }
+          }
+        `}</style>
 
-      <div className="container-fluid relative z-10">
-        {/* header */}
+      {/* header */}
         <ScrollReveal className="mb-8 flex flex-col gap-6 md:mb-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <p className="fv-eyebrow">
@@ -423,7 +451,7 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
             </h2>
             <p className={`mt-3 max-w-xl text-base leading-relaxed sm:text-lg ${dark ? 'text-white/55' : 'text-gray-600'}`}>
               {bn
-                ? 'তাত্ক্ষণিক ডেলিভারির জন্য হাতে বাছাই করা প্রিমিয়াম গাড়ি, স্বচ্ছ মূল্য, যাচাইকৃত ইতিহাস।'
+                ? 'তাত्क্ষণিক ডেলিভারির জন্য হাতে বাছাই করা প্রিমিয়াম গাড়ি, স্বচ্ছ মূল্য, যাচাইকৃত ইতিহাস।'
                 : 'Hand-picked premium vehicles ready for immediate delivery, with transparent pricing and a verified history.'}
             </p>
           </div>
@@ -479,7 +507,7 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
           <div className="fv-marquee mb-8" aria-hidden="true">
             <div className="fv-marquee-track">
               {[0, 1].map((dup) => (
-                <div key={dup} className="fv-marquee-chunk">
+                <div key={dup} className="fv-marquee-track-inner">
                   {['TOYOTA', 'HONDA', 'NISSAN', 'MITSUBISHI', 'SUZUKI', 'LEXUS', 'BMW', 'MERCEDES'].map((b) => (
                     <span key={`${dup}-${b}`} className="fv-marquee-item">
                       {b} <i>◆</i>
@@ -497,7 +525,7 @@ export default function FeaturedVehicles({ vehicles, theme = 'dark', language = 
             {bn ? 'এই ফিল্টারে কোনো গাড়ি নেই।' : 'No vehicles match this filter yet.'}
           </p>
         ) : (
-          <StaggerContainer className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6" stagger={0.07}>
+          <StaggerContainer className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6 xl:gap-8" stagger={0.07}>
             {hero && renderCard(hero, 0, true)}
             {rest.map((v, i) => renderCard(v, i + 1))}
           </StaggerContainer>
